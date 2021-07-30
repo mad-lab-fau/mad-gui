@@ -39,9 +39,9 @@ from mad_gui.state_keeper import StateKeeper
 from mad_gui.windows import VideoWindow
 
 # CI can't handle openGL
-if not os.environ.get("MAD_GUI_CI"):
+if os.environ.get("GITHUB_CI"):
     # helps to make plot zooming smooth even when line width >1
-    # pg.setConfigOption("useOpenGL", True)
+    pg.setConfigOption("useOpenGL", False)
     pass
 
 # Make sure that graphs are properly scaled when having multiple screens
