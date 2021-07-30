@@ -30,7 +30,7 @@ def task_lint():
 def task_test():
     """Run Pytest with coverage."""
     return {
-        "actions": [["pytest", "--cov=mad_gui", "--cov-config=.coveragerc"]],
+        "actions": [["pytest", "--cov=mad_gui", "--cov-config=.coveragerc", "-vv"]],
         "verbosity": 2,
     }
 
