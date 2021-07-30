@@ -1,12 +1,12 @@
 import pandas as pd
-from PySide2.QtCore import QUrl
+from PySide2.QtCore import QObject, QUrl
 from PySide2.QtMultimedia import QMediaContent, QMediaPlayer, QMediaPlaylist
 
 from mad_gui.qt_designer.ui_video import Ui_VideoWindow
 from mad_gui.state_keeper import StateKeeper
 
 
-class VideoWindow(Ui_VideoWindow):
+class VideoWindow(Ui_VideoWindow, QObject):
     """Display a video that can be synchronised with sensor data.
 
     Interacts with :class:`mad_gui.plot_tools.SensorPlot`"""
@@ -60,11 +60,11 @@ class VideoWindow(Ui_VideoWindow):
             return
         self.fps = self.player.metaData("VideoFrameRate")
 
+        StateKeeper.video_duration_available.emit(self.player.metaData("Duration") / 1000, self.fps)
         # Not sure yet why this is, but we need the following commands to make sure switching to sync mode directly
         # after loading the video works
         self.player.play()
         self.player.pause()
-        StateKeeper.video_duration_available.emit(self.player.metaData("Duration") / 1000, self.fps)
 
     def _set_sync_df(self, sync: pd.DataFrame):
         if sync is None:
