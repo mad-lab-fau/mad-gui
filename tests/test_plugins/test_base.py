@@ -11,10 +11,6 @@ EXAMPLE_DATA_PATH = Path(__file__).parent.parent.parent / "example_data"
 
 
 class TestBaseImporter:
-    if not QApplication.instance():
-        app = QApplication(sys.argv)
-    else:
-        app = QApplication.instance()
 
     def test_instantiation(self):
         ExampleImporter()
