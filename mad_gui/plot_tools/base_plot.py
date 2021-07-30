@@ -6,8 +6,10 @@ from PySide2.QtCore import Slot
 from PySide2.QtGui import QColor, QCursor, QMouseEvent
 
 from mad_gui.config import Config
-from mad_gui.plot_tools.base_label import BaseLabel
-from typing import Optional
+from mad_gui.models.global_data import AnnotationData, PlotData
+from mad_gui.plot_tools.base_label import BaseRegionLabel
+from mad_gui.plot_tools.labels import SynchronizationLabel
+from typing import List, Optional, Type
 
 
 class BasePlot(pg.PlotWidget):
@@ -16,15 +18,69 @@ class BasePlot(pg.PlotWidget):
 
     def __init__(
         self,
+        plot_data: PlotData = None,
+        initial_plot_channels=None,
+        label_classes=List[BaseRegionLabel],
         parent=None,
     ):
         super().__init__(parent=None)
         self.parent = parent
+        self.plot_data = plot_data
+        self.label_classes = label_classes
+        self.initial_plot_channels = initial_plot_channels or list(plot_data.data.columns)
         self.configure_style()
         self.video_cursor_line = None
         self.cursor_line_pen = pg.mkPen(color="y", width=3)
         self.sync_item = None
         self.sync_info = None
+        self._initialize_labels(label_classes)
+
+    def _initialize_labels(self, labels: List):
+        label_ranges = pd.DataFrame()
+
+        for label_class in labels:
+            if label_class.__name__ not in self.plot_data.annotations.keys():
+                self.plot_data.annotations[label_class.__name__] = AnnotationData()
+
+            self.set_labels(label_class, self.plot_data.annotations[label_class.__name__].data)
+
+            label_range = pd.DataFrame(
+                index=[label_class.__name__],
+                data=[[label_class.min_height, label_class.max_height]],
+                columns=["min_height", "max_height"],
+            )
+            label_ranges = label_ranges.append(label_range)
+        self.label_ranges = label_ranges
+
+    @Slot(BaseRegionLabel, pd.DataFrame)
+    def set_labels(self, label_class: Type[BaseRegionLabel], df: pd.DataFrame):
+        if df is None or df.empty:
+            return
+        self.clear_labels(label_class)
+        for _, activity in df.iterrows():
+            events = [
+                column for column in df.columns if column not in ["identifier", "start", "end", "type", "details"]
+            ]
+
+            # make sure there are no np.nans in any string field
+            mask = activity.index.isin(["start", "end", "tc"])
+            activity[~mask] = activity[~mask].fillna("")
+
+            # make sure all required fields are available
+            for parameter in ["identifier", "description", "details"]:
+                if parameter not in activity.index:
+                    activity = activity.append(pd.Series(data=[None], index=[parameter]))
+
+            new_activity = label_class(
+                identifier=activity.identifier,
+                description=activity.description,
+                details=activity.details,
+                start=activity.start,
+                end=activity.end,
+                events=activity[events],
+                parent=self,
+            )
+            self.addItem(new_activity)
 
     def set_title(self, title: str):
         """Set the title, which will be shown centered on the top of the plot.
@@ -75,6 +131,22 @@ class BasePlot(pg.PlotWidget):
         if x_min < local_pos.x() < x_max and y_min < local_pos.y() < y_max:
             return True
         return False
+
+    def inside_label_range(self, pos):
+        for label_name, label_range in self.label_ranges.iterrows():
+
+            y_min = self.viewRange()[1][0]
+            y_max = self.viewRange()[1][1]
+
+            if label_range.min_height <= (pos.y() - y_min) / (y_max - y_min) <= label_range.max_height:
+                return self._get_label_class(label_name)
+        return None
+
+    def _get_label_class(self, label_name: str):
+        for label in self.label_classes:
+            if label.__name__ == label_name:
+                return label
+        return None
 
     def get_mouse_pos_from_event(self, ev):
         if isinstance(ev, QMouseEvent):
@@ -182,16 +254,3 @@ class BasePlot(pg.PlotWidget):
     def _remove_sync_item(self):
         self.removeItem(self.sync_item)
         self.sync_item = None
-
-
-class SynchronizationLabel(BaseLabel):
-    def __init__(self, start, end, parent=None):
-        super().__init__(start, end, parent=parent)
-
-    def _set_border_colors(self, start, end):
-        self.start_color = QColor(0, 255, 0, 255)
-        self.end_color = QColor("red")
-
-    def _region_changed(self):
-        """Called as soon as user drags start / end of a stride"""
-        return
