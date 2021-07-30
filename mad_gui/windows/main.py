@@ -418,6 +418,11 @@ class MainWindow(BaseClass):
             return
         self.VideoWindow.start_video(video_path)
         self.VideoWindow.show()
+        StateKeeper.video_duration_available.connect(self._initialize_video_plot)
+        self.ui.btn_sync_data.setDisabled(False)
+
+    def _initialize_video_plot(self):
+        StateKeeper.video_duration_available.disconnect(self._initialize_video_plot)
         if self.video_plot:
             self.ui.plotwidget.removeWidget(self.video_plot)
         self.video_plot = VideoPlot(parent=self, video_window=self.VideoWindow)
@@ -425,7 +430,6 @@ class MainWindow(BaseClass):
         self.video_plot.hide()
         self.ui.plotwidget.addWidget(self.video_plot)
         self.plot_state.bind_property_bidirectional(self.video_plot.state, "mode", "mode", initial="set")
-        self.ui.btn_sync_data.setDisabled(False)
 
     def _get_main_plot(self):
         return [plot for plot in self.sensor_plots.values() if plot.is_main_plot][0]

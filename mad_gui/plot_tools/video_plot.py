@@ -27,7 +27,6 @@ class VideoPlot(BasePlot):
     }
 
     def __init__(self, parent=None, video_window=None):
-
         plot_data = PlotData()
         # following two parts are necessary when initializing a plot
         plot_data.data = pd.DataFrame(data=[], columns=["time"])
@@ -37,7 +36,7 @@ class VideoPlot(BasePlot):
         StateKeeper.video_duration_available.connect(self.update_video_duration)
         self.state = SensorPlotState()
         self.mode_handler = InvestigateModeHandler(self)
-        self.state.bind(self._change_mode, "mode", initial_set=True)
+        self.state.bind(self._change_mode, "mode", initial_set=False)
         self.video_window = video_window
 
     def move_video_cursor_line(self, ev):  # pylint: disable=arguments-differ
@@ -73,8 +72,6 @@ class VideoPlot(BasePlot):
         percentage = np.asarray([float(n) for n in range(0, 101)])
         x_values = percentage / 100 * length_seconds
         self.set_data(x=x_values, y=np.zeros(len(x_values)), fps=fps)
-        if fps:
-            self.plot_data.sampling_rate_hz = fps
 
     def set_data(self, x: List, y: List, fps: Optional[float]):
         self.plot(x=x, y=y)
@@ -82,3 +79,8 @@ class VideoPlot(BasePlot):
         self.plot_data.data = x
         if fps:
             self.plot_data.sampling_rate_hz = fps
+
+    def add_sync_item(self):
+        # just make sure we have the correct sampling frequency and video duration
+        self.update_video_duration(self.video_window.player.duration(), self.video_window.fps)
+        super().add_sync_item()
