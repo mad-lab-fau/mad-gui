@@ -33,7 +33,7 @@ jobs:
         export PYTEST_DEBUG=1
         pip install poetry
         poetry config virtualenvs.in-project true
-
+        sudo apt-get -y install libpulse-mainloop-glib0
         pip install .
         pip list
         python test.py
