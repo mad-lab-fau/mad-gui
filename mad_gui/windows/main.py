@@ -38,11 +38,12 @@ from mad_gui.plugins.helper import filter_plugins
 from mad_gui.state_keeper import StateKeeper
 from mad_gui.windows import VideoWindow
 
+pg.setConfigOption("useOpenGL", False)
+
 # CI can't handle openGL
 if os.environ.get("GITHUB_CI"):
     # helps to make plot zooming smooth even when line width >1
     pg.setConfigOption("useOpenGL", False)
-    pass
 
 # Make sure that graphs are properly scaled when having multiple screens
 # QApplication.setAttribute(Qt.AA_EnableHighDpiScaling)
