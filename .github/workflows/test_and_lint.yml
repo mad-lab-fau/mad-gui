@@ -57,9 +57,8 @@ jobs:
         sudo apt-get -y install libpulse-mainloop-glib0        
         pip install poetry
         poetry config virtualenvs.in-project true
-
-        pip install .
-        pip list
+        poetry update --lock
+        poetry install
         poetry run doit test
     - name: Linting
       run: |
