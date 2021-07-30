@@ -25,4 +25,4 @@ class TestBaseImporter:
     def test_load_data(self):
         importer = ExampleImporter()
         sensor_data, sampling_rate_hz = importer.load_sensor_data(EXAMPLE_DATA_PATH / "smartphone" / "acceleration.csv")
-        assert len(sensor_data["Acceleration"] == 1691)
+        assert len(sensor_data["Acceleration"]) == 1691
