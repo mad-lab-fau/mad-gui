@@ -3,31 +3,27 @@ import sys
 from pathlib import Path
 
 import pytest
-from PySide2.QtCore import Qt
+from PySide2.QtCore import Qt, QTimer
 from PySide2.QtWidgets import QApplication
 
 from mad_gui.models.global_data import PlotData
 from mad_gui.plugins.example import ExampleImporter
 from mad_gui.state_keeper import StateKeeper
 from mad_gui.windows.main import MainWindow
+from tests.test_windows.create_main_window import get_main_window
 
 
 class TestGui:
-    if not QApplication.instance():
-        app = QApplication(sys.argv)
-    else:
-        app = QApplication.instance()
-
     def test_open_gui(self, qtbot):
         """Test if it works to open and close the GUI"""
 
-        gui = MainWindow()
+        gui = get_main_window()
         qtbot.addWidget(gui)
         assert not gui.is_data_plotted()
         gui.close()
 
     def test_toggle_menu(self, qtbot):
-        gui = MainWindow()
+        gui = get_main_window()
         qtbot.addWidget(gui)
         assert not gui.ui_state.menu_collapsed
         qtbot.mouseClick(gui.ui.btn_toggle_menu, Qt.LeftButton)
@@ -41,43 +37,50 @@ class TestGui:
         [(True, True, True), (True, False, False)],
     )
     def test_load_data_from_pickle(self, qtbot, load_sensor, load_activities, load_strides):
-        gui = MainWindow()
+        gui = get_main_window()
         qtbot.addWidget(gui)
         example_pickle = (
             Path(__file__).parent.parent.parent / "example_data" / "smartphone" / "mad_gui" / "data.mad_gui"
         )
-        gui.data_types = {
-            "sensor": load_sensor,
-            "activities": load_activities,
-            "strides": load_strides,
-        }
+
+        def handle_dialog():
+            for box_name, indicator in [
+                ("sensor", load_sensor),
+                ("ActivityLabel", load_activities),
+                ("StrideLabel", load_strides),
+            ]:
+                gui.data_selector.boxes[box_name].setChecked(indicator)
+
+            gui.data_selector.ok_btn.buttons()[0].clicked.emit()
+
+        QTimer.singleShot(1500, handle_dialog)
 
         gui.load_data_from_pickle(str(example_pickle))
 
         # currently gui.plotted_data is empty, it is just in gui.global_data.plotted_data
         activities = {
-            "Acceleration": gui.global_data.plot_data["Acceleration"].activity_annotations,
+            "Acceleration": gui.global_data.plot_data["Acceleration"].annotations["ActivityLabel"],
         }
         strides = {
-            "Acceleration": gui.global_data.plot_data["Acceleration"].stride_annotations,
+            "Acceleration": gui.global_data.plot_data["Acceleration"].annotations["StrideLabel"],
         }
 
         if load_activities:
-            assert len(activities["Acceleration"]) == 1
+            assert len(activities["Acceleration"].data) == 1
         else:
-            assert len(activities["Acceleration"]) == 0
+            assert len(activities["Acceleration"].data) == 0
         if load_strides:
-            assert len(strides["Acceleration"]) == 1
+            assert len(strides["Acceleration"].data) == 1
             # assert strides["Acceleration"].iloc[0].start == 502
             # assert strides["Acceleration"].iloc[0].end == 560
             # _, sr = gui._get_sensor_data()
             # assert int(sr["Acceleration"]) == 50
         else:
-            assert len(strides["Acceleration"]) == 0
+            assert len(strides["Acceleration"].data) == 0
         gui.close()
 
     def test_toggle_label_state(self, qtbot):
-        gui = MainWindow()
+        gui = get_main_window()
         imu_file = Path(__file__).parent.parent.parent / "example_data" / "smartphone" / "acceleration.csv"
         video_file = Path(__file__).parent.parent.parent / "example_data" / "smartphone" / "video" / "video.mp4"
 
@@ -150,25 +153,3 @@ class TestGui:
     @staticmethod
     def save_sync():
         print("This would actually call a dialog in mad_gui.windows.main._save_sync.")
-
-    @pytest.mark.parametrize(
-        "load_sensor, load_activities, load_strides",
-        [(True, True, True), (True, True, False), (True, False, True)],
-    )
-    def test_get_annotations(self, load_sensor, load_activities, load_strides, qtbot):
-        gui = MainWindow()
-        qtbot.addWidget(gui)
-        example_pickle = (
-            Path(__file__).parent.parent.parent / "example_data" / "smartphone" / "mad_gui" / "data.mad_gui"
-        )
-
-        gui.data_types = {
-            "sensor": load_sensor,
-            "activities": load_activities,
-            "strides": load_strides,
-        }
-        gui.load_data_from_pickle(str(example_pickle))
-        stride_labels = gui.global_data.plot_data["Acceleration"].stride_annotations
-        assert (len(stride_labels) == 0) != load_strides
-        StateKeeper.set_has_unsaved_changes(False)
-        gui.close()
