@@ -7,9 +7,10 @@ isort:skip_file (Required import order: PySide2, pyqtgraph, mad_gui.*)
 """
 
 import os
+import warnings
 from pathlib import Path
 import pickle
-from typing import Dict
+from typing import Dict, List
 
 import pandas as pd
 import pyqtgraph as pg
@@ -30,7 +31,7 @@ from mad_gui.components.sidebar import Sidebar
 from mad_gui.config import Config, BaseSettings, BaseTheme
 from mad_gui.models.global_data import GlobalData, PlotData
 from mad_gui.models.ui_state import UiState, PlotState, MODES
-from mad_gui.plot_tools import SensorPlot
+from mad_gui.plot_tools import SensorPlot, BaseRegionLabel
 from mad_gui.plot_tools.video_plot import VideoPlot
 from mad_gui.plugins.base import BaseExporter, BaseImporter
 from mad_gui.plugins.helper import filter_plugins
@@ -55,7 +56,7 @@ class MainWindow(BaseClass):
     Furthermore, it serves as an interface to Input-Output files, which are different for each data source,
     see our `General Information` part of the docs, section `Adding support for other systems`."""
 
-    def __init__(self, parent=None, data_dir=None, settings=BaseSettings, theme=BaseTheme, plugins=None):
+    def __init__(self, parent=None, data_dir=None, settings=BaseSettings, theme=BaseTheme, plugins=None, labels=None):
         super().__init__()
 
         if plugins is None:
@@ -66,6 +67,7 @@ class MainWindow(BaseClass):
         self.global_data = GlobalData(parent=self)
         self.ui_state = UiState(parent=self)
         self.plot_state = PlotState(parent=self)
+        self.global_data.labels = labels
 
         self.parent = parent
 
@@ -81,6 +83,7 @@ class MainWindow(BaseClass):
 
         # Setting up additional windows
         self.VideoWindow = VideoWindow(parent=self)
+        self.data_selector = None
 
         # can only be done after adding the windows above
         self.label_buttons = {
@@ -194,8 +197,6 @@ class MainWindow(BaseClass):
             answer = QMessageBox.Yes
 
         if answer == QMessageBox.Yes:
-            # if the user selects 'yes' in the next step
-            DataSelector(parent=self).ask_user()
             file = self._ask_for_file_name()
             self.load_data_from_pickle(file)
 
@@ -224,23 +225,92 @@ class MainWindow(BaseClass):
         """
         if file.split(".")[-1] != "mad_gui":
             UserInformation.inform("Can only load files that end with '.mad_gui'.")
-            return
+            return None, None
         self.setCursor(Qt.BusyCursor)
         loaded_data = pd.read_pickle(file)
+
+        if isinstance(loaded_data, GlobalData):
+            print("new method.")
+
+        label_classes_to_load = []
+        for sensor_item in loaded_data.values():
+            sensor_item = self._make_keys_backwards_compatible(sensor_item)
+            # we assume that everything that has not the following words in it are labels
+            labels = [key for key in sensor_item.keys() if key not in ["sensor", "data", "sampling_rate_hz"]]
+            label_classes_to_load.extend(labels)
+
+        processable_label_classes = self._get_processable_label_classes(label_classes_to_load)
+        unknown_label_classes = []
+        for label_class in label_classes_to_load:
+            if not any([label.__name__ == label_class for label in processable_label_classes]):
+                unknown_label_classes.append(label_class)
+
+        if len(unknown_label_classes) > 0:
+            UserInformation.inform(
+                f"The saved data has labels which this GUI does not know.\n\n"
+                f"Unknown label class: {unknown_label_classes}\n"
+            )
+            warnings.warn("Implement link to help.")
+        loadable_labels = [label for label in processable_label_classes if label.__name__ in label_classes_to_load]
+
+        # Doing it in two lines, and exposing via self to enable testing this whole method
+        self.data_selector = DataSelector(parent=self, labels=set(loadable_labels))
+        self.data_selector.ask_user()
+
         if not self.data_types["sensor"] and not self.global_data.plot_data:
             UserInformation.inform(
                 "Can only plot labels if data is plotted. Please also tick 'Sensor data' or "
                 "load sensor data using the 'Load Data' button on the upper left."
             )
             self.setCursor(Qt.ArrowCursor)
-            return
+            return None, None
+
         selected_data = [data_type for data_type, use in self.data_types.items() if use]
-        plot_data = {k: PlotData().from_dict(v, selection=selected_data) for k, v in loaded_data.items()}
+
+        plot_data = {}
+        for plot_name, data in loaded_data.items():
+            plot_data[plot_name] = PlotData().from_dict(data, selections=selected_data)
+
         self.global_data.plot_data = plot_data
         self.global_data.base_dir = Path(file).parent
+
         self.setCursor(Qt.ArrowCursor)
         self._enable_buttons(True)
         self.menu.set_collapsed(True)
+
+        return loaded_data, processable_label_classes
+
+    @staticmethod
+    def _make_keys_backwards_compatible(sensor_item: Dict):
+        for t in [("stride_annotations", "StrideLabel"), ("activity_annotations", "ActivityLabel")]:
+            try:
+                sensor_item[t[1]] = sensor_item.pop(t[0])
+            except KeyError:
+                pass
+        return sensor_item
+
+    def _get_processable_label_classes(self, labels: List):
+        known_label_types = {label.__name__: label for label in self.global_data.labels}
+        known_label_types = self._label_classes_backwards_compatibility(labels, known_label_types)
+        return [v for k, v in known_label_types.items()]
+
+    def _label_classes_backwards_compatibility(self, labels, known_label_types: Dict):
+        class StrideLabel(BaseRegionLabel):
+            name = "Stride Label"
+            min_height = 0.25
+            max_height = 0.75
+
+        class ActivityLabel(BaseRegionLabel):
+            name = "Activity Label"
+            min_height = 0.75
+            max_height = 1
+
+        for label_class in [StrideLabel, ActivityLabel]:
+            if label_class.__name__ in labels:
+                known_label_types[label_class.__name__] = label_class
+                if label_class.__name__ not in [label.__name__ for label in self.global_data.labels]:
+                    self.global_data.labels = (*self.global_data.labels, label_class)
+        return known_label_types
 
     def import_data(self):
         """Start dialog to import data.
@@ -267,7 +337,10 @@ class MainWindow(BaseClass):
         self.global_data.data_file = data.get("data_file_name", "")
         self.global_data.sync_file = data.get("sync_file", "")
         self.global_data.video_file = data.get("video_file", "")
-        plot_data = {k: PlotData().from_dict(v) for k, v in data.get("data", {}).items()}
+        plot_data = {
+            k: PlotData().from_dict(v, selections=["sensor", *[item.__name__ for item in self.global_data.labels]])
+            for k, v in data.get("data", {}).items()
+        }
         self.global_data.plot_data = plot_data
         self.load_video(data.get("video_file", None))
         self._set_sync(data.get("sync_file", None))
@@ -316,6 +389,7 @@ class MainWindow(BaseClass):
                 plot_data=data,
                 initial_plot_channels=Config.settings.CHANNELS_TO_PLOT,
                 start_time=start_time,
+                label_classes=self.global_data.labels,
                 parent=self,
             )
             plot_wrapper.addWidget(plot)
@@ -401,7 +475,6 @@ class MainWindow(BaseClass):
             None, "Save GUI data", str(Path(self.global_data.data_file).parent) + "/data.mad_gui", "*.mad_gui"
         )[0]
         if save_file_name != "":
-            # TODO: ask user which format it should be saved (csv / pk)
             pickable_data = {k: v.to_dict() for k, v in data_to_save.items()}
             with open(save_file_name, "wb") as file:
                 pickle.dump(pickable_data, file, protocol=pickle.HIGHEST_PROTOCOL)

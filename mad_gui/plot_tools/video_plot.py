@@ -2,9 +2,11 @@
 class."""
 
 import numpy as np
+import pandas as pd
 
 from mad_gui.models.global_data import PlotData
 from mad_gui.models.ui_state import MODES
+from mad_gui.plot_tools.base_label import BaseRegionLabel
 from mad_gui.plot_tools.base_plot import BasePlot
 from mad_gui.plot_tools.sensor_plot import SensorPlotState
 from mad_gui.plot_tools.sensor_plot_mode_handler import BaseModeHandler, InvestigateModeHandler
@@ -25,10 +27,13 @@ class VideoPlot(BasePlot):
     }
 
     def __init__(self, parent=None, video_window=None):
-        super().__init__(parent=None)
-        self.plot_data = None
-        self.parent = parent
-        self.sampling_rate_hz = None
+
+        plot_data = PlotData()
+        # following two parts are necessary when initializing a plot
+        plot_data.data = pd.DataFrame(data=[], columns=["time"])
+        plot_data.annotations = dict()
+
+        super().__init__(label_classes=[BaseRegionLabel], parent=parent, plot_data=plot_data)
         StateKeeper.video_duration_available.connect(self.update_video_duration)
         self.state = SensorPlotState()
         self.mode_handler = InvestigateModeHandler(self)

@@ -2,43 +2,163 @@ import numpy as np
 import pyqtgraph as pg
 from PySide2.QtGui import QColor, QHoverEvent, Qt
 
+from mad_gui.components.dialogs.label_annotation_dialog import NestedLabelSelectDialog
 from mad_gui.config import Config
+from mad_gui.state_keeper import StateKeeper
+from typing import Optional
 
 
-class BaseLabel(pg.LinearRegionItem):
-    """Used to manually synchronize different data streams by the user.
+class InvalidStartEnd(Exception):
+    pass
+
+
+class NoLabelSelected(Exception):
+    pass
+
+
+class BaseRegionLabel(pg.LinearRegionItem):
+    """A label with a start and end plotted in the upper part of the graph.
 
     Parameters
     ----------
+    label_id
+        An id for the label. Usually we just give it an increasing number.
+    label_type
+        Filled, when :meth:`~RegionLabel.edit_activity_type` triggers
+        :meth:`mad_gui._StateKeeper.need_label_description`.
+    label_details
+        Similar like label_type. Additionally it is configurable for which label types details should be obtained and
+        what the possible options for details are. For more information on this see docs/consts_example.
     start
-        Start time of the label in samples
+        Start time of the label in samples.
     end
-        End time of the label in samples
+        End time of the label in samples.
     parent
         A :class:`mad_gui.plot_tools.BasePlot` object.
 
     """
+
+    min_height = 0
+    max_height = 1
+    color = [100, 100, 100, 50]
+    name = "Label"
 
     def __init__(
         self,
         start: int,
         end: int,
         parent,
+        identifier: int = None,
+        description: Optional[str] = None,
+        details: Optional[str] = None,
+        **_kwargs,  # underscore to prevent pylint form triggering
     ):
         pg.LinearRegionItem.__init__(self)
         self.parent = parent
-        self.min_height = 0
-        self.max_height = 1
         self.setMovable(False)
         self._set_border_colors(start, end)
         self._set_border_positions(start, end)
         self.configure_children()
+        self.standard_brush = pg.mkBrush(QColor(*self.color))
         self.sigRegionChangeFinished.connect(self._region_changed)
         self._set_movable(True)
+        if start == end:
+            return
+        self.id = identifier
+        self.description = description
+        self.details = details
+        # TODO: put the next few lines into a function like `set_start_colors`, which can be overwritten by
+        #  StrideLabels. Reason: StrideLabels should be initialized with blue borders, but activities should be
+        #  initialized with red borders.
+        self.configure_children()
+        self.span = (self.min_height, self.max_height)
+
+        # The stride itself as a whole should not be movable, just the single lines (children = InfiniteLines)
+        self.setAcceptHoverEvents(True)
+
+        self.setBrush(self.standard_brush)
+        self.mouseClickEvent = self._left_mouse_click_event
+        self.removable = False
+        self.editable = False
+        self._set_movable(False)
+        self.hoverEvent = self._hover_event
+        if self.description:
+            self.setToolTip(", ".join(self.description))
+
+    def _left_mouse_click_event(self, ev):
+        if self.removable and ev.button() == Qt.LeftButton:
+            # TODO: create a signal "i want to be deleted" and let the parent delete it
+            self.parent.removeItem(self)
+            StateKeeper.set_has_unsaved_changes(True)
+        elif self.editable and ev.button() == Qt.LeftButton:
+            self.edit_activity_type()
+
+    def _hover_event(self, ev):
+        """Coloring if mouse hovers of the stride"""
+        # first of all, make sure the current stride is in the foreground, s.t. when mouse click event happens to
+        # change the range, the mouse click event captures this stride's borders and not the neighbouring stride which
+        # might have been plotted after this one originally and therefore might have been in the foreground
+        self.parent.removeItem(self)
+        self.parent.addItem(self)
+
+        if self.removable:
+            hover_color = QColor(255, 0, 0, 50)
+        else:
+            hover_color = QColor(0, 255, 0, 50)
+        self.setHoverBrush(hover_color)
+        if self.removable or self.editable:
+            if ev.enter:
+                self.setMouseHover(True)
+            if ev.exit:
+                self.setMouseHover(False)
+                self.setHoverBrush(self.standard_brush)
+        # TODO: this is not properly handled when calling self.edit_activity_type --> fix it
+        self.setToolTip(f"{self.description}")
+
+    def edit_activity_type(self):
+        """Setting the type of the activity to one given in the consts file.
+
+        Called by :meth:`mad_gui.plot_tools.SensorPlot._finish_adding_activity` or if the user clicks on the label while
+        being in edit mode. The emitted signal is caught by :meth:`mad_gui.MainWindow.ask_for_label_type`. In case
+        the configuration file is configured in a way, that also details should be obtained for specific activity types,
+        this will be triggered after obtaining the label type.
+
+        For further information on the configuration file, see `Developer Guidelines
+        <https://madlab.mad-pages.informatik.uni-erlangen.de/GaitAnalysis/labeling_tool/developer_guidelines.html#
+        adding-support-for-other-systems>`_
+
+        """
+        new_description = NestedLabelSelectDialog(parent=self.parent.parent).get_label(Config.settings.ACTIVITIES)
+        if not new_description:
+            raise NoLabelSelected("Invalid description selected for label")
+        self.description = new_description
+
+    def _set_removable(self, removable: bool):
+        self.removable = removable
+        if not removable:
+            self.setBrush(self.standard_brush)
+
+    def _set_editable(self, editable: bool):
+        self.editable = editable
 
     def _set_movable(self, movable: bool):
         for i_child in self.childItems():
             i_child.setMovable(movable)
+
+    def make_editable(self):
+        self._set_removable(False)
+        self._set_editable(True)
+        self._set_movable(True)
+
+    def make_removable(self):
+        self._set_removable(True)
+        self._set_editable(False)
+        self._set_movable(False)
+
+    def make_readonly(self):
+        self._set_removable(False)
+        self._set_editable(False)
+        self._set_movable(False)
 
     def _set_border_positions(self, start, end):
         sampling_rate_hz = self.parent.plot_data.sampling_rate_hz
@@ -122,6 +242,8 @@ class BaseLabel(pg.LinearRegionItem):
                 # This gait event was 'None' before and therefore marked red. Apparently the user shifted it,
                 # so we think it is now at the correct position
                 i_child.pen.setColor(Config.theme.FAU_COLORS["dark_blue"])
+        # TODO: change brush
+        StateKeeper.set_has_unsaved_changes(True)
 
     def _hover_border_event(self, event: QHoverEvent):
         """Actions when hovering over the child item of type `pyqtgraph.InfiniteLine`"""

@@ -12,7 +12,9 @@ from mad_gui.config import Config
 from mad_gui.models.global_data import PlotData
 from mad_gui.models.ui_state import MODES
 from mad_gui.plot_tools.base_plot import BasePlot
-from mad_gui.plot_tools.labels import ActivityLabel, SegmentedStrideLabel, StrideLabel, stride_label_config
+from mad_gui.plot_tools.labels import BaseRegionLabel
+
+# from mad_gui.plot_tools.labels import SegmentedStrideLabel, StrideLabel, stride_label_config
 from mad_gui.plot_tools.sensor_plot_mode_handler import (
     AddModeHandler,
     BaseModeHandler,
@@ -82,12 +84,12 @@ class SensorPlot(BasePlot):
         plot_data: PlotData,
         initial_plot_channels=Optional[List[str]],
         start_time=Optional[datetime.datetime],
+        label_classes=List[BaseRegionLabel],
         parent: Optional[QWidget] = None,
     ):
-        super().__init__(parent=parent)
-        self.parent = parent
-        self.plot_data = plot_data
-        self.initial_plot_channels = initial_plot_channels
+        super().__init__(
+            plot_data=plot_data, initial_plot_channels=initial_plot_channels, label_classes=label_classes, parent=parent
+        )
         self.start_time = start_time
         self.is_main_plot = False
 
@@ -115,8 +117,6 @@ class SensorPlot(BasePlot):
             "plot_channels",
             initial_set=False,
         )
-        self.plot_data.bind(self._set_stride_labels, "stride_annotations", initial_set=True)
-        self.plot_data.bind(self._set_activity_labels, "activity_annotations", initial_set=True)
 
         self.mode_handler = InvestigateModeHandler(self)
         self.state.bind(self._change_mode, "mode", initial_set=True)
@@ -241,62 +241,6 @@ class SensorPlot(BasePlot):
         # make it responsive even for zoomed-in large datasets
         self.getPlotItem().setClipToView(True)
 
-    @Slot(pd.DataFrame)
-    def _set_stride_labels(self, df: pd.DataFrame):
-        """Uses the passed :class:`~pandas.DataFrame` to create stride labels from it and plots them. The type of
-        stride labels being plotted depends on the STRIDE_LABEL_CLASS that is defined in your :ref:`constants-file
-        <stride label>`.
-        Before plotting the passed stride labels, the previously plotted stride labels are deleted (if any).
-
-        Parameters
-        ----------
-        df
-            with df.columns = ["start", "end", "type", "details"]
-
-        See Also
-        --------
-        :func:`~mad_gui.plot_tools.SensorPlot.set_activity_labels`
-        :func:`~mad_gui.plot_tools.SensorPlot._get_labels_from_plot`"""
-        stride_class = stride_label_config[Config.settings.STRIDE_LABEL_CLASS]
-        if df.equals(self._get_labels_from_plot(stride_class)):
-            return
-        self._clear_strides()
-        self._set_labels(df, stride_class)
-
-    def _set_activity_labels(self, df: pd.DataFrame):
-        if df.equals(self._get_labels_from_plot(ActivityLabel)):
-            return
-        self._clear_activities()
-        self._set_labels(df, ActivityLabel)
-
-    def _set_labels(self, df: pd.DataFrame, label_class: Type[ActivityLabel]):
-        if df is None:
-            return
-        for _, activity in df.iterrows():
-            events = [
-                column for column in df.columns if column not in ["identifier", "start", "end", "type", "details"]
-            ]
-
-            # make sure there are no np.nans in any string field
-            mask = activity.index.isin(["start", "end", "tc"])
-            activity[~mask] = activity[~mask].fillna("")
-
-            # make sure all required fields are available
-            for parameter in ["identifier", "description", "details"]:
-                if parameter not in activity.index:
-                    activity = activity.append(pd.Series(data=[None], index=[parameter]))
-
-            new_activity = label_class(
-                identifier=activity.identifier,
-                description=activity.description,
-                details=activity.details,
-                start=activity.start,
-                end=activity.end,
-                events=activity[events],
-                parent=self,
-            )
-            self.addItem(new_activity)
-
     def _change_mode(self, new_mode: MODES):
         """Adapt tool tip text depending on mode and remove potentially plotted green line indicating a new event.
 
@@ -313,6 +257,10 @@ class SensorPlot(BasePlot):
         # On mode change, we sync the annotation state:
         self._sync_annotations()
 
+    def _sync_annotations(self):
+        for label_class in self.label_classes:
+            self.plot_data.annotations[label_class.__name__].data = self._get_labels_from_plot(label_class)
+
     def _set_tooltip(self, mode: MODES):
         tips = {
             "add": "Click to set position of start / event / end",
@@ -325,22 +273,12 @@ class SensorPlot(BasePlot):
         }
         self.setToolTip(tips[mode])
 
-    def _sync_annotations(self):
-        self.plot_data.stride_annotations = self._get_labels_from_plot(
-            stride_label_config[Config.settings.STRIDE_LABEL_CLASS]
-        )
-        self.plot_data.activity_annotations = self._get_labels_from_plot(ActivityLabel)
-
-    def _clear_activities(self):
+    def clear_labels(self, label_class):
+        print("clearing")
         for item in self.items():
-            if type(item) == ActivityLabel:  # pylint: disable=unidiomatic-typecheck
+            if type(item) == label_class:  # pylint: disable=unidiomatic-typecheck
                 # we need this kind of typecheck sinc stride labels inherit from activitiy labels and thus would also
                 # be selected if using `isinstance(...)`
-                self.delete_item(item)
-
-    def _clear_strides(self):
-        for item in self.items():
-            if type(item) in (StrideLabel, SegmentedStrideLabel):
                 self.delete_item(item)
 
     def _clear_data(self):
@@ -352,29 +290,6 @@ class SensorPlot(BasePlot):
         self.removeItem(item)
         item.deleteLater()
         del item
-
-    def inside_stride_label_range(self, local_pos):
-        y_min = self.viewRange()[1][0]
-        y_max = self.viewRange()[1][1]
-        label_height = y_max - y_min
-        label_min = y_min + label_height * Config.settings.MIN_HEIGHT_STRIDE_LABELS
-        label_max = y_min + label_height * Config.settings.MAX_HEIGHT_STRIDE_LABELS
-        if label_min < local_pos.y() < label_max:
-            return True
-        return False
-
-    def inside_activity_label_range(self, local_pos):
-        y_min = self.viewRange()[1][0]
-        y_max = self.viewRange()[1][1]
-        label_height = y_max - y_min
-        label_min = y_min + label_height * Config.settings.MAX_HEIGHT_STRIDE_LABELS
-        label_max = y_max
-        if label_min < local_pos.y() < label_max:
-            return True
-        return False
-
-    def inside_label_range(self, local_pos):
-        return self.inside_activity_label_range(local_pos) or self.inside_stride_label_range(local_pos)
 
     def keyPressEvent(self, ev):  # noqa
         # Camelcase method overwrites qt method
@@ -422,27 +337,27 @@ class SensorPlot(BasePlot):
         # TODO: find the proper stride number and renumber strides in stride_list
         return 0
 
-    def _iter_labels_from_plot(self, label_type: Type[ActivityLabel]):
+    def _iter_labels_from_plot(self, label_type: Type[BaseRegionLabel]):
         """Finds all instances of label_type in the plot and returns them."""
         for i_item in self.items():
             if type(i_item) is label_type:  # noqa
-                # I need to use type, because StrideLabel inherits ActivityLabel and thus I can not differentiate
+                # I need to use type, because StrideLabel inherits RegionLabel and thus I can not differentiate
                 # them using `isinstance`
                 yield i_item
 
-    def _get_labels_from_plot(self, label_type: Type[ActivityLabel]) -> pd.DataFrame:
+    def _get_labels_from_plot(self, label_type: Type[BaseRegionLabel]) -> pd.DataFrame:
         """Finds all labels of type label_type and formats them into a pandas.DataFrame
 
         Parameters
         ----------
         label_type
-            Some class, either ActivityLabel or a class, which inherits from it.
+            Some class, either RegionLabel or a class, which inherits from it.
 
         Returns
         -------
         labels
             A pandas.DataFrame with the columns label_id, start, end, type and details (see
-            :class:`~mad_gui.plot_tools.ActivityLabel`).
+            :class:`~mad_gui.plot_tools.RegionLabel`).
             In case of `label_type` being :class:`~mad_gui.plot_tools.StrideLabel`, there is an additional column `tc` (
             terminal contact).
 
@@ -453,10 +368,10 @@ class SensorPlot(BasePlot):
         GUI's :class:`mad_gui.models.global_data.GlobalData`.
         """
         labels = self._iter_labels_from_plot(label_type)
-        columns = ["identifier", "start", "end", "activity", "details"]
+        # columns = ["identifier", "start", "end", "activity", "details"]
         # TODO: Take care, that we really pass an instance of label_type or use another method!
-        if issubclass(label_type, StrideLabel):
-            columns.extend("tc")
+        # if issubclass(label_type, StrideLabel):
+        #    columns.extend("tc")
         label_dicts = []
         for label in labels:
             start, end = label.getRegion()
@@ -467,8 +382,8 @@ class SensorPlot(BasePlot):
                 "description": label.description,
                 "details": label.details,
             }
-            if issubclass(label_type, StrideLabel):
-                data_dict.update({"tc": [int(label.lines[2].pos()[0] * self.sampling_rate_hz)]})
+            # if issubclass(label_type, StrideLabel):
+            #    data_dict.update({"tc": [int(label.lines[2].pos()[0] * self.sampling_rate_hz)]})
             label_dicts.append(data_dict)
         df = pd.DataFrame.from_records(label_dicts)
         if df.empty:

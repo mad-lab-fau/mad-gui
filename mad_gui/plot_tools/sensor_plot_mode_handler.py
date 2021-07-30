@@ -5,15 +5,9 @@ from PySide2.QtCore import Qt
 
 from mad_gui.components.dialogs.user_information import UserInformation
 from mad_gui.config import Config
+from mad_gui.plot_tools.base_label import BaseRegionLabel, InvalidStartEnd, NoLabelSelected
 from mad_gui.plot_tools.base_mode_handler import BaseModeHandler
-from mad_gui.plot_tools.labels import (
-    ActivityLabel,
-    InvalidStartEnd,
-    NoLabelSelected,
-    PartialLabel,
-    SegmentedStrideLabel,
-    stride_label_config,
-)
+from mad_gui.plot_tools.labels import PartialLabel
 from typing import Optional, Type
 
 
@@ -70,11 +64,8 @@ class AddModeHandler(BaseModeHandler):
     def _add_label_at_mouse_pos(self, pos):
         plot = self.plot
         # is called when in "Add Label" Mode and user clicks mouse
-        if plot.inside_stride_label_range(pos):
-            label_class = stride_label_config[Config.settings.STRIDE_LABEL_CLASS]
-        elif plot.inside_activity_label_range(pos):
-            label_class = ActivityLabel
-        else:
+        label_class = plot.inside_label_range(pos)
+        if not label_class:
             return
         if self._partial_label is not None and self._partial_label.label_class is label_class:
             self._finalize_new_label()
@@ -85,13 +76,10 @@ class AddModeHandler(BaseModeHandler):
         self._clear_partial_label()
         self._start_new_label(pos, label_class)
 
-    def _start_new_label(self, pos, label_class: Type[ActivityLabel]):
+    def _start_new_label(self, pos, label_class: Type[BaseRegionLabel]):
         plot = self.plot
-        if (
-            label_class is SegmentedStrideLabel
-            and getattr(Config.settings, "STRIDE_SNAP_TO_MIN", False)
-            and Config.settings.STRIDE_SNAP_TO_MIN
-        ):
+        label_class = self.plot.inside_label_range(pos)
+        if getattr(label_class, "snap_to_min", False):
             post_process = plot.snap_to_min
         else:
             post_process = plot.snap_to_sample
@@ -137,17 +125,15 @@ class AddModeHandler(BaseModeHandler):
         snapped_pos = self.plot.snap_to_sample(pos.x())
         if self._potential_start:
             self.plot.removeItem(self._potential_start)
-        self._potential_start = InfiniteLine(snapped_pos, pen=mkPen(0, 255, 0, 150, width=2))
-        if self.plot.inside_stride_label_range(pos):
+
+        label_class = self.plot.inside_label_range(pos)
+        if label_class:
+            self._potential_start = InfiniteLine(snapped_pos, pen=mkPen(0, 255, 0, 150, width=2))
             self._potential_start.span = (
-                Config.settings.MIN_HEIGHT_STRIDE_LABELS,
-                Config.settings.MAX_HEIGHT_STRIDE_LABELS,
+                label_class.min_height,
+                label_class.max_height,
             )
-        elif self.plot.inside_activity_label_range(pos):
-            self._potential_start.span = (Config.settings.MAX_HEIGHT_STRIDE_LABELS, 1)
-        else:
-            return
-        self.plot.addItem(self._potential_start)
+            self.plot.addItem(self._potential_start)
 
     def _clear_partial_label(self):
         if self._partial_label is not None:
@@ -170,12 +156,12 @@ class EditModeHandler(BaseModeHandler):
         super().__init__(sensor_plot)
 
         for item in self.plot.items():
-            if isinstance(item, ActivityLabel):
+            if isinstance(item, BaseRegionLabel):
                 item.make_editable()
 
     def deactivate(self):
         for item in self.plot.items():
-            if isinstance(item, ActivityLabel):
+            if isinstance(item, BaseRegionLabel):
                 item.make_readonly()
 
 
@@ -184,12 +170,12 @@ class RemoveModeHandler(BaseModeHandler):
         super().__init__(sensor_plot)
 
         for item in self.plot.items():
-            if isinstance(item, ActivityLabel):
+            if isinstance(item, BaseRegionLabel):
                 item.make_removable()
 
     def deactivate(self):
         for item in self.plot.items():
-            if isinstance(item, ActivityLabel):
+            if isinstance(item, BaseRegionLabel):
                 item.make_readonly()
 
 
@@ -207,5 +193,12 @@ class SyncModeHandler(BaseModeHandler):
             #  automatically
             pass
 
+        for item in self.plot.items():
+            if isinstance(item, BaseRegionLabel):
+                item.make_editable()
+
     def deactivate(self):
         self.plot.finish_syncing()
+        for item in self.plot.items():
+            if isinstance(item, BaseRegionLabel):
+                item.make_readonly()
