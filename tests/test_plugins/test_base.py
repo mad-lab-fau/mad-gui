@@ -9,7 +9,6 @@ EXAMPLE_DATA_PATH = Path(__file__).parent.parent.parent / "example_data"
 
 
 class TestBaseImporter:
-
     def test_instantiation(self):
         ExampleImporter()
 
