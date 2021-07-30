@@ -1,0 +1,17 @@
+<RCC>
+  <qresource prefix="btn">
+    <file>images/camera_light.png</file>
+    <file>images/reload.png</file>
+    <file>images/camera.png</file>
+    <file>images/open.png</file>
+    <file>images/burger.png</file>
+    <file>images/logo_mad_man.png</file>
+    <file>images/save.png</file>
+    <file>images/export.png</file>
+    <file>images/close.png</file>
+    <file>images/algorithm.png</file>
+    <file>images/maximize.png</file>
+    <file>images/minimize.png</file>
+    <file>images/label.png</file>
+  </qresource>
+</RCC>
