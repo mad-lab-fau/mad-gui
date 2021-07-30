@@ -118,22 +118,22 @@ class TestGui:
         assert gui.ui.btn_remove_label.isChecked()
         gui._save_sync = self.save_sync
 
-        self.video_duration_checked = False
-        if not os.environ.get("GITHUB_CI"):
-            # video playing does not work on remote and thus also plot syncing
-            StateKeeper.video_duration_available.connect(lambda duration: self.check_plot_length(gui, duration))
-            qtbot.keyClick(gui, Qt.Key_S)
-            qtbot.wait(2500)
-            assert gui.plot_state.mode == "sync"
-            assert not gui.ui.btn_add_label.isChecked()
-            assert not gui.ui.btn_edit_label.isChecked()
-            assert not gui.ui.btn_remove_label.isChecked()
-            assert gui.ui.btn_sync_data.isChecked()
-            assert gui.sensor_plots["Acceleration"].sync_item
-            # TODO: really check video duration
-            self.video_duration_checked = True
-        else:
-            self.video_duration_checked = True
+        #self.video_duration_checked = False
+        #if not os.environ.get("GITHUB_CI"):
+        #    # video playing does not work on remote and thus also plot syncing
+        StateKeeper.video_duration_available.connect(lambda duration: self.check_plot_length(gui, duration))
+        qtbot.keyClick(gui, Qt.Key_S)
+        qtbot.wait(2500)
+        assert gui.plot_state.mode == "sync"
+        assert not gui.ui.btn_add_label.isChecked()
+        assert not gui.ui.btn_edit_label.isChecked()
+        assert not gui.ui.btn_remove_label.isChecked()
+        assert gui.ui.btn_sync_data.isChecked()
+        assert gui.sensor_plots["Acceleration"].sync_item
+        # TODO: really check video duration
+        self.video_duration_checked = True
+        #else:
+        #    self.video_duration_checked = True
 
         qtbot.keyClick(gui, Qt.Key_Escape)
         qtbot.wait(2500)
