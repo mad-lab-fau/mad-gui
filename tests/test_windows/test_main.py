@@ -119,7 +119,7 @@ class TestGui:
         gui._save_sync = self.save_sync
 
         self.video_duration_checked = False
-        if not os.environ.get("MAD_GUI_CI"):
+        if not os.environ.get("GITHUB_CI"):
             # video playing does not work on remote and thus also plot syncing
             StateKeeper.video_duration_available.connect(lambda duration: self.check_plot_length(gui, duration))
             qtbot.keyClick(gui, Qt.Key_S)
