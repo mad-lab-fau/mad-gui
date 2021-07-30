@@ -44,6 +44,7 @@ jobs:
         poetry install
     - name: Testing
       run: |
+        python test.py
         poetry run doit test
     - name: Linting
       run: |
