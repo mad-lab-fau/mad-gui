@@ -28,7 +28,7 @@ jobs:
         export QT_QPA_PLATFORM="offscreen"
         export PYTEST_DEBUG="TRUE"
         sudo apt-get install -y build-essential libgl1-mesa-dev
-        sudo apt-get install -y libexcb-xinerama0
+        sudo apt-get install -y libxcb-xinerama0
         sudo apt-get install -y libpulse-dev
         sudo apt-get install -y tk
         sudo apt-get install -y libqt5gstreamer-dev
