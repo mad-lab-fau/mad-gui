@@ -45,7 +45,7 @@ jobs:
         sudo apt-get -y install libpulse-mainloop-glib0        
         pip install poetry
         poetry config virtualenvs.in-project true
-        poetry install
+
         pip install .
         pip list
         python test.py
