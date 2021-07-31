@@ -118,8 +118,8 @@ class TestGui:
         assert gui.ui.btn_remove_label.isChecked()
         gui._save_sync = self.save_sync
 
-        #self.video_duration_checked = False
-        #if not os.environ.get("GITHUB_CI"):
+        # self.video_duration_checked = False
+        # if not os.environ.get("GITHUB_CI"):
         #    # video playing does not work on remote and thus also plot syncing
         StateKeeper.video_duration_available.connect(lambda duration: self.check_plot_length(gui, duration))
         qtbot.keyClick(gui, Qt.Key_S)
@@ -132,7 +132,7 @@ class TestGui:
         assert gui.sensor_plots["Acceleration"].sync_item
         # TODO: really check video duration
         self.video_duration_checked = True
-        #else:
+        # else:
         #    self.video_duration_checked = True
 
         qtbot.keyClick(gui, Qt.Key_Escape)
