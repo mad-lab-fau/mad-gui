@@ -22,9 +22,7 @@ jobs:
         python-version: ${{ matrix.python-version }}
     - name: Install dependencies
       run: |
-       sudo apt-get update
-    - name: Testing
-      run: |
+        sudo apt-get update
         python -m pip install --upgrade pip
         sudo apt-get update
         sudo apt-get autoclean
@@ -59,6 +57,8 @@ jobs:
         poetry config virtualenvs.in-project true
         poetry update --lock
         poetry install
+    - name: Testing
+      run: |
         poetry run doit test
     - name: Linting
       run: |
