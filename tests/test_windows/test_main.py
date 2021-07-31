@@ -77,6 +77,7 @@ class TestGui:
             # assert int(sr["Acceleration"]) == 50
         else:
             assert len(strides["Acceleration"].data) == 0
+        qtbot.wait(1500)
         gui.close()
 
     def test_toggle_label_state(self, qtbot):

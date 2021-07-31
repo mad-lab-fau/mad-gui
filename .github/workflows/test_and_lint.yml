@@ -23,16 +23,14 @@ jobs:
     - name: Install dependencies
       run: |
         sudo apt-get update
-    - name: Testing
-      run: |
-        sudo apt-get update
         python -m pip install --upgrade pip
-        sudo apt-get update
+        pip install poetry
+        poetry config virtualenvs.in-project true
+    - name: Configure CI
+      run: |
         sudo apt-get autoclean
         sudo apt-get install -y --no-install-recommends qtbase5-dev-tools xvfb libegl1-mesa x11-xserver-utils libxkbcommon-x11-0 x11-utils
-        sudo apt-get clean
-        python -m pip install --no-cache-dir --upgrade pip
-        pip install --no-cache-dir anybadge devpi-client PySide2 pytest-xvfb Qt.py xvfbwrapper
+        sudo apt-get clean        
         sudo apt-get purge -y build-essential 
         sudo apt-get purge -y cmake
         export DISPLAY=:99
@@ -53,13 +51,13 @@ jobs:
         sudo apt-get install -y libqt5multimedia5-plugins
         sudo apt-get install -y libgstreamer1.0-0 gstreamer1.0-plugins-base gstreamer1.0-plugins-good gstreamer1.0-plugins-bad gstreamer1.0-plugins-ugly gstreamer1.0-libav gstreamer1.0-doc gstreamer1.0-tools gstreamer1.0-x gstreamer1.0-alsa gstreamer1.0-pulseaudio
         sudo apt-get -y install git
-        sudo pip install pip --upgrade
-        sudo pip install git+https://github.com/PyCQA/astroid.git@astroid-2.5.1
-        sudo apt-get -y install libpulse-mainloop-glib0        
-        pip install poetry
-        poetry config virtualenvs.in-project true
+        sudo apt-get -y install libpulse-mainloop-glib0
+        poetry add anybadge devpi-client PySide2 pytest-xvfb Qt.py xvfbwrapper
         poetry update --lock
         poetry install
+        sudo pip install git+https://github.com/PyCQA/astroid.git@astroid-2.5.1    
+    - name: Testing
+      run: | 
         poetry run doit test
     - name: Linting
       run: |
