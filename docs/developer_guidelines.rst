@@ -4,6 +4,9 @@
 Developer Guidelines
 ********************
 
+In the first four sections we give some information about the project setup.
+If you are familiar with PyCharm and python virtual environments, you may directly jump to :ref:`Adapting the GUI <adapting the gui>`.
+
 1 Installing necessary software
 *******************************
 Necessary software to be installed in advance:
@@ -137,6 +140,7 @@ In your opened project, do the following steps:
 
       5.2 Unix: `home/<user>/anaconda3/envs/mad_gui/python`
 
+.. _adapting the gui:
 
 5 Adapting the GUI
 ******************
@@ -145,8 +149,8 @@ These can then for example take care for loading data of a specific format.
 Furthermore, you have the possibility to inject algorithms this way.
 If you want to do that, you will need our :ref:`API Reference <api reference>`.
 
-In case you experience anything that you wish the GUI should handle differently you want to change something,
-which as not achievable via the plugins, you will need our :ref:`Contribution Guidelines <contribution guidelines>`.
+In case you there is something that you want to change in the GUI, which is not possible using plugins,
+you will need our :ref:`Contribution Guidelines <contribution guidelines>`.
 
 
 
