@@ -215,6 +215,7 @@ class MainWindow(BaseClass):
 
     def load_data_from_pickle(self, file: str):
         """Load data from a .mad_gui file.
+
         Parameters
         ----------
         file
