@@ -1,10 +1,10 @@
 # MaD GUI 
-***M***achine Learning 
-***a***nd 
-***D***ata Analytics 
-***G***raphical 
-***U***ser 
-***I***nterface
+**M**achine Learning 
+**a**nd 
+**D**ata Analytics 
+**G**raphical 
+**U**ser 
+**I**nterface
 
 ![Test and Lint](https://github.com/mad-lab-fau/mad-gui/workflows/Test%20and%20Lint/badge.svg)
 [![Documentation Status](https://readthedocs.org/projects/mad-gui/badge/?version=latest)](https://mad-gui.readthedocs.io/en/latest/?badge=latest)
