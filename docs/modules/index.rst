@@ -11,5 +11,4 @@ This is the API Reference for MaD GUI sorted by modules.
 
     Windows <windows>
     Plot Tools <plot_tools>
-    Singletons <mad_gui>
     Plugins <plugins>

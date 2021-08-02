@@ -21,7 +21,7 @@ If you are familiar with git, simply clone the repository.
 If not, go to the start page of the repository, click the download button and then chose `zip` as shown in this image.
 Afterwards, extract the contents from the zip file.
 
-.. image:: images/downloading.png
+.. image:: res/images/downloading.png
     :width: 200
     :alt: Downloading the package
 
@@ -37,7 +37,7 @@ Then create a virtual environment in there by using the following commands:
 
 If the environment is activated you can see `(mad_gui)` in the commandline before your next input.
 
-.. image:: images/conda_activated.png
+.. image:: res/images/conda_activated.png
     :width: 400
     :alt: Environment "mad_gui" activated in command prompt
 
@@ -146,7 +146,7 @@ Open the downloaded repository as a PyCharm project and go on with the next sect
 1.4.4 Adding script for execution
 *********************************
 
-.. image:: images/pycharm_01_add_config.png
+.. image:: res/images/pycharm_01_add_config.png
     :width: 200
     :alt: Configure PyCharm
     :class: float-right

@@ -16,10 +16,3 @@ Classes
 
     MainWindow
     VideoWindow
-    BaseLabelWindow
-    LabelTypeWindow
-    LabelDetailWindow
-    BasePluginSelector
-    LoadDataWindow
-    ExportResultsWindow
-    UserInformation
