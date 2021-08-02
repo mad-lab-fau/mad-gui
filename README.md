@@ -15,23 +15,23 @@ The MaD GUI is a framework for processing time series data.
 Its use-cases include visualization, annotation (manual or automated), and algorithmic processing of visualized data and annotations.
 
 ## How do I get the GUI to work on my machine?
-Below, we provide two ways of obtaining and running the GUI.
+Below, we present two options how to obtain and run the GUI.
 However, this will only enable you to look at our example data.
 You want to load data of a specific format/system or want to use a specific algorithm? 
 In this case please refer to ["Can I use it with data of my specific system or a specific algorithm?"](#can-i-use-it-with-data-of-my-specific-system-or-a-specific-algorithm).
 
-### Standalone executable
+### Option A: Standalone executable
 The GUI can be packed into stand-alone executables, such that is not necessary for you to install anything on your machine.
 
 - Windows users: download our exemplary executable here [Coming soon]
 - Other operating systems: [Contact us](mailto:mad-digait@fau.de).
 
-### Using the python package
+### Option B: Using the python package
 ```
-pip install git+https://github.com/mad-lab-fau/mad-gui.git
+pip install mad_gui
 ```
 
-From your command line either simply start the GUI or pass additional arguments:
+Then, from your command line either simply start the GUI or pass additional arguments:
 ```
 python -m mad_gui.start_gui
 python -m mad_gui.starg_gui --base_dir C:/my_data
