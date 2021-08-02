@@ -1,0 +1,7 @@
+pandas>=1.2.4
+pyqtgraph>=0.11.0
+PySide2>=5.15.1
+recommonmark>=0.7.1
+numpydoc>=1.1.0
+pydata-sphinx-theme>=0.6.2
+sphinx-markdown-tables>=0.0.15
