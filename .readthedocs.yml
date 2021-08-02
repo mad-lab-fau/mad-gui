@@ -16,7 +16,8 @@ python:
     - requirements: docs/requirements.txt
     - method: pip
       path: .
-      
+
+# We need this to be able to import PySide2.QtMultimedia
 build:
   apt_packages:
     - libpulse-mainloop-glib0
