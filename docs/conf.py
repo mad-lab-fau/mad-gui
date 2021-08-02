@@ -14,8 +14,6 @@ from pathlib import Path
 
 
 sys.path.insert(0, os.path.abspath(".."))
-# make sure it finds window_buttons_rc
-sys.path.append(str(Path(__file__).parent.parent / "mad_gui" / "qt_designer"))
 
 import mad_gui
 from importlib import import_module
