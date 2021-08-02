@@ -152,8 +152,6 @@ If you want to do that, you will need our :ref:`API Reference <api reference>`.
 In case you there is something that you want to change in the GUI, which is not possible using plugins,
 you will need our :ref:`Contribution Guidelines <contribution guidelines>`.
 
-
-
 6 Creating an executable
 ************************
 
