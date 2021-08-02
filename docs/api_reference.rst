@@ -10,8 +10,10 @@ Here we describe how you can:
 - implement an algorithm from another python package
 
 This boils down to creating your own plugins and injecting them into the GUI.
-In case you want to change something closer at the core of the GUI, you might need to take a look at our
+You can find all the necessary information and relevant links for that on this page.
+However, in case you want to change something closer at the core of the GUI, you might need to take a look at our
 :ref:`Contribution guidelines <contribution guidelines>`.
+
 Before we start implementing our plugin, we explain in the first section how to set up PyCharm.
 
 .. _configuring pycharm script:

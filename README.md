@@ -54,9 +54,12 @@ start_gui(<data_path>)
 
 ## Can I use it with data of my specific system or a specific algorithm?
 Yes, however it will need someone who is familiar with python.
-Developers can learn more about how to create plugins for our GUI here [Link coming soon].
 You do not have experience with python but still want to load data from a specific system? [Contact us!](mailto:mad-digait@fau.de)
+
+Developers can get basic information about the project setup in our [Developer Guidelines](https://mad-gui.readthedocs.io/en/latest/developer_guidelines.html).
+If you want extend the GUI with your custom plugins, e.g. for loading data of a specific system,
+or adding an algorithm, the necessary information can be found in our [API Reference](https://mad-gui.readthedocs.io/en/latest/api_reference.html).
 
 ## Can I change something at the core of the GUI?
 Sure, we try to document the most important parts of the GUI to make adaption as easy as possible.
-Take a look at the developer guidelines for more information [Link coming soon].
+For more information, please take a look at our [Contribution Guidelines](https://mad-gui.readthedocs.io/en/latest/contribution_guidelines.html#contribution-guidelines).
