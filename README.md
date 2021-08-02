@@ -18,7 +18,7 @@ Its use-cases include visualization, annotation (manual or automated), and algor
 Below, we provide two ways of how to get the GUI. 
 In case one of these fails for you, please refer to our troubleshooting guide [Link coming soon].
 You want to load data of a specific format or want to use a specific algorithm? 
-In this case please refer to ["Can I use it with data of my specific system?"](#can-i-use-it-with-data-of-my-specific-system-or-a-specific-algorithm).
+In this case please refer to ["Can I use it with data of my specific system or a specific algorithm?"](#can-i-use-it-with-data-of-my-specific-system-or-a-specific-algorithm).
 
 ### Standalone executable
 The GUI can be packed into stand-alone executables, such that is not necessary for you to install anything on your machine.
