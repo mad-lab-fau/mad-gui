@@ -14,10 +14,9 @@
 The MaD GUI is a framework for processing time series data.
 Its use-cases include visualization, annotation (manual or automated), and algorithmic processing of visualized data and annotations.
 
-## How do I get the GUI?
-Below, we provide two ways of how to get the GUI. 
-In case one of these fails for you, please refer to our troubleshooting guide [Link coming soon].
-You want to load data of a specific format or want to use a specific algorithm? 
+## How do I get the GUI to work on my machine?
+Below, we provide two ways of obtaining and running the GUI.
+You want to load data of a specific format/system or want to use a specific algorithm? 
 In this case please refer to ["Can I use it with data of my specific system or a specific algorithm?"](#can-i-use-it-with-data-of-my-specific-system-or-a-specific-algorithm).
 
 ### Standalone executable

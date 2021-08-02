@@ -10,19 +10,23 @@ Developer Guidelines
 Necessary software to be installed in advance:
 
     - `anaconda <https://www.anaconda.com/products/individual>`_
-    - `PyCharm <https://www.jetbrains.com/pycharm/>`_ (or any other IDE)
+    - `PyCharm <https://www.jetbrains.com/pycharm/>`_
 
 Anaconda will be used to create a python virtual environment into which all dependencies of the GUI are going to be installed.
 This virtual environment will then be used as python interpreter in the PyCharm IDE to develop the GUI.
 
 1.1 Retrieving the repository
 *****************************
-If you are familiar with git, simply clone the repository.
-If not, go to the start page of the repository, click the download button and then chose `zip` as shown in this image.
+If you are familiar with git, simply clone the repository:
+
+```
+git clone https://github.com/mad-lab-fau/mad-gui.git
+```
+If you are not familiar with git, go to the start page of the repository, click the download button and then chose `zip` as shown in this image.
 Afterwards, extract the contents from the zip file.
 
 .. image:: res/images/downloading.png
-    :width: 200
+    :width: 400
     :alt: Downloading the package
 
 1.2 Preparing an environment
@@ -51,16 +55,15 @@ Most likely, you will need commands like these:
     dir  # (Windows) to list all files/folders in the current working directory
     ls  # (Unix) to list all files/folders in the current working directory
 
-As soon as you have navigated to the repository's folder and you can see files like `pyproject.toml` after typing
-`dir`(Windows) or `ls` (Unix), the installation can start.
-To do so, you need to perform either step 1.3 or step 1.4 to install the the MaD GUI.
+As soon as you have navigated to the repository's folder and you can see files like `pyproject.toml`, the installation can start.
+To do so, you need to perform either step 1.3.1 or step 1.3.2 to install the the MaD GUI.
 
 1.3 Installation
 ****************
 You have two possibilities for installing the dependencies:
 using `pip <https://pip.pypa.io/en/stable/installing/>`_ or using `poetry <https://python-poetry.org>`_.
 Using `pip` is easier and we suggest to use this if you want to get going quickly.
-However, this way no proper dependency handling is ensured.
+However, no proper dependency handling is ensured.
 So if using `pip` causes problems regarding dependencies, you should switch to using `poetry`.
 
 1.3.1 Using pip
@@ -68,14 +71,14 @@ So if using `pip` causes problems regarding dependencies, you should switch to u
 .. note::
     This approach might result in dependency conflicts. If those arise, you should use use poetry as described in the next section.
 
-In the anaconda command prompt type (make sure mad_gui is still activated):
+In the anaconda command prompt type (make sure `mad_gui` is still activated):
 
 .. code-block::
 
     pip install .
 
 Make sure to include the space and the dot.
-If you have done this, you close the anaconda prompt. You can skip 1.4 and directly go on with :ref:`Configuring PyCharm`.
+If you have done this, you close the anaconda prompt. You can skip 1.3.2 and directly go on with :ref:`Configuring PyCharm`.
 
 1.3.2 Using Poetry
 *****************************
@@ -125,136 +128,20 @@ Next, you need to add your virtual environment to PyCharm:
 
 You can now choose if you want to want to extend it with plugins (recommended) or if you want change the GUI itself.
 
-1.4.2 Configuration for adding plugins
-**************************************
-Create a new project with a python file named `start_gui`.
-Insert the following code:
+2 Adapting the GUI
+##################
+We created the GUI in a way, that you can inject your own plugins into the GUI.
+These can then for example take care for loading data of a specific format.
+Furthermore, you have the possibility to inject algorithms this way.
+If you want to do that, you will need our :ref:`API Reference <api reference>`.
 
-.. code-block:: python
-
-    from mad_gui import start_gui
-    start_gui(data_dir=<put a directory here as string, e.g. "/home" or "C:/">)
-
-Now jump to section :ref:`Adding script for execution`
-
-1.4.3 Configuration for changing the GUI's core
-***********************************************
-Open the downloaded repository as a PyCharm project and go on with the next section.
-
-.. _Adding script for execution:
-
-1.4.4 Adding script for execution
-*********************************
-
-.. image:: res/images/pycharm_01_add_config.png
-    :width: 200
-    :alt: Configure PyCharm
-    :class: float-right
-
-Click `Add Configuration...` on the top right:
-
-In the new window, click on the `+` smybol on the top left and select `Python`.
-On the right hand side do the following:
-
-=============================== =======
-Field                           Content         
-=============================== =======  
-Name                            Start GUI
-Script path                     <path to mad_gui/start_gui.py> or <path to your_project/start_gui>
-Python Interpreter              Select the environment you created before
-=============================== =======
-
-You are done with configuration, click `OK` or `Apply`.
-Where you saw `Add Configuration...` previously, should now be written `Start GUI`.
-Next to it, you see the green play button, which will start the GUI.
-The bug next to it can be used to start the debug mode.
-
-2. How to adapt GUI
-###################
-
-2.1 Design
-***********
-Design is done using QtDesigner and the resources are stored in `mad_gui/qt_designer/*.ui <https://mad-srv.informatik.uni-erlangen.de/MadLab/GaitAnalysis/labeling_tool/-/tree/master/mad_gui/qt_designer>`_.
-When adding / changing image buttons, be sure to do this using `window_buttons.qrc`, which afterwards needs to be transformed to a `.py` file e.g. using
-
-.. code-block:: python
-
-    pyrcc5 -o window_buttons_rc.py window_buttons.qrc
-
-Note, that you have to change the import on the resulting `.py` file from PyQt5 to PySide2.
-
-.. _other systems:
-
-2.2 Adding support for other systems
-************************************
-
-.. note::
-   You do not have to implement all methods of `BaseImporter` / `BaseExporter`, just the ones you need.
-   To inform the user about something, can do this import: `from mad_gui.state_keeper import StateKeeper` and then use
-   `StateKeeper.inform_user.emit("Your message")`.
-
-The GUI can be imported into your python project and then you can inject `Importers`, `Algorithms` (to be done), and `Exporters`.
-Below we explain, how you can create and inject plugins for the GUI.
-
-2.2.1 Exemplary Plugin
-**********************
-The GUI can be used to load data from different systems. For each system, an `Importer` can be created.
-Your `Importer` might make use of the methods already implemented in `BaseImporter`, which all Importers should inherit from, see :ref:`Plugins <plugins>`.
-Here you can see an example of how to create an Importer and how to inject it:
-
-.. code-block:: python
-
-    from typing import Tuple, Dict
-    from mad_gui import start_gui, BaseImporter, BaseSettings
-
-    class CustomImporter(BaseImporter):
-        @classmethod
-        def name(cls) -> str:
-            # This will be shown as string in the dropdown menu of mad_gui.windows.LoadDataWindow upon
-            # pressing the button "Load Data" in the GUI
-            return "CustomImporter"
-
-        def load_sensor_data(self, file) -> Tuple[Dict, float]:
-            data = <some method to load the data from file or relative to file>
-            return {
-                "left_sensor": data["left_foot"],
-                "right_sensor": data["right_foot"],
-            }, 204.8
-
-    # This actually starts the GUI. You could also just call `start_gui` without passing any plugins
-    # in case you want to experiment with the shipped example_data
-    start_gui(
-        data_dir=".", # you can also put a directory of your choice here, e.g. "/home" or "C:/"
-        plugins=[CustomImporter],
-    )
-
-This created Importer can be accessed in the GUI by clicking the `Load Data` button, which in turn opens the
-`LoadDataWindow`, see :ref:`Windows <windows>`.
-In the same way you can create a custom Exporter, which should inherit from `BaseExporter`, see :ref:`Plugins <plugins>`.
-You would then pass `plugins=[CustomImporter, CustomExporter]` such that the GUI is aware of both.
-Furthermore, you can create a custom settings class and pass it with the keyword `settings` to mad_gui.start_gui.
-
-2.2.2 Plotting labels based on an algorithm
-*******************************************
-If you also want to implement an algorithm to automatically create activity labels based on the data,
-you will have to do the same for an `Exporter`, see our `BaseExporter` in :ref:`Plugins <plugins>` and
-implement the `annotation_from_data` method.
-
-2.2.3 Calculate parameters from plotted data and export them
-************************************************************
-If you want to calculate and export parameters from the plotted data, you need to implement the BaseExporter's
-`get_df_to_export` in your exporter. Same as for the importer, it will automatically be added to the GUI.
-Upon pressing the `Export data` button in the GUI, the `ExportDataWindow` (see :ref:`Windows <windows>`) will be opened,
-in which your exporter can be selected.
+In case you experience anything that you wish the GUI should handle differently you want to change something,
+which as not achievable via the plugins, you will need our :ref:`Contribution Guidelines <contribution guidelines>`.
 
 
-2.3. Configuration file
-************************
-In our setup, every project can have its own :ref:`configuration file <configs>, that changes a few behaviors of the
-GUI.
-Those files are kept in `mad_gui/config`.
-One file, (`consts.py`) keeps some basic constants, which we think can stay the same for all applications.
-Other constants can be changed in a file to be created by you.
+
+
+
 
 
 3 Contributing
