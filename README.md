@@ -23,7 +23,7 @@ In this case please refer to ["Can I use it with data of my specific system or a
 ### Option A: Standalone executable
 The GUI can be packed into stand-alone executables, such that is not necessary for you to install anything on your machine.
 
-- Windows users: download our exemplary executable here [Coming soon]
+- Windows users: download our exemplary executable here [Coming soon, including example data]
 - Other operating systems: [Contact us](mailto:mad-digait@fau.de).
 
 ### Option B: Using the python package

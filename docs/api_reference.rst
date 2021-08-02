@@ -12,9 +12,15 @@ Here we describe how you can:
 This boils down to creating your own plugins and injecting them into the GUI.
 In case you want to change something closer at the core of the GUI, you might need to take a look at our
 :ref:`Contribution guidelines <contribution guidelines>`.
+Before we start implementing our plugin, we explain in the first section how to set up PyCharm.
 
-1. Configuring PyCharm
-######################
+.. _configuring pycharm script:
+
+1. Configuring PyCharm Script
+#############################
+
+.. note::
+   Some basic steps need to be done beforehand, please check our :ref:`[Developer guidelines] <developer guidelines>` for that.
 
 1.1 Creating an executable script
 *********************************

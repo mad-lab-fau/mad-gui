@@ -22,7 +22,7 @@ copy(Path("../README.md"), Path("./README.md"))
 
 # -- Project information -----------------------------------------------------
 
-project = "MaD-GUI Userguide"
+project = "MaD GUI Userguide"
 copyright = "2021, Malte Ollenschlaeger, Arne Kuederle, Ann-Kristin Seifer"
 author = "Malte Ollenschlaeger, Arne Kuederle, Ann-Kristin Seifer"
 URL = "https://github.com/mad-lab-fau/mad-gui"
@@ -79,6 +79,9 @@ numpydoc_class_members_toctree = False
 # a list of builtin themes.
 #
 html_theme = "pydata_sphinx_theme"
+html_logo = "res/images/logo_mad_man.png"
+html_static_path = ['_static']
+html_css_files = ['css/custom.css']
 html_theme_options = {"show_prev_next": False}
 
 # Add any paths that contain custom static files (such as style sheets) here,
