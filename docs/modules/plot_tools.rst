@@ -13,9 +13,4 @@ Classes
    :template: class_no_inheritances.rst
 
    BasePlot
-   ImuPlot
    VideoPlot
-   TimeAxisItem
-   ActivityLabel
-   SegmentedStrideLabel
-   StrideLabel

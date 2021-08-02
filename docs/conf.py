@@ -25,7 +25,7 @@ from importlib import import_module
 project = "MaD-GUI Userguide"
 copyright = "2021, Malte Ollenschlaeger, Arne Kuederle, Ann-Kristin Seifer"
 author = "Malte Ollenschlaeger, Arne Kuederle, Ann-Kristin Seifer"
-URL = "https://mad-srv.informatik.uni-erlangen.de/MadLab/GaitAnalysis/labeling_tool/-/tree/master"
+URL = "https://github.com/mad-lab-fau/mad-gui"
 
 # -- General configuration ---------------------------------------------------
 
@@ -88,10 +88,6 @@ html_theme_options = {"show_prev_next": False}
 
 # intersphinx configuration
 intersphinx_module_mapping = {
-    "gaitmap": (
-        "http://madlab.mad-pages.informatik.uni-erlangen.de/GaitAnalysis/gaitmap/",
-        None,
-    ),
     "pandas": ("https://pandas.pydata.org/pandas-docs/stable/", None),
 }
 

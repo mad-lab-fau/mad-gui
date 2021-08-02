@@ -13,6 +13,3 @@ Classes
 .. autosummary::
    :toctree: generated/mad_gui
    :template: class_no_inheritances.rst
-
-   _StateKeeper
-   _KeyPressHandler
