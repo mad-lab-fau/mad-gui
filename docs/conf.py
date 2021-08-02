@@ -9,11 +9,12 @@
 
 import os
 import sys
+from importlib import import_module
 from inspect import getsourcefile, getsourcelines
 from pathlib import Path
 
-
 sys.path.insert(0, os.path.abspath(".."))
+import mad_gui
 
 # -- Project information -----------------------------------------------------
 
