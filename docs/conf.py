@@ -39,7 +39,7 @@ extensions = [
     "recommonmark",
     "sphinx_markdown_tables",
 ]
-
+autodoc_mock_imports = ["PySide2"]
 autodoc_default_options = {
     "members": True,
     "inherited-members": False,

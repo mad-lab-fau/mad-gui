@@ -5,11 +5,6 @@
 # Required
 version: 2
 
-# List of APT packages to install.      
-build:
-  apt_packages:
-    - libpulse-mainloop-glib0
-
 # Build documentation in the docs/ directory with Sphinx
 sphinx:
   configuration: docs/conf.py
