@@ -52,11 +52,13 @@ class TestGui:
                 gui.data_selector.boxes[box_name].setChecked(indicator)
 
             gui.data_selector.ok_btn.buttons()[0].clicked.emit()
-
-        QTimer.singleShot(1500, handle_dialog)
+        timer = QTimer()
+        timer.singleShot(1500, handle_dialog())
+        timer.deleteLater()
+        del timer
 
         gui.load_data_from_pickle(str(example_pickle))
-
+        timer.emit()
         # currently gui.plotted_data is empty, it is just in gui.global_data.plotted_data
         activities = {
             "Acceleration": gui.global_data.plot_data["Acceleration"].annotations["ActivityLabel"],
