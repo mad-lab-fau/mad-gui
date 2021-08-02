@@ -51,6 +51,9 @@ In the anaconda command prompt type the following command. Before, make sure `ma
 .. code-block::
 
     pip install mad_gui
+    
+Make sure to include the underscore!
+Otherwise, you will be installing something else.
 
 3.2 Using Poetry
 ################
