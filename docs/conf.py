@@ -25,7 +25,7 @@ copy(Path("../README.md"), Path("./README.md"))
 project = "MaD GUI Userguide"
 copyright = "2021, Malte Ollenschlaeger, Arne Kuederle, Ann-Kristin Seifer"
 author = "Malte Ollenschlaeger, Arne Kuederle, Ann-Kristin Seifer"
-URL = "https://github.com/mad-lab-fau/mad-gui/blob/main/"
+URL = "https://github.com/mad-lab-fau/mad-gui/blob/main"
 
 # -- General configuration ---------------------------------------------------
 
