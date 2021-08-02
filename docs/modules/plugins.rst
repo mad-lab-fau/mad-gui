@@ -1,7 +1,9 @@
 .. _plugins:
 
-mad_gui.plugins: Input and output helpers
-=========================================
+=======
+Plugins
+=======
+
 .. automodule:: mad_gui.plugins
     :no-members:
     :no-inherited-members:

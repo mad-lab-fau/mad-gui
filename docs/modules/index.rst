@@ -1,8 +1,8 @@
 .. _api_ref:
 
-=============
-API Reference
-=============
+=======
+Modules
+=======
 
 This is the API Reference for MaD GUI sorted by modules.
 
