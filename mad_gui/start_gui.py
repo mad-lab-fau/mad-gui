@@ -42,7 +42,5 @@ if __name__ == "__main__":
 
     parser = argparse.ArgumentParser()
     parser.add_argument("--base_dir")
-    parser.add_argument("--consts_file")
     args = parser.parse_args()
-    # TODO: Add Arguments back in
     start_gui(args.base_dir)
