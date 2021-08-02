@@ -10,9 +10,10 @@ Welcome to MaD-GUI Userguide's documentation!
    :maxdepth: 1
    :caption: Contents:
 
-   How to <README.md>
-   modules/index.rst
+   Getting started <README.md>
    Setting constants <consts_example>
+   API reference <api_reference>
+   modules/index.rst
    Developer guidelines <developer_guidelines>
    Troubleshooting <troubleshooting>
 
