@@ -30,6 +30,8 @@ The GUI can be packed into stand-alone executables, such that is not necessary f
 ```
 pip install mad_gui
 ```
+Make sure to include the underscore.
+If you do not include it, you will install a different package.
 
 Then, from your command line either simply start the GUI or pass additional arguments:
 ```
