@@ -16,6 +16,9 @@ from pathlib import Path
 sys.path.insert(0, os.path.abspath(".."))
 import mad_gui
 
+# -- Copy README file --------------------------------------------------------
+copy(Path("../README.md"), Path("./README.md"))
+
 # -- Project information -----------------------------------------------------
 
 project = "MaD-GUI Userguide"
