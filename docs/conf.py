@@ -15,9 +15,6 @@ from pathlib import Path
 
 sys.path.insert(0, os.path.abspath(".."))
 
-import mad_gui
-from importlib import import_module
-
 # -- Project information -----------------------------------------------------
 
 project = "MaD-GUI Userguide"

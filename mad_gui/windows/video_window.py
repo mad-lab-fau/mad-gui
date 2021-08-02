@@ -6,8 +6,12 @@ try:
 except ImportError:
     # This error is raised by readthedocs. This is a workaround.
     warnings.warn("Can not import QtMultimedia classes.")
+try:
+    from mad_gui.qt_designer.ui_video import Ui_VideoWindow
+except ImportError:
+    # This error is raised by readthedocs. This is a workaround.
+    warnings.warn("Can not import QtMultimedia classes.")
 
-from mad_gui.qt_designer.ui_video import Ui_VideoWindow
 from mad_gui.state_keeper import StateKeeper
 
 
