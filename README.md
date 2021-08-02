@@ -16,6 +16,7 @@ Its use-cases include visualization, annotation (manual or automated), and algor
 
 ## How do I get the GUI to work on my machine?
 Below, we provide two ways of obtaining and running the GUI.
+However, this will only enable you to look at our example data.
 You want to load data of a specific format/system or want to use a specific algorithm? 
 In this case please refer to ["Can I use it with data of my specific system or a specific algorithm?"](#can-i-use-it-with-data-of-my-specific-system-or-a-specific-algorithm).
 
