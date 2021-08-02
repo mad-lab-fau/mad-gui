@@ -1,11 +1,18 @@
 [tool.poetry]
 name = "mad_gui"
-version = "0.1"
+version = "0.2.0-alpha.1"
 description = "GUI for annotating and processing IMU data."
 authors = [
     "Malte Ollenschlaeger <malte.ollenschlaeger@fau.de>",
     "Arne Kuederle <arne.kuederle@fau.de>",
     "Ann-Kristin Seifer <ann-kristin.seifer@fau.de>"
+]
+readme = "README.md"
+homepage = "https://github.com/mad-lab-fau/mad-gui"
+repository = "https://github.com/mad-lab-fau/mad-gui"
+classifiers = [
+	"Intended Audience :: Science/Research",
+	"Topic :: Scientific/Engineering",
 ]
 
 [tool.poetry.dependencies]
