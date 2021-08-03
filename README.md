@@ -28,6 +28,8 @@ However, this will only enable you to look at our example data.
 You want to load data of a specific format/system or want to use a specific algorithm? 
 In this case please refer to ["Can I use it with data of my specific system or a specific algorithm?"](#can-i-use-it-with-data-of-my-specific-system-or-a-specific-algorithm).
 
+## How can I test the GUI using your example data on my computer?
+
 First, you need to download the example data.
 Right click on [this link](https://raw.githubusercontent.com/mad-lab-fau/mad-gui/main/example_data/smartphone/acceleration.csv), select `Save link as...` and save it as `acceleration.csv`. Make sure that the ending is `.csv`.
 If you also want to check out synchronization with a video file, then right click on [this link](https://github.com/mad-lab-fau/mad-gui/raw/main/example_data/smartphone/video/video.mp4) and select `Save as...` to store it on your machine.
