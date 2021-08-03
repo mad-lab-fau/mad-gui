@@ -6,9 +6,8 @@ from mad_gui.components.dialogs.user_information import UserInformation
 from mad_gui.components.helper import set_cursor
 from mad_gui.models.global_data import GlobalData, PlotData
 from mad_gui.qt_designer import UI_PATH
-from typing import List, Type
-
 from mad_gui.utils.helper import resource_path
+from typing import List, Type
 
 plugin_selector = str(UI_PATH / "export.ui")
 PluginSelectorWindow, BasePluginSelectorWindow = loadUiType(resource_path(plugin_selector))

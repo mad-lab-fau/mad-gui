@@ -1,8 +1,6 @@
 import os
-import sys
 import warnings
 from collections import Callable
-from pathlib import Path
 
 from PySide2.QtCore import QObject, Signal, Slot
 

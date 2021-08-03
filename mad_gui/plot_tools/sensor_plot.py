@@ -1,6 +1,4 @@
 import datetime
-import os
-from pathlib import Path
 
 import numpy as np
 import pandas as pd
@@ -14,10 +12,7 @@ from mad_gui.models.global_data import PlotData
 from mad_gui.models.ui_state import MODES
 from mad_gui.plot_tools.base_plot import BasePlot
 from mad_gui.plot_tools.labels import BaseRegionLabel
-from mad_gui.utils.helper import resource_path
-from mad_gui.qt_designer import UI_PATH
 
-# from mad_gui.plot_tools.labels import SegmentedStrideLabel, StrideLabel, stride_label_config
 from mad_gui.plot_tools.sensor_plot_mode_handler import (
     AddModeHandler,
     BaseModeHandler,
@@ -26,9 +21,10 @@ from mad_gui.plot_tools.sensor_plot_mode_handler import (
     RemoveModeHandler,
     SyncModeHandler,
 )
+from mad_gui.qt_designer import UI_PATH
 from mad_gui.state_keeper import StateKeeper
+from mad_gui.utils.helper import resource_path
 from mad_gui.utils.model_base import BaseStateModel, Property
-from mad_gui.utils.helper import  resource_path
 from typing import Dict, List, Optional, Type
 
 channel_selector_path = str(UI_PATH / "channel_selector.ui")
