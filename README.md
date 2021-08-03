@@ -38,9 +38,8 @@ Next get the GUI using one of the below methods:
 
 ### Option A: Standalone executable
 The GUI can be packed into stand-alone executables, such that is not necessary for you to install anything on your machine.
-
-- Windows users: download our exemplary executable [here](https://github.com/mad-lab-fau/mad-gui/raw/main/dist/mad_gui.exe)
-- Other operating systems: [Contact us](mailto:mad-digait@fau.de).
+You can download our exemplary executable [for Windows](https://github.com/mad-lab-fau/mad-gui/raw/main/dist/mad_gui.exe) by clicking the link.
+For other operating systems, please [contact us](mailto:malte.ollenschlaeger@fau.de).
 
 Start the program and then you can open the previously downloaded example data as shown in [How do I use it?](#how-do-i-use-it).
 
@@ -69,7 +68,7 @@ Now you can open the previously downloaded example data as shown in [How do I us
 
 ## Can I use it with data of my specific system or a specific algorithm?
 Yes, however it will need someone who is familiar with python.
-You do not have experience with python but still want to load data from a specific system? [Contact us!](mailto:mad-digait@fau.de)
+You do not have experience with python but still want to load data from a specific system? [Contact us!](mailto:malte.ollenschlaeger@fau.de)
 
 Developers can get basic information about the project setup in our [Developer Guidelines](https://mad-gui.readthedocs.io/en/latest/developer_guidelines.html).
 If you want extend the GUI with your custom plugins, e.g. for loading data of a specific system,
