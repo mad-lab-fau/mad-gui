@@ -39,7 +39,7 @@ The GUI can be packed into stand-alone executables, such that is not necessary f
 - Windows users: download our exemplary executable here [Coming soon, including example data]
 - Other operating systems: [Contact us](mailto:mad-digait@fau.de).
 
-Now you can take a look at [How do I interact with the GUI?](#how-do-i-use-it) to see how you can load the data you downloaded before.
+Start the program and then you can open the previously downloaded example data as shown in [How do I use it?](#how-do-i-use-it).
 
 ### Option B: Using the python package
 ```
@@ -61,7 +61,8 @@ from mad_gui import start_gui
 start_gui(<data_path>)
 ```
 
-Now you can take a look at [How do I interact with the GUI?](#how-do-i-use-it) to see how you can load the data you downloaded before.
+Now you can open the previously downloaded example data as shown in [How do I use it?](#how-do-i-use-it).
+
 
 ## Can I use it with data of my specific system or a specific algorithm?
 Yes, however it will need someone who is familiar with python.
