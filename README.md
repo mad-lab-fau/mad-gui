@@ -32,7 +32,7 @@ In this case please refer to ["Can I use it with data of my specific system or a
 
 First, you need to download the example data.
 Right click on [this link](https://raw.githubusercontent.com/mad-lab-fau/mad-gui/main/example_data/smartphone/acceleration.csv), select `Save link as...` and save it as `acceleration.csv`. Make sure that the ending is `.csv`.
-If you also want to check out synchronization with a video file, then right click on [this link](https://github.com/mad-lab-fau/mad-gui/raw/main/example_data/smartphone/video/video.mp4) and select `Save as...` to store it on your machine.
+If you also want to check out synchronization with a video file, then right click on [this link](https://github.com/mad-lab-fau/mad-gui/raw/main/example_data/smartphone/video/video.mp4) and select `Save link as...` to store it on your machine.
 
 After downloading, extract the folder to your machine.
 Maybe it is possible to downlod it directly? [link](https://raw.githubusercontent.com/mad-lab-fau/mad-gui/main/example_data/smartphone/acceleration.csv)
