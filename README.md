@@ -14,17 +14,32 @@
 The MaD GUI is a framework for processing time series data.
 Its use-cases include visualization, annotation (manual or automated), and algorithmic processing of visualized data and annotations.
 
+## How do I use it?
+<soon there will be one or more videos here, which show(s) how the GUI works>
+
+- loading data / video / annotations
+- adding annotations via an algorithm
+- synchronize video and data
+- export data / apply other algorithms and export results
+
 ## How do I get the GUI to work on my machine?
 Below, we present two options how to obtain and run the GUI.
 However, this will only enable you to look at our example data.
 You want to load data of a specific format/system or want to use a specific algorithm? 
 In this case please refer to ["Can I use it with data of my specific system or a specific algorithm?"](#can-i-use-it-with-data-of-my-specific-system-or-a-specific-algorithm).
 
+First, you need to download the example data.
+To do so, please click the green `Code` button at the top of [this page](https://github.com/mad-lab-fau/mad-gui) and then click `Download ZIP`. 
+After downloading, extract the folder to your machine.
+Next get the GUI using one of the below methods:
+
 ### Option A: Standalone executable
 The GUI can be packed into stand-alone executables, such that is not necessary for you to install anything on your machine.
 
 - Windows users: download our exemplary executable here [Coming soon, including example data]
 - Other operating systems: [Contact us](mailto:mad-digait@fau.de).
+
+Now you can take a look at [How do I interact with the GUI?](#how-do-i-interact-with-the-gui) to see how you can load the data you downloaded before.
 
 ### Option B: Using the python package
 ```
@@ -46,13 +61,7 @@ from mad_gui import start_gui
 start_gui(<data_path>)
 ```
 
-## How do I interact with the GUI?
-<soon there will be one or more videos here, which show(s) how the GUI works>
-
-- loading data / video / annotations
-- adding annotations via an algorithm
-- synchronize video and data
-- export data / apply other algorithms and export results
+Now you can take a look at [How do I interact with the GUI?](#how-do-i-interact-with-the-gui) to see how you can load the data you downloaded before.
 
 ## Can I use it with data of my specific system or a specific algorithm?
 Yes, however it will need someone who is familiar with python.
