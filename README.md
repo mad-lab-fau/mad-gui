@@ -40,7 +40,7 @@ Next get the GUI using one of the below methods:
 
 ### Option A: Standalone executable
 The GUI can be packed into stand-alone executables, such that is not necessary for you to install anything on your machine.
-You can download our exemplary executable [for Windows](https://github.com/mad-lab-fau/mad-gui/raw/main/dist/mad_gui.exe) by clicking the link.
+Simply download our exemplary executable [for Windows](https://github.com/mad-lab-fau/mad-gui/raw/main/dist/mad_gui.exe) by clicking the link.
 For other operating systems, please [contact us](mailto:malte.ollenschlaeger@fau.de).
 
 Start the program and then you can open the previously downloaded example data as shown in [How do I use it?](#how-do-i-use-it).
