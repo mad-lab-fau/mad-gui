@@ -31,7 +31,7 @@ In this case please refer to ["Can I use it with data of my specific system or a
 First, you need to download the example data.
 To do so, please click the green `Code` button at the top of [this page](https://github.com/mad-lab-fau/mad-gui) and then click `Download ZIP`. 
 After downloading, extract the folder to your machine.
-Maybe it is possible to downlod it directly? [link](https://github.com/mad-lab-fau/mad-gui/blob/main/example_data/smartphone/acceleration.csv)
+Maybe it is possible to downlod it directly? [link](https://raw.githubusercontent.com/mad-lab-fau/mad-gui/main/example_data/smartphone/acceleration.csv)
 Next get the GUI using one of the below methods:
 
 ### Option A: Standalone executable
