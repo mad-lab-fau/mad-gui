@@ -1,4 +1,8 @@
+import os
+import sys
+import warnings
 from collections import Callable
+from pathlib import Path
 
 from PySide2.QtCore import QObject, Signal, Slot
 
@@ -42,3 +46,15 @@ def signal_attribute_name(property_name):
 def value_attribute_name(property_name):
     """ Return a magic key for the attribute storing the property value. """
     return f"_{property_name}_prop_value_"
+
+
+def resource_path(relative_path):
+    """ Get absolute path to resource, works for dev and for PyInstaller """
+
+    try:
+        paths = os.environ.get("PATH").split(";")
+        base_path = [p for p in paths if "_MEI" in p][0]
+    except IndexError:
+        base_path = os.path.abspath(".")
+        warnings.warn("ERROR")
+    return os.path.join(base_path, relative_path)

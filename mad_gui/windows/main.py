@@ -36,7 +36,9 @@ from mad_gui.plot_tools.video_plot import VideoPlot
 from mad_gui.plugins.base import BaseExporter, BaseImporter
 from mad_gui.plugins.helper import filter_plugins
 from mad_gui.state_keeper import StateKeeper
+from mad_gui.utils.helper import resource_path
 from mad_gui.windows import VideoWindow
+from mad_gui.qt_designer import UI_PATH
 
 pg.setConfigOption("useOpenGL", False)
 
@@ -49,7 +51,8 @@ if os.environ.get("GITHUB_CI"):
 # QApplication.setAttribute(Qt.AA_EnableHighDpiScaling)
 # .setAttribute(Qt.AA_EnableHighDpiScaling)
 
-Window, BaseClass = pg.Qt.loadUiType(str(Path(__file__).parent.parent / "qt_designer/main.ui"))
+window_path = str(UI_PATH / "main.ui")
+Window, BaseClass = pg.Qt.loadUiType(resource_path(window_path))
 
 
 class MainWindow(BaseClass):

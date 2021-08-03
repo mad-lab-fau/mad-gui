@@ -7,10 +7,12 @@ from mad_gui import BaseImporter
 from mad_gui.components.dialogs.user_information import UserInformation
 from mad_gui.components.helper import ask_for_file_name, set_cursor
 from mad_gui.qt_designer import UI_PATH
+from mad_gui.utils.helper import resource_path
 from mad_gui.utils.model_base import BaseStateModel, Property
 from typing import Any, Dict, List, Optional, Tuple, Type
 
-LoadWindow, BaseLoadWindow = pg.Qt.loadUiType(str(UI_PATH / "load.ui"))
+window_path = str(UI_PATH / "load.ui")
+LoadWindow, BaseLoadWindow = pg.Qt.loadUiType(resource_path(window_path))
 
 
 class LoadDataDialogState(BaseStateModel):

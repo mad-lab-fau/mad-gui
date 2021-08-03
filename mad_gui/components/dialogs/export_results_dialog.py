@@ -8,7 +8,10 @@ from mad_gui.models.global_data import GlobalData, PlotData
 from mad_gui.qt_designer import UI_PATH
 from typing import List, Type
 
-PluginSelectorWindow, BasePluginSelectorWindow = loadUiType(str(UI_PATH / "export.ui"))
+from mad_gui.utils.helper import resource_path
+
+plugin_selector = str(UI_PATH / "export.ui")
+PluginSelectorWindow, BasePluginSelectorWindow = loadUiType(resource_path(plugin_selector))
 
 
 class ExportResultsDialog(BasePluginSelectorWindow):

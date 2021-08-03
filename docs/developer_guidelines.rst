@@ -178,8 +178,10 @@ In this case, you can create an executable of the GUI as follows:
     # get PyInstaller (make sure pyinstaller is NOT installed in your global python!)
     pip install pyinstaller
 
-    pyinstaller mad_gui/start_gui.py --icon="mad-runner.ico" --name="mad-gui"
+    # actually create the executable
+    pyinstaller pyinstaller.spec
 
+Afterwards, you will find the file in the `dist` folder
 Sometimes pyinstaller does not find all the imports. In that case, you might need to make use of its
 `hidden import <https://pyinstaller.readthedocs.io/en/stable/when-things-go-wrong.html#listing-hidden-imports>`_
 option.
