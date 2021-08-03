@@ -34,10 +34,6 @@ First, you need to download the example data.
 Right click on [this link](https://raw.githubusercontent.com/mad-lab-fau/mad-gui/main/example_data/smartphone/acceleration.csv), select `Save link as...` and save it as `acceleration.csv`. Make sure that the ending is `.csv`.
 If you also want to check out synchronization with a video file, then right click on [this link](https://github.com/mad-lab-fau/mad-gui/raw/main/example_data/smartphone/video/video.mp4) and select `Save link as...` to store it on your machine.
 
-After downloading, extract the folder to your machine.
-Maybe it is possible to downlod it directly? [link](https://raw.githubusercontent.com/mad-lab-fau/mad-gui/main/example_data/smartphone/acceleration.csv)
-Next get the GUI using one of the below methods:
-
 ### Option A: Standalone executable
 The GUI can be packed into stand-alone executables, such that is not necessary for you to install anything on your machine.
 Simply download our exemplary executable [for Windows](https://github.com/mad-lab-fau/mad-gui/raw/main/dist/mad_gui.exe) by clicking the link.
