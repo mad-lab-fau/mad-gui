@@ -1,7 +1,8 @@
 from pathlib import Path
 
-import pyqtgraph as pg
 from PySide2 import QtCore
+from PySide2.QtUiTools import loadUiType
+from PySide2.QtWidgets import QDialog
 
 from mad_gui import BaseImporter
 from mad_gui.components.dialogs.user_information import UserInformation
@@ -11,8 +12,11 @@ from mad_gui.utils.helper import resource_path
 from mad_gui.utils.model_base import BaseStateModel, Property
 from typing import Any, Dict, List, Optional, Tuple, Type
 
-window_path = str(UI_PATH / "load.ui")
-LoadWindow, BaseLoadWindow = pg.Qt.loadUiType(resource_path(window_path))
+ui_path = resource_path(str(UI_PATH / "load.ui"))
+if ".ui" in ui_path:
+    LoadWindow, _ = loadUiType(ui_path)
+elif ".py" in ui_path:
+    from mad_gui.qt_designer.build.load import Ui_Form as LoadWindow  # pylint: disable=C0412,E0401
 
 
 class LoadDataDialogState(BaseStateModel):
@@ -21,7 +25,7 @@ class LoadDataDialogState(BaseStateModel):
     annotation_file = Property("", dtype=str)
 
 
-class LoadDataDialog(BaseLoadWindow):
+class LoadDataDialog(QDialog):
     final_data_: Dict[str, Dict[str, Any]]
     loader_: BaseImporter
 
@@ -32,7 +36,7 @@ class LoadDataDialog(BaseLoadWindow):
         parent=None,
         initial_state: Optional[LoadDataDialogState] = None,
     ):
-        super().__init__(parent=parent)
+        super().__init__()
         self.loaders = loaders
         self.parent = parent
         self.base_dir = base_dir

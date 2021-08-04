@@ -4,7 +4,7 @@ import shutil
 from pathlib import Path
 
 DOIT_CONFIG = {
-    "default_tasks": ["format", "lint", "test"],
+    "default_tasks": ["format", "lint", "test", "prepare_windows_build"],
     "backend": "json",
 }
 
@@ -31,6 +31,32 @@ def task_test():
     """Run Pytest with coverage."""
     return {
         "actions": [["pytest", "--cov=mad_gui", "--cov-config=.coveragerc", "-vv"]],
+        "verbosity": 2,
+    }
+
+
+def task_prepare_windows_build():
+    """Build a standalone windows executable."""
+    commands = []
+
+    def get_dst_path(path_venv: str):
+        path_venv = Path(path_venv).absolute()
+        return path_venv / "Lib/site-packages/mad_gui/qt_designer/build/"
+
+    def set_up_paths(path_venv):
+        dst_path = get_dst_path(path_venv)
+        os.makedirs(dst_path, exist_ok=True)
+
+    def convert_ui_to_py(path_venv):
+        dst_path = get_dst_path(path_venv)
+        ui_files = [file for file in os.listdir(dst_path.parent) if ".ui" in file]
+        print(ui_files)
+        for file in ui_files:
+            os.popen(f"pyside2-uic -o {dst_path}\\{file.split('.')[0]}.py {dst_path.parent}\\{file}")
+
+    return {
+        "actions": [set_up_paths, convert_ui_to_py],
+        "params": [{"name": "path_venv", "short": "v", "default": ".venv"}],
         "verbosity": 2,
     }
 

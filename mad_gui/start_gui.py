@@ -30,7 +30,6 @@ def start_gui(
     plugins: Sequence[BasePlugin] = (ExampleImporter,),
     labels: Sequence[BaseRegionLabel] = (MyLabel, MyOtherLabel),
 ):
-    print("Starting MaD GUI, please wait a few seconds...")
     # Create the Qt Application
     app = QApplication(sys.argv)
     form = MainWindow(data_dir=data_dir, settings=settings, theme=theme, plugins=plugins, labels=labels)

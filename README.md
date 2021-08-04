@@ -37,7 +37,6 @@ Maybe it is possible to downlod it directly? [link](https://raw.githubuserconten
 Next get the GUI using one of the below methods:
 
 ### Option A: Standalone executable
-The GUI can be packed into stand-alone executables, such that is not necessary for you to install anything on your machine.
 
 - Windows users: download our exemplary executable here [Coming soon, including example data]
 - Other operating systems: [Contact us](mailto:mad-digait@fau.de).

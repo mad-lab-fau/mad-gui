@@ -1,17 +1,17 @@
 # -*- mode: python ; coding: utf-8 -*-
 
-
+# ('D:/mad-gui_github/mad_gui/qt_designer/*.ui', 'mad_gui/qt_designer/')
 block_cipher = None
 
 import os
 HERE = os.path.abspath(".")
 
 a = Analysis(['mad_gui/start_gui.py'],
-             pathex=[HERE],
+             pathex=[HERE, "D:/mad-gui_github/.venv/Lib/site-packages"],
              binaries=[],
-             datas=[('mad_gui/qt_designer/*.ui', 'mad_gui/qt_designer/'),
-                    ('mad_gui/qt_designer/window_buttons_rc.py', 'mad_gui/qt_designer/'),
-                    ('mad_gui/qt_designer/ui_video.py', 'mad_gui/qt_designer/')],
+             datas=[('D:/mad-gui_github/.venv/Lib/site-packages/mad_gui/qt_designer/build/*.py', 'mad_gui/qt_designer/build/'),
+                    ('D:/mad-gui_github/mad_gui/qt_designer/window_buttons_rc.py', 'mad_gui/qt_designer/'),
+                    ('D:/mad-gui_github/mad_gui/qt_designer/ui_video.py', 'mad_gui/qt_designer/')],
              hiddenimports=[],
              hookspath=[],
              hooksconfig={},
@@ -22,13 +22,6 @@ a = Analysis(['mad_gui/start_gui.py'],
              cipher=block_cipher,
              noarchive=False)
 
-splash = Splash('mad_gui/qt_designer/images/logo_mad_man.png',
-                binaries=a.binaries,
-                datas=a.datas,
-                text_pos=(10, 50),
-                text_size=12,
-                text_color='black')
-
 pyz = PYZ(a.pure, a.zipped_data,
              cipher=block_cipher)
 
@@ -37,7 +30,6 @@ exe = EXE(pyz,
           a.binaries,
           a.zipfiles,
           a.datas,
-          #splash,  
           [],
           name='mad_gui',
           debug=False,

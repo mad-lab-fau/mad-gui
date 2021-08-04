@@ -15,10 +15,12 @@ from typing import Dict, List
 import pandas as pd
 import pyqtgraph as pg
 from PySide2.QtCore import Qt
+from PySide2.QtUiTools import loadUiType
 from PySide2.QtWidgets import (
     QFileDialog,
     QMessageBox,
     QVBoxLayout,
+    QMainWindow,
 )
 
 from mad_gui.components.dialogs.data_selector import DataSelector
@@ -51,11 +53,14 @@ if os.environ.get("GITHUB_CI"):
 # QApplication.setAttribute(Qt.AA_EnableHighDpiScaling)
 # .setAttribute(Qt.AA_EnableHighDpiScaling)
 
-window_path = str(UI_PATH / "main.ui")
-Window, BaseClass = pg.Qt.loadUiType(resource_path(window_path))
+ui_path = resource_path(str(UI_PATH / "main.ui"))
+if ".ui" in ui_path:
+    Window, _ = loadUiType(ui_path)
+elif ".py" in ui_path:
+    from mad_gui.qt_designer.build.main import Ui_MainWindow as Window  # pylint: disable=import-error
 
 
-class MainWindow(BaseClass):
+class MainWindow(QMainWindow):
     """This class implements the functionalities of the buttons in the GUI.
     Furthermore, it serves as an interface to Input-Output files, which are different for each data source,
     see our `General Information` part of the docs, section `Adding support for other systems`."""

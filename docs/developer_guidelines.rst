@@ -162,12 +162,16 @@ You may want to ship the GUI including your plugin(s) to users, who are not fami
 In this case, you can create an executable of the GUI as follows:
 
 * install a clean python version (not using anaconda)
-* afterwards, follow these steps:
+* afterwards, follow these steps in the clean python installation (not in your virutal environment mad_gui!):
 
 .. code-block:: python
+    # navigate to the repository
+    cd mad_gui
 
     # create virutal environment
     python -m venv .venv
+    # this creates the virutal environment in the folder `.venv`
+    # the `doit` task `prepare_windows_build` will make use of this folder by default later in this process
 
     # activate the virutal environment
     .venv/Scripts/activate
@@ -177,6 +181,17 @@ In this case, you can create an executable of the GUI as follows:
 
     # get PyInstaller (make sure pyinstaller is NOT installed in your global python!)
     pip install pyinstaller
+
+Now open another terminal and activate your virtual environment `mad_gui`.
+Then execute this task: `doit prepare_windows_build`.
+This will translate some `*.ui` files to `.py` files in `.venv/Lib/site-pacakges/mad_gui/qt_designer/build`.
+
+Now you can finally create the *.exe file:
+
+.. code-block:: python
+
+    # activate the venv
+    .venv/Scripts/activate
 
     # actually create the executable
     pyinstaller pyinstaller.spec

@@ -9,11 +9,14 @@ from mad_gui.qt_designer import UI_PATH
 from mad_gui.utils.helper import resource_path
 from typing import List, Type
 
-plugin_selector = str(UI_PATH / "export.ui")
-PluginSelectorWindow, BasePluginSelectorWindow = loadUiType(resource_path(plugin_selector))
+ui_path = resource_path(str(UI_PATH / "export.ui"))
+if ".ui" in ui_path:
+    PluginSelectorWindow, _ = loadUiType(ui_path)
+elif ".py" in ui_path:
+    from mad_gui.qt_designer.build.export import Ui_Form as PluginSelectorWindow  # pylint: disable=C0412,E0401
 
 
-class ExportResultsDialog(BasePluginSelectorWindow):
+class ExportResultsDialog(PluginSelectorWindow):
     """A dialog to select the exporter to use to export results from the shown data and labels.
 
     See Also
@@ -25,11 +28,9 @@ class ExportResultsDialog(BasePluginSelectorWindow):
     _data: PlotData
 
     def __init__(self, exporters: List[Type[BaseExporter]], parent=None):
-        super().__init__(parent=parent)
+        super().__init__()
         self.exporters = exporters
-
         self.parent = parent
-
         self.ui = PluginSelectorWindow()
         self.setWindowIcon(parent.windowIcon())
         self.ui.setupUi(self)

@@ -59,4 +59,5 @@ pylint:
     - super-init-not-called
     - redundant-keyword-arg
     - wrong-import-order # handled by isort
+    - use-symbolic-message-instead
 

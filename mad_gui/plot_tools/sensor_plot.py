@@ -12,7 +12,6 @@ from mad_gui.models.global_data import PlotData
 from mad_gui.models.ui_state import MODES
 from mad_gui.plot_tools.base_plot import BasePlot
 from mad_gui.plot_tools.labels import BaseRegionLabel
-
 from mad_gui.plot_tools.sensor_plot_mode_handler import (
     AddModeHandler,
     BaseModeHandler,
@@ -29,7 +28,10 @@ from typing import Dict, List, Optional, Type
 
 channel_selector_path = str(UI_PATH / "channel_selector.ui")
 ui_path = resource_path(channel_selector_path)
-ChannelSelector, _ = pg.Qt.loadUiType(ui_path)
+if ".ui" in ui_path:
+    ChannelSelector, _ = pg.Qt.loadUiType(ui_path)
+elif ".py" in ui_path:
+    from mad_gui.qt_designer.build.channel_selector import Ui_Form as ChannelSelector  # pylint: disable=C0412,E0401
 
 
 class TimeAxisItem(pg.AxisItem):
