@@ -36,7 +36,7 @@ If you also want to check out synchronization with a video file, then right clic
 
 ### Option A: Standalone executable
 
-- Windows users: download our exemplary executable here [Coming soon, including example data]
+- Windows users: download our exemplary executable [here](https://github.com/mad-lab-fau/mad-gui/releases/download/v0.2.0-alpha.1/mad_gui.exe)
 - Other operating systems: [Contact us](mailto:mad-digait@fau.de).
 
 Start the program and then you can open the previously downloaded example data as shown in [How do I use it?](#how-do-i-use-it).
