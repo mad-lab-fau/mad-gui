@@ -43,8 +43,11 @@ def task_prepare_windows_build():
     venv_path=sys.executable.split(os.sep)
 
     import warnings
-    answer = input("For more information about this message see https://github.com/mad-lab-fau/mad-gui/blob/main/docs/developer_guidelines.rst#6-creating-an-executable."\
-                   f"\n Go on with {os.sep.join(venv_path)} as the virtual environment exclusively used for packaging? (y/n):")
+    try:
+        answer = input("For more information about this message see https://github.com/mad-lab-fau/mad-gui/blob/main/docs/developer_guidelines.rst#6-creating-an-executable."\
+                      f"\n Go on with {os.sep.join(venv_path)} as the virtual environment exclusively used for packaging? (y/n):")
+    except EOFError:
+        answer = 'y'
 
     if answer.lower() == 'n':
         return
