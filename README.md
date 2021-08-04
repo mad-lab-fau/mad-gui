@@ -28,13 +28,11 @@ However, this will only enable you to look at our example data.
 You want to load data of a specific format/system or want to use a specific algorithm? 
 In this case please refer to ["Can I use it with data of my specific system or a specific algorithm?"](#can-i-use-it-with-data-of-my-specific-system-or-a-specific-algorithm).
 
+## How can I test the GUI using your example data on my computer?
+
 First, you need to download the example data.
 Right click on [this link](https://raw.githubusercontent.com/mad-lab-fau/mad-gui/main/example_data/smartphone/acceleration.csv), select `Save link as...` and save it as `acceleration.csv`. Make sure that the ending is `.csv`.
-If you also want to check out synchronization with a video file, then right click on [this link](https://github.com/mad-lab-fau/mad-gui/raw/main/example_data/smartphone/video/video.mp4) and select `Save as...` to store it on your machine.
-
-After downloading, extract the folder to your machine.
-Maybe it is possible to downlod it directly? [link](https://raw.githubusercontent.com/mad-lab-fau/mad-gui/main/example_data/smartphone/acceleration.csv)
-Next get the GUI using one of the below methods:
+If you also want to check out synchronization with a video file, then right click on [this link](https://github.com/mad-lab-fau/mad-gui/raw/main/example_data/smartphone/video/video.mp4) and select `Save link as...` to store it on your machine.
 
 ### Option A: Standalone executable
 
@@ -68,7 +66,7 @@ Now you can open the previously downloaded example data as shown in [How do I us
 
 ## Can I use it with data of my specific system or a specific algorithm?
 Yes, however it will need someone who is familiar with python.
-You do not have experience with python but still want to load data from a specific system? [Contact us!](mailto:mad-digait@fau.de)
+You do not have experience with python but still want to load data from a specific system? [Contact us!](mailto:malte.ollenschlaeger@fau.de)
 
 Developers can get basic information about the project setup in our [Developer Guidelines](https://mad-gui.readthedocs.io/en/latest/developer_guidelines.html).
 If you want extend the GUI with your custom plugins, e.g. for loading data of a specific system,
