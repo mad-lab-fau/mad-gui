@@ -183,17 +183,12 @@ In this case, you can create an executable of the GUI as follows:
     # get PyInstaller (make sure pyinstaller is NOT installed in your global python!)
     pip install pyinstaller
 
-Now activate your virtual environment `mad_gui`, e.g. by typing `conda activate mad_gui`.
-Then type this command: `doit prepare_windows_build`.
-In case you did not install your venv in the folder `.venv` in the previous step, you can pass the respective path to the doit task by using the `-v` flag.
-This will translate some `*.ui` files to `.py` files in `.venv/Lib/site-pacakges/mad_gui/qt_designer/build`.
+    # we need this to perform the following task
+    pip install doit
 
-Now you can create the *.exe file:
-
-.. code-block:: python
-
-    # activate the venv
-    .venv/Scripts/activate
+    # we have to transform some .ui files to .py and but them into our .venv mad-gui library
+    # note: if you did not name your virtual environment .venv in the second step, you can pass the name using `-v <name of venv>`
+    doit prepare_windows_build
 
     # actually create the executable
     pyinstaller pyinstaller.spec
