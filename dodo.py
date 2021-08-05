@@ -37,40 +37,48 @@ def task_test():
 
 def task_prepare_windows_build():
     """Build a standalone windows executable."""
-    commands = []
 
     import sys
-    venv_path=sys.executable.split(os.sep)
 
-    import warnings
-    answer = input("For more information about this message see https://github.com/mad-lab-fau/mad-gui/blob/main/docs/developer_guidelines.rst#6-creating-an-executable."\
-                   f"\n Go on with {os.sep.join(venv_path)} as the virtual environment exclusively used for packaging? (y/n):")
+    python_path = sys.executable.split(os.sep)
+    venv_path = str(Path(os.sep.join(python_path[:-2])))
 
-    if answer.lower() == 'n':
-        return
+    def check_env():
+        answer = input(
+            "For more information about this message see https://github.com/mad-lab-fau/mad-gui/blob/main/docs/developer_guidelines.rst#6-creating-an-executable."
+            f"\n Go on with {venv_path} as the virtual environment exclusively used for packaging? (y/n):"
+        )
 
+        if answer.lower() == "n":
+            raise ValueError("Aborted by user.")
 
+    def get_dst_path():
+        return Path(venv_path) / "Lib/site-packages/mad_gui/qt_designer/build/"
 
-    def get_dst_path(path_venv: str):
-        print(Path(os.sep.join(venv_path[:-2])) / "Lib/site-packages/mad_gui/qt_designer/build/")
-        return Path(os.sep.join(venv_path[:-2])) / "Lib/site-packages/mad_gui/qt_designer/build/"
-
-    def set_up_paths(path_venv):
-        print(f"checking {get_dst_path(path_venv)}")
-        if not os.path.exists(get_dst_path(path_venv)):
-            raise FileNotFoundError("Apparently mad_gui is not installed in this environemnt. Use `pip install . ` to do so.")
-        dst_path = get_dst_path(path_venv)
+    def set_up_paths():
+        if not os.path.exists(get_dst_path().parent):
+            raise FileNotFoundError(
+                "Apparently mad_gui is not installed in this environemnt. Use `pip install . ` to do so."
+            )
+        dst_path = get_dst_path()
         os.makedirs(dst_path, exist_ok=True)
 
-    def convert_ui_to_py(path_venv):
-        dst_path = get_dst_path(path_venv)
+    def convert_ui_to_py():
+        dst_path = get_dst_path()
         ui_files = [file for file in os.listdir(dst_path.parent) if ".ui" in file]
+        print("\n")
         for file in ui_files:
+            print(f"Converting from: {dst_path.parent}\\{file}")
+            print(f"To: {dst_path}\\{file.split('.')[0]}.py\n")
             os.popen(f"pyside2-uic -o {dst_path}\\{file.split('.')[0]}.py {dst_path.parent}\\{file}")
 
+        print(
+            "Info: These conversion should take place in the virutal environment you are going to use with "
+            "pyinstaller."
+        )
+
     return {
-        "actions": [set_up_paths, convert_ui_to_py],
-        "params": [{"name": "path_venv", "short": "v", "default": ".venv"}],
+        "actions": [check_env, set_up_paths, convert_ui_to_py],
         "verbosity": 2,
     }
 
