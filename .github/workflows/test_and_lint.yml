@@ -29,10 +29,27 @@ jobs:
       with:
         path: ~/.cache/pypoetry/virtualenvs
         key: ${{ runner.os }}-poetry-${{ hashFiles('poetry.lock') }}
+
+    - name: Load cached venv
+      id: cached-poetry-dependencies
+      uses: actions/cache@v2
+      with:
+        path: .venv
+        key: venv-${{ runner.os }}-${{ hashFiles('**/poetry.lock') }}
+    - name: Install dependencies
+      run: |
+        pip install poetry
+        poetry config virtualenvs.in-project true
+        poetry add anybadge devpi-client PySide2 pytest-xvfb Qt.py xvfbwrapper        
+        poetry install
+      if: steps.cached-poetry-dependencies.outputs.cache-hit != 'true'
+
+
     - name: Testing
       run: |
         sudo apt-get update
         python -m pip install --upgrade pip
+        sudo apt-get install python3-pip
         sudo apt-get autoclean
         sudo apt-get install -y --no-install-recommends qtbase5-dev-tools xvfb libegl1-mesa x11-xserver-utils libxkbcommon-x11-0 x11-utils
         sudo apt-get clean        
@@ -58,11 +75,8 @@ jobs:
         sudo apt-get -y install git
         
         sudo apt-get -y install libpulse-mainloop-glib0        
-        pip install poetry
-        poetry config virtualenvs.in-project true
-        poetry add anybadge devpi-client PySide2 pytest-xvfb Qt.py xvfbwrapper
-        poetry update --lock
-        poetry install
+
+
         python -m pip install --no-cache-dir --upgrade pip
         sudo pip install git+https://github.com/PyCQA/astroid.git@astroid-2.5.1
         poetry run doit test
