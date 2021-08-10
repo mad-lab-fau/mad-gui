@@ -40,7 +40,9 @@ jobs:
         poetry config virtualenvs.in-project true
         poetry add anybadge devpi-client PySide2 pytest-xvfb Qt.py xvfbwrapper
         poetry install
-      if: (steps.cached-poetry-dependencies.outputs.cache-hit != 'true') || (steps.changed_files.outputs.files_changed == 'true')
+      if: |
+        (steps.cached-poetry-dependencies.outputs.cache-hit != 'true') ||
+        (steps.changed_files.outputs.files_changed == 'true')
     - name: Testing
       run: |
         sudo apt-get update
