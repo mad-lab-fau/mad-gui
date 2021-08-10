@@ -8,7 +8,6 @@ on:
 
 jobs:
   test_lint:
-
     runs-on: ubuntu-latest
     strategy:
       matrix:
@@ -36,19 +35,21 @@ jobs:
       with:
         path: .venv
         key: venv-${{ runner.os }}-${{ hashFiles('**/poetry.lock') }}
+     - name: Get changed files
+        id: changed-files
+        uses: tj-actions/changed-files@v2.1
     - name: Install dependencies
       run: |
         pip install poetry
         poetry config virtualenvs.in-project true
         poetry add anybadge devpi-client PySide2 pytest-xvfb Qt.py xvfbwrapper   
         poetry install
-      if: steps.cached-poetry-dependencies.outputs.cache-hit != 'true'
-
-
+      if: steps.cached-poetry-dependencies.outputs.cache-hit != 'true' || (contains(steps.changed-files.outputs.modified_files, 'pyproject.toml'))
     - name: Testing
       run: |
         sudo apt-get update
         python -m pip install --upgrade pip
+        pip install poetry
         sudo apt-get install python3-pip
         sudo apt-get autoclean
         sudo apt-get install -y --no-install-recommends qtbase5-dev-tools xvfb libegl1-mesa x11-xserver-utils libxkbcommon-x11-0 x11-utils
