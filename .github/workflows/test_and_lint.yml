@@ -25,11 +25,10 @@ jobs:
       run: |
         sudo apt-get update
     - name: Caching
-    - uses: actions/cache@v2
+      uses: actions/cache@v2
       with:
         path: ~/.cache/pypoetry/virtualenvs
         key: ${{ runner.os }}-poetry-${{ hashFiles('poetry.lock') }}
-    - run: poetry --version
     - name: Testing
       run: |
         sudo apt-get update
