@@ -19,7 +19,8 @@ jobs:
     - name: Set up Python ${{ matrix.python-version }}
       uses: actions/setup-python@v2
       with:
-        python-version: ${{ matrix.python-version }}
+        python-version: ${{ matrix.python-version }} 
+
     - name: Install dependencies
       run: |
         sudo apt-get update
@@ -60,6 +61,11 @@ jobs:
         python -m pip install --no-cache-dir --upgrade pip
         sudo pip install git+https://github.com/PyCQA/astroid.git@astroid-2.5.1
         poetry run doit test
+    - uses: actions/cache@v2
+      with:
+        path: ~/.cache/pypoetry/virtualenvs
+        key: ${{ runner.os }}-poetry-${{ hashFiles('poetry.lock') }}
+    - run: poetry --version
     - name: Linting
       run: |
         poetry run doit -v 0 --continue format_check lint
