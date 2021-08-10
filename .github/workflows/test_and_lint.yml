@@ -23,12 +23,6 @@ jobs:
     - name: Install dependencies
       run: |
         sudo apt-get update
-    - name: Caching
-      uses: actions/cache@v2
-      with:
-        path: ~/.cache/pypoetry/virtualenvs
-        key: ${{ runner.os }}-poetry-${{ hashFiles('poetry.lock') }}
-
     - name: Load cached venv
       id: cached-poetry-dependencies
       uses: actions/cache@v2
@@ -36,8 +30,8 @@ jobs:
         path: .venv
         key: venv-${{ runner.os }}-${{ hashFiles('**/poetry.lock') }}
      - name: Get changed files
-        id: changed-files
-        uses: tj-actions/changed-files@v2.1
+       id: changed-files
+       uses: tj-actions/changed-files@v2.1
     - name: Install dependencies
       run: |
         pip install poetry
