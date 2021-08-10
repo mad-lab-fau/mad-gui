@@ -40,7 +40,7 @@ jobs:
       run: |
         pip install poetry
         poetry config virtualenvs.in-project true
-        poetry add anybadge devpi-client PySide2 pytest-xvfb Qt.py xvfbwrapper        
+        poetry add anybadge devpi-client PySide2 pytest-xvfb Qt.py xvfbwrapper   
         poetry install
       if: steps.cached-poetry-dependencies.outputs.cache-hit != 'true'
 
@@ -58,12 +58,10 @@ jobs:
         export DISPLAY=:99
         export SCREEN=0
         export DBUS_SESSION_BUS_ADDRESS=/dev/null
-        export QT_DEBUG_PLUGINS=1
         export QT_VERBOSE=1
         export QT_TESTING=1
         export QT_QPA_PLATFORM="offscreen"
         export GITHUB_CI=1
-        export PYTEST_DEBUG=1
         sudo apt-get install -y build-essential libgl1-mesa-dev
         sudo apt-get install -y libxcb-xinerama0
         sudo apt-get install -y libpulse-dev
@@ -73,10 +71,7 @@ jobs:
         sudo apt-get install -y libqt5multimedia5-plugins
         sudo apt-get install -y libgstreamer1.0-0 gstreamer1.0-plugins-base gstreamer1.0-plugins-good gstreamer1.0-plugins-bad gstreamer1.0-plugins-ugly gstreamer1.0-libav gstreamer1.0-doc gstreamer1.0-tools gstreamer1.0-x gstreamer1.0-alsa gstreamer1.0-pulseaudio
         sudo apt-get -y install git
-        
         sudo apt-get -y install libpulse-mainloop-glib0        
-
-
         python -m pip install --no-cache-dir --upgrade pip
         sudo pip install git+https://github.com/PyCQA/astroid.git@astroid-2.5.1
         poetry run doit test
