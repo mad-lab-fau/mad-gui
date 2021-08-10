@@ -38,18 +38,12 @@ jobs:
         files: |
           pyproject.toml
 
-    - name: List all modified files
-      run: |
-        for file in "${{ steps.changed-files.outputs.all_modified_files }}"; do
-          echo "$file was modified"
-        done
-        echo "$contains(steps.changed-files.outputs.modified_files, 'pyproject.toml')"
-
     - name: Install dependencies
       run: |
         pip install poetry
         poetry config virtualenvs.in-project true
         poetry add anybadge devpi-client PySide2 pytest-xvfb Qt.py xvfbwrapper
+        poetry update --lock
         poetry install
       if: |
         (steps.cached-poetry-dependencies.outputs.cache-hit != 'true') ||
