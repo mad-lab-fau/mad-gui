@@ -45,7 +45,7 @@ profile = "black"
 skip_glob = ["tests/test_windows/"]
 
 [tool.black]
-line-length = 122
+line-length = 118
 target-version = ['py37']
 exclude = '''
 (
