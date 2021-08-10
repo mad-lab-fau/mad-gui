@@ -36,7 +36,7 @@ jobs:
       run: |
         pip install poetry
         poetry config virtualenvs.in-project true
-        poetry add anybadge devpi-client PySide2 pytest-xvfb Qt.py xvfbwrapper   
+        poetry add anybadge devpi-client PySide2 pytest-xvfb Qt.py xvfbwrapper
         poetry install
       if: steps.cached-poetry-dependencies.outputs.cache-hit != 'true' || (contains(steps.changed-files.outputs.modified_files, 'pyproject.toml'))
     - name: Testing
