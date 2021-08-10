@@ -16,6 +16,9 @@ jobs:
 
     steps:
     - uses: actions/checkout@v2
+      with:
+        fetch-depth: 2
+
     - name: Set up Python ${{ matrix.python-version }}
       uses: actions/setup-python@v2
       with:
@@ -30,10 +33,10 @@ jobs:
         key: venv-${{ runner.os }}-${{ hashFiles('**/poetry.lock') }}
     - name: Get changed files
       id: changed-files
-      uses: tj-actions/changed-files@v2.1
+      uses: tj-actions/changed-files@v9.3
       with:
         files: |
-           pyproject.toml
+          pyproject.toml
     - name: Install dependencies
       run: |
         pip install poetry
@@ -42,13 +45,12 @@ jobs:
         poetry install
       if: |
         (steps.cached-poetry-dependencies.outputs.cache-hit != 'true') ||
-        (steps.changed_files.outputs.files_changed == 'true')
+        (steps.changed_files.outputs.any_changed == 'true')
     - name: Testing
       run: |
         sudo apt-get update
         python -m pip install --upgrade pip
         pip install poetry
-        sudo apt-get install python3-pip
         sudo apt-get autoclean
         sudo apt-get install -y --no-install-recommends qtbase5-dev-tools xvfb libegl1-mesa x11-xserver-utils libxkbcommon-x11-0 x11-utils
         sudo apt-get clean        
