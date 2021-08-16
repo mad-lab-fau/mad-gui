@@ -1,6 +1,5 @@
 # -*- mode: python ; coding: utf-8 -*-
 
-# ('D:/mad-gui_github/mad_gui/qt_designer/*.ui', 'mad_gui/qt_designer/')
 block_cipher = None
 
 import os
