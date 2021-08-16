@@ -40,6 +40,9 @@ pydata-sphinx-theme = "^0.6.2"
 sphinx-markdown-tables = "^0.0.15"
 prospector = "^1.2.0"
 
+[tool.poetry.scripts]
+mad-gui = "mad_gui:start_gui"
+
 [tool.isort]
 profile = "black"
 skip_glob = ["tests/test_windows/"]

@@ -24,7 +24,7 @@ class MyOtherLabel(BaseRegionLabel):
 
 
 def start_gui(
-    data_dir,
+    data_dir = "./",
     settings: Type[BaseSettings] = BaseSettings,
     theme: Type[BaseTheme] = BaseTheme,
     plugins: Sequence[BasePlugin] = (ExampleImporter,),
