@@ -14,8 +14,8 @@ class SegmentedStrideLabel(BaseRegionLabel):
     """Stride labels that only have a start and an end.
 
     This class can for example be used to generate stride labels as suggested by Barth et al. [1]_. This label looks
-    like an :class:`RegionLabel`, just that it is placed in the area of `MIN_HEIGHT_STRIDE_LABELS` to
-    `MAX_HEIGHT_STRIDE_LABELS`. Furthermore, its start and end can snap to minima by setting STRIDE_SNAP_TO_MIN
+    like an :class:`RegionLabel`, just that it is placed in the area of `self.min_height` to
+    `self.max_height`. Furthermore, its start and end can snap to minima by setting STRIDE_SNAP_TO_MIN
     (see `docs/consts_example.md`).
 
     .. [1] Barth, J., Oberndorfer, C., Kugler, P., Schuldhaus, D., Winkler, J., Klucken, J., & Eskofier, B. (2013).
@@ -31,8 +31,8 @@ class SegmentedStrideLabel(BaseRegionLabel):
 
     def __init__(self, identifier: int, start: int, end: int, parent, **_kwargs):
         super().__init__(identifier, start, end, parent)
-        self.min_height = Config.settings.MIN_HEIGHT_STRIDE_LABELS
-        self.max_height = Config.settings.MAX_HEIGHT_STRIDE_LABELS
+        self.min_height = 0.2
+        self.max_height = 0.8
         self.span = (self.min_height, self.max_height)
         self.configure_children()
         self.standard_brush = StrideLabel._generate_brush(self)  # --> RegionLabel
