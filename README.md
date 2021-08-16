@@ -48,9 +48,9 @@ pip install mad_gui
 Make sure to include the underscore.
 If you do not include it, you will install a different package.
 
-Then, from your command line either simply start the GUI or pass additional arguments:
+Then, from your command line either simply start the GUI (first line) or pass additional arguments (second line):
 ```
-python -m mad_gui.start_gui
+mad-gui
 python -m mad_gui.starg_gui --base_dir C:/my_data
 ```
 
