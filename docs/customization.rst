@@ -14,7 +14,8 @@ However, in case you want to change something closer at the core of the GUI, you
 :ref:`Contribution guidelines <contribution guidelines>`.
 
 .. note::
-   In case you are not familiar with PyCharm and virtual environments, you might first want to check out our :ref:`Developer guidelines <developer guidelines>` for that.
+   In case you are not familiar with PyCharm and virtual environments, you might first want to check out our
+   :ref:`Developer guidelines <developer guidelines>` for that.
    Regarding the part of *Installing MaD GUI*, you can use the method :ref:`via pip <install via pip>`.
 
 1 Creating an executable script
@@ -37,27 +38,32 @@ You can execute this script as described in our :ref:`Developer guidelines <addi
 2.1 Adding support for other systems
 ************************************
 
-The GUI can be imported into your python project and then you can inject `Importers`, `Algorithms` (to be done), and `Exporters`.
+The GUI can be imported into your python project and then you can inject `Importers`, `Algorithms` (to be done), and
+`Exporters`.
 Below we explain, how you can create and inject plugins for the GUI.
+In case you want to give some feedback to the user via a popup you can use this:
 
-2.2.1 Exemplary Plugin
-**********************
-This describes how you can inject your plugin.
-As an example, we show how to create a custom importer.
+.. code-block:: python
 
-The GUI can be used to load data from different systems.
-For each system, an `Importer` can be created.
-Your `Importer` might make use of the methods already implemented in `BaseImporter`, which all Importers should inherit from, see :ref:`Plugins <plugins>`.
+   from mad_gui.user_information import UserInformation
+   UserInformation.ask_user("Your message")
 
 .. note::
-   You do not have to implement all methods of `BaseImporter`, just the ones you need.
-   In case you want to send a message to the user of the GUI, you can use this:
+   You do not have to implement all methods of the regarding base class (BaseImporter, BaseAlgorithm, or BaseExporter),
+   just the ones you need.
 
-   .. code-block:: python
+2.2.1 Implement an importer
+***************************
+If the user presses the `Load data` button in the GUI, a new window will pop up (`LoadDataWindow`, see :ref:`Windows <windows>`).
+In there, the user can select one of the importers that were passed to the GUI at startup by selecting it in a dropdown.
+The loader takes care for:
 
-       from mad_gui.user_information import UserInformation
-       UserInformation.ask_user("Your message")
+   * transforming data from your recording system to a dictionary (BaseImporter.load_sensor_data)
+   * loading annotations from a user format (BaseImporter.load_annotations)
 
+Your `Importer` might make use of the methods already implemented in `BaseImporter`, which all Importers should inherit
+from.
+For more information about the BaseImporter and type annotations see :ref:`Plugins <plugins>`.
 
 Here you can see an example of how to create an Importer and how to inject it:
 
@@ -75,8 +81,9 @@ Here you can see an example of how to create an Importer and how to inject it:
 
         def load_sensor_data(self, file) -> Tuple[Dict, float]:
             # We creat a dictionary with one key for each plot we want to generate.
-            # Each value of the dictionary is a pandas dataframe, with columns being the single data streams / sensor channels.
-            # for more information see our Plugins section (link above this code snippet).
+            # Each value of the dictionary is a pandas dataframe, with columns being the single data streams /
+            # sensor channels.
+            # For more information see our Plugins section (link above this code snippet).
             data = <some method to load the data from file or relative to file>
             return {
                 "left_sensor": data["left_foot"],
@@ -97,15 +104,27 @@ please see the two sections below.
 2.2.2 Implement an algorithm (`Use Algorithm` button)
 *****************************************************
 If you want to implement an algorithm to automatically create labels based on the displayed data,
-you will have to additionally implement your custom loader's `annotation_from_data` method, see our `BaseImporter` in :ref:`Plugins <plugins>`.
+you will have to additionally implement your custom loader's `annotation_from_data` method, see our `BaseImporter` in
+:ref:`Plugins <plugins>`.
 
 2.2.3 Implement an exporter (`Export data` button)
 **************************************************
-This basically works as described in the previous section for an exemplary algorithm.
-If you want to calculate and export parameters from the plotted data, you need to implement the BaseExporter's
-`get_df_to_export` in your exporter.
-Upon pressing the `Export data` button in the GUI, the `ExportDataWindow` (see :ref:`Windows <windows>`) will be opened,
-in which your exporter can be selected.
+This basically works as described in the section of creating an importer.
+Upon pressing the `Export data` button in the GUI, the `ExportResultsDialog` (see :ref:`Dialogs <dialogs>`) will be
+opened, in which your exporter can be selected.
+
+.. code-block:: python
+
+    from typing import Tuple, Dict
+    from mad_gui import start_gui, BaseExporter, BaseSettings
+
+    class CustomExporter(BaseImporter):
+        @classmethod
+        def name(cls) -> str:
+            # This will be shown as string in the dropdown menu of mad_gui.components.dialogs.ExportResultsDialog upon
+            # pressing the button "Export data" in the GUI
+            return "Custom exporter"
+
 After creating your exporter, make sure to also pass it to the `start_gui` function.
 
 
