@@ -51,7 +51,7 @@ If you do not include it, you will install a different package.
 Then, from your command line either simply start the GUI (first line) or pass additional arguments (second line):
 ```
 mad-gui
-python -m mad_gui.starg_gui --base_dir C:/my_data
+python -m mad_gui.start_gui --base_dir C:/my_data
 ```
 
 Alternatively, within a python script use our [start_gui](https://github.com/mad-lab-fau/mad-gui/blob/2857ccc20766ea32f847271771b52c97e2682b79/mad_gui/start_gui.py#L26) 
