@@ -19,7 +19,7 @@ Necessary software to be installed in advance:
 Anaconda will be used to create a python virtual environment into which all dependencies of the GUI are going to be installed.
 This virtual environment will then be used as python interpreter in the PyCharm IDE to develop the GUI.
 
-.. _preparing environment
+.. _preparing environment:
 
 2 Preparing an environment
 ##########################
@@ -96,11 +96,11 @@ Then you have 2 options to start using poetry for this package:
 
 1. Using a `conda env` instead of `venv`
 
-.. code-block:: python
+   .. code-block:: python
 
-    # Install dependencies
-    # Poetry will `detect that you are already using a conda env <https://github.com/python-poetry/poetry/pull/1432>`_ and will use it, instead of creating a new one.
-    poetry install --no-root`
+      # Install dependencies
+      # Poetry will `detect that you are already using a conda env <https://github.com/python-poetry/poetry/pull/1432>`_ and will use it, instead of creating a new one.
+      poetry install --no-root`
 
 After running the poetry install command you should be able to use poetry without activating the conda env again.
 You just have to set up your IDE to use the conda env you created (see next section).
@@ -195,7 +195,7 @@ The bug next to it can be used to start the debug mode.
 We created the GUI in a way, that you can inject your own plugins into the GUI.
 These can then for example take care for loading data of a specific format.
 Furthermore, you have the possibility to inject algorithms this way.
-If you want to do that, you will need our :ref:`API Reference <api reference>`.
+If you want to do that, you will need our section about :ref:`Customization <customization>`.
 
 In case you there is something that you want to change in the GUI, which is not possible using plugins,
 you will need our :ref:`Contribution Guidelines <contribution guidelines>`.

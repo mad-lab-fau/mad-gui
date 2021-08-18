@@ -13,10 +13,10 @@ Welcome to MaD-GUI Userguide's documentation!
    :caption: Contents:
 
    Getting started <README.md>
-   Setting constants <consts_example>
-   Customization <customization>
-   modules/index.rst
    Developer guidelines <developer_guidelines>
+   Customization <customization>
+   Contribution guidelines <contribution_guidelines>
+   modules/index.rst
    Troubleshooting <troubleshooting>
 
 

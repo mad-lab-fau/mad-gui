@@ -15,7 +15,7 @@ For more information on this, see our :ref:`Developer guidelines <developer guid
 You can change the color scheme by passing a `theme` when starting the GUI.
 Please find more detailed information about how to inject such a plugin in our :ref:`API reference, section "2. Adding your plugins" <other systems>`.
 
-In case this is not enough and you want to change something more specific, you can achieve this using the *.ui files in
+In case this is not enough and you want to change something more specific, you can achieve this using the `*.ui` files in
 `mad_gui/qt_designer/ <https://github.com/mad-lab-fau/mad-gui/tree/main/mad_gui/qt_designer>`_.
 You can for example use the QtDesigner for it, which you should find in your PySide 2 installation
 (in Windows OS located at `...anaconda3/envs/mad_gui/Lib/site-packages/PySide2/designer.exe`)
