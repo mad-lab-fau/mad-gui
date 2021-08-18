@@ -10,25 +10,12 @@ from mad_gui.plugins.example import ExampleImporter
 from mad_gui.windows import MainWindow
 from typing import Sequence, Type
 
-
-class MyLabel(BaseRegionLabel):
-    name = "Mei label"
-    min_height = 0.1
-    max_height = 0.5
-
-
-class MyOtherLabel(BaseRegionLabel):
-    name = "Mei anners label"
-    min_height = 0.8
-    max_height = 1
-
-
 def start_gui(
     data_dir="./",
     settings: Type[BaseSettings] = BaseSettings,
     theme: Type[BaseTheme] = BaseTheme,
     plugins: Sequence[BasePlugin] = (ExampleImporter,),
-    labels: Sequence[BaseRegionLabel] = (MyLabel, MyOtherLabel),
+    labels: Sequence[BaseRegionLabel] = (BaseRegionLabel,),
 ):
     # Create the Qt Application
     app = QApplication(sys.argv)

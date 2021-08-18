@@ -1,31 +1,24 @@
-.. _api reference:
+.. _customization:
 
 *************
-API Reference
+Customization
 *************
 
 Here we describe how you can:
 
 - load data from a specific system
 - implement an algorithm from another python package
+- customize settings
 
-This boils down to creating your own plugins and injecting them into the GUI.
-You can find all the necessary information and relevant links for that on this page.
 However, in case you want to change something closer at the core of the GUI, you might need to take a look at our
 :ref:`Contribution guidelines <contribution guidelines>`.
 
-Before we start implementing our plugin, we explain in the first section how to set up PyCharm.
-
-.. _configuring pycharm script:
-
-1. Configuring PyCharm Script
-#############################
-
 .. note::
-   Some basic steps need to be done beforehand, please check our :ref:`[Developer guidelines] <developer guidelines>` for that.
+   In case you are not familiar with PyCharm and virtual environments, you might first want to check out our :ref:`Developer guidelines <developer guidelines>` for that.
+   Regarding the part of *Installing MaD GUI*, you can use the method :ref:`via pip <install via pip>`.
 
-1.1 Creating an executable script
-*********************************
+1 Creating an executable script
+###############################
 Create a new project with a python file named `start_gui`.
 Insert the following code:
 
@@ -34,33 +27,7 @@ Insert the following code:
     from mad_gui import start_gui
     start_gui(data_dir=<put a directory here as string, e.g. "/home" or "C:/">)
 
-.. _adding a script for execution:
-
-1.2 Adding a script for execution
-*********************************
-
-.. image:: res/images/pycharm_01_add_config.png
-    :width: 200
-    :alt: Configure PyCharm
-    :class: float-right
-
-Click `Add Configuration...` on the top right:
-
-In the new window, click on the `+` smybol on the top left and select `Python`.
-On the right hand side do the following:
-
-=============================== =======
-Field                           Content
-=============================== =======
-Name                            Start GUI
-Script path                     <path to your_project/start_mad_gui>
-Python Interpreter              Select the environment you created before
-=============================== =======
-
-You are done with configuration, click `OK` or `Apply`.
-Where you saw `Add Configuration...` previously, should now be written `Start GUI`.
-Next to it, you see the green play button, which will start the GUI.
-The bug next to it can be used to start the debug mode.
+You can execute this script as described in our :ref:`Developer guidelines <adding a script for execution>`.
 
 .. _other systems:
 
@@ -140,3 +107,70 @@ If you want to calculate and export parameters from the plotted data, you need t
 Upon pressing the `Export data` button in the GUI, the `ExportDataWindow` (see :ref:`Windows <windows>`) will be opened,
 in which your exporter can be selected.
 After creating your exporter, make sure to also pass it to the `start_gui` function.
+
+
+3 Setting Constants
+###################
+
+You can create your own settings by creating a class, which inherits from our BaseSettings.
+Below show an example for all the things you can customize.
+
+
+3.1 Axes to plot
+****************
+Those are the axes which are plotted by default after loading data.
+However, you can change that at runtime by right-clicking on a graph and then go to the submenu "Select Axes".
+Note that the axis names need to fit the axis names that are in the loaded data.
+
+.. code-block:: python
+
+   AXES_TO_PLOT = [
+       "acc_x",
+       "gyr_y"
+   ]
+
+.. _consts activity labels:
+
+3.2 Activity labels
+********************
+After adding an activity, there will be a pop-up window, which gives you the possiblity to assign one of the following
+activity types to it. Furthermore, you can select those labels, for which you additionally want to provide details in
+a separate pop-up window.
+
+.. code-block:: python
+
+   ACTIVITIES = [
+       "sitting",
+       "moving"
+   ]
+   DETAILS = ["walk", "run"]  # options for details, if user selected activity_type2 before
+
+.. _consts-stride-labels:
+
+3.3 Standard plot width
+***********************
+Set the width of IMU plot to this, when hitting the play button for the video.
+
+.. code-block:: python
+
+   PLOT_WIDTH_PLAYING_VIDEO = 20  # in seconds
+
+
+4 Creating custom labels
+########################
+You can create labels and pass them to our GUI.
+Your label must inherit form our BaseLabel.
+It could for example look like this:
+
+.. code-block:: python
+
+   from mad_gui.plot_tools.base_label import BaseRegionLabel
+   from mad_gui import start_gui
+
+   class Anomaly(BaseRegionLabel):
+      # This label will always be shown at the lowest 20% of the plot view
+      min_height = 0
+      max_height = 0.2
+      name = "Anomaly Label"
+
+   start_gui(labels=[Anomaly])

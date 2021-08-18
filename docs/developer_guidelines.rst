@@ -7,8 +7,10 @@ Developer Guidelines
 In the first four sections we give some information about the project setup.
 If you are familiar with PyCharm and python virtual environments, you may directly jump to :ref:`Adapting the GUI <adapting the gui>`.
 
+.. _installing software:
+
 1 Installing necessary software
-*******************************
+###############################
 Necessary software to be installed in advance:
 
     - `anaconda <https://www.anaconda.com/products/individual>`_
@@ -19,8 +21,8 @@ This virtual environment will then be used as python interpreter in the PyCharm 
 
 .. _preparing environment
 
-2. Preparing an environment
-***************************
+2 Preparing an environment
+##########################
 After installing anaconda, open the Anaconda Prompt.
 Then create a virtual environment in there by using the following commands:
 
@@ -35,17 +37,17 @@ If the environment is activated you can see `(mad_gui)` in the commandline befor
     :width: 400
     :alt: Environment "mad_gui" activated in command prompt
 
-
-
 3 Installing MaD GUI
-********************
+####################
 You have two possibilities for installing the dependencies:
 using `pip <https://pip.pypa.io/en/stable/installing/>`_ or using `poetry <https://python-poetry.org>`_.
 Using `pip` is easier and we suggest to use this if you want to get going quickly.
 However, if using `pip` causes problems regarding dependencies, you should switch to using `poetry`.
 
+.. _install via pip:
+
 3.1 Using pip
-#############
+*************
 In the anaconda command prompt type the following command. Before, make sure `mad_gui` is still activated (see :ref:`Preparing environment <preparing environment>`):
 
 .. code-block::
@@ -56,7 +58,24 @@ Make sure to include the underscore!
 Otherwise, you will be installing something else.
 
 3.2 Using Poetry
-################
+****************
+
+
+3.2.1 Retrieving the repository
+*******************************
+If you are familiar with git, simply clone the repository:
+
+`git clone https://github.com/mad-lab-fau/mad-gui.git`
+
+If you are not familiar with git, go to the start page of the repository, click the download button and then chose `zip` as shown in this image.
+Afterwards, extract the contents from the zip file.
+
+.. image:: res/images/downloading.png
+    :width: 400
+    :alt: Downloading the package
+
+3.2.2 Actual installation
+*************************
 Stay in the anaconda prompt and switch to the directory, where you have downloaded the repository to.
 Most likely, you will need commands like these:
 
@@ -93,59 +112,85 @@ You just have to set up your IDE to use the conda env you created (see next sect
       `different than other envs <https://github.com/maksbotan/poetry/blob/b1058fc2304ea3e2377af357264abd0e1a791a6a/poetry/utils/env.py#L295>`_.
     - Everything else should work like you are not using conda
 
-
-
-
 .. _Configuring PyCharm:
 
 4 Configuring PyCharm
-***********************
+#####################
 
 You can either configure the python interpreter in pycharm directly while creating the project, or afterwards.
 Both options are described below.
 
-4.1 When setting up the project
-###############################
+4.1 Option A: When setting up the project
+*****************************************
 
 Open PyCharm and create a new project.
 On the left hand side, select `Pure Python`.
 On the right hand side:
 
-   1. Set the location to a path where you want to keep the project.
+   #. Set the location to a path where you want to keep the project.
 
-   2. Unfold the element `Python Interpreter`
+   #. Unfold the element `Python Interpreter`
 
-   3. Select `Previously configured interpreter` and click on the three dots on the very right
+   #. Select `Previously configured interpreter` and click on the three dots on the very right
 
-   4. On the left hand side select `Conda Environment`
+   #. On the left hand side select `Conda Environment`
 
-   5. On the right hand side select the environment you have created before. By default, the environment should be located in:
+   #. On the right hand side select the environment you have created before. By default, the environment should be located in:
 
-      5.1 Windows: C:/Users/<your user name>/anaconda3/envs/mad_gui/python
+      * Windows: C:/Users/<your user name>/anaconda3/envs/mad_gui/python
 
-      5.2 Unix: home/<user>/anaconda3/envs/mad_gui/python
+      * Unix: home/<user>/anaconda3/envs/mad_gui/python
 
-4.2 After setting up the project
-################################
+4.2 Option B: After setting up the project
+******************************************
 In your opened project, do the following steps:
 
-   1. File -> Settings -> Project: <your project name> -> Python Interpreter
+   #. File -> Settings -> Project: <your project name> -> Python Interpreter
 
-   2. Click the wheel on the top right and then `Add...`
+   #. Click the wheel on the top right and then `Add...`
 
-   3. On the left hand side select `Conda Environment`
+   #. On the left hand side select `Conda Environment`
 
-   4. On the right hand side choose the radio button `Existing environment`
+   #. On the right hand side choose the radio button `Existing environment`
 
-   5. Select the `python` of the environment you created, by default it should be here:
+   #. Select the `python` of the environment you created, by default it should be here:
 
-      5.1 Windows: `C:/<user>/anaconda3/envs/mad_gui/python`
+      * Windows: `C:/<user>/anaconda3/envs/mad_gui/python`
 
-      5.2 Unix: `home/<user>/anaconda3/envs/mad_gui/python`
+      * Unix: `home/<user>/anaconda3/envs/mad_gui/python`
+
+
+.. _adding a script for execution:
+
+5 Run a script in PyCharm
+#########################
+
+.. image:: res/images/pycharm_01_add_config.png
+    :width: 200
+    :alt: Configure PyCharm
+    :class: float-right
+
+Click `Add Configuration...` on the top right:
+
+In the new window, click on the `+` smybol on the top left and select `Python`.
+On the right hand side do the following:
+
+=============================== =======
+Field                           Content
+=============================== =======
+Name                            Start GUI
+Script path                     <path to the repository on your machine/start_gui.py>
+Python Interpreter              Select the environment you created before
+=============================== =======
+
+You are done with configuration, click `OK` or `Apply`.
+Where you saw `Add Configuration...` previously, should now be written `Start GUI`.
+Next to it, you see the green play button, which will start the GUI.
+The bug next to it can be used to start the debug mode.
 
 .. _adapting the gui:
 
-5 Adapting the GUI
+6 Adapting the GUI
 ******************
 We created the GUI in a way, that you can inject your own plugins into the GUI.
 These can then for example take care for loading data of a specific format.
@@ -155,7 +200,7 @@ If you want to do that, you will need our :ref:`API Reference <api reference>`.
 In case you there is something that you want to change in the GUI, which is not possible using plugins,
 you will need our :ref:`Contribution Guidelines <contribution guidelines>`.
 
-6 Creating an executable
+7 Creating an executable
 ************************
 
 You may want to ship the GUI including your plugin(s) to users, who are not familiar with python and/or do not have the possibilites to install something on their machine.

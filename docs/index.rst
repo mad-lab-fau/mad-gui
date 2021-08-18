@@ -1,3 +1,5 @@
+.. _index:
+
 .. MaD-GUI Userguide documentation master file, created by
    sphinx-quickstart on Fri Jan  1 15:55:43 2021.
    You can adapt this file completely to your liking, but it should at least
@@ -12,7 +14,7 @@ Welcome to MaD-GUI Userguide's documentation!
 
    Getting started <README.md>
    Setting constants <consts_example>
-   API reference <api_reference>
+   Customization <customization>
    modules/index.rst
    Developer guidelines <developer_guidelines>
    Troubleshooting <troubleshooting>
