@@ -69,7 +69,7 @@ Yes, however it will need someone who is familiar with python.
 You do not have experience with python but still want to load data from a specific system? [Contact us!](mailto:malte.ollenschlaeger@fau.de)
 
 Developers can get basic information about the project setup in our [Developer Guidelines](https://mad-gui.readthedocs.io/en/latest/developer_guidelines.html).
-If you want extend the GUI with your custom plugins, e.g. for loading data of a specific system,
+If you want to extend the GUI with your custom plugins, e.g. for loading data of a specific system,
 or adding an algorithm, the necessary information can be found in our [API Reference](https://mad-gui.readthedocs.io/en/latest/api_reference.html).
 
 ## Can I change something at the core of the GUI?
