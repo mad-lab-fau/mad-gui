@@ -6,7 +6,7 @@
 **U**ser 
 **I**nterface
 
-![Test and Lint](https://github.com/mad-lab-fau/mad-gui/workflows/Test%20and%20Lint/badge.svg)
+[![Test and Lint](https://github.com/mad-lab-fau/mad-gui/workflows/Test%20and%20Lint/badge.svg)](https://github.com/mad-lab-fau/mad-gui/actions/workflows/test_and_lint.yml)
 [![Documentation Status](https://readthedocs.org/projects/mad-gui/badge/?version=latest)](https://mad-gui.readthedocs.io/en/latest/?badge=latest)
 [![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
 
@@ -51,7 +51,7 @@ If you do not include it, you will install a different package.
 Then, from your command line either simply start the GUI (first line) or pass additional arguments (second line):
 ```
 mad-gui
-python -m mad_gui.starg_gui --base_dir C:/my_data
+python -m mad_gui.start_gui --base_dir C:/my_data
 ```
 
 Alternatively, within a python script use our [start_gui](https://github.com/mad-lab-fau/mad-gui/blob/2857ccc20766ea32f847271771b52c97e2682b79/mad_gui/start_gui.py#L26) 
@@ -69,7 +69,7 @@ Yes, however it will need someone who is familiar with python.
 You do not have experience with python but still want to load data from a specific system? [Contact us!](mailto:malte.ollenschlaeger@fau.de)
 
 Developers can get basic information about the project setup in our [Developer Guidelines](https://mad-gui.readthedocs.io/en/latest/developer_guidelines.html).
-If you want extend the GUI with your custom plugins, e.g. for loading data of a specific system,
+If you want to extend the GUI with your custom plugins, e.g. for loading data of a specific system,
 or adding an algorithm, the necessary information can be found in our [API Reference](https://mad-gui.readthedocs.io/en/latest/api_reference.html).
 
 ## Can I change something at the core of the GUI?
