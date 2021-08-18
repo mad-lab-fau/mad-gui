@@ -397,7 +397,7 @@ class MainWindow(QMainWindow):
         for sensor_name, data in data_dict.items():
             plot = SensorPlot(
                 plot_data=data,
-                initial_plot_channels=Config.settings.CHANNELS_TO_PLOT,
+                initial_plot_channels=getattr(Config.settings, "CHANNELS_TO_PLOT", None),
                 start_time=start_time,
                 label_classes=self.global_data.labels,
                 parent=self,
