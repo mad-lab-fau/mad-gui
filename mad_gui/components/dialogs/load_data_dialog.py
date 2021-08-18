@@ -92,8 +92,9 @@ class LoadDataDialog(QDialog):
             # TODO: Implement loader config
             user_config = {}
             loader = loader_class(parent=self, **user_config)
-        except:  # noqa
+        except Exception as e:  # noqa
             # ignore bare except because anything can go wrong in a user-implemented plugin
+            print(e)
             UserInformation().inform("Error loading Plugin {}".format(loader_class.name()))
             return None, None
 
