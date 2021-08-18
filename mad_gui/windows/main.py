@@ -182,7 +182,7 @@ class MainWindow(QMainWindow):
     def _save_sync(self):
         sync = pd.DataFrame()
         main_plot = self._get_main_plot()
-        if hasattr(Config.settings, "SENSORS_SYNCHRONIZED") and Config.settings.SENSORS_SYNCHRONIZED:
+        if getattr(Config.settings, "SENSORS_SYNCHRONIZED", False):
             for plot in self.sensor_plots.values():
                 if plot == main_plot:
                     continue

@@ -215,8 +215,8 @@ class BasePlot(pg.PlotWidget):
         if self.state.mode == "sync":
             return
         sec = self._percent_to_position(percent_since_start)
-        x_min = sec - Config.settings.PLOT_WIDTH_PLAYING_VIDEO * 0.5
-        x_max = sec + Config.settings.PLOT_WIDTH_PLAYING_VIDEO * 0.5
+        x_min = sec - getattr(Config.settings, "PLOT_WIDTH_PLAYING_VIDEO", 20) * 0.5
+        x_max = sec + getattr(Config.settings, "PLOT_WIDTH_PLAYING_VIDEO", 20) * 0.5
         self.setXRange(x_min, x_max)
 
     def finish_syncing(self):

@@ -128,7 +128,11 @@ class BaseRegionLabel(pg.LinearRegionItem):
         adding-support-for-other-systems>`_
 
         """
-        new_description = NestedLabelSelectDialog(parent=self.parent.parent).get_label(Config.settings.ACTIVITIES)
+        # the activities should be set by passing a `Settings` object which inherits from mad_gui.config.BaseSettings
+        # and has an attribute `ACTIVITIES`, see our developer guidelines for more information
+        activities = getattr(Config.settings, "ACTIVITIES", ["run", "walk"])
+
+        new_description = NestedLabelSelectDialog(parent=self.parent.parent).get_label(activities)
         if not new_description:
             raise NoLabelSelected("Invalid description selected for label")
         self.description = new_description

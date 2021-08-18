@@ -183,10 +183,10 @@ class SyncModeHandler(BaseModeHandler):
     def __init__(self, sensor_plot):
         super().__init__(sensor_plot)
         self.plot.remove_video_cursor_line()
-        sensors_synced = hasattr(Config.settings, "SENSORS_SYNCHRONIZED") and Config.settings.SENSORS_SYNCHRONIZED
+        sensors_synced = getattr(Config.settings, "SENSORS_SYNCHRONIZED", False)
         if self.plot.is_main_plot or not sensors_synced:
             self.plot.add_sync_item()
-        if not (hasattr(Config.settings, "SENSORS_SYNCHRONIZED") and Config.settings.SENSORS_SYNCHRONIZED):
+        if not getattr(Config.settings, "SENSORS_SYNCHRONIZED", False):
             self.plot.set_coupled_plot(None)
         else:
             # TODO: only create a sync item in the main plot --> remove in other plot(s) since it gets generated

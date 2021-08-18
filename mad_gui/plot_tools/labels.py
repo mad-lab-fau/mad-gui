@@ -68,8 +68,8 @@ class StrideLabel(BaseRegionLabel):
         super().__init__(
             start=start, end=end, parent=parent, identifier=identifier, description=description, details=details
         )
-        self.min_height = Config.settings.MIN_HEIGHT_STRIDE_LABELS
-        self.max_height = Config.settings.MAX_HEIGHT_STRIDE_LABELS
+        self.min_height = 0.25
+        self.max_height = 0.75
         self.span = (self.min_height, self.max_height)
         self.configure_children()
         self.tc_color = Config.theme.FAU_COLORS["dark_blue"]
@@ -107,8 +107,8 @@ class StrideLabel(BaseRegionLabel):
             pen=pg.mkPen(style=Qt.DashLine, color=QColor(0, 0, 0, 255)),
         )
         tc.span = (
-            Config.settings.MIN_HEIGHT_STRIDE_LABELS,
-            Config.settings.MAX_HEIGHT_STRIDE_LABELS,
+            self.min_height,
+            self.max_height,
         )
         stride_region = self.getRegion()
         tc.setParentItem(self)
