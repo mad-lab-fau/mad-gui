@@ -4,7 +4,7 @@
 from mad_gui.plot_tools.base_plot import BasePlot
 from mad_gui.plot_tools.sensor_plot import SensorPlot
 from mad_gui.plot_tools.video_plot import VideoPlot
-from mad_gui.plot_tools.labels import BaseRegionLabel, SegmentedStrideLabel, StrideLabel
+from mad_gui.plot_tools.labels import BaseRegionLabel, SegmentedStrideLabel, StrideLabel, SynchronizationLabel
 
 __all__ = [
     "BasePlot",
@@ -13,4 +13,5 @@ __all__ = [
     "BaseRegionLabel",
     "StrideLabel",
     "SegmentedStrideLabel",
+    "SynchronizationLabel"
 ]

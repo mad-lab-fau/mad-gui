@@ -10,4 +10,6 @@ This is the API Reference for MaD GUI sorted by modules.
     :maxdepth: 1
 
     Plot Tools <plot_tools>
+    Plugin Selection <plugin_selection>
+    Dialogs <dialogs>
     Windows <windows>

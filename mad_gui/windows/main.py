@@ -24,8 +24,8 @@ from PySide2.QtWidgets import (
 )
 
 from mad_gui.components.dialogs.data_selector import DataSelector
-from mad_gui.components.dialogs.export_results_dialog import ExportResultsDialog
-from mad_gui.components.dialogs.load_data_dialog import LoadDataDialog
+from mad_gui.components.dialogs.plugin_selection.export_results_dialog import ExportResultsDialog
+from mad_gui.components.dialogs.plugin_selection.load_data_dialog import LoadDataDialog
 from mad_gui.components.dialogs.user_information import UserInformation
 from mad_gui.components.helper import set_cursor
 from mad_gui.components.key_event_handler import KeyEventHandler

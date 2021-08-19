@@ -1,5 +1,5 @@
-mad_gui.plot_tools: Helpers for Plotting
-========================================
+mad_gui.plot_tools: Plots and Labels
+====================================
 .. automodule:: mad_gui.plot_tools
     :no-members:
     :no-inherited-members:
@@ -13,4 +13,11 @@ Classes
    :template: class_no_inheritances.rst
 
    BasePlot
+   SensorPlot
    VideoPlot
+
+   BaseRegionLabel
+   SegmentedStrideLabel
+   StrideLabel
+
+   SynchronizationLabel
