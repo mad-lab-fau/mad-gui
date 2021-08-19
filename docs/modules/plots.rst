@@ -1,5 +1,5 @@
-mad_gui.plot_tools: Plots and Labels
-====================================
+mad_gui.plot_tools: Plots
+=========================
 .. automodule:: mad_gui.plot_tools
     :no-members:
     :no-inherited-members:
@@ -15,8 +15,3 @@ Classes
    BasePlot
    SensorPlot
    VideoPlot
-
-   BaseRegionLabel
-   SegmentedStrideLabel
-
-   SynchronizationLabel

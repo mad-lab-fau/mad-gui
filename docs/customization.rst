@@ -15,8 +15,7 @@ However, in case you want to change something closer at the core of the GUI, you
 
 .. note::
    In case you are not familiar with PyCharm and virtual environments, you might first want to check out our
-   :ref:`Developer guidelines <developer guidelines>` for that.
-   Regarding the part of *Installing MaD GUI*, you can use the method :ref:`via pip <install via pip>`.
+   :ref:`Developer guidelines <developer guidelines>`.
 
 1 Creating an executable script
 ###############################
@@ -54,16 +53,15 @@ In case you want to give some feedback to the user via a popup you can use this:
 
 2.2.1 Implement an importer
 ***************************
-If the user presses the `Load data` button in the GUI, a new window will pop up (`LoadDataWindow`, see :ref:`Windows <windows>`).
+If the user presses the `Load data` button in the GUI, a new window will pop up (`LoadDataWindow <https://github.com/mad-lab-fau/mad-gui/blob/main/mad_gui/components/dialogs/plugin_selection/load_data_dialog.py#L28>`_).
 In there, the user can select one of the importers that were passed to the GUI at startup by selecting it in a dropdown.
 The loader takes care for:
 
-   * transforming data from your recording system to a dictionary (BaseImporter.load_sensor_data)
-   * loading annotations from a user format (BaseImporter.load_annotations)
+   * transforming data from your recording system to a dictionary using its :meth:`~mad_gui.plugins.BaseImporter.load_sensor_data`
+   * loading annotations from a user format using its :meth:`~mad_gui.plugins.BaseImporter.load_annotations`
 
-Your `Importer` might make use of the methods already implemented in `BaseImporter`, which all Importers should inherit
+Your `Importer` might make use of the methods already implemented in :class:`~mad_gui.plugins.BaseImporter`, which all Importers should inherit
 from.
-For more information about the BaseImporter and type annotations see :ref:`Plugins <plugins>`.
 
 Here you can see an example of how to create an Importer and how to inject it:
 
@@ -75,15 +73,14 @@ Here you can see an example of how to create an Importer and how to inject it:
     class CustomImporter(BaseImporter):
         @classmethod
         def name(cls) -> str:
-            # This will be shown as string in the dropdown menu of mad_gui.windows.LoadDataWindow upon
+            # This will be shown as string in the dropdown menu of the LoadDataWindow upon
             # pressing the button "Load Data" in the GUI
             return "Custom importer"
 
         def load_sensor_data(self, file) -> Tuple[Dict, float]:
-            # We creat a dictionary with one key for each plot we want to generate.
+            # We create a dictionary with one key for each plot we want to generate.
             # Each value of the dictionary is a pandas dataframe, with columns being the single data streams /
             # sensor channels.
-            # For more information see our Plugins section (link above this code snippet).
             data = <some method to load the data from file or relative to file>
             return {
                 "left_sensor": data["left_foot"],
@@ -96,7 +93,7 @@ Here you can see an example of how to create an Importer and how to inject it:
     )
 
 This created Importer can be accessed in the GUI by clicking the `Load Data` button, which in turn opens the
-`LoadDataWindow`, see :ref:`Windows <windows>`.
+`LoadDataWindow <https://github.com/mad-lab-fau/mad-gui/blob/main/mad_gui/components/dialogs/plugin_selection/load_data_dialog.py#L28>`_.
 
 If you want to also add algorithms which are executed upon pressing the buttons `Use algorithm` and `Export Data`,
 please see the two sections below.
@@ -104,13 +101,13 @@ please see the two sections below.
 2.2.2 Implement an algorithm (`Use Algorithm` button)
 *****************************************************
 If you want to implement an algorithm to automatically create labels based on the displayed data,
-you will have to additionally implement your custom loader's `annotation_from_data` method, see our `BaseImporter` in
-:ref:`Plugins <plugins>`.
+you will have to additionally implement your custom loader's :meth:`~mad_gui.plugins.BaseImporter.annotation_from_data`
+method.
 
 2.2.3 Implement an exporter (`Export data` button)
 **************************************************
 This basically works as described in the section of creating an importer.
-Upon pressing the `Export data` button in the GUI, the `ExportResultsDialog` (see :ref:`Dialogs <dialogs>`) will be
+Upon pressing the `Export data` button in the GUI, the `ExportResultsDialog <https://github.com/mad-lab-fau/mad-gui/blob/main/mad_gui/components/dialogs/plugin_selection/export_results_dialog.py#L19>`_ will be
 opened, in which your exporter can be selected.
 
 .. code-block:: python

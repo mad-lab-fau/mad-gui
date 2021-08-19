@@ -11,7 +11,8 @@ This is the API Reference for MaD GUI sorted by modules.
 
     Start GUI <start_gui>
     Data Classes <models>
-    Plot Tools <plot_tools>
+    Plots <plots>
+    Labels <labels>
     Plugin Selection <plugin_selection>
     Dialogs <dialogs>
     Windows <windows>

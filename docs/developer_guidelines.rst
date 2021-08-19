@@ -40,26 +40,34 @@ If the environment is activated you can see `(mad_gui)` in the commandline befor
 3 Installing MaD GUI
 ####################
 You have two possibilities for installing the dependencies:
-using `pip <https://pip.pypa.io/en/stable/installing/>`_ or using `poetry <https://python-poetry.org>`_.
-Using `pip` is easier and we suggest to use this if you want to get going quickly.
-However, if using `pip` causes problems regarding dependencies, you should switch to using `poetry`.
+
+Assuming you want to build on top of the MaD GUI and do things that are described in :ref:`customization`, installation
+can be done as described in :ref:`3.1 Customization <install via pip>`.
+
+In case you want to change parts at the core of the GUI, which go beyond the parts described in :ref:`customization`,
+you should use poetry as described in :ref:`3.2 Contributing <install via poetry>`
+
+
 
 .. _install via pip:
 
-3.1 Using pip
-*************
-In the anaconda command prompt type the following command. Before, make sure `mad_gui` is still activated (see :ref:`Preparing environment <preparing environment>`):
+3.1 Customization
+*****************
 
-.. code-block::
+Make sure `mad_gui` virtual environment is still activated (see :ref:`Preparing environment <preparing environment>`).
+Depending on how you are handling dependency management, you can use one of the three suggestions:
 
-    pip install mad_gui
-    
+   * No dependency management: `pip install mad_gui`
+   * Using requirements.txt: add `mad_gui` and then `pip install -r requirements.txt`
+   * Using poetry: `poetry add mad_gui`
+
 Make sure to include the underscore!
 Otherwise, you will be installing something else.
 
-3.2 Using Poetry
-****************
+.. _install via poetry:
 
+3.2 Contributing
+****************
 
 3.2.1 Retrieving the repository
 *******************************

@@ -14,5 +14,6 @@ Classes
    :toctree: generated/mad_gui
    :template: class_no_inheritances.rst
 
+   AnnotationData
    GlobalData
    PlotData

@@ -4,11 +4,14 @@
 API Reference
 =============
 
-This is the API Reference for MaD GUI sorted by modules. Before accessing the below parts of the GUI you will likely
-want to take a look at :ref:`customization`.
+To keep the API reference simple, we have only included the parts that you will likely have to understand when you want
+to make use of the :ref:`customization`.
+In case you want to have a more detailed documentation about other parts of the GUI, please refer to
+:ref:`contribution guidelines`.
 
 .. toctree::
     :maxdepth: 1
 
     Start GUI <start_gui.rst>
     Data Classes <models.rst>
+    Labels <labels.rst>

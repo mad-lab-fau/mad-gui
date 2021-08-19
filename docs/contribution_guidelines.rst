@@ -8,6 +8,9 @@ Contribution Guidelines
 
 Before you start working, you will have to create a virtual environment and install our GUI.
 For more information on this, see our :ref:`Developer guidelines <developer guidelines>`.
+In case you wish to have a more detailed information regarding code documentation, replace `docs/modules/index.rst` with
+the contents from `docs/index_full.rst` and then use `doit docs` in your terminal.
+However, you might as well just look at the regarding documentation within the code.
 
 
 1 Design
