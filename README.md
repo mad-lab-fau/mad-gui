@@ -65,13 +65,12 @@ Now you can open the previously downloaded example data as shown in [How do I us
 
 
 ## Can I use it with data of my specific system or a specific algorithm?
-Yes, however it will need someone who is familiar with python.
+Yes, however it will need someone who is familiar with python to perform the steps described in [Customization](https://mad-gui.readthedocs.io/en/latest/customization.html).
 You do not have experience with python but still want to load data from a specific system? [Contact us!](mailto:malte.ollenschlaeger@fau.de)
 
 Developers can get basic information about the project setup in our [Developer Guidelines](https://mad-gui.readthedocs.io/en/latest/developer_guidelines.html).
 If you want to extend the GUI with your custom plugins, e.g. for loading data of a specific system,
-or adding an algorithm, the necessary information can be found in our [API Reference](https://mad-gui.readthedocs.io/en/latest/api_reference.html).
+or adding an algorithm, the necessary information can be found in our documentation regarding [Customization](https://mad-gui.readthedocs.io/en/latest/customization.html).
 
 ## Can I change something at the core of the GUI?
-Sure, we try to document the most important parts of the GUI to make adaption as easy as possible.
-For more information, please take a look at our [Contribution Guidelines](https://mad-gui.readthedocs.io/en/latest/contribution_guidelines.html#contribution-guidelines).
+Sure, for more information, please take a look at our [Contribution Guidelines](https://mad-gui.readthedocs.io/en/latest/contribution_guidelines.html#contribution-guidelines).
