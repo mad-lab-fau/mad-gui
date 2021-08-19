@@ -18,6 +18,5 @@ Classes
 
    BaseRegionLabel
    SegmentedStrideLabel
-   StrideLabel
 
    SynchronizationLabel
