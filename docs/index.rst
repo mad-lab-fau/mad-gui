@@ -9,7 +9,7 @@ Welcome to MaD-GUI's documentation!
 ===================================
 
 .. toctree::
-   :maxdepth: 1
+   :maxdepth: 2
    :caption: Contents:
 
    Getting started <README.md>
