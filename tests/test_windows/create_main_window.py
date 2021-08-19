@@ -3,9 +3,21 @@ import sys
 from PySide2.QtWidgets import QApplication
 
 from mad_gui import BaseSettings, BaseTheme
+from mad_gui.plot_tools import BaseRegionLabel
 from mad_gui.plugins.example import ExampleImporter
-from mad_gui.start_gui import MyLabel, MyOtherLabel
 from mad_gui.windows import MainWindow
+
+
+class MyLabel(BaseRegionLabel):
+    name = "Mei label"
+    min_height = 0.1
+    max_height = 0.5
+
+
+class MyOtherLabel(BaseRegionLabel):
+    name = "Mei anners label"
+    min_height = 0.8
+    max_height = 1
 
 
 def get_main_window():

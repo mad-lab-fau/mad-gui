@@ -13,6 +13,7 @@ Welcome to MaD-GUI Userguide's documentation!
    :caption: Contents:
 
    Getting started <README.md>
+      * Some description
    Developer guidelines <developer_guidelines>
    Customization <customization>
    Contribution guidelines <contribution_guidelines>

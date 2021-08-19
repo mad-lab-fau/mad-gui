@@ -4,12 +4,10 @@ from pathlib import Path
 
 import pytest
 from PySide2.QtCore import Qt, QTimer
-from PySide2.QtWidgets import QApplication
 
 from mad_gui.models.global_data import PlotData
 from mad_gui.plugins.example import ExampleImporter
 from mad_gui.state_keeper import StateKeeper
-from mad_gui.windows.main import MainWindow
 from tests.test_windows.create_main_window import get_main_window
 
 
