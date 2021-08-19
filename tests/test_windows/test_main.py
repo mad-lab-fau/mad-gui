@@ -3,11 +3,11 @@ import sys
 from pathlib import Path
 
 import pytest
-from PySide2.QtCore import Qt, QTimer
-
 from mad_gui.models.global_data import PlotData
 from mad_gui.plugins.example import ExampleImporter
 from mad_gui.state_keeper import StateKeeper
+from PySide2.QtCore import Qt, QTimer
+
 from tests.test_windows.create_main_window import get_main_window
 
 

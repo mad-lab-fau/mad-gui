@@ -1,13 +1,13 @@
 from __future__ import annotations
 
-from pyqtgraph import InfiniteLine, mkPen
-from PySide2.QtCore import Qt
-
 from mad_gui.components.dialogs.user_information import UserInformation
 from mad_gui.config import Config
 from mad_gui.plot_tools.base_label import BaseRegionLabel, InvalidStartEnd, NoLabelSelected
 from mad_gui.plot_tools.base_mode_handler import BaseModeHandler
 from mad_gui.plot_tools.labels import PartialLabel
+from pyqtgraph import InfiniteLine, mkPen
+from PySide2.QtCore import Qt
+
 from typing import Optional, Type
 
 

@@ -1,5 +1,6 @@
 # pylint: skip-file
-"""Classes for showing different windows, one singleton for the GUI state and a one to handle key press events.
+"""
+MaD GUI
 """
 
 from mad_gui.config import BaseSettings, BaseTheme

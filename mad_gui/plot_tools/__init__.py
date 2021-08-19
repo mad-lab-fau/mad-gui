@@ -13,5 +13,5 @@ __all__ = [
     "BaseRegionLabel",
     "StrideLabel",
     "SegmentedStrideLabel",
-    "SynchronizationLabel"
+    "SynchronizationLabel",
 ]

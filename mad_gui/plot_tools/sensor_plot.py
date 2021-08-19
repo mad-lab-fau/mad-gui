@@ -3,10 +3,6 @@ import datetime
 import numpy as np
 import pandas as pd
 import pyqtgraph as pg
-from PySide2.QtCore import QObject, Qt, QTime, Slot
-from PySide2.QtWidgets import QButtonGroup, QCheckBox, QMenu, QWidget, QWidgetAction
-
-from mad_gui.components.dialogs.user_information import UserInformation
 from mad_gui.config import Config
 from mad_gui.models.global_data import PlotData
 from mad_gui.models.ui_state import MODES
@@ -24,6 +20,9 @@ from mad_gui.qt_designer import UI_PATH
 from mad_gui.state_keeper import StateKeeper
 from mad_gui.utils.helper import resource_path
 from mad_gui.utils.model_base import BaseStateModel, Property
+from PySide2.QtCore import QObject, Qt, QTime, Slot
+from PySide2.QtWidgets import QButtonGroup, QCheckBox, QMenu, QWidget, QWidgetAction
+
 from typing import Dict, List, Optional, Type
 
 channel_selector_path = str(UI_PATH / "channel_selector.ui")

@@ -1,6 +1,6 @@
 import pandas as pd
-
 from mad_gui.plugins.base import BaseImporter
+
 from typing import Dict, Tuple
 
 

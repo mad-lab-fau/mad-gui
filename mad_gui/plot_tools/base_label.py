@@ -1,10 +1,10 @@
 import numpy as np
 import pyqtgraph as pg
-from PySide2.QtGui import QColor, QHoverEvent, Qt
-
 from mad_gui.components.dialogs.label_annotation_dialog import NestedLabelSelectDialog
 from mad_gui.config import Config
 from mad_gui.state_keeper import StateKeeper
+from PySide2.QtGui import QColor, QHoverEvent, Qt
+
 from typing import Optional
 
 

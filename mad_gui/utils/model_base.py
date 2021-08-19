@@ -1,9 +1,9 @@
 import pandas as pd
+from mad_gui.utils import helper
 from PySide2.QtCore import Property as QtProperty
 from PySide2.QtCore import QObject, Signal, Slot
 from typing_extensions import Literal
 
-from mad_gui.utils import helper
 from typing import Any, Callable, Optional, Type, TypeVar
 
 

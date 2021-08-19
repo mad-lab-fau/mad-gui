@@ -6,8 +6,6 @@ functionalities given by :py:mod:`mad_gui.plugins.base`, see classes below.
 """
 
 from mad_gui.plugins.base import BaseExporter, BaseImporter
+from mad_gui.plugins.example import ExampleImporter
 
-__all__ = [
-    "BaseImporter",
-    "BaseExporter",
-]
+__all__ = ["BaseImporter", "BaseExporter", "ExampleImporter"]

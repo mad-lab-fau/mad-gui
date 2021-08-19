@@ -1,15 +1,15 @@
 from pathlib import Path
 
-from PySide2 import QtCore
-from PySide2.QtUiTools import loadUiType
-from PySide2.QtWidgets import QDialog
-
 from mad_gui import BaseImporter
 from mad_gui.components.dialogs.user_information import UserInformation
 from mad_gui.components.helper import ask_for_file_name, set_cursor
 from mad_gui.qt_designer import UI_PATH
 from mad_gui.utils.helper import resource_path
 from mad_gui.utils.model_base import BaseStateModel, Property
+from PySide2 import QtCore
+from PySide2.QtUiTools import loadUiType
+from PySide2.QtWidgets import QDialog
+
 from typing import Any, Dict, List, Optional, Tuple, Type
 
 ui_path = resource_path(str(UI_PATH / "load.ui"))

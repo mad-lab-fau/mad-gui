@@ -1,9 +1,8 @@
 import pandas as pd
-from PySide2.QtCore import QObject, QUrl
-from PySide2.QtMultimedia import QMediaContent, QMediaPlayer, QMediaPlaylist
-
 from mad_gui.qt_designer.ui_video import Ui_VideoWindow
 from mad_gui.state_keeper import StateKeeper
+from PySide2.QtCore import QObject, QUrl
+from PySide2.QtMultimedia import QMediaContent, QMediaPlayer, QMediaPlaylist
 
 
 class VideoWindow(Ui_VideoWindow, QObject):

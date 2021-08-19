@@ -18,3 +18,4 @@ Classes
 
    BaseImporter
    BaseExporter
+   ExampleImporter

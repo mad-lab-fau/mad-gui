@@ -1,15 +1,14 @@
 .. _api_ref:
 
-=======
-Modules
-=======
+=============
+API Reference
+=============
 
-This is the API Reference for MaD GUI sorted by modules.
+This is the API Reference for MaD GUI sorted by modules. Before accessing the below parts of the GUI you will likely
+want to take a look at :ref:`customization`.
 
 .. toctree::
     :maxdepth: 1
 
-    Plot Tools <plot_tools>
-    Plugin Selection <plugin_selection>
-    Dialogs <dialogs>
-    Windows <windows>
+    Start GUI <start_gui.rst>
+    Data Classes <models.rst>
