@@ -9,8 +9,8 @@ If you are familiar with PyCharm and python virtual environments, you may direct
 
 .. _installing software:
 
-1 Installing necessary software
-###############################
+Installing necessary software
+#############################
 Necessary software to be installed in advance:
 
     - `anaconda <https://www.anaconda.com/products/individual>`_
@@ -21,8 +21,8 @@ This virtual environment will then be used as python interpreter in the PyCharm 
 
 .. _preparing environment:
 
-2 Preparing an environment
-##########################
+Preparing an environment
+########################
 After installing anaconda, open the Anaconda Prompt.
 Then create a virtual environment in there by using the following commands:
 
@@ -37,8 +37,8 @@ If the environment is activated you can see `(mad_gui)` in the commandline befor
     :width: 400
     :alt: Environment "mad_gui" activated in command prompt
 
-3 Installing MaD GUI
-####################
+Installing MaD GUI
+##################
 You have two possibilities for installing the dependencies:
 
 Assuming you want to build on top of the MaD GUI and do things that are described in :ref:`customization`, installation
@@ -51,8 +51,8 @@ you should use poetry as described in :ref:`3.2 Contributing <install via poetry
 
 .. _install via pip:
 
-3.1 Customization
-*****************
+Customization
+*************
 
 Make sure `mad_gui` virtual environment is still activated (see :ref:`Preparing environment <preparing environment>`).
 Depending on how you are handling dependency management, you can use one of the three suggestions:
@@ -66,11 +66,11 @@ Otherwise, you will be installing something else.
 
 .. _install via poetry:
 
-3.2 Contributing
-****************
+Contributing
+************
 
-3.2.1 Retrieving the repository
-*******************************
+Retrieving the repository
+*************************
 If you are familiar with git, simply clone the repository:
 
 `git clone https://github.com/mad-lab-fau/mad-gui.git`
@@ -82,8 +82,8 @@ Afterwards, extract the contents from the zip file.
     :width: 400
     :alt: Downloading the package
 
-3.2.2 Actual installation
-*************************
+Actual installation
+*******************
 Stay in the anaconda prompt and switch to the directory, where you have downloaded the repository to.
 Most likely, you will need commands like these:
 
@@ -122,14 +122,14 @@ You just have to set up your IDE to use the conda env you created (see next sect
 
 .. _Configuring PyCharm:
 
-4 Configuring PyCharm
-#####################
+Configuring PyCharm
+###################
 
 You can either configure the python interpreter in pycharm directly while creating the project, or afterwards.
 Both options are described below.
 
-4.1 Option A: When setting up the project
-*****************************************
+Option A: When setting up the project
+*************************************
 
 Open PyCharm and create a new project.
 On the left hand side, select `Pure Python`.
@@ -149,8 +149,8 @@ On the right hand side:
 
       * Unix: home/<user>/anaconda3/envs/mad_gui/python
 
-4.2 Option B: After setting up the project
-******************************************
+Option B: After setting up the project
+**************************************
 In your opened project, do the following steps:
 
    #. File -> Settings -> Project: <your project name> -> Python Interpreter
@@ -170,8 +170,8 @@ In your opened project, do the following steps:
 
 .. _adding a script for execution:
 
-5 Run a script in PyCharm
-#########################
+Run a script in PyCharm
+#######################
 
 .. image:: res/images/pycharm_01_add_config.png
     :width: 200
@@ -198,8 +198,8 @@ The bug next to it can be used to start the debug mode.
 
 .. _adapting the gui:
 
-6 Adapting the GUI
-******************
+Adapting the GUI
+****************
 We created the GUI in a way, that you can inject your own plugins into the GUI.
 These can then for example take care for loading data of a specific format.
 Furthermore, you have the possibility to inject algorithms this way.
@@ -208,8 +208,8 @@ If you want to do that, you will need our section about :ref:`Customization <cus
 In case you there is something that you want to change in the GUI, which is not possible using plugins,
 you will need our :ref:`Contribution Guidelines <contribution guidelines>`.
 
-7 Creating an executable
-************************
+Creating an executable
+**********************
 
 You may want to ship the GUI including your plugin(s) to users, who are not familiar with python and/or do not have the possibilites to install something on their machine.
 In this case, you can create an executable of the GUI as follows:
