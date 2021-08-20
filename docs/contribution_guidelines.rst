@@ -13,8 +13,8 @@ the contents from `docs/index_full.rst` and then use `doit docs` in your termina
 However, you might as well just look at the regarding documentation within the code.
 
 
-1 Design
-########
+Design
+######
 You can change the color scheme by passing a `theme` when starting the GUI.
 Please find more detailed information about how to inject such a plugin in our :ref:`API reference, section "2. Adding your plugins" <other systems>`.
 
@@ -31,11 +31,11 @@ When adding / changing image buttons, be sure to do this using `window_buttons.q
 Note, that you have to change the import on the resulting `.py` file from PyQt5 to PySide2.
 
 
-2 Contributing
-##############
+Contributing
+############
 
-2.1 Creating a merge request
-****************************
+Creating a merge request
+************************
 Before you start, create a new branch based on development named like this `<feature-you-want-to-implement>`, to describe roughly what you would like to fix or add.
 Afterwards, create a merge request.
 Be sure to have a `WIP:` at the very beginning of its name.
@@ -44,8 +44,8 @@ Do not choose an assignee yet.
 
 In the description, write shortly what you are going to fix or add, then make commits (see next section).
 
-2.2 Pushing code
-****************
+Pushing code
+************
 Before pushing code, be sure to call `doit` from commandline within the project folder.
 This will automatically trigger the following commands, which you can also call separately:
 
@@ -70,15 +70,15 @@ In case you are experiencing problems with the task `doit lint`, you may want to
 
     pip install git+https://github.com/PyCQA/astroid.git@astroid-2.5.1
 
-2.3 Request to merge code
-*************************
+Request to merge code
+*********************
 When you think your implementation is done, remove `WIP:` from the merge request's name (e.g. by marking it as ready).
 Then, assign a reviewer to the merge request, this person will have to review your code, see [2.4 Reviewing Code](#reviewing-code)
 After the review has been completed, the reviewer will merge your changes into development.
 
 
-3 Reviewing code
-################
+Reviewing code
+##############
 Make sure, code is readable and understandable for others. This includes for example things like these:
 
 * does the method (variable) do (keep) what its name suggest it does?

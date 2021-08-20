@@ -95,9 +95,11 @@ class BasePlot(pg.PlotWidget):
         self.plotItem.titleLabel.setText(text=title, color=Config.theme.FAU_COLORS["dark_blue"])
 
     def configure_style(self):
-        self.setBackground(Config.theme.FAU_COLORS["medium_blue"])
+        from PySide2.QtGui import QPalette
+        bg_color = self.parent.palette().color(QPalette.Active, QPalette.Light)
+        self.setBackground(bg_color)
         for i_channel in ["bottom", "left"]:
-            self._adapt_channel_color(i_channel, Config.theme.FAU_COLORS["dark_blue"])
+            self._adapt_channel_color(i_channel, self.parent.palette().color(QPalette.Active, QPalette.Window))
 
     def _adapt_channel_color(self, channel: str, color: QColor):
         """Make channel color in FAU style"""

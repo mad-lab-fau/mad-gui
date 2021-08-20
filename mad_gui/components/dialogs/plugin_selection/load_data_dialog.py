@@ -3,12 +3,13 @@ from pathlib import Path
 from mad_gui import BaseImporter
 from mad_gui.components.dialogs.user_information import UserInformation
 from mad_gui.components.helper import ask_for_file_name, set_cursor
+from mad_gui.config import Config
 from mad_gui.qt_designer import UI_PATH
 from mad_gui.utils.helper import resource_path
 from mad_gui.utils.model_base import BaseStateModel, Property
 from PySide2 import QtCore
 from PySide2.QtUiTools import loadUiType
-from PySide2.QtWidgets import QDialog
+from PySide2.QtWidgets import QDialog, QPushButton, QLabel, QLineEdit
 
 from typing import Any, Dict, List, Optional, Tuple, Type
 
@@ -48,6 +49,7 @@ class LoadDataDialog(QDialog):
         self.ui = LoadWindow()
         self.setWindowIcon(parent.windowIcon())
         self.ui.setupUi(self)
+        self.setStyleSheet(parent.styleSheet())
         self._setup_ui()
 
     def _setup_ui(self):
@@ -68,6 +70,34 @@ class LoadDataDialog(QDialog):
 
         self.ui.btn_ok.clicked.connect(self.process_data)
         self.ui.btn_cancel.clicked.connect(self.close)
+        for btn in [
+            self.ui.btn_ok,
+            self.ui.btn_cancel,
+            self.ui.btn_select_data,
+            self.ui.btn_select_video,
+            self.ui.btn_select_annotation,
+        ]:
+            btn.setStyleSheet(self.parent.ui.btn_add_label.styleSheet())
+
+        light = Config.theme.COLOR_LIGHT
+        style_btn = (
+            f"QPushButton"
+            f"{{\nborder:none;\npadding: 3px;\nbackground-color:rgb({light.red()}"
+            f",{light.green()}"
+            f",{light.blue()});\ntext-align: left;\n}}"
+        )
+
+        for elem in self.findChildren(QPushButton):
+            elem.setStyleSheet(style_btn)
+
+        for label in self.findChildren(QLabel):
+            label.setStyleSheet(f"color: rgb({light.red()},{light.green()},{light.blue()});")
+
+        for edit in self.findChildren(QLineEdit):
+            edit.setStyleSheet(f"color: rgb({light.red()},{light.green()},{light.blue()});")
+
+        style_cb = style_btn.replace("QPushButton", "QComboBox")
+        self.ui.combo_plugin.setStyleSheet(style_cb)
 
     def _handle_file_select(self, property_name):
         file_name = ask_for_file_name(self.base_dir, parent=self)

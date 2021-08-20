@@ -15,12 +15,13 @@ from typing import Dict, List
 import pandas as pd
 import pyqtgraph as pg
 from PySide2.QtCore import Qt
+from PySide2.QtGui import QPalette, QColor
 from PySide2.QtUiTools import loadUiType
 from PySide2.QtWidgets import (
     QFileDialog,
     QMessageBox,
     QVBoxLayout,
-    QMainWindow,
+    QMainWindow, QLabel,
 )
 
 from mad_gui.components.dialogs.data_selector import DataSelector
@@ -83,6 +84,9 @@ class MainWindow(QMainWindow):
         # Setting up the UI
         self.ui = Window()
         self.ui.setupUi(self)
+        c = theme.COLOR_DARK
+
+        self.setStyleSheet(f"background-color: rgb({c.red()}, {c.green()}, {c.blue()});")
         self._set_window_properties()
 
         # Register sidebar component logic
@@ -157,10 +161,23 @@ class MainWindow(QMainWindow):
         self.ui.btn_export.clicked.connect(self.export)
         self.ui.btn_load_data_gui_format.clicked.connect(self._handle_load_data_gui_format)
         # buttons manual annotation
+        light = Config.theme.COLOR_LIGHT
+        light_hsl = light.toHsl()
+        even_lighter = light_hsl.lighter(150).toRgb()
         for k, b in self.label_buttons.items():
             b.setObjectName(k)
             b.toggled.connect(self.on_main_buttons_clicked)
+            b.setStyleSheet(
+                f"QPushButton"
+                f"{{\nborder:none;\npadding: 3px;\nbackground-color:rgb({light.red()}"
+                f",{light.green()}"
+                f",{light.blue()});\ntext-align: left;\n}}\n\nQPushButton:hover{{\n	background-color: rgb("
+                f"{even_lighter.red()},"
+                f"{even_lighter.green()},{even_lighter.blue()});\n}}"
+            )
         self._enable_buttons(False)
+        self.ui.btn_add_label.palette().setColor(QPalette.Active, QPalette.Window, Config.theme.COLOR_LIGHT)
+        # for button in [self.ui.btn_use_algorithm, self.ui.btn_
 
     def on_main_buttons_clicked(self, new_state):
         button = self.sender()
@@ -340,6 +357,7 @@ class MainWindow(QMainWindow):
         view = LoadDataDialog(
             self.global_data.base_dir, loaders=filter_plugins(self.global_data.plugins, BaseImporter), parent=self
         )
+
         data, loader = view.get_data()
         if data is None or loader is None:
             return
@@ -540,4 +558,5 @@ class MainWindow(QMainWindow):
 
     def _set_window_properties(self):
         self.setAttribute(Qt.WA_DeleteOnClose)
+        self.setAttribute(Qt.WA_WindowPropagation)
         self.setWindowTitle("MaD GUI")

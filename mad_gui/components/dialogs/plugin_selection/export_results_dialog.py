@@ -1,6 +1,9 @@
+from PySide2.QtWidgets import QDialog
+
 from mad_gui import BaseExporter
 from mad_gui.components.dialogs.user_information import UserInformation
 from mad_gui.components.helper import set_cursor
+from mad_gui.config import Config
 from mad_gui.models.global_data import GlobalData, PlotData
 from mad_gui.qt_designer import UI_PATH
 from mad_gui.utils.helper import resource_path
@@ -16,7 +19,7 @@ elif ".py" in ui_path:
     from mad_gui.qt_designer.build.export import Ui_Form as PluginSelectorWindow  # pylint: disable=C0412,E0401
 
 
-class ExportResultsDialog(PluginSelectorWindow):
+class ExportResultsDialog(QDialog):
     """A dialog to select the exporter to use to export results from the shown data and labels.
 
     See Also
@@ -34,6 +37,7 @@ class ExportResultsDialog(PluginSelectorWindow):
         self.ui = PluginSelectorWindow()
         self.setWindowIcon(parent.windowIcon())
         self.ui.setupUi(self)
+        self.setStyleSheet(parent.styleSheet())
         self._setup_ui()
 
     def _setup_ui(self):
@@ -41,6 +45,22 @@ class ExportResultsDialog(PluginSelectorWindow):
         self.ui.combo_plugin.addItems([exporter.name() for exporter in self.exporters])
         self.ui.btn_ok.clicked.connect(self.process_data)
         self.ui.btn_cancel.clicked.connect(self.close)
+
+        for btn in [
+            self.ui.btn_ok,
+            self.ui.btn_cancel,
+        ]:
+            btn.setStyleSheet(self.parent.ui.btn_add_label.styleSheet())
+
+        light = Config.theme.MAIN_COLORS[1]
+
+        style_cb = (
+            f"QComboBox"
+            f"{{\nborder:none;\npadding: 3px;\nbackground-color:rgb({light.red()}"
+            f",{light.green()}"
+            f",{light.blue()});\ntext-align: left;\n}}"
+        )
+        self.ui.combo_plugin.setStyleSheet(style_cb)
 
     def process_data(self):
         set_cursor(self, QtCore.Qt.BusyCursor)

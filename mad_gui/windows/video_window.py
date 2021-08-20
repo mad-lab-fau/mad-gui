@@ -27,6 +27,7 @@ class VideoWindow(Ui_VideoWindow, QObject):
         self.player.positionChanged.connect(self.frame_changed)
         self.player.durationChanged.connect(self.set_slider_range)
         self.btn_play_pause.clicked.connect(self.toggle_play)
+        self.setStyleSheet(parent.styleSheet())
 
     def toggle_play(self):
         if self.player.state() == QMediaPlayer.PlayingState:

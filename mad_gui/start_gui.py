@@ -1,5 +1,6 @@
 import argparse
 import sys
+from pathlib import Path
 
 from mad_gui.config import BaseSettings, BaseTheme
 from mad_gui.plot_tools import BaseRegionLabel
@@ -12,7 +13,7 @@ from typing import Sequence, Type
 
 
 def start_gui(
-    data_dir="./",
+    base_dir=Path("../example_data/").absolute(),
     settings: Type[BaseSettings] = BaseSettings,
     theme: Type[BaseTheme] = BaseTheme,
     plugins: Sequence[BasePlugin] = (ExampleImporter,),
@@ -20,7 +21,7 @@ def start_gui(
 ):
     # Create the Qt Application
     app = QApplication(sys.argv)
-    form = MainWindow(data_dir=data_dir, settings=settings, theme=theme, plugins=plugins, labels=labels)
+    form = MainWindow(parent=app, data_dir=base_dir, settings=settings, theme=theme, plugins=plugins, labels=labels)
     form.show()
 
     sys.exit(app.exec_())

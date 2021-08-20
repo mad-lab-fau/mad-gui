@@ -2,6 +2,8 @@ from PySide2.QtGui import QColor
 
 
 class BaseTheme:
+    COLOR_DARK = QColor(0, 56, 101)
+    COLOR_LIGHT = QColor(144, 167, 198)
     FAU_COLORS = {
         "dark_blue": QColor(0, 56, 101),
         "medium_blue": QColor(144, 167, 198),

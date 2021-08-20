@@ -1,4 +1,7 @@
 from PySide2.QtCore import QObject, QPropertyAnimation, Signal
+from PySide2.QtGui import QPalette
+
+from mad_gui.config import Config
 
 
 class Sidebar(QObject):
@@ -10,10 +13,11 @@ class Sidebar(QObject):
     def __init__(self, ui, parent=None, initial_collapsed: bool = False):
         super().__init__(parent=parent)
         self.parent = parent
-        self.ui = ui
+        c = Config.theme.COLOR_LIGHT
+        ui.menu_bar.setStyleSheet(f"background-color: rgb({c.red()}, {c.green()}, {c.blue()});")
         self.collapsed = initial_collapsed
         self._animation = None
-
+        self.ui = ui
         self.ui.btn_toggle_menu.clicked.connect(self.toggle)
 
     def set_collapsed(self, collapsed: bool):
