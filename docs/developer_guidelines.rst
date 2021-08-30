@@ -33,7 +33,7 @@ Then create a virtual environment in there by using the following commands:
 
 If the environment is activated you can see `(mad_gui)` in the commandline before your next input.
 
-.. image:: res/images/conda_activated.png
+.. image:: _static/images/conda_activated.png
     :width: 400
     :alt: Environment "mad_gui" activated in command prompt
 
@@ -76,7 +76,7 @@ If you are familiar with git, simply clone the repository:
 If you are not familiar with git, go to the start page of the repository, click the download button and then chose `zip` as shown in this image.
 Afterwards, extract the contents from the zip file.
 
-.. image:: res/images/downloading.png
+.. image:: _static/images/downloading.png
     :width: 400
     :alt: Downloading the package
 
@@ -171,7 +171,7 @@ In your opened project, do the following steps:
 Run a script in PyCharm
 #######################
 
-.. image:: res/images/pycharm_01_add_config.png
+.. image:: _static/images/pycharm_01_add_config.png
     :width: 200
     :alt: Configure PyCharm
     :class: float-right
