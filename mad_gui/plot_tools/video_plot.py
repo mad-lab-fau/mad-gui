@@ -73,12 +73,16 @@ class VideoPlot(BasePlot):
         x_values = percentage / 100 * length_seconds
         self.set_data(x=x_values, y=np.zeros(len(x_values)), fps=fps)
 
-    def set_data(self, x: List, y: List, fps: Optional[float]):
-        self.plot(x=x, y=y)
+    def set_data(self, x: List, y: List, fps: Optional[float]=1):
+        self.plot(x=x/1000, y=y)
         self.plot_data = PlotData()
-        self.plot_data.data = x
-        if fps:
-            self.plot_data.sampling_rate_hz = fps
+        self.plot_data.sampling_rate_hz = fps
+        self.plot_data.data = y
+        ax_bottom = self.getAxis("bottom")
+        if fps != 1:
+            ax_bottom.setLabel(text="time [seconds]")
+        else:
+            ax_bottom.setLabel(text="time [samples]")
 
     def add_sync_item(self):
         # just make sure we have the correct sampling frequency and video duration
