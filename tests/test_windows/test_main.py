@@ -1,5 +1,3 @@
-import os
-import sys
 from pathlib import Path
 
 import pytest
@@ -31,10 +29,10 @@ class TestGui:
         gui.close()
 
     @pytest.mark.parametrize(
-        "load_sensor, load_activities, load_strides",
-        [(True, True, True), (True, False, False)],
+        "load_sensor, load_activities",
+        [(True, True), (True, False)],
     )
-    def test_load_data_from_pickle(self, qtbot, load_sensor, load_activities, load_strides):
+    def test_load_data_from_pickle(self, qtbot, load_sensor, load_activities):
         gui = get_main_window()
         qtbot.addWidget(gui)
         example_pickle = Path(__file__).parent.parent.parent / "example_data" / "data.mad_gui"
@@ -42,8 +40,7 @@ class TestGui:
         def handle_dialog():
             for box_name, indicator in [
                 ("sensor", load_sensor),
-                ("ActivityLabel", load_activities),
-                ("StrideLabel", load_strides),
+                ("Base Label", load_activities),
             ]:
                 gui.data_selector.boxes[box_name].setChecked(indicator)
 
@@ -55,24 +52,13 @@ class TestGui:
 
         # currently gui.plotted_data is empty, it is just in gui.global_data.plotted_data
         activities = {
-            "Acceleration": gui.global_data.plot_data["Acceleration"].annotations["ActivityLabel"],
-        }
-        strides = {
-            "Acceleration": gui.global_data.plot_data["Acceleration"].annotations["StrideLabel"],
+            "Acceleration": gui.global_data.plot_data["Acceleration"].annotations["Base Label"],
         }
 
         if load_activities:
             assert len(activities["Acceleration"].data) == 1
         else:
             assert len(activities["Acceleration"].data) == 0
-        if load_strides:
-            assert len(strides["Acceleration"].data) == 1
-            # assert strides["Acceleration"].iloc[0].start == 502
-            # assert strides["Acceleration"].iloc[0].end == 560
-            # _, sr = gui._get_sensor_data()
-            # assert int(sr["Acceleration"]) == 50
-        else:
-            assert len(strides["Acceleration"].data) == 0
         gui.close()
 
     def test_toggle_label_state(self, qtbot):

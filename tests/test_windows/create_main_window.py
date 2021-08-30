@@ -29,7 +29,7 @@ def get_main_window():
     settings = BaseSettings
     theme = BaseTheme
     plugins = (ExampleImporter,)
-    labels = (MyLabel, MyOtherLabel)
+    labels = (BaseRegionLabel,)
 
     form = MainWindow(settings=settings, theme=theme, plugins=plugins, labels=labels)
     return form
