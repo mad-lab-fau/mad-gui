@@ -127,6 +127,7 @@ Setting Constants
 
 You can create your own settings by creating a class, which inherits from our `BaseSettings <https://github.com/mad-lab-fau/mad-gui/blob/main/mad_gui/config/settings.py#L1>`_.
 The following example makes use of the BaseSettings and simply overrides two selected properties:
+
 .. code-block:: python
 
    from mad_gui.config import BaseSettings

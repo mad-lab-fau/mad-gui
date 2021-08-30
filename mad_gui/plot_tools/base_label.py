@@ -119,14 +119,7 @@ class BaseRegionLabel(pg.LinearRegionItem):
         """Setting the type of the activity to one given in the consts file.
 
         Called by :meth:`mad_gui.plot_tools.SensorPlot._finish_adding_activity` or if the user clicks on the label while
-        being in edit mode. The emitted signal is caught by :meth:`mad_gui.MainWindow.ask_for_label_type`. In case
-        the configuration file is configured in a way, that also details should be obtained for specific activity types,
-        this will be triggered after obtaining the label type.
-
-        For further information on the configuration file, see `Developer Guidelines
-        <https://madlab.mad-pages.informatik.uni-erlangen.de/GaitAnalysis/labeling_tool/developer_guidelines.html#
-        adding-support-for-other-systems>`_
-
+        being in edit mode. The emitted signal is caught by :meth:`mad_gui.MainWindow.ask_for_label_type`.
         """
         # the activities should be set by passing a `Settings` object which inherits from mad_gui.config.BaseSettings
         # and has an attribute `ACTIVITIES`, see our developer guidelines for more information

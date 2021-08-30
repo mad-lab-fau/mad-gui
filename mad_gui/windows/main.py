@@ -176,6 +176,8 @@ class MainWindow(QMainWindow):
                 f"{even_lighter.red()},{even_lighter.green()},{even_lighter.blue()});\n}}"
                 f"QPushButton:disabled{{\n	background-color: rgb(160,160,160);\n"
                 f"color: rgb(120,120,120)}}"
+                f"QPushButton:checked{{\n	background-color: rgb("
+                f"{even_lighter.red()},{even_lighter.green()},{even_lighter.blue()});\n}}"
             )
         self._enable_buttons(False)
 
