@@ -162,6 +162,7 @@ class MainWindow(QMainWindow):
         self.ui.btn_load_data_gui_format.clicked.connect(self._handle_load_data_gui_format)
         # buttons manual annotation
         light = Config.theme.COLOR_LIGHT
+        dark = Config.theme.COLOR_DARK
         light_hsl = light.toHsl()
         even_lighter = light_hsl.lighter(150).toRgb()
         for k, b in self.label_buttons.items():
@@ -169,15 +170,15 @@ class MainWindow(QMainWindow):
             b.toggled.connect(self.on_main_buttons_clicked)
             b.setStyleSheet(
                 f"QPushButton"
-                f"{{\nborder:none;\npadding: 3px;\nbackground-color:rgb({light.red()}"
-                f",{light.green()}"
-                f",{light.blue()});\ntext-align: left;\n}}\n\nQPushButton:hover{{\n	background-color: rgb("
-                f"{even_lighter.red()},"
-                f"{even_lighter.green()},{even_lighter.blue()});\n}}"
+                f"{{\nborder:none;\npadding: 3px;\nbackground-color:rgb({light.red()},{light.green()},{light.blue()});"
+                f"\ntext-align: left;\ncolor:rgb({dark.red()},{dark.green()},{dark.blue()});\n"
+                f"border-radius: 5px;}}\n\n"
+                f"QPushButton:hover{{\n	background-color: rgb("
+                f"{even_lighter.red()},{even_lighter.green()},{even_lighter.blue()});\n}}"
+                f"QPushButton:disabled{{\n	background-color: rgb(160,160,160);\n"
+                f"color: rgb(120,120,120)}}"
             )
         self._enable_buttons(False)
-        self.ui.btn_add_label.palette().setColor(QPalette.Active, QPalette.Window, Config.theme.COLOR_LIGHT)
-        # for button in [self.ui.btn_use_algorithm, self.ui.btn_
 
     def on_main_buttons_clicked(self, new_state):
         button = self.sender()
@@ -481,8 +482,8 @@ class MainWindow(QMainWindow):
         if not UserInformation(parent=self).confirm(
             "Warning: Calculating new annotations might delete all currently "
             "displayed annotations!\nIt is up to the implemented algorithm, "
-            "if the new annotations are added or if they replace the old "
-            "annotations."
+            "if the new annotations are added or if they replace the currently displayed "
+            "annotations. Do you want to continue?"
         ):
             return
 

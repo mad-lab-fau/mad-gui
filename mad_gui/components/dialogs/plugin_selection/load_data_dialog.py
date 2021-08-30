@@ -77,18 +77,19 @@ class LoadDataDialog(QDialog):
             self.ui.btn_select_video,
             self.ui.btn_select_annotation,
         ]:
-            btn.setStyleSheet(self.parent.ui.btn_add_label.styleSheet())
+            btn.setStyleSheet(self.parent.ui.btn_load_data.styleSheet())
 
         light = Config.theme.COLOR_LIGHT
-        style_btn = (
-            f"QPushButton"
-            f"{{\nborder:none;\npadding: 3px;\nbackground-color:rgb({light.red()}"
-            f",{light.green()}"
-            f",{light.blue()});\ntext-align: left;\n}}"
-        )
-
-        for elem in self.findChildren(QPushButton):
-            elem.setStyleSheet(style_btn)
+        #light_hsl = light.toHsl()
+        #even_lighter = light_hsl.lighter(150).toRgb()
+        #style_btn = (
+        #    f"QPushButton"
+        #    f"{{\nborder:none;\npadding: 3px;\nbackground-color:rgb({light.red()}"
+        #    f",{light.green()}"
+        #    f",{light.blue()});\ntext-align: left;\n}}\n\nQPushButton:hover{{\n	background-color: rgb("
+        #    f"{even_lighter.red()},"
+        #    f"{even_lighter.green()},{even_lighter.blue()});\n}}"
+        #)
 
         for label in self.findChildren(QLabel):
             label.setStyleSheet(f"color: rgb({light.red()},{light.green()},{light.blue()});")
@@ -96,7 +97,10 @@ class LoadDataDialog(QDialog):
         for edit in self.findChildren(QLineEdit):
             edit.setStyleSheet(f"color: rgb({light.red()},{light.green()},{light.blue()});")
 
-        style_cb = style_btn.replace("QPushButton", "QComboBox")
+        for elem in self.findChildren(QPushButton):
+            elem.setStyleSheet(self.parent.ui.btn_add_label.styleSheet())
+
+        style_cb = self.parent.ui.btn_add_label.styleSheet().replace("QPushButton", "QComboBox")
         self.ui.combo_plugin.setStyleSheet(style_cb)
 
     def _handle_file_select(self, property_name):

@@ -51,8 +51,7 @@ class ExportResultsDialog(QDialog):
         ]:
             btn.setStyleSheet(self.parent.ui.btn_add_label.styleSheet())
 
-        light = Config.theme.MAIN_COLORS[1]
-
+        light = Config.theme.COLOR_LIGHT
         style_cb = (
             f"QComboBox"
             f"{{\nborder:none;\npadding: 3px;\nbackground-color:rgb({light.red()}"
@@ -75,7 +74,11 @@ class ExportResultsDialog(QDialog):
         The emitted signal will be fetched by :class:`mad_gui.windows.MainWindow`, which will in turn trigger the
         loading by the regarding importer. Also, the mode of the GUI will be set to `investigate`.
         """
-        exporter_class = self.exporters[self.ui.combo_plugin.currentIndex()]
+        try:
+            exporter_class = self.exporters[self.ui.combo_plugin.currentIndex()]
+        except IndexError:
+            UserInformation.inform("No methods for exporting are implemented.")
+            return
         try:
             # TODO: Implement loader config
             user_config = {}
