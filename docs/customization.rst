@@ -159,16 +159,19 @@ Note that the axis names need to fit the axis names that are in the loaded data.
 
 Activity labels
 ***************
-After adding an activity, there will be a pop-up window, which gives you the possiblity to assign one of the following
-activity types to it. Furthermore, you can select those labels, for which you additionally want to provide details in
-a separate pop-up window.
+After adding an activity, there will be a pop-up window, which gives you the possibility to assign activity types to it.
+In this example, there are up to three levels.
+"Sitting" has only one level.
+"Moving" can be further differentiated into `walk` and `run`, and `walk` can be further differentiated into `slow` and `fast`.
+The number of levels you create is arbitrary.
 
 .. code-block:: python
 
-   ACTIVITIES = [
-       "sitting",
-       "moving"
-   ]
+   ACTIVITIES = {
+       "sitting": None,
+       "moving": {"walk": ["slow", "fast"],
+                  "run": None}
+   }
 
 .. _consts-stride-labels:
 

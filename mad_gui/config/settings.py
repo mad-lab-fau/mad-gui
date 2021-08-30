@@ -2,7 +2,7 @@ class BaseSettings:
     BIND_Y_AXIS = True
     SENSORS_SYNCHRONIZED = True
 
-    ACTIVITIES = ["gait", "other"]
+    ACTIVITIES = {"gait": {"slow": None, "fast": ["jogging", "running"]}, "other": None}
     DETAILS = []
 
     STRIDE_SNAP_TO_MIN = False
