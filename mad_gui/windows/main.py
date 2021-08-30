@@ -361,6 +361,7 @@ class MainWindow(QMainWindow):
         data, loader = view.get_data()
         if data is None or loader is None:
             return
+        warnings.warn("We need to implement plotting annotations in case they have been loaded.")
         self.global_data.active_loader = loader
         self.global_data.data_file = data.get("data_file_name", "")
         self.global_data.sync_file = data.get("sync_file", "")

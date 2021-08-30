@@ -38,7 +38,7 @@ class TestGui:
         gui = get_main_window()
         qtbot.addWidget(gui)
         example_pickle = (
-            Path(__file__).parent.parent.parent / "example_data" / "smartphone" / "mad_gui" / "data.mad_gui"
+            Path(__file__).parent.parent.parent / "example_data" / "data.mad_gui"
         )
 
         def handle_dialog():
@@ -79,8 +79,8 @@ class TestGui:
 
     def test_toggle_label_state(self, qtbot):
         gui = get_main_window()
-        imu_file = Path(__file__).parent.parent.parent / "example_data" / "smartphone" / "acceleration.csv"
-        video_file = Path(__file__).parent.parent.parent / "example_data" / "smartphone" / "video" / "video.mp4"
+        imu_file = Path(__file__).parent.parent.parent / "example_data" / "acceleration.csv"
+        video_file = Path(__file__).parent.parent.parent / "example_data" / "video" / "video.mp4"
 
         gui.global_data.data_file = str(imu_file)
         gui.global_data.video_file = str(video_file)
