@@ -190,6 +190,8 @@ class MainWindow(QMainWindow):
 
     def _update_button_state(self, new_mode: MODES):
         for k, b in self.label_buttons.items():
+            if not b.isEnabled():
+                return
             old_state = b.blockSignals(True)
             b.setChecked(k == new_mode)
             b.blockSignals(old_state)
@@ -432,6 +434,7 @@ class MainWindow(QMainWindow):
         self.VideoWindow.show()
         StateKeeper.video_duration_available.connect(self._initialize_video_plot)
         self.ui.btn_sync_data.setDisabled(False)
+
 
     def _initialize_video_plot(self):
         StateKeeper.video_duration_available.disconnect(self._initialize_video_plot)

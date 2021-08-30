@@ -64,14 +64,16 @@ class TestGui:
     def test_toggle_label_state(self, qtbot):
         gui = get_main_window()
         imu_file = Path(__file__).parent.parent.parent / "example_data" / "sensor_data.csv"
-        video_file = Path(__file__).parent.parent.parent / "example_data" / "video" / "video.mp4"
+        video_file = Path(__file__).parent.parent / "test_video"
+
+        print(video_file.absolute())
 
         gui.global_data.data_file = str(imu_file)
         gui.global_data.video_file = str(video_file)
         qtbot.addWidget(gui)
-
+        qtbot.wait(1000)
         assert gui.VideoWindow.isHidden()
-        gui.load_video(str(video_file))
+        #gui.load_video(str(video_file))
 
         # wait until data is plotted
         qtbot.wait(1000)
