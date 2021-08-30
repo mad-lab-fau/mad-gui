@@ -78,7 +78,7 @@ class ExportResultsDialog(QDialog):
             exporter_class = self.exporters[self.ui.combo_plugin.currentIndex()]
         except IndexError:
             UserInformation.inform("No methods for exporting are implemented.")
-            return
+            return False
         try:
             # TODO: Implement loader config
             user_config = {}

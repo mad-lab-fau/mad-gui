@@ -70,26 +70,8 @@ class LoadDataDialog(QDialog):
 
         self.ui.btn_ok.clicked.connect(self.process_data)
         self.ui.btn_cancel.clicked.connect(self.close)
-        for btn in [
-            self.ui.btn_ok,
-            self.ui.btn_cancel,
-            self.ui.btn_select_data,
-            self.ui.btn_select_video,
-            self.ui.btn_select_annotation,
-        ]:
-            btn.setStyleSheet(self.parent.ui.btn_load_data.styleSheet())
 
         light = Config.theme.COLOR_LIGHT
-        #light_hsl = light.toHsl()
-        #even_lighter = light_hsl.lighter(150).toRgb()
-        #style_btn = (
-        #    f"QPushButton"
-        #    f"{{\nborder:none;\npadding: 3px;\nbackground-color:rgb({light.red()}"
-        #    f",{light.green()}"
-        #    f",{light.blue()});\ntext-align: left;\n}}\n\nQPushButton:hover{{\n	background-color: rgb("
-        #    f"{even_lighter.red()},"
-        #    f"{even_lighter.green()},{even_lighter.blue()});\n}}"
-        #)
 
         for label in self.findChildren(QLabel):
             label.setStyleSheet(f"color: rgb({light.red()},{light.green()},{light.blue()});")
