@@ -6,12 +6,9 @@ Customization
 
 Here we describe how you can:
 
-- load data from a specific system
-- implement an algorithm from another python package
+- add a plugin to load data of a specific system / a specific format, implement a custom algorithm, and export data in a custom format
+- create custom labels
 - customize settings
-
-However, in case you want to change something closer at the core of the GUI, you might need to take a look at our
-:ref:`Contribution guidelines <contribution guidelines>`.
 
 .. note::
    In case you are not familiar with PyCharm and virtual environments, you might first want to check out our
@@ -128,8 +125,21 @@ After creating your exporter, make sure to also pass it to the `start_gui` funct
 Setting Constants
 #################
 
-You can create your own settings by creating a class, which inherits from our BaseSettings.
-Below show an example for all the things you can customize.
+You can create your own settings by creating a class, which inherits from our `BaseSettings <https://github.com/mad-lab-fau/mad-gui/blob/main/mad_gui/config/settings.py#L1>`_.
+The following example makes use of the BaseSettings and simply overrides two selected properties:
+.. code-block:: python
+
+   from mad_gui.config import BaseSettings
+
+   class MySettings(BaseSettings):
+     CHANNELS_TO_PLOT = ["acc_x", "acc_z"]
+     ACTIVITIES = ["sleep", "walk", "sit"]
+
+   start_gui(
+    settings=MySettings,
+   )
+
+Below you can find all the possibilities for customization.
 
 
 Axes to plot
@@ -159,7 +169,6 @@ a separate pop-up window.
        "sitting",
        "moving"
    ]
-   DETAILS = ["walk", "run"]  # options for details, if user selected activity_type2 before
 
 .. _consts-stride-labels:
 
@@ -175,7 +184,7 @@ Set the width of IMU plot to this, when hitting the play button for the video.
 Creating custom labels
 ######################
 You can create labels and pass them to our GUI.
-Your label must inherit form our BaseLabel.
+Your label must inherit form our `BaseRegionLabel <https://mad-gui.readthedocs.io/en/latest/modules/generated/plot_tools/mad_gui.plot_tools.BaseRegionLabel.html#mad_gui.plot_tools.BaseRegionLabel>`_.
 It could for example look like this:
 
 .. code-block:: python

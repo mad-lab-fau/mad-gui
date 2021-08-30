@@ -42,17 +42,15 @@ Installing MaD GUI
 You have two possibilities for installing the dependencies:
 
 Assuming you want to build on top of the MaD GUI and do things that are described in :ref:`customization`, installation
-can be done as described in :ref:`3.1 Customization <install via pip>`.
+can be done as described in :ref:`Installation for Customization (recommended) <install via pip>`.
 
 In case you want to change parts at the core of the GUI, which go beyond the parts described in :ref:`customization`,
-you should use poetry as described in :ref:`3.2 Contributing <install via poetry>`
-
-
+you should use poetry as described in :ref:`Installation for Contributing <install via poetry>`
 
 .. _install via pip:
 
-Customization
-*************
+1. Installation for Customization (recommended)
+***********************************************
 
 Make sure `mad_gui` virtual environment is still activated (see :ref:`Preparing environment <preparing environment>`).
 Depending on how you are handling dependency management, you can use one of the three suggestions:
@@ -66,11 +64,11 @@ Otherwise, you will be installing something else.
 
 .. _install via poetry:
 
-Contributing
-************
+2. Installation for Contributing
+********************************
 
-Retrieving the repository
-*************************
+2.1 Retrieving the repository
+*****************************
 If you are familiar with git, simply clone the repository:
 
 `git clone https://github.com/mad-lab-fau/mad-gui.git`
@@ -82,8 +80,8 @@ Afterwards, extract the contents from the zip file.
     :width: 400
     :alt: Downloading the package
 
-Actual installation
-*******************
+2.2 Actual installation
+***********************
 Stay in the anaconda prompt and switch to the directory, where you have downloaded the repository to.
 Most likely, you will need commands like these:
 
@@ -196,18 +194,6 @@ Where you saw `Add Configuration...` previously, should now be written `Start GU
 Next to it, you see the green play button, which will start the GUI.
 The bug next to it can be used to start the debug mode.
 
-.. _adapting the gui:
-
-Adapting the GUI
-****************
-We created the GUI in a way, that you can inject your own plugins into the GUI.
-These can then for example take care for loading data of a specific format.
-Furthermore, you have the possibility to inject algorithms this way.
-If you want to do that, you will need our section about :ref:`Customization <customization>`.
-
-In case you there is something that you want to change in the GUI, which is not possible using plugins,
-you will need our :ref:`Contribution Guidelines <contribution guidelines>`.
-
 Creating an executable
 **********************
 
@@ -215,7 +201,7 @@ You may want to ship the GUI including your plugin(s) to users, who are not fami
 In this case, you can create an executable of the GUI as follows:
 
 * install a clean python version (not using anaconda)
-* afterwards, follow these steps in the clean python installation (not in your virutal environment mad_gui!):
+* afterwards, follow these steps in the clean python installation (not in your virtual environment mad_gui!):
 
 .. code-block:: python
 
@@ -250,5 +236,17 @@ Afterwards, you will find the file in the `dist` folder
 Sometimes pyinstaller does not find all the imports. In that case, you might need to make use of its
 `hidden import <https://pyinstaller.readthedocs.io/en/stable/when-things-go-wrong.html#listing-hidden-imports>`_
 option.
+
+.. _adapting the gui:
+
+Adapting the GUI
+****************
+We created the GUI in a way, that you can inject your own plugins into the GUI.
+These can then for example take care for loading data of a specific format.
+Furthermore, you have the possibility to inject algorithms this way.
+If you want to do that, you will need our section about :ref:`Customization <customization>`.
+
+In case you is something that you want to change in the GUI, which is not possible using the described ways for customization,
+you will need our :ref:`Contribution Guidelines <contribution guidelines>`.
 
 
