@@ -73,8 +73,8 @@ class VideoPlot(BasePlot):
         x_values = percentage / 100 * length_seconds
         self.set_data(x=x_values, y=np.zeros(len(x_values)), fps=fps)
 
-    def set_data(self, x: List, y: List, fps: Optional[float]=1):
-        self.plot(x=x/1000, y=y)
+    def set_data(self, x: List, y: List, fps: Optional[float] = 1):
+        self.plot(x=x / 1000, y=y)
         self.plot_data = PlotData()
         self.plot_data.sampling_rate_hz = fps
         self.plot_data.data = y

@@ -10,7 +10,7 @@ import os
 import warnings
 from pathlib import Path
 import pickle
-from typing import Dict, List
+from typing import Dict
 
 import pandas as pd
 import pyqtgraph as pg
@@ -304,10 +304,6 @@ class MainWindow(QMainWindow):
         self.menu.set_collapsed(True)
 
         return loaded_data, loadable_labels
-
-    def _get_processable_label_classes(self):
-
-        return [v for k, v in known_label_types.items()]
 
     def _label_classes_backwards_compatibility(self, labels, known_label_types: Dict):
         class StrideLabel(BaseRegionLabel):
