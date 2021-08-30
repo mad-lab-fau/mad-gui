@@ -435,7 +435,6 @@ class MainWindow(QMainWindow):
         StateKeeper.video_duration_available.connect(self._initialize_video_plot)
         self.ui.btn_sync_data.setDisabled(False)
 
-
     def _initialize_video_plot(self):
         StateKeeper.video_duration_available.disconnect(self._initialize_video_plot)
         if self.video_plot:
