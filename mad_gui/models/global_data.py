@@ -13,6 +13,9 @@ if TYPE_CHECKING:
 class AnnotationData(BaseStateModel):
     data = Property(pd.DataFrame(), dtype=pd.DataFrame)
 
+    def to_df(self):
+        return self.data
+
 
 class PlotData(BaseStateModel):
     # we need to initialize this with `None` for sphinx
@@ -23,8 +26,7 @@ class PlotData(BaseStateModel):
     def to_dict(self):
         return {
             "data": self.data,
-            "stride_annotations": self.stride_annotations,
-            "activity_annotations": self.activity_annotations,
+            "annotations": {k: v.to_df() for k, v in self.annotations.items()},
             "sampling_rate_hz": self.sampling_rate_hz,
         }
 

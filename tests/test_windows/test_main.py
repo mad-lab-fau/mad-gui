@@ -77,7 +77,7 @@ class TestGui:
 
     def test_toggle_label_state(self, qtbot):
         gui = get_main_window()
-        imu_file = Path(__file__).parent.parent.parent / "example_data" / "acceleration.csv"
+        imu_file = Path(__file__).parent.parent.parent / "example_data" / "sensor_data.csv"
         video_file = Path(__file__).parent.parent.parent / "example_data" / "video" / "video.mp4"
 
         gui.global_data.data_file = str(imu_file)

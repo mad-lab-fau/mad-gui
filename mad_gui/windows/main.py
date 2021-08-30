@@ -258,9 +258,6 @@ class MainWindow(QMainWindow):
         self.setCursor(Qt.BusyCursor)
         loaded_data = pd.read_pickle(file)
 
-        if isinstance(loaded_data, GlobalData):
-            print("new method.")
-
         label_classes_to_load = []
         for sensor_item in loaded_data.values():
             sensor_item = self._make_keys_backwards_compatible(sensor_item)
