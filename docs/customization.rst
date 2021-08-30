@@ -134,7 +134,7 @@ The following example makes use of the BaseSettings and simply overrides two sel
 
    class MySettings(BaseSettings):
      CHANNELS_TO_PLOT = ["acc_x", "acc_z"]
-     ACTIVITIES = ["sleep", "walk", "sit"]
+     ACTIVITIES = {"sleep": None, "walk": ["fast", "slow"], "sit": None}
 
    start_gui(
     settings=MySettings,
