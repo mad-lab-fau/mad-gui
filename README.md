@@ -55,7 +55,7 @@ python -m mad_gui.start_gui --base_dir C:/my_data
 ```
 
 Alternatively, within a python script use our [start_gui](https://github.com/mad-lab-fau/mad-gui/blob/2857ccc20766ea32f847271771b52c97e2682b79/mad_gui/start_gui.py#L26) 
-function and hand it over the path where your data resides, `<data_path>` like `"C:/data"` or `"/home/data/"`: 
+function and hand it over the path where your data resides, `<data_path>` like `C:/data` or `/home/data/`: 
 ```
 from mad_gui import start_gui
 start_gui(<data_path>)
