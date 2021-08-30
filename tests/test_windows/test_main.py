@@ -64,7 +64,7 @@ class TestGui:
     def test_toggle_label_state(self, qtbot):
         gui = get_main_window()
         imu_file = Path(__file__).parent.parent.parent / "example_data" / "sensor_data.csv"
-        video_file = Path(__file__).parent.parent / "test_video"
+        video_file = Path(__file__).parent.parent / "test_video.mp4"
 
         print(video_file.absolute())
 
@@ -73,15 +73,17 @@ class TestGui:
         qtbot.addWidget(gui)
         qtbot.wait(1000)
         assert gui.VideoWindow.isHidden()
-        #gui.load_video(str(video_file))
+        gui.load_video(str(video_file))
 
         # wait until data is plotted
         qtbot.wait(1000)
+        gui.show()
 
         assert len(gui.sensor_plots) == 0
         sensor_data, sampling_rate = ExampleImporter().load_sensor_data(imu_file)
         plot_data = PlotData().from_dict({"data": sensor_data["Acceleration"], "sampling_rate_hz": sampling_rate})
         gui.global_data.plot_data = {"Acceleration": plot_data}
+        gui._enable_buttons(True)
         qtbot.keyClick(gui, Qt.Key_A)
         qtbot.wait(1000)
         assert gui.plot_state.mode == "add"
