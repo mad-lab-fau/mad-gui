@@ -15,14 +15,13 @@ from typing import Dict, List
 import pandas as pd
 import pyqtgraph as pg
 from PySide2.QtCore import Qt
-from PySide2.QtGui import QPalette, QColor
+from PySide2.QtGui import QPalette
 from PySide2.QtUiTools import loadUiType
 from PySide2.QtWidgets import (
     QFileDialog,
     QMessageBox,
     QVBoxLayout,
     QMainWindow,
-    QLabel,
 )
 
 from mad_gui.components.dialogs.data_selector import DataSelector

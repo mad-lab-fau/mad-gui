@@ -7,7 +7,7 @@ from mad_gui.plot_tools.base_label import BaseRegionLabel
 from mad_gui.plot_tools.labels import SynchronizationLabel
 from pyqtgraph.GraphicsScene.mouseEvents import MouseClickEvent
 from PySide2.QtCore import Slot
-from PySide2.QtGui import QColor, QCursor, QMouseEvent
+from PySide2.QtGui import QColor, QCursor, QMouseEvent, QPalette
 
 from typing import List, Optional, Type
 
@@ -95,8 +95,6 @@ class BasePlot(pg.PlotWidget):
         self.plotItem.titleLabel.setText(text=title, color=Config.theme.FAU_COLORS["dark_blue"])
 
     def configure_style(self):
-        from PySide2.QtGui import QPalette
-
         bg_color = self.parent.palette().color(QPalette.Active, QPalette.Light)
         self.setBackground(bg_color)
         for i_channel in ["bottom", "left"]:
