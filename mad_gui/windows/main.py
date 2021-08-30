@@ -260,24 +260,23 @@ class MainWindow(QMainWindow):
 
         label_classes_to_load = []
         for sensor_item in loaded_data.values():
-            sensor_item = self._make_keys_backwards_compatible(sensor_item)
-            # we assume that everything that has not the following words in it are labels
-            labels = [key for key in sensor_item.keys() if key not in ["sensor", "data", "sampling_rate_hz"]]
-            label_classes_to_load.extend(labels)
+            label_classes_to_load.extend(sensor_item["annotations"].keys())
 
-        processable_label_classes = self._get_processable_label_classes(label_classes_to_load)
-        unknown_label_classes = []
+        loadable_labels = []
+        unknown_labels = []
+        known_label_types = {label.name: label for label in self.global_data.labels}
         for label_class in label_classes_to_load:
-            if not any([label.__name__ == label_class for label in processable_label_classes]):
-                unknown_label_classes.append(label_class)
+            if label_class in known_label_types.keys():
+                loadable_labels.append(label_class)
+            else:
+                unknown_labels.append(label_class)
 
-        if len(unknown_label_classes) > 0:
+        if len(unknown_labels) > 0:
             UserInformation.inform(
                 f"The saved data has labels which this GUI does not know.\n\n"
-                f"Unknown label class: {unknown_label_classes}\n"
+                f"Unknown label class: {unknown_labels}\n"
             )
             warnings.warn("Implement link to help.")
-        loadable_labels = [label for label in processable_label_classes if label.__name__ in label_classes_to_load]
 
         # Doing it in two lines, and exposing via self to enable testing this whole method
         self.data_selector = DataSelector(parent=self, labels=set(loadable_labels))
@@ -304,20 +303,10 @@ class MainWindow(QMainWindow):
         self._enable_buttons(True)
         self.menu.set_collapsed(True)
 
-        return loaded_data, processable_label_classes
+        return loaded_data, loadable_labels
 
-    @staticmethod
-    def _make_keys_backwards_compatible(sensor_item: Dict):
-        for t in [("stride_annotations", "StrideLabel"), ("activity_annotations", "ActivityLabel")]:
-            try:
-                sensor_item[t[1]] = sensor_item.pop(t[0])
-            except KeyError:
-                pass
-        return sensor_item
+    def _get_processable_label_classes(self):
 
-    def _get_processable_label_classes(self, labels: List):
-        known_label_types = {label.__name__: label for label in self.global_data.labels}
-        known_label_types = self._label_classes_backwards_compatibility(labels, known_label_types)
         return [v for k, v in known_label_types.items()]
 
     def _label_classes_backwards_compatibility(self, labels, known_label_types: Dict):

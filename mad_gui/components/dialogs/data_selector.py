@@ -24,9 +24,9 @@ class DataSelector(QDialog):
         self.boxes["sensor"].setCheckState(Qt.Checked)
         self.vbox.addWidget(self.boxes["sensor"])
         for label in self.labels:
-            self.boxes[label.__name__] = QCheckBox(label.name)
-            self.boxes[label.__name__].setCheckState(Qt.Checked)
-            self.vbox.addWidget(self.boxes[label.__name__])
+            self.boxes[label] = QCheckBox(label)
+            self.boxes[label].setCheckState(Qt.Checked)
+            self.vbox.addWidget(self.boxes[label])
 
     def add_ok_btn(self):
         self.ok_btn = QDialogButtonBox(QDialogButtonBox.Ok)

@@ -262,7 +262,7 @@ class SensorPlot(BasePlot):
 
     def _sync_annotations(self):
         for label_class in self.label_classes:
-            self.plot_data.annotations[label_class.__name__].data = self._get_labels_from_plot(label_class)
+            self.plot_data.annotations[label_class.name].data = self._get_labels_from_plot(label_class)
 
     def _set_tooltip(self, mode: MODES):
         tips = {

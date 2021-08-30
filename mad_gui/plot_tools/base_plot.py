@@ -39,13 +39,13 @@ class BasePlot(pg.PlotWidget):
         label_ranges = pd.DataFrame()
 
         for label_class in labels:
-            if label_class.__name__ not in self.plot_data.annotations.keys():
-                self.plot_data.annotations[label_class.__name__] = AnnotationData()
+            if label_class.name not in self.plot_data.annotations.keys():
+                self.plot_data.annotations[label_class.name] = AnnotationData()
 
-            self.set_labels(label_class, self.plot_data.annotations[label_class.__name__].data)
+            self.set_labels(label_class, self.plot_data.annotations[label_class.name].data)
 
             label_range = pd.DataFrame(
-                index=[label_class.__name__],
+                index=[label_class.name],
                 data=[[label_class.min_height, label_class.max_height]],
                 columns=["min_height", "max_height"],
             )
@@ -145,7 +145,7 @@ class BasePlot(pg.PlotWidget):
 
     def _get_label_class(self, label_name: str):
         for label in self.label_classes:
-            if label.__name__ == label_name:
+            if label.name == label_name:
                 return label
         return None
 

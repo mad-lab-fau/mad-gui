@@ -41,7 +41,7 @@ class BaseRegionLabel(pg.LinearRegionItem):
     min_height = 0
     max_height = 1
     color = [100, 100, 100, 50]
-    name = "Label"
+    name = "Base Label"
 
     def __init__(
         self,

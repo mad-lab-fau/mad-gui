@@ -43,8 +43,9 @@ class PlotData(BaseStateModel):
 
     def _add_label(self, plot_data: PlotData, label: str):
         annotation = AnnotationData()
-        if label in plot_data.keys():
-            annotation.data = plot_data[label]
+        if label in plot_data['annotations'].keys():
+            # only in this case the plot_data object is aware of this kind of label
+            annotation.data = plot_data["annotations"][label]
         self.annotations[label] = annotation
 
 
