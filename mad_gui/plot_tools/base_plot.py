@@ -96,6 +96,7 @@ class BasePlot(pg.PlotWidget):
 
     def configure_style(self):
         from PySide2.QtGui import QPalette
+
         bg_color = self.parent.palette().color(QPalette.Active, QPalette.Light)
         self.setBackground(bg_color)
         for i_channel in ["bottom", "left"]:

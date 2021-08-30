@@ -1,5 +1,3 @@
-from PySide2.QtWidgets import QDialog
-
 from mad_gui import BaseExporter
 from mad_gui.components.dialogs.user_information import UserInformation
 from mad_gui.components.helper import set_cursor
@@ -9,6 +7,7 @@ from mad_gui.qt_designer import UI_PATH
 from mad_gui.utils.helper import resource_path
 from PySide2 import QtCore
 from PySide2.QtUiTools import loadUiType
+from PySide2.QtWidgets import QDialog
 
 from typing import List, Type
 

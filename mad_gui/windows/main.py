@@ -21,7 +21,8 @@ from PySide2.QtWidgets import (
     QFileDialog,
     QMessageBox,
     QVBoxLayout,
-    QMainWindow, QLabel,
+    QMainWindow,
+    QLabel,
 )
 
 from mad_gui.components.dialogs.data_selector import DataSelector

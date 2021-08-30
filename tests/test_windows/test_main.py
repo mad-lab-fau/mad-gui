@@ -37,9 +37,7 @@ class TestGui:
     def test_load_data_from_pickle(self, qtbot, load_sensor, load_activities, load_strides):
         gui = get_main_window()
         qtbot.addWidget(gui)
-        example_pickle = (
-            Path(__file__).parent.parent.parent / "example_data" / "data.mad_gui"
-        )
+        example_pickle = Path(__file__).parent.parent.parent / "example_data" / "data.mad_gui"
 
         def handle_dialog():
             for box_name, indicator in [

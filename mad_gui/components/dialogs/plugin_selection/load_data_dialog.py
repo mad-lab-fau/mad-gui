@@ -9,7 +9,7 @@ from mad_gui.utils.helper import resource_path
 from mad_gui.utils.model_base import BaseStateModel, Property
 from PySide2 import QtCore
 from PySide2.QtUiTools import loadUiType
-from PySide2.QtWidgets import QDialog, QPushButton, QLabel, QLineEdit
+from PySide2.QtWidgets import QDialog, QLabel, QLineEdit, QPushButton
 
 from typing import Any, Dict, List, Optional, Tuple, Type
 
