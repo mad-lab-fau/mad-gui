@@ -16,7 +16,7 @@ class ExampleImporter(BaseImporter):
     def load_sensor_data(self, file: str) -> Tuple[Dict, float]:
         df = pd.read_csv(file)
 
-        data = {"Acceleration": pd.read_csv(file)[["acc_x", "acc_y", "acc_z", "gyr_x", "gyr_y", "gyr_z"]]}
+        data = {"Pocket IMU": pd.read_csv(file)[["acc_x", "acc_y", "acc_z", "gyr_x", "gyr_y", "gyr_z"]]}
         sampling_rate = 1 / df["time"].diff().mean()
         return data, sampling_rate
 
@@ -64,4 +64,5 @@ class ExampleAlgorithm(BaseAlgorithm):
             if starts_stops[0].iloc[idx] == -1 or idx == len(standing):
                 stop = idx
                 annotations = annotations.append(pd.DataFrame(data=[[start, stop]], columns=["start", "end"]))
+        annotations["description"] = "standing"
         return annotations

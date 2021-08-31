@@ -115,7 +115,7 @@ class LoadDataDialog(QDialog):
             return None, None
 
         if not self.state.data_file:
-            UserInformation().inform("You need to select a sensor data file!")
+            UserInformation().confirm("You need to select a sensor data file!")
             return None, None
 
         data, sampling_rate_hz = loader.load_sensor_data(self.state.data_file)
