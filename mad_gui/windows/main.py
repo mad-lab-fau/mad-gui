@@ -344,9 +344,14 @@ class MainWindow(QMainWindow):
             self.global_data.base_dir, loaders=filter_plugins(self.global_data.plugins, BaseImporter), parent=self
         )
 
-        data = None
-        while data is None:
-            data, loader = view.get_data()
+        try:
+            data = None
+            loader = None
+            while data is None and loader is None:
+                data, loader = view.get_data()
+        except TypeError:
+            # user pressed cancel or x button
+            return
         warnings.warn("We need to implement plotting annotations in case they have been loaded.")
         self.global_data.active_loader = loader
         self.global_data.data_file = data.get("data_file_name", "")
