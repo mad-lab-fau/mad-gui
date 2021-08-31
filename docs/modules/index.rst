@@ -13,6 +13,7 @@ In case you want to have a more detailed documentation about other parts of the 
     :maxdepth: 1
 
     Start GUI <start_gui.rst>
-    Data Classes <models.rst>
+    Global Data <models.rst>
+    Local Data <models_local.rst>
     Labels <labels.rst>
     Plugins <plugins.rst>
