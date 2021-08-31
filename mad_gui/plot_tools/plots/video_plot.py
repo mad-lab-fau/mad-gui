@@ -3,7 +3,7 @@ class."""
 
 import numpy as np
 import pandas as pd
-from mad_gui.models.global_data import PlotData
+from mad_gui.models.local import PlotData
 from mad_gui.models.ui_state import MODES
 from mad_gui.plot_tools.labels.base_label import BaseRegionLabel
 from mad_gui.plot_tools.plots.base_plot import BasePlot

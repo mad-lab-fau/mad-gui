@@ -31,7 +31,8 @@ from mad_gui.components.helper import set_cursor
 from mad_gui.components.key_event_handler import KeyEventHandler
 from mad_gui.components.sidebar import Sidebar
 from mad_gui.config import Config, BaseSettings, BaseTheme
-from mad_gui.models.global_data import GlobalData, PlotData
+from mad_gui.models.global_data import GlobalData
+from mad_gui.models.local import PlotData
 from mad_gui.models.ui_state import UiState, PlotState, MODES
 from mad_gui.plot_tools.plots import SensorPlot, VideoPlot
 from mad_gui.plot_tools.labels import BaseRegionLabel

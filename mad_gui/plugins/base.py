@@ -5,7 +5,7 @@ from pathlib import Path
 
 import pandas as pd
 from mad_gui.components.dialogs.user_information import UserInformation
-from mad_gui.models import PlotData
+from mad_gui.models.local import PlotData
 
 from typing import Dict, Tuple, Union
 
