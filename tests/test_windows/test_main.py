@@ -66,8 +66,6 @@ class TestGui:
         imu_file = Path(__file__).parent.parent.parent / "example_data" / "sensor_data.csv"
         video_file = Path(__file__).parent.parent / "test_video.mp4"
 
-        print(video_file.absolute())
-
         gui.global_data.data_file = str(imu_file)
         gui.global_data.video_file = str(video_file)
         qtbot.addWidget(gui)

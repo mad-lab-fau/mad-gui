@@ -430,6 +430,9 @@ class MainWindow(QMainWindow):
     def load_video(self, video_path):
         if not video_path:
             return
+        if not os.path.exists(video_path):
+            UserInformation.inform(f"The selected file could not be found: {video_path}")
+            return
         self.VideoWindow.start_video(video_path)
         self.VideoWindow.show()
         StateKeeper.video_duration_available.connect(self._initialize_video_plot)
