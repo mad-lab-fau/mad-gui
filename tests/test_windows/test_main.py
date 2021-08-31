@@ -52,13 +52,13 @@ class TestGui:
 
         # currently gui.plotted_data is empty, it is just in gui.global_data.plotted_data
         activities = {
-            "Acceleration": gui.global_data.plot_data["Acceleration"].annotations["Base Label"],
+            "Pocket IMU": gui.global_data.plot_data["Pocket IMU"].annotations["Base Label"],
         }
 
         if load_activities:
-            assert len(activities["Acceleration"].data) == 1
+            assert len(activities["Pocket IMU"].data) == 1
         else:
-            assert len(activities["Acceleration"].data) == 0
+            assert len(activities["Pocket IMU"].data) == 0
         gui.close()
 
     def test_toggle_label_state(self, qtbot):
@@ -75,12 +75,11 @@ class TestGui:
 
         # wait until data is plotted
         qtbot.wait(1000)
-        gui.show()
 
         assert len(gui.sensor_plots) == 0
         sensor_data, sampling_rate = ExampleImporter().load_sensor_data(imu_file)
-        plot_data = PlotData().from_dict({"data": sensor_data["Acceleration"], "sampling_rate_hz": sampling_rate})
-        gui.global_data.plot_data = {"Acceleration": plot_data}
+        plot_data = PlotData().from_dict({"data": sensor_data["Pocket IMU"], "sampling_rate_hz": sampling_rate})
+        gui.global_data.plot_data = {"Pocket IMU": plot_data}
         gui._enable_buttons(True)
         qtbot.keyClick(gui, Qt.Key_A)
         qtbot.wait(1000)
@@ -109,7 +108,7 @@ class TestGui:
         assert not gui.ui.btn_edit_label.isChecked()
         assert not gui.ui.btn_remove_label.isChecked()
         assert gui.ui.btn_sync_data.isChecked()
-        assert gui.sensor_plots["Acceleration"].sync_item
+        assert gui.sensor_plots["Pocket IMU"].sync_item
 
         qtbot.keyClick(gui, Qt.Key_Escape)
         qtbot.wait(2500)
@@ -117,7 +116,7 @@ class TestGui:
         assert not gui.ui.btn_add_label.isChecked()
         assert not gui.ui.btn_edit_label.isChecked()
         assert not gui.ui.btn_remove_label.isChecked()
-        assert not gui.sensor_plots["Acceleration"].sync_item
+        assert not gui.sensor_plots["Pocket IMU"].sync_item
         gui.close()
 
     @staticmethod

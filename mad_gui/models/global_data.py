@@ -37,7 +37,7 @@ class PlotData(BaseStateModel):
             if selection == "sensor":
                 self.data = plot_data["data"]
                 self.sampling_rate_hz = plot_data["sampling_rate_hz"]
-            elif "annotation" in plot_data.keys():
+            elif "annotations" in plot_data.keys():
                 self._add_label(plot_data, selection)
         return self
 

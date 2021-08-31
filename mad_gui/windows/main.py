@@ -300,6 +300,7 @@ class MainWindow(QMainWindow):
 
         self.global_data.plot_data = plot_data
         self.global_data.base_dir = Path(file).parent
+#        self._plot_data()
 
         self.setCursor(Qt.ArrowCursor)
         self._enable_buttons(True)

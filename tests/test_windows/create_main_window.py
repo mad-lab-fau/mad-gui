@@ -1,7 +1,7 @@
 import sys
 
 from mad_gui import BaseSettings, BaseTheme
-from mad_gui.plot_tools import BaseRegionLabel
+from mad_gui.plot_tools.labels import BaseRegionLabel
 from mad_gui.plugins.example import ExampleImporter
 from mad_gui.windows import MainWindow
 from PySide2.QtWidgets import QApplication
