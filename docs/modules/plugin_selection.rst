@@ -14,5 +14,5 @@ Classes
    :toctree: generated/components/dialogs/plugin_selection
    :template: class.rst
 
-    ExportResultsDialog
+    PluginSelectionDialog
     LoadDataDialog
