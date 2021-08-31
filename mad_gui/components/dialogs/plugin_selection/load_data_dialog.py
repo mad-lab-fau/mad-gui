@@ -8,7 +8,6 @@ from mad_gui.qt_designer import UI_PATH
 from mad_gui.utils.helper import resource_path
 from mad_gui.utils.model_base import BaseStateModel, Property
 from PySide2 import QtCore
-from PySide2.QtGui import QCloseEvent
 from PySide2.QtUiTools import loadUiType
 from PySide2.QtWidgets import QDialog, QLabel, QLineEdit, QPushButton
 
@@ -90,6 +89,7 @@ class LoadDataDialog(QDialog):
         file_name = ask_for_file_name(self.base_dir, parent=self)
         if file_name is not None:
             self.state.set(property_name, file_name)
+            self.base_dir = str(Path(file_name).parent)
 
     def process_data(self):
         set_cursor(self, QtCore.Qt.BusyCursor)
@@ -117,6 +117,7 @@ class LoadDataDialog(QDialog):
 
         if not self.state.data_file:
             UserInformation().inform("You need to select a sensor data file!")
+            self.parent.ui.btn_load_data.clicked.emit()
             return None, None
 
         data, sampling_rate_hz = loader.load_sensor_data(self.state.data_file)
@@ -164,8 +165,6 @@ class LoadDataDialog(QDialog):
         return tmp
 
     def get_data(self) -> Optional[Tuple[Dict[str, Dict[str, Any]], BaseImporter]]:
-        a = self.exec_()
-        if a == 1:
+        if self.exec_():
             return self.final_data_, self.loader_
-        elif a == -1:
-            return None, None
+        return None, None

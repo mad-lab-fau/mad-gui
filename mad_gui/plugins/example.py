@@ -1,9 +1,11 @@
+from pathlib import Path
+
 import numpy as np
 import pandas as pd
 from mad_gui.models import PlotData
 from mad_gui.plugins.base import BaseAlgorithm, BaseImporter
 
-from typing import Dict, Tuple
+from typing import Dict, Tuple, Union
 
 
 class ExampleImporter(BaseImporter):
@@ -20,7 +22,7 @@ class ExampleImporter(BaseImporter):
         sampling_rate = 1 / df["time"].diff().mean()
         return data, sampling_rate
 
-    def load_annotations(self, file: str) -> Dict[str, pd.DataFrame]:
+    def load_annotations(self, file_path: Union[Path, str]) -> Dict[str, pd.DataFrame]:
         return
 
 
@@ -32,7 +34,6 @@ class ExampleAlgorithm(BaseAlgorithm):
     def process_data(self, data: Dict[str, PlotData]) -> Dict[str, PlotData]:
         for sensor_plot in data.values():
             sensor_plot.annotations["Base Label"].data = self.get_annotations(sensor_plot.data)
-        return
 
     @staticmethod
     def get_annotations(data: pd.DataFrame):
@@ -48,7 +49,7 @@ class ExampleAlgorithm(BaseAlgorithm):
         # this single one to a series of window_length ones
         standing = np.zeros(shape=(1, len(acc)))
         for idx, value in standing_windows.iteritems():
-            if value == True:
+            if value:
                 filter_lag = window_length
                 start = max(0, idx - filter_lag)
                 stop = min(idx + window_length - filter_lag, len(acc))
