@@ -24,8 +24,8 @@ from PySide2.QtWidgets import (
 )
 
 from mad_gui.components.dialogs.data_selector import DataSelector
-from mad_gui.components.dialogs.plugin_selection.export_results_dialog import ExportResultsDialog
 from mad_gui.components.dialogs.plugin_selection.load_data_dialog import LoadDataDialog
+from mad_gui.components.dialogs.plugin_selection.plugin_selection_dialog import PluginSelectionDialog
 from mad_gui.components.dialogs.user_information import UserInformation
 from mad_gui.components.helper import set_cursor
 from mad_gui.components.key_event_handler import KeyEventHandler
@@ -33,9 +33,9 @@ from mad_gui.components.sidebar import Sidebar
 from mad_gui.config import Config, BaseSettings, BaseTheme
 from mad_gui.models.global_data import GlobalData, PlotData
 from mad_gui.models.ui_state import UiState, PlotState, MODES
-from mad_gui.plot_tools import SensorPlot, BaseRegionLabel
-from mad_gui.plot_tools.video_plot import VideoPlot
-from mad_gui.plugins.base import BaseExporter, BaseImporter
+from mad_gui.plot_tools.plots import SensorPlot, VideoPlot
+from mad_gui.plot_tools.labels import BaseRegionLabel
+from mad_gui.plugins.base import BaseExporter, BaseImporter, BaseAlgorithm
 from mad_gui.plugins.helper import filter_plugins
 from mad_gui.state_keeper import StateKeeper
 from mad_gui.utils.helper import resource_path
@@ -352,10 +352,10 @@ class MainWindow(QMainWindow):
         self.global_data.data_file = data.get("data_file_name", "")
         self.global_data.sync_file = data.get("sync_file", "")
         self.global_data.video_file = data.get("video_file", "")
-        plot_data = {
-            k: PlotData().from_dict(v, selections=["sensor", *[item.__name__ for item in self.global_data.labels]])
-            for k, v in data.get("data", {}).items()
-        }
+
+        # in the next step we will try to plot all labels that the GUI is aware of and that are in the `annotation_file`
+        selections = ["sensor", *[item.__name__ for item in self.global_data.labels]]
+        plot_data = {k: PlotData().from_dict(v, selections=selections) for k, v in data.get("data", {}).items()}
         self.global_data.plot_data = plot_data
         self.load_video(data.get("video_file", None))
         self._set_sync(data.get("sync_file", None))
@@ -480,17 +480,17 @@ class MainWindow(QMainWindow):
 
         set_cursor(self, Qt.BusyCursor)
         try:
-            for plot_data in self.global_data.plot_data.values():
-                annotations = self.global_data.active_loader.annotation_from_data(plot_data=plot_data)
-                if "strides" in annotations:
-                    plot_data.stride_annotations = annotations["strides"]
-                if "activities" in annotations:
-                    plot_data.activity_annotations = annotations["activities"]
+            PluginSelectionDialog(
+                plugins=filter_plugins(self.global_data.plugins, BaseAlgorithm), parent=self
+            ).process_data(self.global_data.plot_data)
         except (AttributeError, NotImplementedError):
             set_cursor(self, Qt.ArrowCursor)
             return
 
         set_cursor(self, Qt.ArrowCursor)
+        # actually this should be called automatically due to global_data.bind(_plot_data, "plot_data") but that does
+        # not work currently
+        self._plot_data(self.global_data.plot_data)
 
     def _save_data(self, data_to_save: PlotData):
         save_file_name = QFileDialog().getSaveFileName(
@@ -532,7 +532,7 @@ class MainWindow(QMainWindow):
         # Set state to investigate to force updating global state from plot
         self.plot_state.mode = "investigate"
 
-        ExportResultsDialog(exporters=filter_plugins(self.global_data.plugins, BaseExporter), parent=self).export_data(
+        PluginSelectionDialog(plugins=filter_plugins(self.global_data.plugins, BaseExporter), parent=self).process_data(
             self.global_data
         )
 

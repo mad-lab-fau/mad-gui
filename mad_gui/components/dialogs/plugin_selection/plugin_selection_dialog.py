@@ -1,8 +1,8 @@
-from mad_gui import BaseExporter
 from mad_gui.components.dialogs.user_information import UserInformation
 from mad_gui.components.helper import set_cursor
 from mad_gui.config import Config
 from mad_gui.models.global_data import GlobalData, PlotData
+from mad_gui.plugins.base import BasePlugin
 from mad_gui.qt_designer import UI_PATH
 from mad_gui.utils.helper import resource_path
 from PySide2 import QtCore
@@ -11,15 +11,15 @@ from PySide2.QtWidgets import QDialog
 
 from typing import List, Type
 
-ui_path = resource_path(str(UI_PATH / "export.ui"))
+ui_path = resource_path(str(UI_PATH / "plugin_selection.ui"))
 if ".ui" in ui_path:
     PluginSelectorWindow, _ = loadUiType(ui_path)
 elif ".py" in ui_path:
     from mad_gui.qt_designer.build.export import Ui_Form as PluginSelectorWindow  # pylint: disable=C0412,E0401
 
 
-class ExportResultsDialog(QDialog):
-    """A dialog to select the exporter to use to export results from the shown data and labels.
+class PluginSelectionDialog(QDialog):
+    """A dialog to select the plugin to use to export results from the shown data and labels.
 
     See Also
     --------
@@ -29,9 +29,9 @@ class ExportResultsDialog(QDialog):
 
     _data: PlotData
 
-    def __init__(self, exporters: List[Type[BaseExporter]], parent=None):
+    def __init__(self, plugins: List[Type[BasePlugin]], parent=None):
         super().__init__()
-        self.exporters = exporters
+        self.plugins = plugins
         self.parent = parent
         self.ui = PluginSelectorWindow()
         self.setWindowIcon(parent.windowIcon())
@@ -40,9 +40,9 @@ class ExportResultsDialog(QDialog):
         self._setup_ui()
 
     def _setup_ui(self):
-        self.setWindowTitle("Export Results")
-        self.ui.combo_plugin.addItems([exporter.name() for exporter in self.exporters])
-        self.ui.btn_ok.clicked.connect(self.process_data)
+        self.setWindowTitle("Select Plugin")
+        self.ui.combo_plugin.addItems([plugin.name() for plugin in self.plugins])
+        self.ui.btn_ok.clicked.connect(self._start_processing)
         self.ui.btn_cancel.clicked.connect(self.close)
 
         for btn in [
@@ -60,7 +60,7 @@ class ExportResultsDialog(QDialog):
         )
         self.ui.combo_plugin.setStyleSheet(style_cb)
 
-    def process_data(self):
+    def _start_processing(self):
         set_cursor(self, QtCore.Qt.BusyCursor)
         out = self._process_data()
         set_cursor(self, QtCore.Qt.ArrowCursor)
@@ -75,32 +75,31 @@ class ExportResultsDialog(QDialog):
         loading by the regarding importer. Also, the mode of the GUI will be set to `investigate`.
         """
         try:
-            exporter_class = self.exporters[self.ui.combo_plugin.currentIndex()]
+            plugin_class = self.plugins[self.ui.combo_plugin.currentIndex()]
         except IndexError:
             UserInformation.inform("No methods for exporting are implemented.")
             return False
         try:
             # TODO: Implement loader config
             user_config = {}
-            exporter = exporter_class(parent=self, **user_config)
+            plugin = plugin_class(parent=self, **user_config)
         except Exception as e:  # pylint: disable=broad-except
-            # broad exception on purpose because we do not know which exceptions might be thrown by an exporter
+            # broad exception on purpose because we do not know which exceptions might be thrown by an plugin
             # created by someone else
-            UserInformation().inform("Error loading Plugin {}".format(exporter_class.name()))
+            UserInformation().inform("Error loading Plugin {}".format(plugin_class.name()))
             print(e)
             return False
 
         try:
-            exporter.export(self._data)
+            plugin.process_data(self._data)
         except Exception as e:  # pylint: disable=broad-except
-            # broad exception on purpose because we do not know which exceptions might be thrown by an exporter
+            # broad exception on purpose because we do not know which exceptions might be thrown by an plugin
             # created by someone else
-            UserInformation().inform("An error occured exporting the data")
-            print(e)
+            UserInformation().inform(f"An error occured: {e}")
             return False
 
         return True
 
-    def export_data(self, data: GlobalData):
+    def process_data(self, data: GlobalData):
         self._data = data
         self.exec_()

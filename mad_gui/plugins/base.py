@@ -1,10 +1,11 @@
 """Base class for importing and processing sensor data and annotations."""
-
+import abc
 import datetime
 from pathlib import Path
 
 import pandas as pd
 from mad_gui.components.dialogs.user_information import UserInformation
+from mad_gui.models import PlotData
 
 from typing import Dict, Tuple, Union
 
@@ -21,9 +22,10 @@ class BasePlugin:
 
 
 class BaseImporter(BasePlugin):
-    """Classes based on this one enable the GUI to handle data from different systems."""
+    """Classes based on this one enable the GUI to load data from different systems/formats."""
 
     @classmethod
+    @abc.abstractmethod
     def name(cls) -> str:
         raise NotImplementedError()
 
@@ -102,35 +104,6 @@ class BaseImporter(BasePlugin):
         )
         raise NotImplementedError()
 
-    def annotation_from_data(self, plot_data) -> Dict[str, pd.DataFrame]:  # noqa
-        """Get labels from the data using an algorithm.
-
-        This method uses the passed data and an algorithm to find specific activities.
-        For example it could be a peak detection algorithm, which then for example creates one
-        :class:`mad_gui.plot_tools.StrideLabel` between to consecutive peaks.
-        You only need to implement this method, if you want to put a functionality behind the `Use algorithm` button.
-
-        Parameters
-        ----------
-        data
-            sensor data of one of the plots in MainWindow.sensor_plots
-        sampling_rate_hz
-            The sampling frequency for that plot
-
-        Returns
-        -------
-        df
-            A dataframe which can be processed by  :func:`mad_gui.plot_tools.SensorPlot._set_stride_labels`. Therefore,
-            it should at least have the columns "start" and "end". Each row then corresponds to one stride
-            label. Optionally, you can pass the colums "type" and/or "details" for each row / stride.
-        """
-        # df = some method that uses sensor data to get all the starts and ends for single activities / strides
-        # return df
-        UserInformation(parent=self.parent).inform(
-            "The functionality of using an algorithm is not implemented for the chosen importer / recording system."
-        )
-        raise NotImplementedError()
-
     def get_start_time(self, *args, **kwargs) -> datetime.time:  # noqa
         """Get the start time of the corresponding data.
 
@@ -188,14 +161,53 @@ class BaseImporter(BasePlugin):
             UserInformation.inform("Format of the sync file is unknown.")
 
 
+class BaseAlgorithm(BasePlugin):
+    @classmethod
+    @abc.abstractmethod
+    def name(cls) -> str:
+        return "Basic Algorithm"
+
+    @abc.abstractmethod
+    def process_data(self, data: Dict[str, PlotData]) -> Dict[str, PlotData]:  # noqa
+        """Get labels from the data using an algorithm.
+
+        This method applies an algorithm to the passed data.
+        For example it could be a peak detection algorithm, which then for example creates one
+        :class:`mad_gui.plot_tools.BaseRegionLabel` between to consecutive peaks.
+        This method can be accessed by the user by clicking the `Use algorithm` button in the GUI's sidebar.
+        For more information and an example, see the part of `Implement an algorithm
+        <https://mad-gui.readthedocs.io/en/latest/customization.html#implement-an-algorithm-use-algorithm-button>`_
+        in our online documentation.
+
+        Parameters
+        ----------
+        data
+            A dictionary, where keys are the names of the plots in the GUI and the values are instances of
+            :class:`mad_gui.models.PlotData`. These in turn keep the plotted sensor data, its sampling frequency,
+            and the plotted annotations.
+
+        Returns
+        -------
+        data
+            An object of the same structure as `data`, that was passed to this method with potentially added or
+            changed annotations.
+
+        """
+        # df = some method that uses sensor data to get all the starts and ends for single activities / strides
+        # return df
+        raise NotImplementedError()
+
+
 class BaseExporter(BasePlugin):
     """Export gait data"""
 
     @classmethod
+    @abc.abstractmethod
     def name(cls) -> str:
         raise NotImplementedError()
 
-    def export(self, global_data):  # pylint: disable=unused-argument
+    @abc.abstractmethod
+    def process_data(self, global_data):  # pylint: disable=unused-argument
         """Export data using a Plugin-Exporter.
 
         Parameters
@@ -209,3 +221,4 @@ class BaseExporter(BasePlugin):
             "The functionality to calculate parameters from plotted data is not implemented for "
             "the chosen exporter / recording system."
         )
+        raise NotImplementedError()

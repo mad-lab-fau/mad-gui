@@ -1,7 +1,7 @@
 from __future__ import annotations
 
 import pandas as pd
-from mad_gui.plot_tools.base_label import BaseRegionLabel
+from mad_gui.plot_tools.labels import BaseRegionLabel
 from mad_gui.utils.model_base import BaseStateModel, Property
 
 from typing import TYPE_CHECKING, Dict, List, Optional, Type
@@ -37,7 +37,7 @@ class PlotData(BaseStateModel):
             if selection == "sensor":
                 self.data = plot_data["data"]
                 self.sampling_rate_hz = plot_data["sampling_rate_hz"]
-            else:
+            elif "annotation" in plot_data.keys():
                 self._add_label(plot_data, selection)
         return self
 

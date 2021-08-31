@@ -17,5 +17,6 @@ Classes
    :template: class.rst
 
    BaseImporter
+   BaseAlgorithm
    BaseExporter
    ExampleImporter

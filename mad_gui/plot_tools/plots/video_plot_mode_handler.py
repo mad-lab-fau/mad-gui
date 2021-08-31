@@ -1,5 +1,5 @@
 from mad_gui.plot_tools.labels import BaseRegionLabel
-from mad_gui.plot_tools.sensor_plot_mode_handler import BaseModeHandler
+from mad_gui.plot_tools.plots.sensor_plot_mode_handler import BaseModeHandler
 from mad_gui.state_keeper import StateKeeper
 
 

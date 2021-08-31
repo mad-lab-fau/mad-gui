@@ -3,9 +3,9 @@ import sys
 from pathlib import Path
 
 from mad_gui.config import BaseSettings, BaseTheme
-from mad_gui.plot_tools import BaseRegionLabel
+from mad_gui.plot_tools.labels import BaseRegionLabel
 from mad_gui.plugins.base import BasePlugin
-from mad_gui.plugins.example import ExampleImporter
+from mad_gui.plugins.example import ExampleAlgorithm, ExampleImporter
 from mad_gui.windows import MainWindow
 from PySide2.QtWidgets import QApplication
 
@@ -16,7 +16,7 @@ def start_gui(
     base_dir=Path("../example_data/").absolute(),
     settings: Type[BaseSettings] = BaseSettings,
     theme: Type[BaseTheme] = BaseTheme,
-    plugins: Sequence[BasePlugin] = (ExampleImporter,),
+    plugins: Sequence[BasePlugin] = (ExampleImporter, ExampleAlgorithm),
     labels: Sequence[BaseRegionLabel] = (BaseRegionLabel,),
 ):
     # Create the Qt Application
