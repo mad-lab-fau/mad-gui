@@ -14,11 +14,9 @@ from typing import List, Type
 
 ui_path = resource_path(str(UI_PATH / "plugin_selection.ui"))
 if ".ui" in ui_path:
-    PluginSelectorWindow, _ = loadUiType(ui_path)
+    UiForm, _ = loadUiType(ui_path)
 elif ".py" in ui_path:
-    from mad_gui.qt_designer.build.plugin_selection import Ui_Form as PluginSelectorWindow  # pylint: disable=C0412,
-
-    # E0401
+    from mad_gui.qt_designer.build.plugin_selection import Ui_Form  # noqa
 
 
 class PluginSelectionDialog(QDialog):
@@ -36,7 +34,7 @@ class PluginSelectionDialog(QDialog):
         super().__init__()
         self.plugins = plugins
         self.parent = parent
-        self.ui = PluginSelectorWindow()
+        self.ui = UiForm()
         self.setWindowIcon(parent.windowIcon())
         self.ui.setupUi(self)
         self.setStyleSheet(parent.styleSheet())
