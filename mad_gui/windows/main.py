@@ -14,6 +14,7 @@ from typing import Dict
 
 import pandas as pd
 import pyqtgraph as pg
+from PySide2 import QtCore
 from PySide2.QtCore import Qt
 from PySide2.QtUiTools import loadUiType
 from PySide2.QtWidgets import (
@@ -134,6 +135,9 @@ class MainWindow(QMainWindow):
         # Note: Need to make all connections and ui setup before updating the value
         self.global_data.base_dir = data_dir
         self.global_data.plugins = list(plugins)
+
+        self.resize(1280, 720)
+        self.move(0,0)
 
     def _enable_buttons(self, enable: bool):
         """In the beginning we want the user to load data, so we just show the two buttons."""
@@ -552,4 +556,5 @@ class MainWindow(QMainWindow):
     def _set_window_properties(self):
         self.setAttribute(Qt.WA_DeleteOnClose)
         self.setAttribute(Qt.WA_WindowPropagation)
+        self.setWindowFlags(QtCore.Qt.FramelessWindowHint)
         self.setWindowTitle("MaD GUI")

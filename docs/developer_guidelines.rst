@@ -195,7 +195,7 @@ Next to it, you see the green play button, which will start the GUI.
 The bug next to it can be used to start the debug mode.
 
 Creating an executable
-**********************
+######################
 
 You may want to ship the GUI including your plugin(s) to users, who are not familiar with python and/or do not have the possibilites to install something on their machine.
 In this case, you can create an executable of the GUI as follows:
@@ -225,14 +225,14 @@ In this case, you can create an executable of the GUI as follows:
     # we need this to perform the following task
     pip install doit
 
-    # we have to transform some .ui files to .py and but them into our .venv mad-gui library
+    # we have to transform some .ui files to .py and put them into our .venv mad-gui library
     # note: if you did not name your virtual environment .venv in the second step, you can pass the name using `-v <name of venv>`
     doit prepare_windows_build
 
     # actually create the executable
     pyinstaller pyinstaller.spec
 
-Afterwards, you will find the file in the `dist` folder
+Afterwards, you will find the file in the `dist` folder.
 Sometimes pyinstaller does not find all the imports. In that case, you might need to make use of its
 `hidden import <https://pyinstaller.readthedocs.io/en/stable/when-things-go-wrong.html#listing-hidden-imports>`_
 option.
@@ -240,7 +240,7 @@ option.
 .. _adapting the gui:
 
 Adapting the GUI
-****************
+################
 We created the GUI in a way, that you can inject your own plugins into the GUI.
 These can then for example take care for loading data of a specific format.
 Furthermore, you have the possibility to inject algorithms this way.

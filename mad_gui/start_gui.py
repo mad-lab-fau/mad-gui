@@ -13,7 +13,7 @@ from typing import Sequence, Type
 
 
 def start_gui(
-    base_dir=Path("../example_data/").absolute(),
+    data_dir=Path("../example_data/").absolute(),
     settings: Type[BaseSettings] = BaseSettings,
     theme: Type[BaseTheme] = BaseTheme,
     plugins: Sequence[BasePlugin] = (ExampleImporter, ExampleAlgorithm),
@@ -21,7 +21,7 @@ def start_gui(
 ):
     # Create the Qt Application
     app = QApplication(sys.argv)
-    form = MainWindow(parent=app, data_dir=base_dir, settings=settings, theme=theme, plugins=plugins, labels=labels)
+    form = MainWindow(parent=app, data_dir=data_dir, settings=settings, theme=theme, plugins=plugins, labels=labels)
     form.show()
 
     sys.exit(app.exec_())
@@ -30,6 +30,6 @@ def start_gui(
 if __name__ == "__main__":
 
     parser = argparse.ArgumentParser()
-    parser.add_argument("--base_dir")
+    parser.add_argument("--data_dir")
     args = parser.parse_args()
-    start_gui(args.base_dir)
+    start_gui(args.data_dir)

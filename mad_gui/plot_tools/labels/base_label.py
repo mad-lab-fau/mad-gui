@@ -36,6 +36,11 @@ class BaseRegionLabel(pg.LinearRegionItem):
     parent
         A :class:`mad_gui.plot_tools.BasePlot` object.
 
+    Attributes
+    ----------
+    name
+        A string that is used to represent the label type in the GUI.
+
     """
 
     min_height = 0

@@ -16,7 +16,8 @@ ui_path = resource_path(str(UI_PATH / "plugin_selection.ui"))
 if ".ui" in ui_path:
     PluginSelectorWindow, _ = loadUiType(ui_path)
 elif ".py" in ui_path:
-    from mad_gui.qt_designer.build.export import Ui_Form as PluginSelectorWindow  # pylint: disable=C0412,E0401
+    from mad_gui.qt_designer.build.plugin_selection import Ui_Form as PluginSelectorWindow  # pylint: disable=C0412,
+    # E0401
 
 
 class PluginSelectionDialog(QDialog):

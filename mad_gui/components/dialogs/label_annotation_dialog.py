@@ -55,6 +55,11 @@ class NestedLabelSelectDialog(QDialog):
 
         self.main_layout.addWidget(self.buttons)
         self._setup_level(self._get_level_keys(self._label_options), level=0)
+        if NestedLabelSelectDialog.latest_selection_:
+            name_radiobutton = NestedLabelSelectDialog.latest_selection_[0]
+            radiobutton = self.findChild(QRadioButton, name_radiobutton)
+            self.level_button_group[0].buttonToggled.emit(radiobutton, True)
+
         self.level_button_group[0].buttons()[0].setFocus()
 
     def _on_label_select(self, value):
@@ -121,7 +126,10 @@ class NestedLabelSelectDialog(QDialog):
             widget.insertWidget(widget.count() - 1, button)
             if (
                 NestedLabelSelectDialog.latest_selection_
-                and NestedLabelSelectDialog.latest_selection_[level] in choice  # pylint: disable=unsubscriptable-object
+                and len(NestedLabelSelectDialog.latest_selection_) > level
+                and NestedLabelSelectDialog.latest_selection_[level] in choice  #
+                # pylint:
+                # disable=unsubscriptable-object
             ):
 
                 button.setChecked(True)

@@ -92,6 +92,10 @@ class LoadDataDialog(QDialog):
             self.base_dir = str(Path(file_name).parent)
 
     def process_data(self):
+        """Use the selected loader for the selcted data.
+
+        Additionally, this changes to cursor to `busy` for user feedback while loading the data.
+        """
         set_cursor(self, QtCore.Qt.BusyCursor)
         out = self._process_data()
         set_cursor(self, QtCore.Qt.ArrowCursor)
@@ -165,6 +169,7 @@ class LoadDataDialog(QDialog):
         return tmp
 
     def get_data(self) -> Optional[Tuple[Dict[str, Dict[str, Any]], BaseImporter]]:
+        """Close this dialog and return the data, that was selected by the user."""
         if self.exec_():
             return self.final_data_, self.loader_
         return None, None

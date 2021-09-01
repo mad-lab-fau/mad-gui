@@ -9,15 +9,17 @@ import sys
 venv_path = sys.executable.split(os.sep)[-3]
 
 if not os.path.exists(venv_path):
-    raise FileNotFoundError("Apparently there is no virtual environment here named .venv although I was expecting that. "\
+    raise FileNotFoundError(f"Apparently there is no virtual environment in {venv_path} although I was expecting that. "\
                             "Please see https://github.com/mad-lab-fau/mad-gui/blob/main/docs/developer_guidelines.rst#6-creating-an-executable "\
                             "for information why I'm expecting that."\
                             "\n In case your venv is in a different location, please change it in `pyinstaller.spec`")
 
+site_packages_path = f"{venv_path}/Lib/site-packages"
+
 a = Analysis(['mad_gui/start_gui.py'],
-             pathex=[HERE, "f'{venv_path}/Lib/site-packages"],
+             pathex=[HERE, site_packages_path],
              binaries=[],
-             datas=[(f'{venv_path}/.venv/Lib/site-packages/mad_gui/qt_designer/build/*.py', 'mad_gui/qt_designer/build/'),
+             datas=[(f'{venv_path}/Lib/site-packages/mad_gui/qt_designer/build/*.py', 'mad_gui/qt_designer/build/'),
                     (f'{HERE}/mad_gui/qt_designer/window_buttons_rc.py', 'mad_gui/qt_designer/'),
                     (f'{HERE}/mad_gui/qt_designer/ui_video.py', 'mad_gui/qt_designer/')],
              hiddenimports=[],

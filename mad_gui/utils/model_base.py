@@ -46,7 +46,6 @@ class Property:
 
 
 class PropertyImpl(QtProperty):
-    """ Actual property implementation using a signal to notify any change. """
 
     def __init__(self, initial_value, name, dtype=None, notify=None):
         super().__init__(dtype, self._getter, self._setter, notify=notify)

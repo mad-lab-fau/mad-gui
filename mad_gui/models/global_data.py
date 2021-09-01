@@ -20,7 +20,7 @@ class GlobalData(BaseStateModel):
         can be selected by the user via the dropdown menu in the
         :class:`~mad_gui.components.dialogs.plugin_selection.LoadDataDialog`.
     data_file
-        File of the currently data that is selected by the user in the
+        File of the data that is selected by the user in the
         :class:`~mad_gui.components.dialogs.plugin_selection.LoadDataDialog`.
     sync_file
         A file that keeps synchronization between video and sensor data. The GUI automatically searches for a file in
@@ -30,7 +30,8 @@ class GlobalData(BaseStateModel):
         File which contains the video to be displayed in the
         :class:`~mad_gui.components.dialogs.plugin_selection.LoadDataDialog`.
     plot_data
-        The keys are the names of the plots and the values are :class:`~mad_gui.models.PlotData` objects.
+        A dictionary, where the keys are the names of the plots and the values are
+        :class:`~mad_gui.models.local.PlotData` objects.
     plugins
         All plugins, that the GUI is aware of. The GUI is aware of all plugins that were passed to it via
         :meth:`~mad_gui.start_gui`.
