@@ -137,7 +137,7 @@ class MainWindow(QMainWindow):
         self.global_data.plugins = list(plugins)
 
         self.resize(1280, 720)
-        self.move(0,0)
+        self.move(0, 0)
 
     def _enable_buttons(self, enable: bool):
         """In the beginning we want the user to load data, so we just show the two buttons."""

@@ -46,7 +46,6 @@ class Property:
 
 
 class PropertyImpl(QtProperty):
-
     def __init__(self, initial_value, name, dtype=None, notify=None):
         super().__init__(dtype, self._getter, self._setter, notify=notify)
         self.initial_value = initial_value

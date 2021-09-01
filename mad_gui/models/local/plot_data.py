@@ -42,6 +42,7 @@ class AnnotationData(BaseStateModel):
     identifier  start   end description details
              0   1687  2238    (sleep,)    None
     """
+
     data = Property(pd.DataFrame(), dtype=pd.DataFrame)
 
     def to_df(self):
@@ -64,6 +65,7 @@ class PlotData(BaseStateModel):
         :meth:`~mad_gui.plot_tools.labels.BaseRegionLabel.name` attribute). The values are instances of
         :class:`~mad_gui.models.local.AnnotationData`.
     """
+
     # we need to initialize this with `None` for sphinx
     data: pd.DataFrame = None
     sampling_rate_hz: float = None
