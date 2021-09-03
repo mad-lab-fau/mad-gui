@@ -17,11 +17,11 @@ The current version is not stable and might crash unexpectedly!
 The MaD GUI is a framework for processing time series data.
 Its use-cases include visualization, annotation (manual or automated), and algorithmic processing of visualized data and annotations.
 
-## How do I use it?
-By clicking on the images below, you will be redirected to YouTube. In case you want to follow along on your own machine, check out the section ["How do I get the GUI to work on my machine?](#how-do-i-get-the-gui-to-work-on-my-machine) first.
+## How do I use it (videos)?
+By clicking on the images below, you will be redirected to YouTube. In case you want to follow along on your own machine, check out the section [How do I get the GUI to work on my machine?](#how-do-i-get-the-gui-to-work-on-my-machine) first.
 
 
-[![Loading data and navigating in the plot](./docs/_static/images/video_thumbnails/loading_and_navigating.png)](https://www.youtube.com/watch?v=Vq45DcQAVnQ "MaD GUI - Loading data and navigating in the plot")
+[<img src="./docs/_static/images/video_thumbnails/loading_and_navigating.png" width="300">](https://www.youtube.com/watch?v=Vq45DcQAVnQ "MaD GUI - Loading data and navigating in the plot")
 
 
 - adding annotations via an algorithm
