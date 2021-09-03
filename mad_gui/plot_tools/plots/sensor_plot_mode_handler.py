@@ -26,6 +26,9 @@ class AddModeHandler(BaseModeHandler):
             self._add_label_at_mouse_pos(mouse_position)
         else:
             super().handle_mouse_click(ev)
+        if ev.modifiers() == Qt.ShiftModifier:
+            # If we press Shift+Mouse we directly create a new event if one is finished
+            self._add_label_at_mouse_pos(mouse_position)
         ev.accept()
 
     def handle_key_press(self, ev):
