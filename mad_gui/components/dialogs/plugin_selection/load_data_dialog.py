@@ -97,11 +97,11 @@ class LoadDataDialog(QDialog):
         Additionally, this changes to cursor to `busy` for user feedback while loading the data.
         """
         set_cursor(self, QtCore.Qt.BusyCursor)
-        out = self._process_data()
+        final_data, loader = self._process_data()
         set_cursor(self, QtCore.Qt.ArrowCursor)
-        if out is None:
+        if final_data is None or loader is None:
             return
-        final_data, loader = out
+        final_data, loader
         self.final_data_ = final_data
         self.loader_ = loader
         self.accept()
@@ -116,12 +116,11 @@ class LoadDataDialog(QDialog):
         except Exception as e:  # noqa
             # ignore bare except because anything can go wrong in a user-implemented plugin
             print(e)
-            UserInformation().inform("Error loading Plugin {}".format(loader_class.name()))
+            UserInformation().inform(f"Error loading Plugin {loader_class.name}")
             return None, None
 
         if not self.state.data_file:
             UserInformation().inform("You need to select a sensor data file!")
-            self.parent.ui.btn_load_data.clicked.emit()
             return None, None
 
         data, sampling_rate_hz = loader.load_sensor_data(self.state.data_file)
