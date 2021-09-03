@@ -23,8 +23,8 @@ By clicking on the images below, you will be redirected to YouTube. In case you 
 
 [<img src="./docs/_static/images/video_thumbnails/loading_and_navigating.png" width="300">](https://www.youtube.com/watch?v=Vq45DcQAVnQ "MaD GUI - Loading data and navigating in the plot")
 
+[<img src="./docs/_static/images/video_thumbnails/annotations.png" width="300">](https://www.youtube.com/watch?v=YFLYf11Bks4 "MaD GUI - Labelling data manually or using an algorithm")
 
-- adding annotations via an algorithm
 - synchronize video and data
 - export data / apply other algorithms and export results
 
