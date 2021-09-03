@@ -13,20 +13,19 @@ from typing import Sequence, Type
 
 
 class Activity(BaseRegionLabel):
-   # This label will always be shown at the upper 20% of the plot view
-   min_height = 0.8
-   max_height = 1
-   name = "Activity"
-   descriptions = {"stand": None, "walk": ["fast", "slow"], "jump": None}
+    # This label will always be shown at the upper 20% of the plot view
+    min_height = 0.8
+    max_height = 1
+    name = "Activity"
+    descriptions = {"stand": None, "walk": ["fast", "slow"], "jump": None}
 
 
 class Jump(BaseRegionLabel):
-   # This label will always be shown at the upper 20% of the plot view
-   min_height = 0
-   max_height = 0.7
-   name = "Jump"
-   #descriptions = {"high": None, "not so high": None}
-
+    # This label will always be shown at the upper 20% of the plot view
+    min_height = 0
+    max_height = 0.7
+    name = "Jump"
+    # descriptions = {"high": None, "not so high": None}
 
 
 def start_gui(

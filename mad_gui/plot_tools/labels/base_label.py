@@ -1,6 +1,5 @@
 import numpy as np
 import pyqtgraph as pg
-
 from mad_gui.components.dialogs import UserInformation
 from mad_gui.components.dialogs.label_annotation_dialog import NestedLabelSelectDialog
 from mad_gui.config import Config
