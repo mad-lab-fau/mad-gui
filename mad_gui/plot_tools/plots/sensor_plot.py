@@ -291,8 +291,6 @@ class SensorPlot(BasePlot):
 
     def delete_item(self, item: QObject):
         self.removeItem(item)
-        item.deleteLater()
-        del item
 
     def keyPressEvent(self, ev):  # noqa
         # Camelcase method overwrites qt method

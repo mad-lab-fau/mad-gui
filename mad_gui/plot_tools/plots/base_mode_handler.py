@@ -15,6 +15,7 @@ class BaseModeHandler:
         active_widget = QApplication.widgetAt(pos)
         if active_widget:
             active_widget.setFocus()
+        self._active = True
 
     def handle_key_press(self, ev):
         pass
@@ -26,4 +27,4 @@ class BaseModeHandler:
         pg.PlotWidget.mouseMoveEvent(self.plot, ev)
 
     def deactivate(self):
-        raise NotImplementedError()
+        self._active = False

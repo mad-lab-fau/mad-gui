@@ -41,15 +41,11 @@ class AddModeHandler(BaseModeHandler):
             if self._partial_label is None and ev.modifiers() == Qt.ShiftModifier:
                 # If we press Shift+Space we directly create a new event if one is finished
                 self._add_label_at_mouse_pos(local)
-            ev.accept()
-            return
-        if key == Qt.Key_Escape:
-            self._clear_partial_label()
-            ev.accept()
-            return
-        super().handle_key_press(ev)
+        ev.accept()
 
     def handle_mouse_movement(self, ev):
+        if not self._active:
+            return
         if self._partial_label is None or not self.plot.inside_plot_range(self.plot.get_mouse_pos_from_event(ev)):
             self._reposition_potential_start(ev)
             super(AddModeHandler, self).handle_mouse_movement(ev)
@@ -59,6 +55,7 @@ class AddModeHandler(BaseModeHandler):
         ev.accept()
 
     def deactivate(self):
+        self._active = False
         self._clear_partial_label()
 
     def _add_label_at_mouse_pos(self, pos):
@@ -136,6 +133,9 @@ class AddModeHandler(BaseModeHandler):
             self.plot.addItem(self._potential_start)
 
     def _clear_partial_label(self):
+        if self._potential_start is not None:
+            self.plot.delete_item(self._potential_start)
+            self._potential_start = None
         if self._partial_label is not None:
             self.plot.delete_item(self._partial_label)
             self._partial_label = None
