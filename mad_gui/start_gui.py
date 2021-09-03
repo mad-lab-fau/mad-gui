@@ -12,12 +12,29 @@ from PySide2.QtWidgets import QApplication
 from typing import Sequence, Type
 
 
+class Activity(BaseRegionLabel):
+   # This label will always be shown at the upper 20% of the plot view
+   min_height = 0.8
+   max_height = 1
+   name = "Activity"
+   descriptions = {"stand": None, "walk": ["fast", "slow"], "jump": None}
+
+
+class Jump(BaseRegionLabel):
+   # This label will always be shown at the upper 20% of the plot view
+   min_height = 0
+   max_height = 0.7
+   name = "Jump"
+   descriptions = {"high": None, "not so high": None}
+
+
+
 def start_gui(
     data_dir=Path("../example_data/").absolute(),
     settings: Type[BaseSettings] = BaseSettings,
     theme: Type[BaseTheme] = BaseTheme,
     plugins: Sequence[BasePlugin] = (ExampleImporter, ExampleAlgorithm),
-    labels: Sequence[BaseRegionLabel] = (BaseRegionLabel,),
+    labels: Sequence[BaseRegionLabel] = (Activity, Jump),
 ):
     # Create the Qt Application
     app = QApplication(sys.argv)

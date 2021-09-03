@@ -196,10 +196,15 @@ It could for example look like this:
    from mad_gui.plot_tools.base_label import BaseRegionLabel
    from mad_gui import start_gui
 
-   class Anomaly(BaseRegionLabel):
+   class Status(BaseRegionLabel):
       # This label will always be shown at the lowest 20% of the plot view
       min_height = 0
       max_height = 0.2
       name = "Anomaly Label"
+      descriptions = {"normal": None, "anomaly": ["too fast", "too slow"]}
 
-   start_gui(labels=[Anomaly])
+   start_gui(labels=[Status])
+
+The `description` defines the possible strings that can be assigned to a label. They will automatically show up after
+manually editting a label. In our [examplary video](LINK TBD), this is
+`{"stand": None, "walk": ["fast", "slow"], "jump": None}`.

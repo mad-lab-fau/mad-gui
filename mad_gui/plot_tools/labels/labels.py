@@ -193,9 +193,9 @@ class PartialLabel(pg.LinearRegionItem):
             end=end * self.sampling_rate_hz,
             parent=self.label_parent,
         )
-        if self.label_class == BaseRegionLabel:
+        if self.label_class.descriptions:
             # If it is an activity label, we need to select the activity type
-            final_label.edit_activity_type()
+            final_label.edit_label_description()
         return final_label
 
 

@@ -2,9 +2,6 @@ class BaseSettings:
     BIND_Y_AXIS = True
     SENSORS_SYNCHRONIZED = True
 
-    ACTIVITIES = {"sleep": None, "walk": ["fast", "slow"], "sit": None}
-    DETAILS = []
-
     STRIDE_SNAP_TO_MIN = False
     # SNAP_RANGE_S = 0.05  # in seconds
     # SNAP_CHANNEL = "AVERAGE_PUPIL_SIZE"

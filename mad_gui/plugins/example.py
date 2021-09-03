@@ -29,11 +29,11 @@ class ExampleImporter(BaseImporter):
 class ExampleAlgorithm(BaseAlgorithm):
     @classmethod
     def name(cls):
-        return "Exemplary Algorithm"
+        return "Find Resting Phases (example MaD GUI)"
 
     def process_data(self, data: Dict[str, PlotData]) -> Dict[str, PlotData]:
         for sensor_plot in data.values():
-            sensor_plot.annotations["Base Label"].data = self.get_annotations(sensor_plot.data)
+            sensor_plot.annotations["Activity"].data = self.get_annotations(sensor_plot.data)
 
     @staticmethod
     def get_annotations(data: pd.DataFrame):

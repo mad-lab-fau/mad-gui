@@ -24,7 +24,7 @@ class BaseRegionLabel(pg.LinearRegionItem):
     label_id
         An id for the label. Usually we just give it an increasing number.
     label_type
-        Filled, when :meth:`~RegionLabel.edit_activity_type` triggers
+        Filled, when :meth:`~RegionLabel.edit_label_description` triggers
         :meth:`mad_gui._StateKeeper.need_label_description`.
     label_details
         Similar like label_type. Additionally it is configurable for which label types details should be obtained and
@@ -47,6 +47,7 @@ class BaseRegionLabel(pg.LinearRegionItem):
     max_height = 1
     color = [100, 100, 100, 50]
     name = "Base Label"
+    descriptions = None
 
     def __init__(
         self,
@@ -96,7 +97,7 @@ class BaseRegionLabel(pg.LinearRegionItem):
             self.parent.removeItem(self)
             StateKeeper.set_has_unsaved_changes(True)
         elif self.editable and ev.button() == Qt.LeftButton:
-            self.edit_activity_type()
+            self.edit_label_description()
 
     def _hover_event(self, ev):
         """Coloring if mouse hovers of the stride"""
@@ -117,10 +118,10 @@ class BaseRegionLabel(pg.LinearRegionItem):
             if ev.exit:
                 self.setMouseHover(False)
                 self.setHoverBrush(self.standard_brush)
-        # TODO: this is not properly handled when calling self.edit_activity_type --> fix it
+        # TODO: this is not properly handled when calling self.edit_label_description --> fix it
         self.setToolTip(f"{self.description}")
 
-    def edit_activity_type(self):
+    def edit_label_description(self):
         """Setting the type of the activity to one given in the consts file.
 
         Called by :meth:`mad_gui.plot_tools.SensorPlot._finish_adding_activity` or if the user clicks on the label while
@@ -128,9 +129,8 @@ class BaseRegionLabel(pg.LinearRegionItem):
         """
         # the activities should be set by passing a `Settings` object which inherits from mad_gui.config.BaseSettings
         # and has an attribute `ACTIVITIES`, see our developer guidelines for more information
-        activities = getattr(Config.settings, "ACTIVITIES", ["run", "walk"])
 
-        new_description = NestedLabelSelectDialog(parent=self.parent.parent).get_label(activities)
+        new_description = NestedLabelSelectDialog(parent=self.parent.parent).get_label(self.descriptions)
         if not new_description:
             raise NoLabelSelected("Invalid description selected for label")
         self.description = new_description
