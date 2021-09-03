@@ -20,10 +20,7 @@ Its use-cases include visualization, annotation (manual or automated), and algor
 ## How do I use it (videos)?
 By clicking on the images below, you will be redirected to YouTube. In case you want to follow along on your own machine, check out the section ["How do I get the GUI to work on my machine?](#how-do-i-get-the-gui-to-work-on-my-machine) first.
 
-
-<a href="http://google.com.au/" rel="some text">![Foo](http://www.google.com.au/images/nav_logo7.png)</a>
-
-<a href="http://example.com/" target="_blank">MaD GUI - Loading data and navigating in the plot[<img src="./docs/_static/images/video_thumbnails/loading_and_navigating.png" width="300">]</a>
+[<img src="./docs/_static/images/video_thumbnails/loading_and_navigating.png" width="300">](https://www.youtube.com/watch?v=Vq45DcQAVnQ "MaD GUI - Loading data and navigating in the plot")
 
 
 - adding annotations via an algorithm
