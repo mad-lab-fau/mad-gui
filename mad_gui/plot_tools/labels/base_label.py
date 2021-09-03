@@ -100,8 +100,10 @@ class BaseRegionLabel(pg.LinearRegionItem):
         elif self.editable and ev.button() == Qt.LeftButton:
             if not self.descriptions:
                 UserInformation.inform(
-                    "MaD GUI is not aware of descriptions for this class. Thus, you can not edit the description.",
-                    help_link="https://mad-gui.readthedocs.io/en/latest/troubleshooting.html",
+                    f"MaD GUI is not aware of descriptions for the class {self.name}. Thus, you can not edit the "
+                    f"description.",
+                    help_link="https://mad-gui.readthedocs.io/en/latest/troubleshooting.html#mad-gui-is-not-aware-of-"
+                    "descriptions-for-the-class",
                 )
                 return
             self.edit_label_description()

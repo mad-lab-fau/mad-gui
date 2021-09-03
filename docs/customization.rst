@@ -174,7 +174,6 @@ The number of levels you create is arbitrary.
                   "run": None}
    }
 
-.. _consts-stride-labels:
 
 Standard plot width
 *******************
@@ -184,6 +183,8 @@ Set the width of IMU plot to this, when hitting the play button for the video.
 
    PLOT_WIDTH_PLAYING_VIDEO = 20  # in seconds
 
+
+.. _creating custom labels:
 
 Creating custom labels
 ######################

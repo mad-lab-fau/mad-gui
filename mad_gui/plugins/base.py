@@ -125,7 +125,11 @@ class BaseImporter(BasePlugin):
     def get_sync_file(video_file: str) -> str:
         files = list(Path(video_file).parent.glob("*sync*.xlsx"))
         if len(files) == 0:
-            UserInformation.inform(text="Video and data not synchronized because not sync file was found.")
+            UserInformation.inform(
+                text="Video and data not synchronized because not sync file was found.",
+                help_link="https://mad-gui.readthedocs.io/en/latest/troubleshooting.html#video-and"
+                "-data-not-synchronized",
+            )
             return None
         if len(files) == 1:
             return files[0]
