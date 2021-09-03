@@ -10,14 +10,20 @@
 [![Documentation Status](https://readthedocs.org/projects/mad-gui/badge/?version=latest)](https://mad-gui.readthedocs.io/en/latest/?badge=latest)
 [![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
 
+# DISCLAIMER
+The current version is not stable and might crash unexpectedly!
+
 ##  What is it?
 The MaD GUI is a framework for processing time series data.
 Its use-cases include visualization, annotation (manual or automated), and algorithmic processing of visualized data and annotations.
 
 ## How do I use it?
-<soon there will be one or more videos here, which show(s) how the GUI works>
+By clicking on the images below, you will be redirected to YouTube. In case you want to follow along on your own machine, check out the section ["How do I get the GUI to work on my machine?](#how-do-i-get-the-gui-to-work-on-my-machine) first.
 
-- loading data / video / annotations
+
+[![Loading data and navigating in the plot](./docs/_static/images/video_thumbnails/loading_and_navigating.png)](https://www.youtube.com/watch?v=Vq45DcQAVnQ "MaD GUI - Loading data and navigating in the plot")
+
+
 - adding annotations via an algorithm
 - synchronize video and data
 - export data / apply other algorithms and export results
@@ -32,7 +38,7 @@ In this case please refer to ["Can I use it with data of my specific system or a
 
 First, you need to download the example data.
 Right click on [this link](https://raw.githubusercontent.com/mad-lab-fau/mad-gui/main/example_data/smartphone/acceleration.csv), select `Save link as...` and save it as `acceleration.csv`.
-If you also want to check out synchronization with a video file, then right click on [this link](https://github.com/mad-lab-fau/mad-gui/releases/download/v0.2.0-alpha.1/video.mp4) and select `Save link as...` to store it on your machine.
+If you also want to check out synchronization with a video file, then right click on [this link](https://github.com/mad-lab-fau/mad-gui/releases/download/v0.2.0-alpha.1/video.mp4) and select `Save link as...` to store it on your machine. Next, use one of the following two options (for testing it on Windows, we recommend Option A).
 
 ### Option A: Standalone executable
 
