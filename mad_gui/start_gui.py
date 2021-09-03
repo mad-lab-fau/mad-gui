@@ -25,7 +25,7 @@ class Jump(BaseRegionLabel):
    min_height = 0
    max_height = 0.7
    name = "Jump"
-   descriptions = {"high": None, "not so high": None}
+   #descriptions = {"high": None, "not so high": None}
 
 
 

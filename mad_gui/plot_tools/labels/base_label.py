@@ -1,5 +1,7 @@
 import numpy as np
 import pyqtgraph as pg
+
+from mad_gui.components.dialogs import UserInformation
 from mad_gui.components.dialogs.label_annotation_dialog import NestedLabelSelectDialog
 from mad_gui.config import Config
 from mad_gui.state_keeper import StateKeeper
@@ -96,6 +98,11 @@ class BaseRegionLabel(pg.LinearRegionItem):
             # TODO: create a signal "i want to be deleted" and let the parent delete it
             self.parent.removeItem(self)
             StateKeeper.set_has_unsaved_changes(True)
+        elif not self.descriptions:
+            UserInformation.inform(
+                "MaD GUI is not aware of descriptions for this class. Thus, you can not edit the " "description.",
+                help_link="https://mad-gui.readthedocs.io/en/latest/troubleshooting.html",
+            )
         elif self.editable and ev.button() == Qt.LeftButton:
             self.edit_label_description()
 
