@@ -101,7 +101,6 @@ class LoadDataDialog(QDialog):
         set_cursor(self, QtCore.Qt.ArrowCursor)
         if final_data is None or loader is None:
             return
-        final_data, loader
         self.final_data_ = final_data
         self.loader_ = loader
         self.accept()
