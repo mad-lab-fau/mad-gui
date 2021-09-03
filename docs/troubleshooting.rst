@@ -25,11 +25,10 @@ To solve the problem, add the attribute `description` to the class in the code /
 Video and data not synchronized
 *******************************
 When loading a video, the GUI searches for an excel file that has the word `sync` in it and ends with `.xlsx` in the same folder, where the video is located.
-In case it does not find such a file, you receive the message `Could not find a synchronization file for video and data`.
-You have two options:
+In case it does not find such a file, you have two options:
 
    - work with video and data without synchronization -> you have to shift sensor data and video separately
-   - use the GUI's synchronization mode to synchronize video and data, as described in our `How To` (see top of the page).
+   - use the GUI's synchronization mode to synchronize video and data
 
 
 Development
