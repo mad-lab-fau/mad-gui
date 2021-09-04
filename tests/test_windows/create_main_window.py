@@ -7,14 +7,14 @@ from mad_gui.windows import MainWindow
 from PySide2.QtWidgets import QApplication
 
 
-class MyLabel(BaseRegionLabel):
-    name = "Mei label"
+class Jump(BaseRegionLabel):
+    name = "Jump"
     min_height = 0.1
     max_height = 0.5
 
 
-class MyOtherLabel(BaseRegionLabel):
-    name = "Mei anners label"
+class Activity(BaseRegionLabel):
+    name = "Activity"
     min_height = 0.8
     max_height = 1
 
@@ -29,7 +29,7 @@ def get_main_window():
     settings = BaseSettings
     theme = BaseTheme
     plugins = (ExampleImporter,)
-    labels = (BaseRegionLabel,)
+    labels = (BaseRegionLabel, Activity, Jump)
 
     form = MainWindow(settings=settings, theme=theme, plugins=plugins, labels=labels)
     return form

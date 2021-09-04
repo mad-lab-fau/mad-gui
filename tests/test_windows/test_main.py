@@ -3,7 +3,6 @@ from pathlib import Path
 import pytest
 from mad_gui.models.global_data import PlotData
 from mad_gui.plugins.example import ExampleImporter
-from mad_gui.state_keeper import StateKeeper
 from PySide2.QtCore import Qt, QTimer
 
 from tests.test_windows.create_main_window import get_main_window
@@ -40,7 +39,7 @@ class TestGui:
         def handle_dialog():
             for box_name, indicator in [
                 ("sensor", load_sensor),
-                ("Base Label", load_activities),
+                ("Activity", load_activities),
             ]:
                 gui.data_selector.boxes[box_name].setChecked(indicator)
 
@@ -52,11 +51,11 @@ class TestGui:
 
         # currently gui.plotted_data is empty, it is just in gui.global_data.plotted_data
         activities = {
-            "Pocket IMU": gui.global_data.plot_data["Pocket IMU"].annotations["Base Label"],
+            "Pocket IMU": gui.global_data.plot_data["Pocket IMU"].annotations["Activity"],
         }
 
         if load_activities:
-            assert len(activities["Pocket IMU"].data) == 1
+            assert len(activities["Pocket IMU"].data) == 2
         else:
             assert len(activities["Pocket IMU"].data) == 0
         gui.close()
