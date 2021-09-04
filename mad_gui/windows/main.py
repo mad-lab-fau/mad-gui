@@ -583,5 +583,4 @@ class MainWindow(QMainWindow):
     def _set_window_properties(self):
         self.setAttribute(Qt.WA_DeleteOnClose)
         self.setAttribute(Qt.WA_WindowPropagation)
-        self.setWindowFlags(QtCore.Qt.FramelessWindowHint)
         self.setWindowTitle("MaD GUI")
