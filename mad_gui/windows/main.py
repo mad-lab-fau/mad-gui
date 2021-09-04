@@ -14,7 +14,6 @@ from typing import Dict
 
 import pandas as pd
 import pyqtgraph as pg
-from PySide2 import QtCore
 from PySide2.QtCore import Qt
 from PySide2.QtUiTools import loadUiType
 from PySide2.QtWidgets import (
