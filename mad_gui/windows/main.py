@@ -43,6 +43,14 @@ from mad_gui.utils.helper import resource_path
 from mad_gui.windows import VideoWindow
 from mad_gui.qt_designer import UI_PATH
 
+try:
+    import pyi_splash
+
+    pyi_splash.close()
+except ModuleNotFoundError:
+    # apparently this is not execute from a .exe file
+    pass
+
 pg.setConfigOption("useOpenGL", False)
 
 # CI can't handle openGL
@@ -68,6 +76,8 @@ class MainWindow(QMainWindow):
 
     def __init__(self, parent=None, data_dir=None, settings=BaseSettings, theme=BaseTheme, plugins=None, labels=None):
         super().__init__()
+
+
 
         if plugins is None:
             plugins = []
@@ -144,6 +154,8 @@ class MainWindow(QMainWindow):
 
         self.resize(1280, 720)
         self.move(0, 0)
+
+
 
     def _enable_buttons(self, enable: bool):
         """In the beginning we want the user to load data, so we just show the two buttons."""

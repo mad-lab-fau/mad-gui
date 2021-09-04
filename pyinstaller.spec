@@ -32,10 +32,21 @@ a = Analysis(['mad_gui/start_gui.py'],
              cipher=block_cipher,
              noarchive=False)
 
+splash = Splash('docs/_static/images/splash.jpg',
+                binaries=a.binaries,
+                datas=a.datas,
+                text_pos=(10, 250),
+                text_size=12,
+                text_color='black',
+		text_default='Starting MaD GUI...')
+
+
 pyz = PYZ(a.pure, a.zipped_data,
              cipher=block_cipher)
 
 exe = EXE(pyz,
+          splash,
+          splash.binaries,
           a.scripts,
           a.binaries,
           a.zipfiles,
@@ -48,13 +59,13 @@ exe = EXE(pyz,
           upx=True,
           upx_exclude=[],
           runtime_tmpdir=None,
-          console=True,
+          console=False,
           disable_windowed_traceback=False,
           target_arch=None,
           codesign_identity=None,
           entitlements_file=None , icon='mad-runner.ico')
 
 # in case of using --onefile remove splash.binaries from exe above and activate this below
-#coll = COLLECT(exe,
-#               splash.binaries,     # <-- splash binaries
+#coll = COLLECT(exe#,
+#               #splash.binaries,     # <-- splash binaries
 #               )
