@@ -31,7 +31,7 @@ class GlobalData(BaseStateModel):
         :class:`~mad_gui.components.dialogs.plugin_selection.LoadDataDialog`.
     plot_data
         A dictionary, where the keys are the names of the plots and the values are
-        :class:`~mad_gui.models.local.PlotData` objects.
+        :class:`~mad_gui.models.local.plot_data.PlotData` objects.
     plugins
         All plugins, that the GUI is aware of. The GUI is aware of all plugins that were passed to it via
         :meth:`~mad_gui.start_gui`.
