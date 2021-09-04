@@ -51,6 +51,14 @@ class LoadDataDialog(QDialog):
         self.ui.setupUi(self)
         self.setStyleSheet(parent.styleSheet())
         self._setup_ui()
+        self._init_position()
+
+    def _init_position(self):
+        """Move the window to the center of the parent window."""
+
+        x = self.parent.pos().x() + self.parent.size().width() / 2 - self.size().width() / 2
+        y = self.parent.pos().y() + self.parent.size().height() / 2 - self.size().height() / 2
+        self.move(x, y)
 
     def _setup_ui(self):
         self.setWindowTitle("Load Data")

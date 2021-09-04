@@ -28,6 +28,13 @@ class VideoWindow(Ui_VideoWindow, QObject):
         self.setStyleSheet(parent.styleSheet())
         self.setWindowFlag(Qt.WindowStaysOnTopHint)
 
+    def _init_position(self):
+        """Move the window to the center of the parent window."""
+
+        x = self.parent.pos().x() + self.parent.size().width() / 2 - self.size().width() / 2
+        y = self.parent.pos().y() + self.parent.size().height() / 2 - self.size().height() / 2
+        self.move(x, y)
+
     def toggle_play(self):
         if self.player.state() == QMediaPlayer.PlayingState:
             self.player.pause()
@@ -48,6 +55,7 @@ class VideoWindow(Ui_VideoWindow, QObject):
         # trigger mediaStatusChanged event, such that self.fps is set in self.set_rate
         self.player.play()
         self.player.pause()
+        self._init_position()
 
     def set_rate(self):
         if self.fps:
