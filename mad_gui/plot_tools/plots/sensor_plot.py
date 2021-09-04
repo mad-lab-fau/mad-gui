@@ -23,7 +23,7 @@ from mad_gui.utils.model_base import BaseStateModel, Property
 from PySide2.QtCore import QObject, Qt, QTime, Slot
 from PySide2.QtWidgets import QButtonGroup, QCheckBox, QMenu, QWidget, QWidgetAction
 
-from typing import Dict, List, Optional, Type
+from typing import Callable, Dict, List, Optional, Type
 
 channel_selector_path = str(UI_PATH / "channel_selector.ui")
 ui_path = resource_path(channel_selector_path)
@@ -306,6 +306,32 @@ class SensorPlot(BasePlot):
         # Camelcase method overwrites qt method
         self.mode_handler.handle_mouse_movement(ev)
 
+    def _snap_to(self, pos: float, f: Callable):
+        sampling_rate = self.plot_data.sampling_rate_hz
+        pos_sample = pos * sampling_rate
+        snap_min = int(pos_sample - getattr(Config.settings, "SNAP_RANGE_S", 0.1) / 2 * sampling_rate)
+        snap_max = int(pos_sample + getattr(Config.settings, "SNAP_RANGE_S", 0.1) / 2 * sampling_rate)
+        region_data = self.plot_data.data[Config.settings.SNAP_CHANNEL].iloc[snap_min:snap_max]
+        values = region_data.values
+        idx_relative = f(values)
+        idx_absolute = region_data.index[idx_relative]
+        return idx_absolute / sampling_rate
+
+    def snap_to_max(self, pos: float):
+        """Snap to a maximum in the `Config.settings.SNAP_CHANNEL` of the sensor.
+
+        Parameters
+        ----------
+        pos
+            Position on the x-channel given in seconds
+
+        Returns
+        -------
+        pos_snapped
+            maximum within pos +- SNAP_RANGE_S (in seconds)/2 defined in your settings.
+        """
+        return self._snap_to(pos, np.argmax)
+
     def snap_to_min(self, pos: float):
         """Snap to a minimum in the `Config.settings.SNAP_CHANNEL` of the sensor.
 
@@ -317,13 +343,9 @@ class SensorPlot(BasePlot):
         Returns
         -------
         pos_snapped
-            minimum within pos +- SNAP_RANGE_S (in seconds) defined in your :ref:`constants-file <stride label>`.
+            minimum within pos +- SNAP_RANGE_S (in seconds)/2 defined in your settings.
         """
-        sampling_rate = self.plot_data.sampling_rate_hz
-        pos_sample = pos * sampling_rate
-        snap_min = int(pos_sample - getattr(Config.settings, "SNAP_RANGE_S", 0.1) / 2 * sampling_rate)
-        snap_max = int(pos_sample + getattr(Config.settings, "SNAP_RANGE_S", 0.1) / 2 * sampling_rate)
-        return self.plot_data.data[Config.settings.SNAP_CHANNEL].iloc[snap_min:snap_max].idxmin() / sampling_rate
+        return self._snap_to(pos, np.argmin)
 
     def snap_to_sample(self, pos: float):
         sampling_rate_hz = self.plot_data.sampling_rate_hz

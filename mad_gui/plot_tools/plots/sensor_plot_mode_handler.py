@@ -83,6 +83,10 @@ class AddModeHandler(BaseModeHandler):
             post_process = plot.snap_to_min
         else:
             post_process = plot.snap_to_sample
+        if getattr(label_class, "snap_to_max", False):
+            post_process = plot.snap_to_max
+        else:
+            post_process = plot.snap_to_sample
 
         if self._partial_label:
             self._clear_partial_label()
