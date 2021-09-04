@@ -13,7 +13,7 @@ if TYPE_CHECKING:
 class GlobalData(BaseStateModel):
     """A single object per MaD GUI instance that keeps global data.
 
-    Parameters
+    Attributes
     ----------
     active_loader
         One of the loaders passed to start_gui, which have inherited from :class:`~mad_gui.plugins.BaseImporter`. It
@@ -35,6 +35,8 @@ class GlobalData(BaseStateModel):
     plugins
         All plugins, that the GUI is aware of. The GUI is aware of all plugins that were passed to it via
         :meth:`~mad_gui.start_gui`.
+    labels
+        All the labels that the GUI is aware of (= the ones that were passed to :meth:`~mad_gui.start_gui`)
     """
 
     data_file = Property("", dtype=str)
