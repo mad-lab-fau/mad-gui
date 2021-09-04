@@ -3,8 +3,8 @@ class BaseSettings:
     SENSORS_SYNCHRONIZED = True
 
     STRIDE_SNAP_TO_MIN = False
-    # SNAP_RANGE_S = 0.05  # in seconds
-    # SNAP_CHANNEL = "AVERAGE_PUPIL_SIZE"
+    SNAP_RANGE_S = 0.2  # in seconds
+    SNAP_CHANNEL = "acc_x"
 
     PLOT_WIDTH_PLAYING_VIDEO = 20  # in seconds
 

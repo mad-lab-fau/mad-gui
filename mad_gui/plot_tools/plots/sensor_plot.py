@@ -307,7 +307,7 @@ class SensorPlot(BasePlot):
         self.mode_handler.handle_mouse_movement(ev)
 
     def snap_to_min(self, pos: float):
-        """Snap to a minimum in the `gyr_ml` channel of the sensor.
+        """Snap to a minimum in the `Config.settings.SNAP_CHANNEL` of the sensor.
 
         Parameters
         ----------
@@ -321,8 +321,8 @@ class SensorPlot(BasePlot):
         """
         sampling_rate = self.plot_data.sampling_rate_hz
         pos_sample = pos * sampling_rate
-        snap_min = int(pos_sample - getattr(Config.settings, "SNAP_RANGE_S", 0.1) * sampling_rate)
-        snap_max = int(pos_sample + getattr(Config.settings, "SNAP_RANGE_S", 0.1) + 1)
+        snap_min = int(pos_sample - getattr(Config.settings, "SNAP_RANGE_S", 0.1) / 2 * sampling_rate)
+        snap_max = int(pos_sample + getattr(Config.settings, "SNAP_RANGE_S", 0.1) / 2 * sampling_rate)
         return self.plot_data.data[Config.settings.SNAP_CHANNEL].iloc[snap_min:snap_max].idxmin() / sampling_rate
 
     def snap_to_sample(self, pos: float):
