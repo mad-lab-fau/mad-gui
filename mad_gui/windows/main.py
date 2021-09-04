@@ -107,6 +107,13 @@ class MainWindow(QMainWindow):
             "sync": self.ui.btn_sync_data,
         }
 
+        self.menu_buttons = {
+            "load": self.ui.btn_load_data,
+            "algorithm": self.ui.btn_use_algorithm,
+            "export": self.ui.btn_export,
+            "save": self.ui.btn_save_data_gui_format
+        }
+
         # Setting up the plots
         self.sensor_plots = {}
         self.video_plot = None
@@ -180,6 +187,21 @@ class MainWindow(QMainWindow):
                 f"QPushButton:hover{{\n	background-color: rgb("
                 f"{even_lighter.red()},{even_lighter.green()},{even_lighter.blue()});\n}}"
                 f"QPushButton:disabled{{\n	background-color: rgb(160,160,160);\n"
+                f"color: rgb(120,120,120)}}"
+                f"QPushButton:checked{{\n	background-color: rgb("
+                f"{even_lighter.red()},{even_lighter.green()},{even_lighter.blue()});\n}}"
+            )
+        for k, b in self.menu_buttons.items():
+            b.setObjectName(k)
+            b.toggled.connect(self.on_main_buttons_clicked)
+            b.setStyleSheet(
+                f"QPushButton"
+                f"{{\nborder:none;\npadding: 3px;\nbackground-color:rgb({light.red()},{light.green()},{light.blue()});"
+                f"\ntext-align: left;\ncolor:rgb({dark.red()},{dark.green()},{dark.blue()});\n"
+                f"border-radius: 0px;}}\n\n"  # to remove shadow around button
+                f"QPushButton:hover{{\n	background-color: rgb("
+                f"{even_lighter.red()},{even_lighter.green()},{even_lighter.blue()});\n}}"
+                f"QPushButton:disabled{{\n"
                 f"color: rgb(120,120,120)}}"
                 f"QPushButton:checked{{\n	background-color: rgb("
                 f"{even_lighter.red()},{even_lighter.green()},{even_lighter.blue()});\n}}"
