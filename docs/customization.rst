@@ -101,7 +101,7 @@ namely in its `Plot Data <https://mad-gui.readthedocs.io/en/latest/modules/gener
 
 Here you can see an example of how to create an algorithm that creates labels, that have the name `Activity`.
 It is important, that we also pass a label to the GUI, which has the attribute `name = "Activity"`. Otherwise the GUI
-will not know, what the label "Activity" should look like. Read more about creating custom labels :ref:`below <custom_labels>`.
+will not know, what the label "Activity" should look like. Read more about creating custom labels :ref:`below <custom labels>`.
 
 .. code-block:: python
 
