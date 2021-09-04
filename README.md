@@ -20,15 +20,9 @@ Its use-cases include visualization, annotation (manual or automated), and algor
 ## How do I use it (videos)?
 By clicking on the images below, you will be redirected to YouTube. In case you want to follow along on your own machine, check out the section [How do I get the GUI to work on my machine?](#how-do-i-get-the-gui-to-work-on-my-machine) first.
 
-
-[<img src="./docs/_static/images/video_thumbnails/loading_and_navigating.png" width="300">](https://www.youtube.com/watch?v=xHu-iXByWEU "MaD GUI - Loading data and navigating in the plot")
-[<img src="./docs/_static/images/video_thumbnails/annotations.png" width="300">](https://www.youtube.com/watch?v=DvOEVlkugnM "MaD GUI - Labelling data manually or using an algorithm")
-[<img src="./docs/_static/images/video_thumbnails/sync.png" width="300">](https://www.youtube.com/watch?v=-GI5agFOPRM "MaD GUI - Synchronize video and sensor data")
-
-
-
-- synchronize video and data
-- export data / apply other algorithms and export results
+[<img src="./docs/_static/images/video_thumbnails/loading_and_navigating.png" width="250">](https://www.youtube.com/watch?v=xHu-iXByWEU "MaD GUI - Loading data and navigating in the plot")
+[<img src="./docs/_static/images/video_thumbnails/annotations.png" width="250">](https://www.youtube.com/watch?v=DvOEVlkugnM "MaD GUI - Labelling data manually or using an algorithm")
+[<img src="./docs/_static/images/video_thumbnails/sync.png" width="250">](https://www.youtube.com/watch?v=-GI5agFOPRM "MaD GUI - Synchronize video and sensor data")
 
 ## How do I get the GUI to work on my machine?
 Below, we present two options how to obtain and run the GUI.
@@ -39,7 +33,7 @@ In this case please refer to ["Can I use it with data of my specific system or a
 ## How can I test the GUI using your example data on my computer?
 
 First, you need to download the example data.
-Right click on [this link](https://raw.githubusercontent.com/mad-lab-fau/mad-gui/main/example_data/smartphone/acceleration.csv), select `Save link as...` and save it as `acceleration.csv`.
+Right click on [this link](https://raw.githubusercontent.com/mad-lab-fau/mad-gui/main/example_data/smartphone/acceleration.csv), select `Save link as...` and save it.
 If you also want to check out synchronization with a video file, then right click on [this link](https://github.com/mad-lab-fau/mad-gui/releases/download/v0.2.0-alpha.1/video.mp4) and select `Save link as...` to store it on your machine. Next, use one of the following two options (for testing it on Windows, we recommend Option A).
 
 ### Option A: Standalone executable
