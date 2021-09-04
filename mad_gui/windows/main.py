@@ -111,7 +111,7 @@ class MainWindow(QMainWindow):
             "load": self.ui.btn_load_data,
             "algorithm": self.ui.btn_use_algorithm,
             "export": self.ui.btn_export,
-            "save": self.ui.btn_save_data_gui_format
+            "save": self.ui.btn_save_data_gui_format,
         }
 
         # Setting up the plots
