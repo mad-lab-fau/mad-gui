@@ -10,9 +10,6 @@
 [![Documentation Status](https://readthedocs.org/projects/mad-gui/badge/?version=latest)](https://mad-gui.readthedocs.io/en/latest/?badge=latest)
 [![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
 
-# DISCLAIMER
-The current version is not stable and might crash unexpectedly!
-
 ##  What is it?
 The MaD GUI is a framework for processing time series data.
 Its use-cases include visualization, annotation (manual or automated), and algorithmic processing of visualized data and annotations.
@@ -64,7 +61,6 @@ start_gui(<data_path>)
 ```
 
 Now you can open the previously downloaded example data as shown in [How do I use it?](#how-do-i-use-it).
-
 
 ## Can I use it with data of my specific system or a specific algorithm?
 Yes, however it will need someone who is familiar with python to perform the steps described in [Customization](https://mad-gui.readthedocs.io/en/latest/customization.html).
