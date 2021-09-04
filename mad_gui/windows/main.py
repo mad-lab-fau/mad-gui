@@ -240,6 +240,7 @@ class MainWindow(QMainWindow):
         for plot_name, plot in self.sensor_plots.items():
             sync = pd.concat([sync, pd.DataFrame(data=plot.sync_info, columns=[plot_name])], axis=1)
         sync = pd.concat([sync, pd.DataFrame(data=self.video_plot.sync_info, columns=["Video"])], axis=1)
+        self.VideoWindow.set_sync(self.video_plot.sync_info["start"], self.video_plot.sync_info["end"])
         file_name, _ = QFileDialog.getSaveFileName(self, "Save Synchronization File", filter="*.xlsx")
         if file_name is None:
             return
