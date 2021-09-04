@@ -100,7 +100,8 @@ The algorithm receives the plotted data as well as currently plotted labels, as 
 namely in its `Plot Data <https://mad-gui.readthedocs.io/en/latest/modules/generated/mad_gui/mad_gui.models.local.PlotData.html#mad_gui.models.local.PlotData>`_ objects.
 
 Here you can see an example of how to create an algorithm that creates labels, that have the name `Activity`.
-It is important, that
+It is important, that we also pass a label to the GUI, which has the attribute `name = "Activity"`. Otherwise the GUI
+will not know, what the label "Activity" should look like. Read more about creating custom labels :ref:`below <custom_labels>`.
 
 .. code-block:: python
 
@@ -122,10 +123,7 @@ It is important, that
                 # returns a pd.DataFrame.
                 sensor_plot.annotations["Activity"].data = self.get_annotations(sensor_plot.data
 
-    # The algorithm above creates a pd. DataFrame and puts it into a dictionary with the key `Activity`. Therefore it
-    # is necessary, that we also pass a label to the GUI, which has the attribute `name = "Activity"`. Otherwise the
-    # GUI will not know, what the label "Activity" should look like. Read more about creating custom labels at the end
-    # of this page.
+
     class Activity(BaseRegionLabel):
         name = "Activity"
         min_height = 0.8
@@ -139,8 +137,8 @@ It is important, that
 
 If you want to see a full example, head to `ExampleImporter <https://github.com/mad-lab-fau/mad-gui/blob/main/mad_gui/plugins/example.py#L29>`_
 
-Implement an exporter (`Export data` button)
-********************************************
+Implement an exporter
+*********************
 This basically works as described in the section of creating an importer.
 Upon pressing the `Export data` button in the GUI, the `ExportResultsDialog <https://github.com/mad-lab-fau/mad-gui/blob/main/mad_gui/components/dialogs/plugin_selection/export_results_dialog.py#L19>`_ will be
 opened, in which your exporter can be selected.
