@@ -230,7 +230,7 @@ In this case, you can create an executable of the GUI as follows:
     doit prepare_windows_build
 
     # actually create the executable
-    pyinstaller pyinstaller.spec
+    pyinstaller pyinstaller.spec --onefile
 
 Afterwards, you will find the file in the `dist` folder.
 Sometimes pyinstaller does not find all the imports. In that case, you might need to make use of its
