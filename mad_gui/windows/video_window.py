@@ -1,7 +1,7 @@
 import pandas as pd
 from mad_gui.qt_designer.ui_video import Ui_VideoWindow
 from mad_gui.state_keeper import StateKeeper
-from PySide2.QtCore import QObject, QUrl
+from PySide2.QtCore import QObject, QUrl, Qt
 from PySide2.QtMultimedia import QMediaContent, QMediaPlayer, QMediaPlaylist
 
 
@@ -18,8 +18,6 @@ class VideoWindow(Ui_VideoWindow, QObject):
             self.setPalette(self.parent.palette())
         self.fps = None
         self.sync_info = None
-        self.start = None
-        self.end = None
         self.slider.sliderPressed.connect(self.slider_pressed)
         self.slider.sliderReleased.connect(self.slider_released)
         self.slider.sliderMoved.connect(self.slider_moved)
@@ -28,6 +26,7 @@ class VideoWindow(Ui_VideoWindow, QObject):
         self.player.durationChanged.connect(self.set_slider_range)
         self.btn_play_pause.clicked.connect(self.toggle_play)
         self.setStyleSheet(parent.styleSheet())
+        self.setWindowFlag(Qt.WindowStaysOnTopHint)
 
     def toggle_play(self):
         if self.player.state() == QMediaPlayer.PlayingState:
@@ -35,7 +34,7 @@ class VideoWindow(Ui_VideoWindow, QObject):
         else:
             self.player.play()
 
-    def start_video(self, video_file: str, sync: pd.DataFrame = None):
+    def start_video(self, video_file: str):
         self.playlist.clear()
         self.playlist.addMedia(QMediaContent(QUrl.fromLocalFile(video_file)))
         self.playlist.setCurrentIndex(0)
@@ -46,7 +45,6 @@ class VideoWindow(Ui_VideoWindow, QObject):
         self.player.setNotifyInterval(10)
         self.player.setPlaybackRate(1.0)
         self.player.setVolume(0)
-        self._set_sync_df(sync)
         # trigger mediaStatusChanged event, such that self.fps is set in self.set_rate
         self.player.play()
         self.player.pause()
@@ -66,14 +64,8 @@ class VideoWindow(Ui_VideoWindow, QObject):
         self.player.play()
         self.player.pause()
 
-    def _set_sync_df(self, sync: pd.DataFrame):
-        if sync is None:
-            return
-        start, end = sync["Video"].start, sync["Video"].end
-        self.set_sync(start, end)
-
-    def set_sync(self, start_ms: float, end_ms: float):
-        self.sync_info = pd.Series(data=[start_ms, end_ms], index=[["start", "end"]])
+    def set_sync(self, start_frame: float, end_frame: float):
+        self.sync_info = pd.Series(data=[start_frame, end_frame], index=[["start", "end"]])
 
     def key_press_event(self, **args):  # noqa (unused argument)
         if self.player.state() == QMediaPlayer.PlayingState:
@@ -122,13 +114,16 @@ class VideoWindow(Ui_VideoWindow, QObject):
         #    stream_length = self.sync_info["end"][0] - self.sync_info["start"][0]
         #    start = self.sync_info["start"][0]
         # else:
-        if not self.start:
-            self.start = 0
-        if not self.end:
-            self.end = self.player.metaData("Duration")
-        stream_length = self.end - self.start
+        if self.sync_info is None:
+            start = 0
+            end = self.player.metaData("Duration")
+        else:
+            start = self.sync_info["start"] / self.fps * 1000
+            end = self.sync_info["end"] / self.fps * 1000
+
+        stream_length = end - start
         pos = self.slider.value()
-        percent_since_start = (pos - self.start) / stream_length * 100
+        percent_since_start = (pos - start) / stream_length * 100
         try:
             StateKeeper.data_position_changed.emit(percent_since_start)
         except RuntimeError:

@@ -8,4 +8,4 @@ class BaseSettings:
 
     PLOT_WIDTH_PLAYING_VIDEO = 20  # in seconds
 
-    # CHANNELS_TO_PLOT = ["acc_x", "acc_y"]
+    CHANNELS_TO_PLOT = ["acc_z"]

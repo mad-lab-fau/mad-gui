@@ -389,6 +389,9 @@ class MainWindow(QMainWindow):
         if self.video_plot:
             self.video_plot.sync_info = sync["Video"]
 
+        if self.VideoWindow:
+            self.VideoWindow.set_sync(start_frame=sync["Video"]["start"], end_frame=sync["Video"]["end"])
+
     def _plot_data(self, data_dict: Dict[str, PlotData]):
         # if len(StateKeeper.loaded_data) == 3:
         #     start_time = StateKeeper.loaded_data[2]
@@ -454,6 +457,7 @@ class MainWindow(QMainWindow):
         self.video_plot.hide()
         self.ui.plotwidget.addWidget(self.video_plot)
         self.plot_state.bind_property_bidirectional(self.video_plot.state, "mode", "mode", initial="set")
+        self.video_plot.sync_info = self.VideoWindow.sync_info
 
     def _get_main_plot(self):
         return [plot for plot in self.sensor_plots.values() if plot.is_main_plot][0]
