@@ -91,13 +91,13 @@ class PluginSelectionDialog(QDialog):
             print(e)
             return False
 
-        try:
-            plugin.process_data(self._data)
-        except Exception as e:  # pylint: disable=broad-except
-            # broad exception on purpose because we do not know which exceptions might be thrown by an plugin
-            # created by someone else
-            UserInformation().inform(f"An error occured: {e}")
-            return False
+        # try:
+        plugin.process_data(self._data)
+        # except Exception as e:  # pylint: disable=broad-except
+        # broad exception on purpose because we do not know which exceptions might be thrown by an plugin
+        # created by someone else
+        #    UserInformation().inform(f"An error occured: {e}")
+        #    return False
 
         return True
 

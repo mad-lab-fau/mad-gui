@@ -172,7 +172,7 @@ class BaseAlgorithm(BasePlugin):
         return "Basic Algorithm"
 
     @abc.abstractmethod
-    def process_data(self, data: Dict[str, PlotData]) -> Dict[str, PlotData]:  # noqa
+    def process_data(self, plot_data: Dict[str, PlotData]):  # noqa
         """Get labels from the data using an algorithm.
 
         This method applies an algorithm to the passed data.

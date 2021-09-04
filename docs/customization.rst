@@ -50,7 +50,8 @@ In case you want to give some feedback to the user via a popup you can use this:
 
 Implement an importer
 *********************
-If the user presses the `Load data` button in the GUI, a new window will pop up (`LoadDataWindow <https://github.com/mad-lab-fau/mad-gui/blob/main/mad_gui/components/dialogs/plugin_selection/load_data_dialog.py#L28>`_).
+If the user presses the `Load data` button in the GUI, a `LoadDataWindow <https://github.com/mad-lab-fau/mad-gui/blob/main/mad_gui/components/dialogs/plugin_selection/load_data_dialog.py#L28>`_
+will pop up, as shown in our `exemplary video about loading data <https://www.youtube.com/watch?v=jMU_HifXkts>`_.
 In there, the user can select one of the importers that were passed to the GUI at startup by selecting it in a dropdown.
 The loader takes care for:
 
@@ -65,7 +66,7 @@ Here you can see an example of how to create an Importer and how to inject it:
 .. code-block:: python
 
     from typing import Tuple, Dict
-    from mad_gui import start_gui, BaseImporter, BaseSettings
+    from mad_gui import start_gui, BaseImporter
 
     class CustomImporter(BaseImporter):
         @classmethod
@@ -89,17 +90,54 @@ Here you can see an example of how to create an Importer and how to inject it:
         plugins=[CustomImporter],
     )
 
-This created Importer can be accessed in the GUI by clicking the `Load Data` button, which in turn opens the
-`LoadDataWindow <https://github.com/mad-lab-fau/mad-gui/blob/main/mad_gui/components/dialogs/plugin_selection/load_data_dialog.py#L28>`_.
 
-If you want to also add algorithms which are executed upon pressing the buttons `Use algorithm` and `Export Data`,
-please see the two following sections.
+Implement an algorithm
+**********************
+If the user presses the `Use algorithm` button in the GUI, a `PluginSelectionDialog <https://github.com/mad-lab-fau/mad-gui/blob/main/mad_gui/components/dialogs/plugin_selection/plugin_selection_dialog.py#L22>`_
+will pop up, as shown in our `exemplary video about automated annotations <https://youtu.be/VWQKYRRRGVA?t=65>`_
+In there, the user can select one of the algorithms that were passed to the GUI at startup by selecting it in a dropdown.
+The algorithm receives the plotted data as well as currently plotted labels, as kept in the `Global Data <https://mad-gui.readthedocs.io/en/latest/modules/generated/mad_gui/mad_gui.models.GlobalData.html#mad_gui.models.GlobalData>`_ object,
+namely in its `Plot Data <https://mad-gui.readthedocs.io/en/latest/modules/generated/mad_gui/mad_gui.models.local.PlotData.html#mad_gui.models.local.PlotData>`_ objects.
 
-Implement an algorithm (`Use Algorithm` button)
-***********************************************
-If you want to implement an algorithm to automatically create labels based on the displayed data,
-you will have to additionally implement your custom loader's :meth:`~mad_gui.plugins.BaseImporter.annotation_from_data`
-method.
+Here you can see an example of how to create an algorithm that creates labels, that have the name `Activity`.
+It is important, that
+
+.. code-block:: python
+
+    from typing import Tuple, Dict
+    from mad_gui import start_gui, BaseAlgorithm
+
+    class CustomAlgorithm(BaseAlgorithm):
+        @classmethod
+        def name(cls):
+            return "Find Resting Phases (example MaD GUI)"
+
+        def process_data(self, data: Dict[str, PlotData]) -> Dict[str, PlotData]:
+            for sensor_plot in data.values():
+                # sensor_plot.annotations["Activity"] basically is a pd.DataFrame.
+                # However, we changed it to a custom object, which makes it easier for us internally to synchronize
+                # our PlotData / GlobalData with the currently displayed data. Therefore, you can see the additional
+                # `.data` in the next line.
+                # You do not need to care about that, just make sure that the method `self.get_annotations(...)
+                # returns a pd.DataFrame.
+                sensor_plot.annotations["Activity"].data = self.get_annotations(sensor_plot.data
+
+    # The algorithm above creates a pd. DataFrame and puts it into a dictionary with the key `Activity`. Therefore it
+    # is necessary, that we also pass a label to the GUI, which has the attribute `name = "Activity"`. Otherwise the
+    # GUI will not know, what the label "Activity" should look like. Read more about creating custom labels at the end
+    # of this page.
+    class Activity(BaseRegionLabel):
+        name = "Activity"
+        min_height = 0.8
+        max_height = 1
+
+    start_gui(
+        data_dir=".", # you can also put a directory of your choice here, e.g. "/home" or "C:/"
+        plugins=[CustomAlgorithm],
+        labels=[Activity]
+    )
+
+If you want to see a full example, head to `ExampleImporter <https://github.com/mad-lab-fau/mad-gui/blob/main/mad_gui/plugins/example.py#L29>`_
 
 Implement an exporter (`Export data` button)
 ********************************************
@@ -121,12 +159,30 @@ opened, in which your exporter can be selected.
 
 After creating your exporter, make sure to also pass it to the `start_gui` function.
 
+Setting a Theme
+###############
+
+.. code-block:: python
+
+   from mad_gui.config import BaseTheme
+   from PySide2.QtGui import QColor
+
+   class MyTheme(BaseTheme):
+     COLOR_DARK = QColor(0, 56, 101)
+     COLOR_LIGHT = QColor(144, 167, 198)
+
+   start_gui(
+    theme=MyTheme,
+   )
+
+
+.. _setting constants:
 
 Setting Constants
 #################
 
 You can create your own settings by creating a class, which inherits from our `BaseSettings <https://github.com/mad-lab-fau/mad-gui/blob/main/mad_gui/config/settings.py#L1>`_.
-The following example makes use of the BaseSettings and simply overrides two selected properties:
+The following example makes use of the BaseSettings and simply overrides some properties:
 
 .. code-block:: python
 
@@ -134,57 +190,19 @@ The following example makes use of the BaseSettings and simply overrides two sel
 
    class MySettings(BaseSettings):
      CHANNELS_TO_PLOT = ["acc_x", "acc_z"]
-     ACTIVITIES = {"sleep": None, "walk": ["fast", "slow"], "sit": None}
+
+     # used if a label has `snap_to_min = True` or `snap_to_max = True`
+     SNAP_AXIS = "acc_x"
+     SNAP_RANGE_S = 0.2
+
+     # Set the width of IMU plot to this, when hitting the play button for the video.
+     PLOT_WIDTH_PLAYING_VIDEO = 20  # in seconds
 
    start_gui(
     settings=MySettings,
    )
 
-Below you can find all the possibilities for customization.
-
-
-Axes to plot
-************
-Those are the axes which are plotted by default after loading data.
-However, you can change that at runtime by right-clicking on a graph and then go to the submenu "Select Axes".
-Note that the axis names need to fit the axis names that are in the loaded data.
-
-.. code-block:: python
-
-   AXES_TO_PLOT = [
-       "acc_x",
-       "gyr_y"
-   ]
-
-.. _consts activity labels:
-
-Activity labels
-***************
-After adding an activity, there will be a pop-up window, which gives you the possibility to assign activity types to it.
-In this example, there are up to three levels.
-"Sitting" has only one level.
-"Moving" can be further differentiated into `walk` and `run`, and `walk` can be further differentiated into `slow` and `fast`.
-The number of levels you create is arbitrary.
-
-.. code-block:: python
-
-   ACTIVITIES = {
-       "sitting": None,
-       "moving": {"walk": ["slow", "fast"],
-                  "run": None}
-   }
-
-
-Standard plot width
-*******************
-Set the width of IMU plot to this, when hitting the play button for the video.
-
-.. code-block:: python
-
-   PLOT_WIDTH_PLAYING_VIDEO = 20  # in seconds
-
-
-.. _creating custom labels:
+.. _custom labels:
 
 Creating custom labels
 ######################
@@ -202,10 +220,14 @@ It could for example look like this:
       min_height = 0
       max_height = 0.2
       name = "Anomaly Label"
+      # Snapping will be done on the axis and in the range defined in MySettings (see above)
+      snap_to_min = True
+      # snap_to_max = False  # if setting this to `True`, set `snap_to_min` to `False` or delete it
       descriptions = {"normal": None, "anomaly": ["too fast", "too slow"]}
 
    start_gui(labels=[Status])
 
 The `description` defines the possible strings that can be assigned to a label. They will automatically show up after
-manually editting a label. In our [examplary video](LINK TBD), this is
+adding a new label or by clicking on a label when in `Edit label` mode, such that the user can select one of the
+descriptions. In our `exemplary video <https://www.youtube.com/watch?v=VWQKYRRRGVA&t=18s>`_, this is
 `{"stand": None, "walk": ["fast", "slow"], "jump": None}`.
