@@ -224,6 +224,9 @@ In this case, you can create an executable of the GUI as follows:
 
     # we need this to perform the following task
     pip install doit
+    
+    # for pyinstaller to be able to transform from png to jpg (if we use png directly, we get strange pink borders)
+    pip install pillow
 
     # we have to transform some .ui files to .py and put them into our .venv mad-gui library
     # note: if you did not name your virtual environment .venv in the second step, you can pass the name using `-v <name of venv>`
