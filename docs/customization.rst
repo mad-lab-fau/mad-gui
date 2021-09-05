@@ -51,7 +51,7 @@ In case you want to give some feedback to the user via a popup you can use this:
 Implement an importer
 *********************
 If the user presses the `Load data` button in the GUI, a `LoadDataWindow <https://github.com/mad-lab-fau/mad-gui/blob/main/mad_gui/components/dialogs/plugin_selection/load_data_dialog.py#L28>`_
-will pop up, as shown in our `exemplary video about loading data <https://www.youtube.com/watch?v=jMU_HifXkts>`_.
+will pop up, as shown in our `exemplary video about loading data <https://youtu.be/akxcuFOesC8>`_.
 In there, the user can select one of the importers that were passed to the GUI at startup by selecting it in a dropdown.
 The loader takes care for:
 
