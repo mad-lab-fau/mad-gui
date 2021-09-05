@@ -34,7 +34,7 @@ Adding your plugins
 Adding support for other systems
 ********************************
 
-The GUI can be imported into your python project and then you can inject `Importers`, `Algorithms` (to be done), and
+The GUI can be imported into your python project and then you can inject `Importers`, `Algorithms`, and
 `Exporters`.
 Below we explain, how you can create and inject plugins for the GUI.
 In case you want to give some feedback to the user via a popup you can use this:
