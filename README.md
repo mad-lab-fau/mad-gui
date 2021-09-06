@@ -36,6 +36,9 @@ If you also want to check out synchronization with a video file, click on [this 
 ### Option A: Standalone executable
 
 - Windows users: download our exemplary executable [here](https://github.com/mad-lab-fau/mad-gui/releases/download/v0.2.0-alpha.1/mad_gui.exe)
+
+Note: you might see a pop-up from windows when starting the GUI for the first time stating something about `Windows protected your PC`. Click the link with `More info` and then select `Run anyway`
+
 - Other operating systems: [Contact us](mailto:malte.ollenschlaeger@fau.de).
 
 Start the program and then you can open the previously downloaded example data as shown in [How do I use it?](#how-do-i-use-it).
@@ -53,7 +56,7 @@ mad-gui
 python -m mad_gui.start_gui --base_dir C:/my_data
 ```
 
-Alternatively, within a python script use our [start_gui](https://github.com/mad-lab-fau/mad-gui/blob/2857ccc20766ea32f847271771b52c97e2682b79/mad_gui/start_gui.py#L26) 
+Alternatively, within a python script use our [start_gui](https://github.com/mad-lab-fau/mad-gui/blob/main/mad_gui/start_gui.py#L26) 
 function and hand it over the path where your data resides, `<data_path>` like `C:/data` or `/home/data/`: 
 ```
 from mad_gui import start_gui
