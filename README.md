@@ -39,7 +39,7 @@ If you also want to check out synchronization with a video file, click on [this 
 | Windows                | Download our exemplary executable [here](https://github.com/mad-lab-fau/mad-gui/releases/download/v0.2.0-alpha.1/mad_gui.exe). <br /> <br /> Note: If prompted with a dialog `Windows protected your PC`, click `More info` and then select `Run anyway` |
 | other                  | [Contact us](mailto:malte.ollenschlaeger@fau.de)     
 
-Start the program and then you can open the previously downloaded example data as shown in [How do I use it (videos)?](#how-do-i-use-it-videos).
+Start the program and then you can open the previously downloaded example data as shown in [How do I use it (videos)?](#how-do-i-use-it-videos)
 
 ### Option B: Using the python package
 ```
@@ -61,7 +61,7 @@ from mad_gui import start_gui
 start_gui(<data_path>)
 ```
 
-Now you can open the previously downloaded example data as shown in [How do I use it (videos)?](#how-do-i-use-it-videos).
+Now you can open the previously downloaded example data as shown in [How do I use it (videos)?](#how-do-i-use-it-videos)
 
 ## Can I use it with data of my specific system or a specific algorithm?
 Yes, however it will need someone who is familiar with python to perform the steps described in [Customization](https://mad-gui.readthedocs.io/en/latest/customization.html).
