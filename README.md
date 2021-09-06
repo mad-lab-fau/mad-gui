@@ -34,10 +34,10 @@ Right click on [this link](https://raw.githubusercontent.com/mad-lab-fau/mad-gui
 If you also want to check out synchronization with a video file, click on [this link](https://github.com/mad-lab-fau/mad-gui/releases/download/v0.2.0-alpha.1/video.mp4) and save it on your machine. Next, use one of the following two options (for testing it on Windows, we recommend Option A).
 
 ### Option A: Standalone executable
-
-| Windows                | download our exemplary executable [here](https://github.com/mad-lab-fau/mad-gui/releases/download/v0.2.0-alpha.1/mad_gui.exe) Note: you might see a pop-up from windows when starting the GUI for the first time stating something about `Windows protected your PC`. Click the link with `More info` and then select `Run anyway` |
+| Operating system       |                                                   |
 |------------------------|---------------------------------------------------|
-| Other operating system | [Contact us](mailto:malte.ollenschlaeger@fau.de)     
+| Windows                | download our exemplary executable [here](https://github.com/mad-lab-fau/mad-gui/releases/download/v0.2.0-alpha.1/mad_gui.exe) Note: you might see a pop-up from windows when starting the GUI for the first time stating something about `Windows protected your PC`. Click the link with `More info` and then select `Run anyway` |
+| other                  | [Contact us](mailto:malte.ollenschlaeger@fau.de)     
 
 Start the program and then you can open the previously downloaded example data as shown in [How do I use it?](#how-do-i-use-it).
 
