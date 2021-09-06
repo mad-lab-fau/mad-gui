@@ -25,7 +25,7 @@ By clicking on the images below, you will be redirected to YouTube. In case you 
 Below, we present two options how to obtain and run the GUI.
 However, this will only enable you to look at our example data.
 You want to load data of a specific format/system or want to use a specific algorithm? 
-In this case please refer to [Can I use it with data of my specific system or a specific algorithm?](#can-i-use-it-with-data-of-my-specific-system-or-a-specific-algorithm).
+In this case please refer to [Can I use it with data of my specific system or a specific algorithm?](#can-i-use-it-with-data-of-my-specific-system-or-a-specific-algorithm)
 
 ## How can I test the GUI using your example data on my computer?
 
