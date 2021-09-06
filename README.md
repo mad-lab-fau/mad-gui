@@ -61,7 +61,7 @@ from mad_gui import start_gui
 start_gui(<data_path>)
 ```
 
-Now you can open the previously downloaded example data as shown in [How do I use it?](#how-do-i-use-it).
+Now you can open the previously downloaded example data as shown in [How do I use it (videos)?](#how-do-i-use-it-videos).
 
 ## Can I use it with data of my specific system or a specific algorithm?
 Yes, however it will need someone who is familiar with python to perform the steps described in [Customization](https://mad-gui.readthedocs.io/en/latest/customization.html).
