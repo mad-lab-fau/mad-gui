@@ -73,11 +73,18 @@ Here you can see an example of how to create an Importer and how to inject it:
             # We create a dictionary with one key for each plot we want to generate.
             # Each value of the dictionary is a pandas dataframe, with columns being the single data streams /
             # sensor channels.
-            data = <some method to load the data from file or relative to file>
-            return {
-                "left_sensor": data["left_foot"],
-                "right_sensor": data["right_foot"],
-            }, 204.8
+            data = {
+            "IMU Hip": {
+                "sensor_data": pd.read_csv(file)['hip_sensor'],
+                "sampling_rate_hz": 50,
+                }
+            "IMU Foot": {
+                "sensor_data": pd.read_csv(file)['foo_sensor'],
+                "sampling_rate_hz": 100,
+                }
+            }
+
+            return data
 
     start_gui(
         data_dir=".", # you can also put a directory of your choice here, e.g. "/home" or "C:/"
