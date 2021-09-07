@@ -38,7 +38,7 @@ class TestGui:
 
         def handle_dialog():
             for box_name, indicator in [
-                ("sensor", load_sensor),
+                ("sensor_data", load_sensor),
                 ("Activity", load_activities),
             ]:
                 gui.data_selector.boxes[box_name].setChecked(indicator)

@@ -99,17 +99,19 @@ class PlotData(BaseStateModel):
                         "docs.io/en/latest/modules/generated/plugins/mad_gui.plugins.BaseImporter.html#mad_g"
                         "ui.plugins.BaseImporter.load_sensor_data"
                     ) from k
-            elif selection == "annotations" and plot_data.get("annotations", None):
-                self._add_label(plot_data, selection)
-            else:
+            elif not self._add_label(plot_data, selection):
                 if not self.additional_data:
                     self.additional_data = {}
                 self.additional_data[selection] = plot_data[selection]
         return self
 
     def _add_label(self, plot_data: Dict, label: str):
+        if not plot_data.get("annotations", None):
+            return False
         annotation = AnnotationData()
         if label in plot_data["annotations"].keys():
             # only in this case the plot_data object is aware of this kind of label
             annotation.data = plot_data["annotations"][label]
-        self.annotations[label] = annotation
+            self.annotations[label] = annotation
+            return True
+        return False

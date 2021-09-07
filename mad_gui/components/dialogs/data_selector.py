@@ -20,9 +20,9 @@ class DataSelector(QDialog):
 
     def add_checkboxes_to_vbox(self):
         self.boxes = dict()
-        self.boxes["sensor"] = QCheckBox("Sensor data")
-        self.boxes["sensor"].setCheckState(Qt.Checked)
-        self.vbox.addWidget(self.boxes["sensor"])
+        self.boxes["sensor_data"] = QCheckBox("Sensor data")
+        self.boxes["sensor_data"].setCheckState(Qt.Checked)
+        self.vbox.addWidget(self.boxes["sensor_data"])
         for label in self.labels:
             self.boxes[label] = QCheckBox(label)
             self.boxes[label].setCheckState(Qt.Checked)

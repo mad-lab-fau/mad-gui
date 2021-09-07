@@ -321,7 +321,7 @@ class MainWindow(QMainWindow):
         self.data_selector = DataSelector(parent=self, labels=set(loadable_labels))
         self.data_selector.ask_user()
 
-        if not self.data_types["sensor"] and not self.global_data.plot_data:
+        if not self.data_types["sensor_data"] and not self.global_data.plot_data:
             UserInformation.inform(
                 "Can only plot labels if data is plotted. Please also tick 'Sensor data' or "
                 "load sensor data using the 'Load Data' button on the upper left."
