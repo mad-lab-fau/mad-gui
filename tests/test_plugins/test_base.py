@@ -24,6 +24,6 @@ class TestBaseImporter:
     def test_load_data(self):
         importer = ExampleImporter()
         print("Importer Created.")
-        sensor_data, sampling_rate_hz = importer.load_sensor_data(EXAMPLE_DATA_PATH / "sensor_data.csv")
+        plot_data = importer.load_sensor_data(EXAMPLE_DATA_PATH / "sensor_data.csv")
         print("Data imported.")
-        assert len(sensor_data["Pocket IMU"]) == 5526
+        assert len(plot_data["Pocket IMU"]["sensor_data"]) == 5526

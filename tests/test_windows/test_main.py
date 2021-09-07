@@ -76,8 +76,10 @@ class TestGui:
         qtbot.wait(1000)
 
         assert len(gui.sensor_plots) == 0
-        sensor_data, sampling_rate = ExampleImporter().load_sensor_data(imu_file)
-        plot_data = PlotData().from_dict({"data": sensor_data["Pocket IMU"], "sampling_rate_hz": sampling_rate})
+        plot_data_dict = ExampleImporter().load_sensor_data(imu_file)
+        plot_data = PlotData().from_dict({"sensor_data": plot_data_dict["Pocket IMU"]["sensor_data"],
+                                          "sampling_rate_hz": plot_data_dict["Pocket IMU"]["sampling_rate_hz"],
+                                          "annotations": None})
         gui.global_data.plot_data = {"Pocket IMU": plot_data}
         gui._enable_buttons(True)
         qtbot.keyClick(gui, Qt.Key_A)

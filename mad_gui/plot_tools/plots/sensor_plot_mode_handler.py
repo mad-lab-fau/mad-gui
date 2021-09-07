@@ -80,8 +80,10 @@ class AddModeHandler(BaseModeHandler):
         plot = self.plot
         label_class = self.plot.inside_label_range(pos)
         if getattr(label_class, "snap_to_min", False) and getattr(label_class, "snap_to_max", False):
-            UserInformation.inform(f"The class {label_class} is configured to snap to minimum AND maximum. Please "
-                                   f"only set one of those to attributes to `True`. Snapping is deactivated for now.")
+            UserInformation.inform(
+                f"The class {label_class} is configured to snap to minimum AND maximum. Please "
+                f"only set one of those to attributes to `True`. Snapping is deactivated for now."
+            )
         elif getattr(label_class, "snap_to_min", False):
             post_process = plot.snap_to_min
         elif getattr(label_class, "snap_to_max", False):

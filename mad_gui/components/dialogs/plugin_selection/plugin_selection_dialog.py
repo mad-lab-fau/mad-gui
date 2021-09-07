@@ -1,5 +1,3 @@
-import warnings
-
 from mad_gui.components.dialogs.user_information import UserInformation
 from mad_gui.components.helper import set_cursor
 from mad_gui.config import Config
@@ -20,8 +18,9 @@ if ".ui" in ui_path:
         UiForm, _ = loadUiType(ui_path)
     except TypeError:
         raise FileNotFoundError(
-            'Probably python did not find `pyside2-uic`. See '
-            '"https://mad-gui.readthedocs.io/en/latest/troubleshooting.html#pyside2-uic-not-found" for more information')
+            "Probably python did not find `pyside2-uic`. See "
+            '"https://mad-gui.readthedocs.io/en/latest/troubleshooting.html#pyside2-uic-not-found" for more information'
+        )
 
 elif ".py" in ui_path:
     from mad_gui.qt_designer.build.plugin_selection import Ui_Form  # noqa

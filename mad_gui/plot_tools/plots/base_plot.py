@@ -7,7 +7,7 @@ from mad_gui.plot_tools.labels import SynchronizationLabel
 from mad_gui.plot_tools.labels.base_label import BaseRegionLabel
 from pyqtgraph.GraphicsScene.mouseEvents import MouseClickEvent
 from PySide2.QtCore import Slot
-from PySide2.QtGui import QColor, QCursor, QMouseEvent, QPalette, QPen
+from PySide2.QtGui import QColor, QCursor, QMouseEvent, QPalette
 
 from typing import List, Optional, Type
 

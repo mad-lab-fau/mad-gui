@@ -95,8 +95,6 @@ class MainWindow(QMainWindow):
         self.ui.setupUi(self)
         c = theme.COLOR_DARK
 
-
-
         self.setStyleSheet(f"background-color: rgb({c.red()}, {c.green()}, {c.blue()});")
         self.palette().setColor(QPalette.Active, QPalette.Window, theme.COLOR_LIGHT)
         self._set_window_properties()
@@ -395,7 +393,7 @@ class MainWindow(QMainWindow):
 
         # in the next step we will try to plot all labels that the GUI is aware of and that are in the `annotation_file`
         selections = ["sensor", *[item.name for item in self.global_data.labels]]
-        plot_data = {k: PlotData().from_dict(v, selections=selections) for k, v in data['plot_data_dicts'].items()}
+        plot_data = {k: PlotData().from_dict(v, selections=selections) for k, v in data["plot_data_dicts"].items()}
         self.global_data.plot_data = plot_data
         self.load_video(data.get("video_file", None))
         self._set_sync(data.get("sync_file", None))

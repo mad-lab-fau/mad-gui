@@ -1,7 +1,4 @@
-import warnings
 from pathlib import Path
-
-from PySide2.QtGui import Qt
 
 from mad_gui import BaseImporter
 from mad_gui.components.dialogs.user_information import UserInformation
@@ -11,6 +8,7 @@ from mad_gui.qt_designer import UI_PATH
 from mad_gui.utils.helper import resource_path
 from mad_gui.utils.model_base import BaseStateModel, Property
 from PySide2 import QtCore
+from PySide2.QtGui import Qt
 from PySide2.QtUiTools import loadUiType
 from PySide2.QtWidgets import QDialog, QLabel, QLineEdit, QPushButton
 
@@ -125,6 +123,10 @@ class LoadDataDialog(QDialog):
         self.accept()
 
     def _process_data(self):
+        if not self.state.data_file:
+            UserInformation().inform("You need to select a sensor data file!")
+            return None, None
+
         # Get loader from combobox
         loader_class = self.loaders[self.ui.combo_plugin.currentIndex()]
         try:
@@ -134,11 +136,7 @@ class LoadDataDialog(QDialog):
         except Exception as e:  # noqa
             # ignore bare except because anything can go wrong in a user-implemented plugin
             print(e)
-            UserInformation().inform(f"Error loading Plugin {loader_class.name}")
-            return None, None
-
-        if not self.state.data_file:
-            UserInformation().inform("You need to select a sensor data file!")
+            UserInformation().inform(f"Error creating an instance of the plugin {loader_class.name}:\n\n {e}")
             return None, None
 
         try:
@@ -150,26 +148,10 @@ class LoadDataDialog(QDialog):
                 "recording system in the dropdown box?"
             )
             return None, None
-        annotations = {}
+
         if self.state.annotation_file:
             annotations = loader.load_annotations(self.state.annotation_file)
-            for sensor, annotation in annotations.items():
-                try:
-                    data[sensor]["annotations"] = annotation
-                except KeyError:
-                    UserInformation.inform(
-                        "Loader provided annotations for sensors that have no plot. Click 'Learn More' "
-                        "for more information",
-                        help_link="https://mad-gui.readthedocs.io/en/latest/"
-                        "troubleshooting.html#loader-provided-"
-                        "annotations-that-were-not-understood",
-                    )
-
-                    raise ValueError(
-                        "The dict keys of the annotations must match the dict keys of the sensor data. See "
-                        "https://mad-gui.readthedocs.io/en/latest/troubleshooting.html#id2 for more "
-                        "information."
-                    )
+            data = self._incorporate_annotations_to_data(data, annotations)
 
         return_dict = {"plot_data_dicts": data, "data_file_name": self.state.data_file}
 
@@ -180,37 +162,33 @@ class LoadDataDialog(QDialog):
 
         return return_dict, loader
 
+    @staticmethod
+    def _incorporate_annotations_to_data(data: Dict, annotations: Dict) -> Dict:
+        for sensor, annotation in annotations.items():
+            try:
+                data[sensor]["annotations"] = annotation
+            except KeyError:
+                UserInformation.inform(
+                    "Loader provided annotations for sensors that have no plot. Click 'Learn More' "
+                    "for more information",
+                    help_link="https://mad-gui.readthedocs.io/en/latest/"
+                    "troubleshooting.html#loader-provided-"
+                    "annotations-that-were-not-understood",
+                )
+
+                raise ValueError(
+                    "The dict keys of the annotations must match the dict keys of the sensor data. See "
+                    "https://mad-gui.readthedocs.io/en/latest/troubleshooting.html#id2 for more "
+                    "information."
+                )
+        return data
+
     def _handle_video_file(self, return_dict, loader):
         return_dict["video_file"] = self.state.video_file
         sync_file = loader.get_sync_file(self.state.video_file)
         if sync_file:
             return_dict["sync_file"] = sync_file
         return return_dict
-
-    def _transform_annotations(self, sensor_data, sensor, sampling_rate_hz, annotations):
-        tmp = {"data": sensor_data, "sampling_rate_hz": sampling_rate_hz}
-        if annotations:
-            unknown_sensors = set(annotations.keys()) - set(sensor_data.keys())
-            if unknown_sensors:
-                raise ValueError(
-                    f"Loader provided annotations for sensors that have no plot: {unknown_sensors} \n\n"
-                    f"See https://mad-gui.readthedocs.io/en/latest/troubleshooting.html#id2 for more info."
-                )
-            for sensor in annotations:
-                known_plots = [label.name for label in self.parent.global_data.plot_data]
-                unknown_plots = set(annotations[sensor].keys()) - set(known_plots)
-                if unknown_plots:
-                    UserInformation.inform(
-                        f"Loader provided annotations that were not understood: {unknown_plots} \n"
-                        f"Click Learn More for further information.",
-                        help_link="https://mad-gui.readthedocs.io/en/latest/troubleshooting.html#"
-                        "loader-provided-annotations-that-were-not-understood",
-                    )
-                    raise ValueError(
-                        f"Loader provided annotations that were not understood: {unknown_plots} \n\n"
-                        f"See https://mad-gui.readthedocs.io/en/latest/troubleshooting.html#id2 for more info."
-                    )
-        return {"data": sensor_data, "sampling_rate_hz": sampling_rate_hz, "annotations": annotations}
 
     def get_data(self) -> Optional[Tuple[Dict[str, Dict[str, Any]], BaseImporter]]:
         """Close this dialog and return the data, that was selected by the user."""

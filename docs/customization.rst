@@ -110,13 +110,11 @@ will not know, what the label "Activity" should look like. Read more about creat
 
         def process_data(self, data: Dict[str, PlotData]) -> Dict[str, PlotData]:
             for sensor_plot in data.values():
-                # sensor_plot.annotations["Activity"] basically is a pd.DataFrame.
-                # However, we changed it to a custom object, which makes it easier for us internally to synchronize
-                # our PlotData / GlobalData with the currently displayed data. Therefore, you can see the additional
-                # `.data` in the next line.
+                # sensor_plot.annotations["Activity"] basically is a pd.DataFrame. However, you can see an additional
+                # `.data` in the next line. This is due to internal data handling in the GUI.
                 # You do not need to care about that, just make sure that the method `self.get_annotations(...)
                 # returns a pd.DataFrame.
-                sensor_plot.annotations["Activity"].data = self.get_annotations(sensor_plot.data)
+                sensor_plot.annotations["Activity Label"].data = self.get_annotations(sensor_plot.data)
 
         def get_annotations(plot_data: PlotData) -> pd.DataFrame:
             # Some code that creates a pd.DataFrame with the columns `start` and `end`.
@@ -125,8 +123,11 @@ will not know, what the label "Activity" should look like. Read more about creat
 
 
 
+    # It is important to create this class and pass it to the GUI because otherwise the sensor_plot.annotation will not
+    # have a key `Activity Label` and thus won't know how to plot the labels it receives from
+    # CustomAlgorithm.process_data above
     class Activity(BaseRegionLabel):
-        name = "Activity"
+        name = "Activity Label"
         min_height = 0.8
         max_height = 1
 
