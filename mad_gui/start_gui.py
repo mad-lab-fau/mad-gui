@@ -24,8 +24,7 @@ class Jump(BaseRegionLabel):
     # This label will always be shown at the upper 20% of the plot view
     min_height = 0
     max_height = 0.7
-    snap_to_max = True
-    snap_axis = "acc_z"
+    snap_to_min = True
     name = "Jump"
     # descriptions = {"high": None, "not so high": None}
 
