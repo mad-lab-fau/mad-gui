@@ -49,6 +49,8 @@ class BaseRegionLabel(pg.LinearRegionItem):
     color = [100, 100, 100, 50]
     name = "Base Label"
     descriptions = None
+    snap_to_min = False
+    snap_to_max = False
 
     def __init__(
         self,
@@ -84,6 +86,7 @@ class BaseRegionLabel(pg.LinearRegionItem):
         self.setAcceptHoverEvents(True)
 
         self.setBrush(self.standard_brush)
+        self.setHoverBrush(QColor(0, 255, 0, 50))
         self.mouseClickEvent = self._left_mouse_click_event
         self.removable = False
         self.editable = False
@@ -91,6 +94,7 @@ class BaseRegionLabel(pg.LinearRegionItem):
         self.hoverEvent = self._hover_event
         if self.description:
             self.setToolTip(", ".join(self.description))
+        self.setEnabled(False)
 
     def _left_mouse_click_event(self, ev):
         if self.removable and ev.button() == Qt.LeftButton:
@@ -110,11 +114,9 @@ class BaseRegionLabel(pg.LinearRegionItem):
 
     def _hover_event(self, ev):
         """Coloring if mouse hovers of the stride"""
-        # first of all, make sure the current stride is in the foreground, s.t. when mouse click event happens to
-        # change the range, the mouse click event captures this stride's borders and not the neighbouring stride which
-        # might have been plotted after this one originally and therefore might have been in the foreground
-        self.parent.removeItem(self)
-        self.parent.addItem(self)
+        # such that only borders of this element will be movable
+        # and not the one of the neighbour
+        self.setEnabled(True)
 
         if self.removable:
             hover_color = QColor(255, 0, 0, 50)
@@ -260,9 +262,10 @@ class BaseRegionLabel(pg.LinearRegionItem):
         """Actions when hovering over the child item of type `pyqtgraph.InfiniteLine`"""
         mode = self.parent.state.mode
         if mode in ["edit", "sync"]:
-            if event.enter:
+            if event.enter and self.isEnabled():
                 self.parent.setCursor(Qt.SizeHorCursor)
             if event.exit and mode == "edit":
                 self.parent.setCursor(Qt.PointingHandCursor)
             elif event.exit:
                 self.parent.setCursor(Qt.ArrowCursor)
+                self.setEnabled(False)
