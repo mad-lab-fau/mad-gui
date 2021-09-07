@@ -69,7 +69,7 @@ Here you can see an example of how to create an Importer and how to inject it:
             # pressing the button "Load Data" in the GUI
             return "Custom importer"
 
-        def load_sensor_data(self, file) -> Tuple[Dict, float]:
+        def load_sensor_data(self, file) -> Dict:
             # We create a dictionary with one key for each plot we want to generate.
             # Each value of the dictionary is a pandas dataframe, with columns being the single data streams /
             # sensor channels.
