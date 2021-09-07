@@ -30,9 +30,22 @@ In case it does not find such a file, you have two options:
    - work with video and data without synchronization -> you have to shift sensor data and video separately
    - use the GUI's synchronization mode to synchronize video and data
 
+Loader provided annotations that were not understood
+****************************************************
+
+This means, that the GUI does not know anything about the kind of annotations the loader wants to plot.
+You can read something about how to fix it in the Development section below.
+
 
 Development
 ###########
+
+.. _pip stuck:
+
+`pip install .` stuck at `Processing`
+*************************************
+
+Deactivate the experimental new installer: `poetry config experimental.new-installer false`
 
 Dependencies
 ************
@@ -41,14 +54,50 @@ In our gitlab-CI there is a dependency issue with prospector that boils down to 
 Therefore we manually install astroid 2.5.1 in the CI.
 If you experience problems on your local machine you might consider doing this as well.
 
-Testing fails in PyCharm command line but works otherwise
+Fail to load UI
+***************
+
+If you get an error like this, see the next section.
+
+.. code-block:: python
+
+    ... loadUiType(...)
+    TypeError: cannot unpack non-iterable NoneType object
+
+
+PySide2-uic not found
+*********************
+
+.. note::
+    So far, this problem is only known for Windows.
+
+.. code-block:: python
+
+    "...mad_gui\components\dialogs\....py", line .., in <module>
+    FileNotFoundError: Probably python did not find pyside2-uic
+
+Probably python can't find pyside2-uic. Look for a folder called `Scripts` in your python env.
+To find the location of your python env, go to the command line, activate the environment and then type:
+
+Operating system | command
+-----------------|--------
+Windows          | where python
+
+Then copy pyside2-uic from the folder `Scripts` to the location where also your python executable is (should be the
+parent directory).
+
+Loader provided annotations for sensors that have no plot
 *********************************************************
-For some reason, some test execute properly if you click the "play" button right next to it.
-However, if you call `doit test` within the command line in PyCharm it may fail because of
 
-```
-PluginSelectorWindow, BasePluginSelectorWindow = loadUiType(str(UI_PATH / "export.ui"))
-E   TypeError: cannot unpack non-iterable NoneType object
-```
+Apparently you tried to plot annotations for a sensor, which is not in the keys of `MainWindow.sensor_plots`.
+To fix that, make sure that your loaded returns a plot for this sensor.
+See our section about `Customization <https://mad-gui.readthedocs.io/en/latest/customization.html#implement-an-importer>`_
+for more information.
 
-In this case, simply switch to your computer's command line and call `doit test` from there.
+
+
+Loader provided annotations that were not understood
+****************************************************
+
+You need to pass labels with the attribute `name` equal to the ones stated in the error message to our `start_gui`
+function. Read more about creating labels in our section about :ref:`Customization <customization>`.

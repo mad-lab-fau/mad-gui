@@ -4,12 +4,6 @@
 Customization
 *************
 
-Here we describe how you can:
-
-- add a plugin to load data of a specific system / a specific format, implement a custom algorithm, and export data in a custom format
-- create custom labels
-- customize settings
-
 .. note::
    In case you are not familiar with PyCharm and virtual environments, you might first want to check out our
    :ref:`Developer guidelines <developer guidelines>`.
@@ -107,6 +101,7 @@ will not know, what the label "Activity" should look like. Read more about creat
 
     from typing import Tuple, Dict
     from mad_gui import start_gui, BaseAlgorithm
+    from mad_gui.models.local import PlotData
 
     class CustomAlgorithm(BaseAlgorithm):
         @classmethod
@@ -121,7 +116,13 @@ will not know, what the label "Activity" should look like. Read more about creat
                 # `.data` in the next line.
                 # You do not need to care about that, just make sure that the method `self.get_annotations(...)
                 # returns a pd.DataFrame.
-                sensor_plot.annotations["Activity"].data = self.get_annotations(sensor_plot.data
+                sensor_plot.annotations["Activity"].data = self.get_annotations(sensor_plot.data)
+
+        def get_annotations(plot_data: PlotData) -> pd.DataFrame:
+            # Some code that creates a pd.DataFrame with the columns `start` and `end`.
+            # Each row corresponds to one label to be plotted.
+
+
 
 
     class Activity(BaseRegionLabel):

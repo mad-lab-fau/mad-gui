@@ -22,6 +22,7 @@ from PySide2.QtWidgets import (
     QVBoxLayout,
     QMainWindow,
 )
+from PySide2.QtGui import QPalette
 
 from mad_gui.components.dialogs.data_selector import DataSelector
 from mad_gui.components.dialogs.plugin_selection.load_data_dialog import LoadDataDialog
@@ -94,7 +95,10 @@ class MainWindow(QMainWindow):
         self.ui.setupUi(self)
         c = theme.COLOR_DARK
 
+
+
         self.setStyleSheet(f"background-color: rgb({c.red()}, {c.green()}, {c.blue()});")
+        self.palette().setColor(QPalette.Active, QPalette.Window, theme.COLOR_LIGHT)
         self._set_window_properties()
 
         # Register sidebar component logic
@@ -151,7 +155,6 @@ class MainWindow(QMainWindow):
         self.global_data.plugins = list(plugins)
 
         self.resize(1280, 720)
-        self.move(0, 0)
 
     def _enable_buttons(self, enable: bool):
         """In the beginning we want the user to load data, so we just show the two buttons."""
@@ -391,8 +394,8 @@ class MainWindow(QMainWindow):
         self.global_data.video_file = data.get("video_file", "")
 
         # in the next step we will try to plot all labels that the GUI is aware of and that are in the `annotation_file`
-        selections = ["sensor", *[item.__name__ for item in self.global_data.labels]]
-        plot_data = {k: PlotData().from_dict(v, selections=selections) for k, v in data.get("data", {}).items()}
+        selections = ["sensor", *[item.name for item in self.global_data.labels]]
+        plot_data = {k: PlotData().from_dict(v, selections=selections) for k, v in data['plot_data_dicts'].items()}
         self.global_data.plot_data = plot_data
         self.load_video(data.get("video_file", None))
         self._set_sync(data.get("sync_file", None))

@@ -18,9 +18,13 @@ class ExampleImporter(BaseImporter):
     def load_sensor_data(self, file: str) -> Tuple[Dict, float]:
         df = pd.read_csv(file)
 
-        data = {"Pocket IMU": pd.read_csv(file)[["acc_x", "acc_y", "acc_z", "gyr_x", "gyr_y", "gyr_z"]]}
-        sampling_rate = 1 / df["time"].diff().mean()
-        return data, sampling_rate
+        data = {
+            "Pocket IMU": {
+                "sensor_data": pd.read_csv(file)[["acc_x", "acc_y", "acc_z", "gyr_x", "gyr_y", "gyr_z"]],
+                "sampling_rate_hz": 1 / df["time"].diff().mean(),
+            }
+        }
+        return data
 
     def load_annotations(self, file_path: Union[Path, str]) -> Dict[str, pd.DataFrame]:
         return

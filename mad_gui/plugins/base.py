@@ -40,19 +40,19 @@ class BaseImporter(BasePlugin):
         Returns
         -------
         sensor_data
-            A dictionary with one key per sensor. Each of those, keeps a dataframe with one column per sensor channel.
+            A dictionary with one key per sensor. Each of those, again keeps a dictionary, with two keys: `sensor data`
+            and `sampling_rate_hz`. Behind the key `sensor_data` is a pd.DataFrame with one column per channel.
+            `sampling_rate_hz` is a float.
             If the data consists of acc_x, acc_y, and acc_z the dataframe has three columns.
-        sampling_rate_hz
-            The sampling rate with which the data has been recorded.
 
         Examples
         --------
-        >>> data, sr = load_sensor_data("/some/file.format")
+        >>> data = load_sensor_data("/some/file.format")
         >>> data.keys()
         dict_keys(['left_sensor', 'right_sensor'])
-        >>> sr
-        102.4
-        >>> data['left_sensor']
+        >>> data['left_sensor'].keys()
+        dict_keys(['sensor_data', 'sampling_rate_hz'])
+        >>> data['left_sensor']['sensor_data']
             acc_x    'acc_y'
         0    9.81       0.1
         1    9.80       0.0

@@ -7,7 +7,7 @@ from mad_gui.plot_tools.labels import SynchronizationLabel
 from mad_gui.plot_tools.labels.base_label import BaseRegionLabel
 from pyqtgraph.GraphicsScene.mouseEvents import MouseClickEvent
 from PySide2.QtCore import Slot
-from PySide2.QtGui import QColor, QCursor, QMouseEvent, QPalette
+from PySide2.QtGui import QColor, QCursor, QMouseEvent, QPalette, QPen
 
 from typing import List, Optional, Type
 
@@ -30,7 +30,7 @@ class BasePlot(pg.PlotWidget):
         self.initial_plot_channels = initial_plot_channels or list(plot_data.data.columns)
         self.configure_style()
         self.video_cursor_line = None
-        self.cursor_line_pen = pg.mkPen(color="y", width=3)
+        self.cursor_line_pen = pg.mkPen(color="y", width=1)
         self.sync_item = None
         self.sync_info = None
         self._initialize_labels(label_classes)
@@ -95,7 +95,7 @@ class BasePlot(pg.PlotWidget):
         self.plotItem.titleLabel.setText(text=title, color=Config.theme.FAU_COLORS["dark_blue"])
 
     def configure_style(self):
-        bg_color = self.parent.palette().color(QPalette.Active, QPalette.Light)
+        bg_color = Config.theme.COLOR_LIGHT
         self.setBackground(bg_color)
         for i_channel in ["bottom", "left"]:
             self._adapt_channel_color(i_channel, self.parent.palette().color(QPalette.Active, QPalette.Window))
@@ -103,7 +103,7 @@ class BasePlot(pg.PlotWidget):
     def _adapt_channel_color(self, channel: str, color: QColor):
         """Make channel color in FAU style"""
         ax = self.getAxis(channel)
-        ax.setPen(color=color)
+        ax.setPen(color=color, width=1)
         ax.setTextPen(color=color)
 
     def set_coupled_plot(self, other: Optional[pg.PlotWidget] = None):

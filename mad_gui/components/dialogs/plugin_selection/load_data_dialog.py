@@ -1,4 +1,7 @@
+import warnings
 from pathlib import Path
+
+from PySide2.QtGui import Qt
 
 from mad_gui import BaseImporter
 from mad_gui.components.dialogs.user_information import UserInformation
@@ -15,7 +18,15 @@ from typing import Any, Dict, List, Optional, Tuple, Type
 
 ui_path = resource_path(str(UI_PATH / "load.ui"))
 if ".ui" in ui_path:
-    LoadWindow, _ = loadUiType(ui_path)
+    try:
+        LoadWindow, _ = loadUiType(ui_path)
+    except TypeError:
+        raise FileNotFoundError(
+            "Probably python did not find `pyside2-uic`. See "
+            '"https://mad-gui.readthedocs.io/en/latest/troubleshooting.html#pyside2-uic-not-found" for more information'
+        )
+
+
 elif ".py" in ui_path:
     from mad_gui.qt_designer.build.load import Ui_Form as LoadWindow  # pylint: disable=C0412,E0401
 
@@ -130,19 +141,37 @@ class LoadDataDialog(QDialog):
             UserInformation().inform("You need to select a sensor data file!")
             return None, None
 
-        data, sampling_rate_hz = loader.load_sensor_data(self.state.data_file)
+        try:
+            data = loader.load_sensor_data(self.state.data_file)
+        except:  # noqa
+            self.setCursor(Qt.ArrowCursor)
+            UserInformation.inform(
+                "There was an error loading the data. Maybe you selected a wrong file or a wrong "
+                "recording system in the dropdown box?"
+            )
+            return None, None
         annotations = {}
         if self.state.annotation_file:
             annotations = loader.load_annotations(self.state.annotation_file)
+            for sensor, annotation in annotations.items():
+                try:
+                    data[sensor]["annotations"] = annotation
+                except KeyError:
+                    UserInformation.inform(
+                        "Loader provided annotations for sensors that have no plot. Click 'Learn More' "
+                        "for more information",
+                        help_link="https://mad-gui.readthedocs.io/en/latest/"
+                        "troubleshooting.html#loader-provided-"
+                        "annotations-that-were-not-understood",
+                    )
 
-            if not set(annotations.keys()) == set(data.keys()):
-                raise ValueError("The dict keys of the annotations must match the dict keys of the sensor data.")
+                    raise ValueError(
+                        "The dict keys of the annotations must match the dict keys of the sensor data. See "
+                        "https://mad-gui.readthedocs.io/en/latest/troubleshooting.html#id2 for more "
+                        "information."
+                    )
 
-        final_data = {}
-        for sensor, sensor_data in data.items():
-            final_data[sensor] = self._transform_annotations(sensor_data, sensor, sampling_rate_hz, annotations)
-
-        return_dict = {"data": final_data, "data_file_name": self.state.data_file}
+        return_dict = {"plot_data_dicts": data, "data_file_name": self.state.data_file}
 
         if self.state.video_file:
             # Note: this must be done after loading data, since loading video might trigger plotting yellow lines in
@@ -158,21 +187,30 @@ class LoadDataDialog(QDialog):
             return_dict["sync_file"] = sync_file
         return return_dict
 
-    @classmethod
-    def _transform_annotations(cls, sensor_data, sensor, sampling_rate_hz, annotations):
+    def _transform_annotations(self, sensor_data, sensor, sampling_rate_hz, annotations):
         tmp = {"data": sensor_data, "sampling_rate_hz": sampling_rate_hz}
         if annotations:
-            a = annotations[sensor]
-            if "strides" in a:
-                tmp["stride_annotations"] = a["strides"]
-            if "activities" in a:
-                tmp["activity_annotations"] = a["activities"]
-            if set(a.keys()) - {"strides", "activities"}:
+            unknown_sensors = set(annotations.keys()) - set(sensor_data.keys())
+            if unknown_sensors:
                 raise ValueError(
-                    "Loader provided annotations that were not understood. Only `strides` and `activities` are "
-                    "supported as dict keys."
+                    f"Loader provided annotations for sensors that have no plot: {unknown_sensors} \n\n"
+                    f"See https://mad-gui.readthedocs.io/en/latest/troubleshooting.html#id2 for more info."
                 )
-        return tmp
+            for sensor in annotations:
+                known_plots = [label.name for label in self.parent.global_data.plot_data]
+                unknown_plots = set(annotations[sensor].keys()) - set(known_plots)
+                if unknown_plots:
+                    UserInformation.inform(
+                        f"Loader provided annotations that were not understood: {unknown_plots} \n"
+                        f"Click Learn More for further information.",
+                        help_link="https://mad-gui.readthedocs.io/en/latest/troubleshooting.html#"
+                        "loader-provided-annotations-that-were-not-understood",
+                    )
+                    raise ValueError(
+                        f"Loader provided annotations that were not understood: {unknown_plots} \n\n"
+                        f"See https://mad-gui.readthedocs.io/en/latest/troubleshooting.html#id2 for more info."
+                    )
+        return {"data": sensor_data, "sampling_rate_hz": sampling_rate_hz, "annotations": annotations}
 
     def get_data(self) -> Optional[Tuple[Dict[str, Dict[str, Any]], BaseImporter]]:
         """Close this dialog and return the data, that was selected by the user."""

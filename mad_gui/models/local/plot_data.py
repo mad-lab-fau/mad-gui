@@ -73,7 +73,7 @@ class PlotData(BaseStateModel):
 
     def to_dict(self):
         return {
-            "data": self.data,
+            "sensor_data": self.data,
             "annotations": {k: v.to_df() for k, v in self.annotations.items()},
             "sampling_rate_hz": self.sampling_rate_hz,
         }
@@ -83,9 +83,10 @@ class PlotData(BaseStateModel):
         self.annotations = dict()
         for selection in selections:
             if selection == "sensor":
-                self.data = plot_data["data"]
+                self.data = plot_data["sensor_data"]
                 self.sampling_rate_hz = plot_data["sampling_rate_hz"]
-            elif "annotations" in plot_data.keys():
+            elif plot_data.get("annotations", None):
+                # We simply assume it is a label
                 self._add_label(plot_data, selection)
         return self
 

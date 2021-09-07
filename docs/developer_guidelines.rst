@@ -217,7 +217,9 @@ In this case, you can create an executable of the GUI as follows:
     .venv/Scripts/activate
 
     # Install project dependencies
+    # in case pip install gets stuck at 'processing', see our troubleshooting section for a possible solution
     pip install .
+
 
     # get PyInstaller (make sure pyinstaller is NOT installed in your global python!)
     pip install pyinstaller
