@@ -7,6 +7,7 @@ isort:skip_file (Required import order: PySide2, pyqtgraph, mad_gui.*)
 """
 
 import os
+import sys
 import warnings
 from pathlib import Path
 import pickle
@@ -391,9 +392,15 @@ class MainWindow(QMainWindow):
         self.global_data.sync_file = data.get("sync_file", "")
         self.global_data.video_file = data.get("video_file", "")
 
-        # in the next step we will try to plot all labels that the GUI is aware of and that are in the `annotation_file`
-        selections = ["sensor", *[item.name for item in self.global_data.labels]]
-        plot_data = {k: PlotData().from_dict(v, selections=selections) for k, v in data["plot_data_dicts"].items()}
+        try:
+            plot_data = {k: PlotData().from_dict(v) for k, v in data["plot_data_dicts"].items()}
+        except:  # noqa
+            print(sys.exc_info()[0])
+            raise NotImplementedError(
+                f"Possibly there is an error in the data the was loaded using {loader}. Please "
+                f"see our guide in implementing an importer: https://mad-gui.readthedocs.io/en/la"
+                f"test/customization.html#implement-an-importer"
+            )
         self.global_data.plot_data = plot_data
         self.load_video(data.get("video_file", None))
         self._set_sync(data.get("sync_file", None))
@@ -525,9 +532,13 @@ class MainWindow(QMainWindow):
             PluginSelectionDialog(
                 plugins=filter_plugins(self.global_data.plugins, BaseAlgorithm), parent=self
             ).process_data(self.global_data.plot_data)
-        except (AttributeError, NotImplementedError):
-            set_cursor(self, Qt.ArrowCursor)
-            return
+        except:  # noqa
+            print(sys.exc_info()[0])
+            raise NotImplementedError(
+                "Possibly there is an error in the implementation of the algorithm. Please "
+                "see our guide in implementing an algorithm: https://mad-gui.readthedocs.io/en/latest/customization.ht"
+                "ml#implement-an-algorithm"
+            )
 
         set_cursor(self, Qt.ArrowCursor)
         # actually this should be called automatically due to global_data.bind(_plot_data, "plot_data") but that does

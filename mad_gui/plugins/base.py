@@ -7,7 +7,7 @@ import pandas as pd
 from mad_gui.components.dialogs.user_information import UserInformation
 from mad_gui.models.local import PlotData
 
-from typing import Dict, Tuple, Union
+from typing import Dict, Union
 
 
 class BasePlugin:
@@ -29,21 +29,23 @@ class BaseImporter(BasePlugin):
     def name(cls) -> str:
         raise NotImplementedError()
 
-    def load_sensor_data(self, file: str) -> Tuple[Dict, float]:  # noqa
+    def load_sensor_data(self, file: str) -> Dict:  # noqa
         """Loading sensor data as it is usually stored by your recording device
 
         Parameters
         ----------
         file
-            Full path to the file that should be used to load data.
+            Full path to the file that should be used to load data. You will automatically receive this from the GUI
+            which calls this importer.
 
         Returns
         -------
         sensor_data
-            A dictionary with one key per sensor. Each of those, again keeps a dictionary, with two keys: `sensor data`
-            and `sampling_rate_hz`. Behind the key `sensor_data` is a pd.DataFrame with one column per channel.
-            `sampling_rate_hz` is a float.
-            If the data consists of acc_x, acc_y, and acc_z the dataframe has three columns.
+            A dictionary with one key per sensor. Each of those, again keeps a dictionary, with at least two keys:
+            `sensor data` and `sampling_rate_hz`. Behind the key `sensor_data` is a pd.DataFrame with one column per
+            channel, `sampling_rate_hz` is a float.
+            If this dictionary has further keys, those will later be stored in
+            :class:`mad_gui.models.local.PlotData`'s additional_data.
 
         Examples
         --------

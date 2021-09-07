@@ -73,16 +73,16 @@ Here you can see an example of how to create an Importer and how to inject it:
             # We create a dictionary with one key for each plot we want to generate.
             # Each value of the dictionary is a pandas dataframe, with columns being the single data streams /
             # sensor channels.
+            sensor_data =
+            sensor_data['something_my_algorithm_need']
             data = {
             "IMU Hip": {
-                "sensor_data": pd.read_csv(file)['hip_sensor'],
+                "sensor_data": pd.read_csv(file)[['x', 'y', 'z']],
                 "sampling_rate_hz": 50,
+                # note: very other key will become part of the dictionary PlotData.additional_data, as for example the
+                # following one. This way it is not plotted, but is available for algorithms later on.
+                "some_additional_description_of_the_data": -1,
                 }
-            "IMU Foot": {
-                "sensor_data": pd.read_csv(file)['foo_sensor'],
-                "sampling_rate_hz": 100,
-                }
-            }
 
             return data
 
@@ -121,11 +121,13 @@ will not know, what the label "Activity" should look like. Read more about creat
                 # `.data` in the next line. This is due to internal data handling in the GUI.
                 # You do not need to care about that, just make sure that the method `self.get_annotations(...)
                 # returns a pd.DataFrame.
-                sensor_plot.annotations["Activity Label"].data = self.get_annotations(sensor_plot.data)
+                sensor_plot.annotations["Activity Label"].data = self.get_annotations(sensor_plot)
 
         def get_annotations(plot_data: PlotData) -> pd.DataFrame:
             # Some code that creates a pd.DataFrame with the columns `start` and `end`.
             # Each row corresponds to one label to be plotted.
+            imu_hip_data = plot_data.data
+            imu_hip_fs = plot_data.sampling_rate_hz
 
 
 

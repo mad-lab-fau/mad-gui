@@ -64,12 +64,18 @@ class PlotData(BaseStateModel):
         A dictionary, where the keys are the label names (as named in the label's
         :meth:`~mad_gui.plot_tools.labels.BaseRegionLabel.name` attribute). The values are instances of
         :class:`~mad_gui.models.local.AnnotationData`.
+
+    additional_data
+        Keeps things that belongs to the plotted data but should not be plotted. Here you can find everything that was
+        returned from your loader for one sensor, where the key is not `sensor_data` or `sampling_rate_hz`, see
+        :class:`mad_gui.plugins.BaseImporter`.
     """
 
     # we need to initialize this with `None` for sphinx
     data: pd.DataFrame = None
     sampling_rate_hz: float = None
     annotations: Dict = None
+    additional_data: Dict = None
 
     def to_dict(self):
         return {
@@ -79,15 +85,26 @@ class PlotData(BaseStateModel):
         }
 
     def from_dict(self, plot_data: Dict, selections: Optional[List] = None) -> PlotData:
-        selections = selections or ["sensor"]
+        selections = selections or plot_data.keys()
         self.annotations = dict()
         for selection in selections:
-            if selection == "sensor":
-                self.data = plot_data["sensor_data"]
-                self.sampling_rate_hz = plot_data["sampling_rate_hz"]
-            elif plot_data.get("annotations", None):
-                # We simply assume it is a label
+            if selection == "sensor_data":
+                try:
+                    self.data = plot_data["sensor_data"]
+                    self.sampling_rate_hz = plot_data["sampling_rate_hz"]
+                except KeyError as k:
+                    raise KeyError(
+                        "Please provide sensor data and a sampling rate for each sensor in your loader's "
+                        "`load_sensor_data` method. For docstring on that method see https://mad-gui.readthe"
+                        "docs.io/en/latest/modules/generated/plugins/mad_gui.plugins.BaseImporter.html#mad_g"
+                        "ui.plugins.BaseImporter.load_sensor_data"
+                    ) from k
+            elif selection == "annotations" and plot_data.get("annotations", None):
                 self._add_label(plot_data, selection)
+            else:
+                if not self.additional_data:
+                    self.additional_data = {}
+                self.additional_data[selection] = plot_data[selection]
         return self
 
     def _add_label(self, plot_data: Dict, label: str):

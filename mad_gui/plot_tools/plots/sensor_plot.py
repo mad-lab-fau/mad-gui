@@ -1,4 +1,5 @@
 import datetime
+import warnings
 
 import numpy as np
 import pandas as pd
@@ -234,11 +235,14 @@ class SensorPlot(BasePlot):
             if getattr(Config.settings, "NORMALIZE_DISPLAYED_DATA", False) is True:
                 data_zero_mean = data_to_plot - data_to_plot.mean()
                 data_to_plot = data_zero_mean / (data_zero_mean.max() - data_zero_mean.min())
-            self.plot(
-                x=x_axis,
-                y=data_to_plot,
-                pen=pg.mkPen(width=2, color=color),
-            )
+            try:
+                self.plot(
+                    x=x_axis,
+                    y=data_to_plot,
+                    pen=pg.mkPen(width=2, color=color),
+                )
+            except TypeError:
+                warnings.warn(f"Cannot plot channel {channel_name} because of a type error.")
 
         self.autoRange()
 
