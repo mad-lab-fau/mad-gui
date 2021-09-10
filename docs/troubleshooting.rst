@@ -48,7 +48,7 @@ If using Visual Studio, you might get this error on starting the GUI:
 
     qt.qpa.plugin: Could not load the Qt platform plugin "windows" in "" even though it was found.
     
-You can fix it as described in `this stackoverflow answer<https://stackoverflow.com/a/42231526>`_.
+You can fix it as described in `this stackoverflow answer <https://stackoverflow.com/a/42231526>`_.
 
 .. _pip stuck:
 
@@ -89,9 +89,14 @@ PySide2-uic not found
 Probably python can't find pyside2-uic. Look for a folder called `Scripts` in your python env.
 To find the location of your python env, go to the command line, activate the environment and then type:
 
-Operating system | command
------------------|--------
-Windows          | where python
+.. list-table:: Finding python
+    :widths: 25 25
+    :header-rows: 1
+
+    * - Operating system
+      - Command
+    * - Windows
+      - where python
 
 Then copy pyside2-uic from the folder `Scripts` to the location where also your python executable is (should be the
 parent directory).
