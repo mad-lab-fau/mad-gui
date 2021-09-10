@@ -11,6 +11,7 @@ import os
 import sys
 from importlib import import_module
 from inspect import getsourcefile, getsourcelines
+import markdown
 from pathlib import Path
 from shutil import copy
 
@@ -19,6 +20,13 @@ import mad_gui
 
 # -- Copy README file --------------------------------------------------------
 copy(Path("../README.md"), Path("./README.md"))
+
+# -- replace image paths in README---------------------------------------------
+with open("./README.md", "r") as file:
+    readme_md = file.read()
+readme_html = readme_md.replace("./docs/", "")
+with open("./README.md", "w") as file:
+    file.write(readme_html)
 
 # -- Project information -----------------------------------------------------
 
