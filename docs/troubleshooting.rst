@@ -43,7 +43,7 @@ Development
 qt.qpa.plugin Error
 *******************
 
-.. code-block:: python
+.. code-block:: console
 
     qt.qpa.plugin: Could not load the Qt platform plugin "windows" in "" even though it was found.
  
@@ -70,7 +70,7 @@ Fail to load UI
 
 If you get an error like this, see the next section.
 
-.. code-block:: python
+.. code-block:: console
 
     ... loadUiType(...)
     TypeError: cannot unpack non-iterable NoneType object
@@ -82,7 +82,7 @@ PySide2-uic not found
 .. note::
     So far, this problem is only known for Windows.
 
-.. code-block:: python
+.. code-block:: console
 
     "...mad_gui\components\dialogs\....py", line .., in <module>
     FileNotFoundError: Probably python did not find pyside2-uic
