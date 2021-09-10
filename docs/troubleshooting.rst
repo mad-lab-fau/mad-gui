@@ -47,7 +47,7 @@ qt.qpa.plugin Error
 
     qt.qpa.plugin: Could not load the Qt platform plugin "windows" in "" even though it was found.
     
-Please see `this stackoverflow post <https://stackoverflow.com/questions/41994485/how-to-fix-could-not-find-or-load-the-qt-platform-plugin-windows-while-using-m>`_, in which you'll find a ton of possible reasons and fixes.
+Please see `this stackoverflow post <https://stackoverflow.com/questions/41994485/how-to-fix-could-not-find-or-load-the-qt-platform-plugin-windows-while-using-m>`_, in which you'll find a ton of possible reasons and fixes. However, please be keep in mind that the MaD GUI uses `PySide2` and not `PyQt4` or something, which is mentioned in some answers. You might therefore need to replace something from the answers to make it suit to your problem.
 
 .. _pip stuck:
 
