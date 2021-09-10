@@ -205,36 +205,36 @@ In this case, you can create an executable of the GUI as follows:
 
 .. code-block:: console
 
-    echo navigate to the gui's repository
+    echo navigating to the gui's repository
     cd mad_gui
 
-    # create virutal environment
+    echo create virutal environment
     python -m venv .venv
-    # this creates the virutal environment in the folder `.venv`
-    # the `doit` task `prepare_windows_build` will make use of this folder by default later in this process
+    echo this creates the virutal environment in the folder `.venv`
+    echo the `doit` task `prepare_windows_build` will make use of this folder by default later in this process
 
-    # activate the virutal environment
+    echo activate the virutal environment
     .venv/Scripts/activate
 
-    # Install project dependencies
-    # in case pip install gets stuck at 'processing', see our troubleshooting section for a possible solution
+    echo Install project dependencies
+    echo in case pip install gets stuck at 'processing', see our troubleshooting section for a possible solution
     pip install .
 
 
-    # get PyInstaller (make sure pyinstaller is NOT installed in your global python!)
+    echo get PyInstaller (make sure pyinstaller is NOT installed in your global python!)
     pip install pyinstaller
 
-    # we need this to perform the following task
+    echo we need this to perform the following task
     pip install doit
     
-    # for pyinstaller to be able to transform from png to jpg (if we use png directly, we get strange pink borders)
+    echo for pyinstaller to be able to transform from png to jpg (if we use png directly, we get strange pink borders)
     pip install pillow
 
-    # we have to transform some .ui files to .py and put them into our .venv mad-gui library
-    # note: if you did not name your virtual environment .venv in the second step, you can pass the name using `-v <name of venv>`
+    echo we have to transform some .ui files to .py and put them into our .venv mad-gui library
+    echo note: if you did not name your virtual environment .venv in the second step, you can pass the name using `-v <name of venv>`
     doit prepare_windows_build
 
-    # actually create the executable
+    echo actually create the executable
     pyinstaller pyinstaller.spec --onefile
 
 Afterwards, you will find the file in the `dist` folder.
