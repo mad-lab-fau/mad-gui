@@ -92,6 +92,9 @@ html_favicon = "_static/images/mad-runner.ico"
 html_static_path = ['_static']
 html_css_files = ['css/custom.css']
 html_theme_options = {"show_prev_next": False}
+html_sidebars = {
+   'README.html': ['localtoc.html']
+}
 
 # Add any paths that contain custom static files (such as style sheets) here,
 # relative to this directory. They are copied after the builtin static files,
