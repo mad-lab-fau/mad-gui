@@ -26,7 +26,7 @@ Preparing an environment
 After installing anaconda, open the Anaconda Prompt.
 Then create a virtual environment in there by using the following commands:
 
-.. code-block:: python
+.. code-block:: console
 
     conda create -n mad_gui python=3.7 --no-default-packages
     conda activate mad_gui
@@ -85,7 +85,7 @@ Afterwards, extract the contents from the zip file.
 Stay in the anaconda prompt and switch to the directory, where you have downloaded the repository to.
 Most likely, you will need commands like these:
 
-.. code-block::
+.. code-block:: console
 
     cd ..  # to go to a parent directory
     cd folder_name  # to enter a folder
@@ -102,7 +102,7 @@ Then you have 2 options to start using poetry for this package:
 
 1. Using a `conda env` instead of `venv`
 
-   .. code-block:: python
+   .. code-block:: console
 
       # Install dependencies
       # Poetry will `detect that you are already using a conda env <https://github.com/python-poetry/poetry/pull/1432>`_ and will use it, instead of creating a new one.
@@ -203,7 +203,7 @@ In this case, you can create an executable of the GUI as follows:
 * install a clean python version (not using anaconda)
 * afterwards, follow these steps in the clean python installation (not in your virtual environment mad_gui!):
 
-.. code-block:: python
+.. code-block:: console
 
     # navigate to the repository
     cd mad_gui
