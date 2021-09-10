@@ -104,8 +104,8 @@ Then you have 2 options to start using poetry for this package:
 
    .. code-block:: console
 
-      # Install dependencies
-      # Poetry will `detect that you are already using a conda env <https://github.com/python-poetry/poetry/pull/1432>`_ and will use it, instead of creating a new one.
+      echo Installing dependencies
+      echo Poetry will `detect that you are already using a conda env <https://github.com/python-poetry/poetry/pull/1432>`_ and will use it, instead of creating a new one.
       poetry install --no-root`
 
 After running the poetry install command you should be able to use poetry without activating the conda env again.
@@ -205,7 +205,7 @@ In this case, you can create an executable of the GUI as follows:
 
 .. code-block:: console
 
-    # navigate to the repository
+    echo navigate to the gui's repository
     cd mad_gui
 
     # create virutal environment
