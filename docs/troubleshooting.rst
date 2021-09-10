@@ -47,8 +47,7 @@ qt.qpa.plugin Error
 
     qt.qpa.plugin: Could not load the Qt platform plugin "windows" in "" even though it was found.
     
-Try to fix it using `this stackoverflow answer <https://stackoverflow.com/a/42231526>`_.
-However, it might also have to do with other qt version being installed on your machine, see `this stackoverflow answer <https://stackoverflow.com/a/49092279>`_.
+Please see `this stackoverflow post <https://stackoverflow.com/questions/41994485/how-to-fix-could-not-find-or-load-the-qt-platform-plugin-windows-while-using-m>`_, in which you'll find a ton of possible reasons and fixes.
 
 .. _pip stuck:
 
