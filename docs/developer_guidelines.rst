@@ -26,7 +26,7 @@ Preparing an environment
 After installing anaconda, open the Anaconda Prompt.
 Then create a virtual environment in there by using the following commands:
 
-.. code-block:: python
+.. code-block:: console
 
     conda create -n mad_gui python=3.7 --no-default-packages
     conda activate mad_gui
@@ -85,7 +85,7 @@ Afterwards, extract the contents from the zip file.
 Stay in the anaconda prompt and switch to the directory, where you have downloaded the repository to.
 Most likely, you will need commands like these:
 
-.. code-block::
+.. code-block:: console
 
     cd ..  # to go to a parent directory
     cd folder_name  # to enter a folder
@@ -102,10 +102,10 @@ Then you have 2 options to start using poetry for this package:
 
 1. Using a `conda env` instead of `venv`
 
-   .. code-block:: python
+   .. code-block:: console
 
-      # Install dependencies
-      # Poetry will `detect that you are already using a conda env <https://github.com/python-poetry/poetry/pull/1432>`_ and will use it, instead of creating a new one.
+      echo Installing dependencies
+      echo Poetry will `detect that you are already using a conda env <https://github.com/python-poetry/poetry/pull/1432>`_ and will use it, instead of creating a new one.
       poetry install --no-root`
 
 After running the poetry install command you should be able to use poetry without activating the conda env again.
@@ -203,38 +203,38 @@ In this case, you can create an executable of the GUI as follows:
 * install a clean python version (not using anaconda)
 * afterwards, follow these steps in the clean python installation (not in your virtual environment mad_gui!):
 
-.. code-block:: python
+.. code-block:: console
 
-    # navigate to the repository
+    echo navigating to the gui's repository
     cd mad_gui
 
-    # create virutal environment
+    echo create virutal environment
     python -m venv .venv
-    # this creates the virutal environment in the folder `.venv`
-    # the `doit` task `prepare_windows_build` will make use of this folder by default later in this process
+    echo this creates the virutal environment in the folder `.venv`
+    echo the `doit` task `prepare_windows_build` will make use of this folder by default later in this process
 
-    # activate the virutal environment
+    echo activate the virutal environment
     .venv/Scripts/activate
 
-    # Install project dependencies
-    # in case pip install gets stuck at 'processing', see our troubleshooting section for a possible solution
+    echo Install project dependencies
+    echo in case pip install gets stuck at 'processing', see our troubleshooting section for a possible solution
     pip install .
 
 
-    # get PyInstaller (make sure pyinstaller is NOT installed in your global python!)
+    echo get PyInstaller (make sure pyinstaller is NOT installed in your global python!)
     pip install pyinstaller
 
-    # we need this to perform the following task
+    echo we need this to perform the following task
     pip install doit
     
-    # for pyinstaller to be able to transform from png to jpg (if we use png directly, we get strange pink borders)
+    echo for pyinstaller to be able to transform from png to jpg (if we use png directly, we get strange pink borders)
     pip install pillow
 
-    # we have to transform some .ui files to .py and put them into our .venv mad-gui library
-    # note: if you did not name your virtual environment .venv in the second step, you can pass the name using `-v <name of venv>`
+    echo we have to transform some .ui files to .py and put them into our .venv mad-gui library
+    echo note: if you did not name your virtual environment .venv in the second step, you can pass the name using `-v <name of venv>`
     doit prepare_windows_build
 
-    # actually create the executable
+    echo actually create the executable
     pyinstaller pyinstaller.spec --onefile
 
 Afterwards, you will find the file in the `dist` folder.

@@ -42,13 +42,14 @@ Development
 
 qt.qpa.plugin Error
 *******************
-If using Visual Studio, you might get this error on starting the GUI:
 
-.. code-block:: python
+.. code-block:: console
 
     qt.qpa.plugin: Could not load the Qt platform plugin "windows" in "" even though it was found.
-    
-You can fix it as described in `this stackoverflow answer <https://stackoverflow.com/a/42231526>`_.
+ 
+So far, developers of MaD GUI only had problems that could be solved by adding a new system variable `QT_QPA_PLATFORM_PLUGIN_PATH` with the value `...\Lib\site-packages\PySide2\plugins\platform` (replace the three dots to match the path to your python instalation, e.g. C:\Users\name\anaconda3\env\mad_gui` ` to your machine. In case you are using Windows, you can find more about setting system variables `here <https://superuser.com/questions/949560/how-do-i-set-system-environment-variables-in-windows-10>`_.
+
+In case that does not work, please see `this stackoverflow post <https://stackoverflow.com/questions/41994485/how-to-fix-could-not-find-or-load-the-qt-platform-plugin-windows-while-using-m>`_, in which you'll find a ton of possible reasons and fixes. However, please be keep in mind that the MaD GUI uses `PySide2` and not `PyQt4` or something, which is mentioned in some answers. You might therefore need to replace something from the answers to make it suit to your problem.
 
 .. _pip stuck:
 
@@ -69,7 +70,7 @@ Fail to load UI
 
 If you get an error like this, see the next section.
 
-.. code-block:: python
+.. code-block:: console
 
     ... loadUiType(...)
     TypeError: cannot unpack non-iterable NoneType object
@@ -81,7 +82,7 @@ PySide2-uic not found
 .. note::
     So far, this problem is only known for Windows.
 
-.. code-block:: python
+.. code-block:: console
 
     "...mad_gui\components\dialogs\....py", line .., in <module>
     FileNotFoundError: Probably python did not find pyside2-uic
