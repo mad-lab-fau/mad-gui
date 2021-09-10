@@ -42,13 +42,13 @@ Development
 
 qt.qpa.plugin Error
 *******************
-If using Visual Studio, you might get this error on starting the GUI:
 
 .. code-block:: python
 
     qt.qpa.plugin: Could not load the Qt platform plugin "windows" in "" even though it was found.
     
-You can fix it as described in `this stackoverflow answer <https://stackoverflow.com/a/42231526>`_.
+Try to fix it using `this stackoverflow answer <https://stackoverflow.com/a/42231526>`_.
+However, it might also have to do with other qt version being installed on your machine, see `this stackoverflow answer <https://stackoverflow.com/a/49092279>`_.
 
 .. _pip stuck:
 
