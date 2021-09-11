@@ -93,7 +93,7 @@ html_static_path = ['_static']
 html_css_files = ['css/custom.css']
 html_theme_options = {"show_prev_next": False}
 html_sidebars = {
-   'README': ['localtoc.html'],
+   'README': [],
    'Getting started': []
 }
 
