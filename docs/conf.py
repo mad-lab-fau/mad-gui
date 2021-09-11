@@ -93,7 +93,8 @@ html_static_path = ['_static']
 html_css_files = ['css/custom.css']
 html_theme_options = {"show_prev_next": False}
 html_sidebars = {
-   'README.html': ['localtoc.html']
+   'README': ['localtoc.html'],
+   'Getting started': ['localtoc.html']
 }
 
 # Add any paths that contain custom static files (such as style sheets) here,
