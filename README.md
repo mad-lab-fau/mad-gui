@@ -23,12 +23,20 @@
 The MaD GUI is a framework for processing time series data.
 Its use-cases include visualization, annotation (manual or automated), and algorithmic processing of visualized data and annotations.
 
-## How do I use it (videos)?
+## How do I use it?
+### Videos
 By clicking on the images below, you will be redirected to YouTube. In case you want to follow along on your own machine, check out the section [How do I get the GUI to work on my machine?](#how-do-i-get-the-gui-to-work-on-my-machine) first.
 
 [<img src="./docs/_static/images/video_thumbnails/loading_and_navigating.png" width="200px">](https://www.youtube.com/watch?v=akxcuFOesC8 "MaD GUI - Loading data and navigating in the plot")
 [<img src="./docs/_static/images/video_thumbnails/annotations.png" width="200px">](https://www.youtube.com/watch?v=VWQKYRRRGVA "MaD GUI - Labelling data manually or using an algorithm")
 [<img src="./docs/_static/images/video_thumbnails/sync.png" width="200px">](https://www.youtube.com/watch?v=-GI5agFOPRM "MaD GUI - Synchronize video and sensor data")
+
+### Shortcuts
+| Shortcut                     | Action |
+|------------------------------|--------|
+| a, e, r, s, Esc              | Switch between modes `Add label`, `Edit label`, `Remove label`, `Synchronize data`|
+| `Shift` + Left Mouse Click   | If in `Add label` mode, start a new label directly when setting the end of a label|
+| `Left Mouse Click` or `Space`| If in `Add label` mode, set label start / end
 
 ## How do I get the GUI to work on my machine?
 Below, we present two options how to obtain and run the GUI.
