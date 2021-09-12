@@ -209,6 +209,10 @@ The following example makes use of the BaseSettings and simply overrides some pr
      SNAP_AXIS = "acc_x"
      SNAP_RANGE_S = 0.2
 
+     # in all your labels you can add an event by using `Ctrl` as modifier when in `Add label` mode
+     # when adding an event the user will be prompted to select one of these two strings as a `description` for the event
+     EVENTS = ["important event", "other type of important event"]
+
      # Set the width of IMU plot to this, when hitting the play button for the video.
      PLOT_WIDTH_PLAYING_VIDEO = 20  # in seconds
 
@@ -221,7 +225,7 @@ The following example makes use of the BaseSettings and simply overrides some pr
 Creating custom labels
 ######################
 You can create labels and pass them to our GUI.
-Your label must inherit form our `BaseRegionLabel <https://mad-gui.readthedocs.io/en/latest/modules/generated/plot_tools/mad_gui.plot_tools.BaseRegionLabel.html#mad_gui.plot_tools.BaseRegionLabel>`_.
+Your label must inherit form our `BaseRegionLabel <https://mad-gui.readthedocs.io/en/latest/modules/generated/plot_tools/mad_gui.plot_tools.labels.BaseRegionLabel.html#mad_gui.plot_tools.labels.BaseRegionLabel>`_.
 It could for example look like this:
 
 .. code-block:: python

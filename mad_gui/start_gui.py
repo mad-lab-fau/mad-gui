@@ -9,7 +9,7 @@ from mad_gui.plugins.example import ExampleAlgorithm, ExampleImporter
 from mad_gui.windows import MainWindow
 from PySide2.QtWidgets import QApplication
 
-from typing import Sequence, Type
+from typing import Sequence, Type, Optional
 
 
 class Activity(BaseRegionLabel):
@@ -30,12 +30,39 @@ class Jump(BaseRegionLabel):
 
 
 def start_gui(
-    data_dir=Path("../example_data/").absolute(),
-    settings: Type[BaseSettings] = BaseSettings,
-    theme: Type[BaseTheme] = BaseTheme,
-    plugins: Sequence[BasePlugin] = (ExampleImporter, ExampleAlgorithm),
-    labels: Sequence[BaseRegionLabel] = (Activity, Jump),
+    data_dir=Path("."),
+    plugins: Optional[Sequence[BasePlugin]] = (ExampleImporter, ExampleAlgorithm),
+    labels: Optional[Sequence[BaseRegionLabel]] = (Activity, Jump),
+    settings: Optional[Type[BaseSettings]] = BaseSettings,
+    theme: Optional[Type[BaseTheme]] = BaseTheme,
+
 ):
+    """Use this function to start the GUI and pass your plugins, like importers and algorithms to it.
+
+    Please look at the `See Also` section below, to learn more about how to create objects of the classes you can
+    pass to this function.
+
+    See Also
+    --------
+    :ref:`customization`
+
+    Parameters
+    ----------
+    data_dir
+        The base path where there user will be directed to when opening a file.
+    plugins
+        Mostly you will adapt the GUI via this. The plugins must inherit from either of these:
+        :class:`~mad_gui.plugins.BaseImporter`, :class:`~mad_gui.plugins.BaseExporter`,
+        :class:`~mad_gui.plugins.BaseAlgorithm`.
+    labels
+        The labels you want to use. They inherit from :class:`~mad_gui.plot_tools.labels.BaseRegionLabel`.
+    settings
+        Change some settings like the snap range, if you set your label's `snap_to_min` or `snap_to_max` to `True`
+    theme
+        Change the two main colors (light and dark) of the GUI using this
+
+
+    """
     # Create the Qt Application
     app = QApplication(sys.argv)
     form = MainWindow(parent=app, data_dir=data_dir, settings=settings, theme=theme, plugins=plugins, labels=labels)
