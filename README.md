@@ -10,7 +10,7 @@
 [![Documentation Status](https://readthedocs.org/projects/mad-gui/badge/?version=latest)](https://mad-gui.readthedocs.io/en/latest/?badge=latest)
 [![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
 
-## Contents of this readme
+##. Contents of this readme
 - [What is it?](#what-is-it)
 - [How do I use it (videos)](#how-do-i-use-it-videos)
 - [How do I get the GUI to work on my machine?](#how-do-i-get-the-gui-to-work-on-my-machine)
