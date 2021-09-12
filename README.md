@@ -34,8 +34,9 @@ By clicking on the images below, you will be redirected to YouTube. In case you 
 ### Shortcuts
 | Shortcut                     | Action |
 |------------------------------|--------|
-| a, e, r, s, Esc              | Switch between modes `Add label`, `Edit label`, `Remove label`, `Synchronize data`|
-| `Shift` + Left Mouse Click   | If in `Add label` mode, start a new label directly when setting the end of a label|
+| `a`, `e`, `r`, `s`, `Esc`    | Switch between modes *Add label*, *Edit label*, *Remove label*, *Synchronize data*|
+|------------------------------|--------|
+| `Shift` + Left Mouse Click   | If in Add label` mode, start a new label directly when setting the end of a label|
 | `Left Mouse Click` or `Space`| If in `Add label` mode, set label start / end
 
 ## How do I get the GUI to work on my machine?
