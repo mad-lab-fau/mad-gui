@@ -8,6 +8,7 @@ from mad_gui.config import Config
 from mad_gui.models.local import PlotData
 from mad_gui.models.ui_state import MODES
 from mad_gui.plot_tools.labels import BaseRegionLabel
+from mad_gui.plot_tools.labels.base_label import BaseEventLabel
 from mad_gui.plot_tools.plots.base_plot import BasePlot
 from mad_gui.plot_tools.plots.sensor_plot_mode_handler import (
     AddModeHandler,
@@ -29,14 +30,13 @@ from PySide2.QtWidgets import (
     QDialog,
     QDialogButtonBox,
     QMenu,
-    QMessageBox,
     QRadioButton,
     QVBoxLayout,
     QWidget,
     QWidgetAction,
 )
 
-from typing import Callable, Dict, List, Optional, Type
+from typing import Callable, Dict, List, Optional, Type, Union
 
 channel_selector_path = str(UI_PATH / "channel_selector.ui")
 ui_path = resource_path(channel_selector_path)
@@ -272,7 +272,7 @@ class SensorPlot(BasePlot):
         # Deactivate old mode_handler:
         self.mode_handler.deactivate()
         self.mode_handler = self.MODE_HANDLER[new_mode](sensor_plot=self)
-        self._set_tooltip(new_mode)
+        self.set_tooltip(new_mode)
 
         # On mode change, we sync the annotation state:
         self._sync_annotations()
@@ -280,8 +280,9 @@ class SensorPlot(BasePlot):
     def _sync_annotations(self):
         for label_class in self.label_classes:
             self.plot_data.annotations[label_class.name].data = self._get_labels_from_plot(label_class)
+        self.plot_data.annotations["events"].data = self._get_events_from_plot(BaseEventLabel)
 
-    def _set_tooltip(self, mode: MODES):
+    def set_tooltip(self, mode: MODES):
         tips = {
             "add": "Click to set position of start / event / end",
             "edit": "Hover over a line to be moved or click on a label to edit its type / details",
@@ -377,23 +378,38 @@ class SensorPlot(BasePlot):
         """
         return self._snap_to(pos, np.argmin)
 
-    def snap_to_sample(self, pos: float):
-        sampling_rate_hz = self.plot_data.sampling_rate_hz
-        # make at least sure it is at the position of an actual sample
-        return round(pos * sampling_rate_hz) / sampling_rate_hz
-
     @staticmethod
     def _get_appropriate_stride_id():
         # TODO: find the proper stride number and renumber strides in stride_list
         return 0
 
-    def _iter_labels_from_plot(self, label_type: Type[BaseRegionLabel]):
+    def _iter_labels_from_plot(self, label_type: Type[Union[BaseRegionLabel, BaseEventLabel]]):
         """Finds all instances of label_type in the plot and returns them."""
         for i_item in self.items():
             if type(i_item) is label_type:  # noqa
                 # I need to use type, because StrideLabel inherits RegionLabel and thus I can not differentiate
                 # them using `isinstance`
                 yield i_item
+
+    def _get_events_from_plot(self, label_type: Type[BaseEventLabel]) -> pd.DataFrame:
+        events = self._iter_labels_from_plot(label_type)
+        event_dicts = []
+        for event in events:
+            pos = event.pos()
+            data_dict = {
+                "pos": int(pos.x() * self.plot_data.sampling_rate_hz),
+                "min_height": event.span[0],
+                "max_height": event.span[1],
+                "description": event.description,
+            }
+            # if issubclass(label_type, StrideLabel):
+            #    data_dict.update({"tc": [int(label.lines[2].pos()[0] * self.sampling_rate_hz)]})
+            event_dicts.append(data_dict)
+        df = pd.DataFrame.from_records(event_dicts)
+        if df.empty:
+            return df
+        df.sort_values(by="pos", axis=0, inplace=True)
+        return df.reset_index(drop=True)
 
     def _get_labels_from_plot(self, label_type: Type[BaseRegionLabel]) -> pd.DataFrame:
         """Finds all labels of type label_type and formats them into a pandas.DataFrame
@@ -430,7 +446,6 @@ class SensorPlot(BasePlot):
                 "start": int(start * self.plot_data.sampling_rate_hz),
                 "end": int(end * self.plot_data.sampling_rate_hz),
                 "description": label.description,
-                "details": label.details,
             }
             # if issubclass(label_type, StrideLabel):
             #    data_dict.update({"tc": [int(label.lines[2].pos()[0] * self.sampling_rate_hz)]})
@@ -471,7 +486,7 @@ class SelectSnapChannel(QDialog):
         for channel in self.channels:
             if self.radio_buttons[channel].isChecked():
                 return self.radio_buttons[channel].text(), self.remember.isChecked()
-        return None
+        return None, None
 
     def add_ok_btn(self):
         self.ok_btn = QDialogButtonBox(QDialogButtonBox.Ok)

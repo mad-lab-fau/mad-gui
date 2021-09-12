@@ -4,7 +4,7 @@ import pyqtgraph as pg
 from mad_gui.config import Config
 from mad_gui.models.local import AnnotationData, PlotData
 from mad_gui.plot_tools.labels import SynchronizationLabel
-from mad_gui.plot_tools.labels.base_label import BaseRegionLabel
+from mad_gui.plot_tools.labels.base_label import BaseEventLabel, BaseRegionLabel
 from pyqtgraph.GraphicsScene.mouseEvents import MouseClickEvent
 from PySide2.QtCore import Slot
 from PySide2.QtGui import QColor, QCursor, QMouseEvent, QPalette
@@ -34,6 +34,13 @@ class BasePlot(pg.PlotWidget):
         self.sync_item = None
         self.sync_info = None
         self._initialize_labels(label_classes)
+        self._initialize_events()
+
+    def _initialize_events(self):
+        df = self.plot_data.annotations["events"].data
+        for _, event in df.iterrows():
+            pos = self.snap_to_sample(event.pos / self.plot_data.sampling_rate_hz)
+            self.addItem(BaseEventLabel(pos=pos, span=(event.min_height, event.max_height), parent=self))
 
     def _initialize_labels(self, labels: List):
         label_ranges = pd.DataFrame()
@@ -179,6 +186,11 @@ class BasePlot(pg.PlotWidget):
         if self.video_cursor_line:
             self.removeItem(self.video_cursor_line)
             self.video_cursor_line = None
+
+    def snap_to_sample(self, pos: float):
+        sampling_rate_hz = self.plot_data.sampling_rate_hz
+        # make at least sure it is at the position of an actual sample
+        return round(pos * sampling_rate_hz) / sampling_rate_hz
 
     def _percent_to_position(self, percent_since_start: float):
         if self.plot_data.data is None:

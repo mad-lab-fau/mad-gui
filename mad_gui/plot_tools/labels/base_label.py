@@ -4,7 +4,8 @@ from mad_gui.components.dialogs import UserInformation
 from mad_gui.components.dialogs.label_annotation_dialog import NestedLabelSelectDialog
 from mad_gui.config import Config
 from mad_gui.state_keeper import StateKeeper
-from PySide2.QtGui import QColor, QHoverEvent, Qt
+from pyqtgraph import mkPen
+from PySide2.QtGui import QColor, QHoverEvent, QMouseEvent, Qt
 
 from typing import Optional
 
@@ -17,6 +18,61 @@ class NoLabelSelected(Exception):
     pass
 
 
+class BaseEventLabel(pg.InfiniteLine):
+    name = "Event Label"
+
+    def __init__(self, parent, pos, span):
+        self.parent = parent
+        self.removable = False
+        self.base_pen = mkPen(color="b", style=Qt.DashLine)
+        self.description = None
+        super().__init__(pos=pos, span=span, pen=mkPen(color="b", style=Qt.DashLine))
+
+    def hoverEvent(self, event: QHoverEvent):  # noqa: N802
+        """Actions when hovering over the InfiniteLine`"""
+        mode = self.parent.state.mode
+        if mode in ["edit", "sync", "remove"]:
+            if event.enter and self.movable:
+                self.parent.setCursor(Qt.SizeHorCursor)
+            if event.enter and self.removable:
+                self.parent.setCursor(Qt.PointingHandCursor)
+                self.setPen(mkPen(QColor(255, 0, 0)))
+            if event.exit:
+                self.parent.setCursor(Qt.ArrowCursor)
+                self.setPen(self.base_pen)
+        else:
+            if event.enter:
+                # Unfortunately, this does not work
+                # https://mathematica.stackexchange.com/q/66074
+                self.setToolTip(*self.description)
+            else:
+                self.parent.set_tooltip("investigate")
+
+    def mousePressEvent(self, event: QMouseEvent):  # noqa: N802
+        if self.removable:
+            self.parent.removeItem(self)
+            self.parent.setCursor(Qt.ArrowCursor)
+        elif self.movable:
+            super().mousePressEvent(event)
+            self.setPos(self.parent.snap_to_sample(self.pos().x()))
+
+    def mouseDragEvent(self, ev):  # noqa: N802
+        super().mouseDragEvent(ev)
+        self.setPos(self.parent.snap_to_sample(self.pos().x()))
+
+    def make_editable(self):
+        self.removable = False
+        self.setMovable(True)
+
+    def make_removable(self):
+        self.removable = True
+        self.setMovable(False)
+
+    def make_readonly(self):
+        self.removable = False
+        self.setMovable(False)
+
+
 class BaseRegionLabel(pg.LinearRegionItem):
     """A label with a start and end plotted in the upper part of the graph.
 
@@ -24,12 +80,8 @@ class BaseRegionLabel(pg.LinearRegionItem):
     ----------
     label_id
         An id for the label. Usually we just give it an increasing number.
-    label_type
-        Filled, when :meth:`~RegionLabel.edit_label_description` triggers
-        :meth:`mad_gui._StateKeeper.need_label_description`.
-    label_details
-        Similar like label_type. Additionally it is configurable for which label types details should be obtained and
-        what the possible options for details are. For more information on this see docs/consts_example.
+    description
+        A list of strings, filled by the user via the NestedLabelDialog
     start
         Start time of the label in samples.
     end
@@ -59,7 +111,6 @@ class BaseRegionLabel(pg.LinearRegionItem):
         parent,
         identifier: int = None,
         description: Optional[str] = None,
-        details: Optional[str] = None,
         **_kwargs,  # underscore to prevent pylint form triggering
     ):
         pg.LinearRegionItem.__init__(self)
@@ -75,10 +126,6 @@ class BaseRegionLabel(pg.LinearRegionItem):
             return
         self.id = identifier
         self.description = description
-        self.details = details
-        # TODO: put the next few lines into a function like `set_start_colors`, which can be overwritten by
-        #  StrideLabels. Reason: StrideLabels should be initialized with blue borders, but activities should be
-        #  initialized with red borders.
         self.configure_children()
         self.span = (self.min_height, self.max_height)
 

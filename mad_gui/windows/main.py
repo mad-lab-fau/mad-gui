@@ -333,7 +333,7 @@ class MainWindow(QMainWindow):
 
         plot_data = {}
         for plot_name, data in loaded_data.items():
-            plot_data[plot_name] = PlotData().from_dict(data, selections=selected_data)
+            plot_data[plot_name] = PlotData(parent=self).from_dict(data, selections=selected_data)
 
         self.global_data.plot_data = plot_data
         self.global_data.base_dir = Path(file).parent

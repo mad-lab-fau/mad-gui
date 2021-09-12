@@ -1,12 +1,14 @@
 from __future__ import annotations
 
+from mad_gui.components.dialogs import NestedLabelSelectDialog
 from mad_gui.components.dialogs.user_information import UserInformation
 from mad_gui.config import Config
 from mad_gui.plot_tools.labels import PartialLabel
-from mad_gui.plot_tools.labels.base_label import BaseRegionLabel, InvalidStartEnd, NoLabelSelected
+from mad_gui.plot_tools.labels.base_label import BaseEventLabel, BaseRegionLabel, InvalidStartEnd, NoLabelSelected
 from mad_gui.plot_tools.plots.base_mode_handler import BaseModeHandler
 from pyqtgraph import InfiniteLine, mkPen
-from PySide2.QtCore import Qt
+from PySide2.QtCore import QEvent, Qt
+from PySide2.QtGui import QCursor, QMouseEvent
 
 from typing import Optional, Type
 
@@ -19,14 +21,19 @@ class AddModeHandler(BaseModeHandler):
     def __init__(self, sensor_plot):
         super().__init__(plot=sensor_plot)
 
-    def handle_mouse_click(self, ev):
+    def handle_mouse_click(self, ev, pos=None):  # noqa
         if ev.button() == Qt.MouseButton.RightButton:
             super().handle_mouse_click(ev)
             return
-        # If no active label, create new stride -> switch to edit mode
-        mouse_position = self.plot.get_mouse_pos_from_event(ev)
+        if pos:
+            mouse_position = pos
+        else:
+            mouse_position = self.plot.get_mouse_pos_from_event(ev)
         if self.plot.inside_label_range(mouse_position):
-            self._add_label_at_mouse_pos(mouse_position)
+            if ev.modifiers() == Qt.ControlModifier:
+                self._add_event_at_mouse_pos(mouse_position)
+            else:
+                self._add_label_at_mouse_pos(mouse_position)
         else:
             super().handle_mouse_click(ev)
         if ev.modifiers() == Qt.ShiftModifier:
@@ -43,10 +50,23 @@ class AddModeHandler(BaseModeHandler):
         key = ev.key()
         if key == Qt.Key_Space:
             local = self.plot.get_mouse_pos_from_event(ev)
-            self._add_label_at_mouse_pos(local)
-            if self._partial_label is None and ev.modifiers() == Qt.ShiftModifier:
-                # If we press Shift+Space we directly create a new event if one is finished
-                self._add_label_at_mouse_pos(local)
+            e = QMouseEvent(
+                QEvent.MouseButtonPress,
+                local,
+                local,
+                local,
+                Qt.MouseButton.LeftButton,
+                Qt.MouseButton.LeftButton,
+                ev.modifiers(),
+                Qt.MouseEventSource.MouseEventSynthesizedByApplication,
+            )
+            self.handle_mouse_click(e, pos=local)
+            ev.accept()
+            e.accept()
+            # self._add_label_at_mouse_pos(local)
+            # if self._partial_label is None and ev.modifiers() == Qt.ShiftModifier:
+            # If we press Shift+Space we directly create a new event if one is finished
+            #    self._add_label_at_mouse_pos(local)
         ev.accept()
 
     def handle_mouse_movement(self, ev):
@@ -63,6 +83,27 @@ class AddModeHandler(BaseModeHandler):
     def deactivate(self):
         self._active = False
         self._clear_partial_label()
+
+    def _add_event_at_mouse_pos(self, pos):
+        plot = self.plot
+        label_class = plot.inside_label_range(pos)
+        if not label_class:
+            return
+        if getattr(label_class, "snap_to_min", False):
+            position = self.plot.snap_to_min(pos.x())
+        elif getattr(label_class, "snap_to_max", False):
+            position = self.plot.snap_to_max(pos.x())
+        else:
+            position = self.plot.snap_to_sample(pos.x())
+        new_label = BaseEventLabel(
+            parent=self.plot,
+            pos=position,
+            span=(label_class.min_height, label_class.max_height),
+        )
+        new_label.description = NestedLabelSelectDialog(parent=self.plot.parent.parent).get_label(
+            Config.settings.EVENTS
+        )
+        plot.addItem(new_label)
 
     def _add_label_at_mouse_pos(self, pos):
         plot = self.plot
@@ -169,12 +210,12 @@ class EditModeHandler(BaseModeHandler):
         super().__init__(sensor_plot)
 
         for item in self.plot.items():
-            if isinstance(item, BaseRegionLabel):
+            if isinstance(item, (BaseRegionLabel, BaseEventLabel)):
                 item.make_editable()
 
     def deactivate(self):
         for item in self.plot.items():
-            if isinstance(item, BaseRegionLabel):
+            if isinstance(item, (BaseRegionLabel, BaseEventLabel)):
                 item.make_readonly()
 
 
@@ -183,12 +224,12 @@ class RemoveModeHandler(BaseModeHandler):
         super().__init__(sensor_plot)
 
         for item in self.plot.items():
-            if isinstance(item, BaseRegionLabel):
+            if isinstance(item, (BaseRegionLabel, BaseEventLabel)):
                 item.make_removable()
 
     def deactivate(self):
         for item in self.plot.items():
-            if isinstance(item, BaseRegionLabel):
+            if isinstance(item, (BaseRegionLabel, BaseEventLabel)):
                 item.make_readonly()
 
 

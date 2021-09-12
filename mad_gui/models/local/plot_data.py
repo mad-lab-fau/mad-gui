@@ -80,7 +80,8 @@ class PlotData(BaseStateModel):
     def to_dict(self):
         return {
             "sensor_data": self.data,
-            "annotations": {k: v.to_df() for k, v in self.annotations.items()},
+            "annotations": {k: v.to_df() for k, v in self.annotations.items() if k != "events"},
+            "events": self.annotations["events"].to_df(),
             "sampling_rate_hz": self.sampling_rate_hz,
         }
 
@@ -103,7 +104,19 @@ class PlotData(BaseStateModel):
                 if not self.additional_data:
                     self.additional_data = {}
                 self.additional_data[selection] = plot_data[selection]
+        # TODO: Make sure to load annotaion data if it is passed in selections
+        self.annotations["events"] = AnnotationData()
+        self._add_events(getattr(plot_data, "events", None))
         return self
+
+    def _add_events(self, events: pd.DataFrame):
+        if not events:
+            return
+        global_labels = [label for label in self.parent().global_data.labels if label.name in self.annotations.keys()]
+        for _, event in events.iterrows():
+            for label in global_labels:
+                if event.min_height == label.min_height and event.max_height == label.max_height:
+                    self.annotations["events"].data = self.annotations["events"].data.append(event)
 
     def _add_label(self, plot_data: Dict, label: str):
         if not plot_data.get("annotations", None):
