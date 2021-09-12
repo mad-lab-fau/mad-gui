@@ -20,6 +20,9 @@ class AddModeHandler(BaseModeHandler):
         super().__init__(plot=sensor_plot)
 
     def handle_mouse_click(self, ev):
+        if ev.button() == Qt.MouseButton.RightButton:
+            super().handle_mouse_click(ev)
+            return
         # If no active label, create new stride -> switch to edit mode
         mouse_position = self.plot.get_mouse_pos_from_event(ev)
         if self.plot.inside_label_range(mouse_position):

@@ -23,7 +23,18 @@ from mad_gui.utils.helper import resource_path
 from mad_gui.utils.model_base import BaseStateModel, Property
 from PySide2.QtCore import QObject, Qt, QTime, Slot
 from PySide2.QtUiTools import loadUiType
-from PySide2.QtWidgets import QButtonGroup, QCheckBox, QMenu, QWidget, QWidgetAction
+from PySide2.QtWidgets import (
+    QButtonGroup,
+    QCheckBox,
+    QDialog,
+    QDialogButtonBox,
+    QMenu,
+    QMessageBox,
+    QRadioButton,
+    QVBoxLayout,
+    QWidget,
+    QWidgetAction,
+)
 
 from typing import Callable, Dict, List, Optional, Type
 
@@ -98,6 +109,7 @@ class SensorPlot(BasePlot):
         self.start_time = start_time
         self.is_main_plot = False
 
+        self._skip_snap_to = False
         self.state = SensorPlotState()
         self.state.plot_channels = initial_plot_channels or list(plot_data.data.columns)
         # TODO: Refactor to make nicer
@@ -312,11 +324,24 @@ class SensorPlot(BasePlot):
         self.mode_handler.handle_mouse_movement(ev)
 
     def _snap_to(self, pos: float, f: Callable):
+        if self._skip_snap_to:
+            return pos
         sampling_rate = self.plot_data.sampling_rate_hz
         pos_sample = pos * sampling_rate
         snap_min = int(pos_sample - getattr(Config.settings, "SNAP_RANGE_S", 0.1) / 2 * sampling_rate)
         snap_max = int(pos_sample + getattr(Config.settings, "SNAP_RANGE_S", 0.1) / 2 * sampling_rate)
-        region_data = self.plot_data.data[Config.settings.SNAP_CHANNEL].iloc[snap_min:snap_max]
+        if not hasattr(Config.settings, "SNAP_CHANNEL"):
+            ds = SelectSnapChannel(parent=self.parent, channels=list(self.plot_data.data.columns))
+            ds.ask_user()
+            snap_channel, remember = ds.get_snap_channel()
+            if not snap_channel:
+                return pos
+            del ds
+            if remember:
+                Config.settings.SNAP_CHANNEL = snap_channel
+        else:
+            snap_channel = Config.settings.SNAP_CHANNEL
+        region_data = self.plot_data.data[snap_channel].iloc[snap_min:snap_max]
         values = region_data.values
         idx_relative = f(values)
         idx_absolute = region_data.index[idx_relative]
@@ -415,3 +440,48 @@ class SensorPlot(BasePlot):
             return df
         df.sort_values(by="start", axis=0, inplace=True)
         return df.reset_index(drop=True)
+
+
+class SelectSnapChannel(QDialog):
+    def __init__(self, parent=None, channels=None):
+        super().__init__(parent)
+        self.parent = parent
+        self.setWindowModality(Qt.ApplicationModal)
+        self.setPalette(self.parent.palette())
+        self.vbox = QVBoxLayout()
+        self.channels = channels
+        self.add_checkboxes_to_vbox()
+        self.add_ok_btn()
+        self.remember = QCheckBox("Remember until closing GUI")
+        self.remember.setStyleSheet(self.parent.ui.btn_add_label.styleSheet().replace("QPushButton", "QCheckBox"))
+        self.vbox.addWidget(self.remember)
+        self.setLayout(self.vbox)
+        self.setWindowTitle("Select channel to use for snapping")
+
+    def add_checkboxes_to_vbox(self):
+        self.radio_buttons = dict()
+        for channel in self.channels:
+            self.radio_buttons[channel] = QRadioButton(channel)
+            self.radio_buttons[channel].setChecked(Qt.Unchecked)
+            style = self.parent.ui.btn_add_label.styleSheet()
+            self.radio_buttons[channel].setStyleSheet(style.replace("QPushButton", "QRadioButton"))
+            self.vbox.addWidget(self.radio_buttons[channel])
+
+    def get_snap_channel(self):
+        for channel in self.channels:
+            if self.radio_buttons[channel].isChecked():
+                return self.radio_buttons[channel].text(), self.remember.isChecked()
+        return None
+
+    def add_ok_btn(self):
+        self.ok_btn = QDialogButtonBox(QDialogButtonBox.Ok)
+        button_style = self.parent.ui.btn_add_label.styleSheet()
+        self.ok_btn.setStyleSheet(button_style)
+        self.ok_btn.clicked.connect(self.handle_ok_click)
+        self.vbox.addWidget(self.ok_btn)
+
+    def handle_ok_click(self):
+        self.close()
+
+    def ask_user(self):
+        self.exec_()

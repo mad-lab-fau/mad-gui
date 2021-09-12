@@ -46,6 +46,6 @@ class UserInformation(QDialog):
             msg = cls.create_message(text, [QMessageBox.StandardButton.Ok])
         return msg.exec_()
 
-    def confirm(self, text: str) -> bool:
-        msg = self.create_message(text, [QMessageBox.Yes, QMessageBox.No])
+    def confirm(self, text: str, help_link: Optional[str] = None) -> bool:
+        msg = self.create_message(text, [QMessageBox.Yes, QMessageBox.No], help_link)
         return msg.exec_()
