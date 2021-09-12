@@ -37,10 +37,9 @@ Please watch the videos linked above, if you want to learn more about the differ
 | Shortcut                     | Action |
 |------------------------------|--------|
 | `a`, `e`, `r`, `s`, `Esc`    | Switch between modes *Add label*, *Edit label*, *Remove label*, *Synchronize data*|
-| `Shift` + Left Mouse Click   | *Add label* mode: Start a new label directly when setting the end of a label |
-| `Left Mouse Click` or `Space`| *Add label* mode: Set label start / end or select `OK` in pop-up window <br /> 
-                                 *Edit label* mode:|
-| `1`, `2`, `3`, `TAB`         | *Add label* mode: Navigate in the pop-up window
+| `Shift` + `Left Mouse Click` | *Add label* mode: Start a new label directly when setting the end of a label |
+| `1`, `2`, `3`, `TAB`         | *Add label* mode: Navigate in the pop-up window |
+| `Space`                      | *Add label* mode: Can be used instead of `Left Mouse Click` |
 
 ## How do I get the GUI to work on my machine?
 Below, we present two options how to obtain and run the GUI.
