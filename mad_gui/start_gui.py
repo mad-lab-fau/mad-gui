@@ -9,7 +9,7 @@ from mad_gui.plugins.example import ExampleAlgorithm, ExampleImporter
 from mad_gui.windows import MainWindow
 from PySide2.QtWidgets import QApplication
 
-from typing import Sequence, Type, Optional
+from typing import Optional, Sequence, Type
 
 
 class Activity(BaseRegionLabel):
@@ -35,7 +35,6 @@ def start_gui(
     labels: Optional[Sequence[BaseRegionLabel]] = (Activity, Jump),
     settings: Optional[Type[BaseSettings]] = BaseSettings,
     theme: Optional[Type[BaseTheme]] = BaseTheme,
-
 ):
     """Use this function to start the GUI and pass your plugins, like importers and algorithms to it.
 
