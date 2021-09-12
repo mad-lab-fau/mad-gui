@@ -8,7 +8,7 @@ from mad_gui.plot_tools.labels.base_label import BaseEventLabel, BaseRegionLabel
 from mad_gui.plot_tools.plots.base_mode_handler import BaseModeHandler
 from pyqtgraph import InfiniteLine, mkPen
 from PySide2.QtCore import QEvent, Qt
-from PySide2.QtGui import QCursor, QMouseEvent
+from PySide2.QtGui import QMouseEvent
 
 from typing import Optional, Type
 
