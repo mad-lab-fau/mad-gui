@@ -38,7 +38,7 @@ Please watch the videos linked above, if you want to learn more about the differ
 |------------------------------|-----------|-------|
 | `a`, `e`, `r`, `s`, `Esc`    | all       | Switch between modes *Add label*, *Edit label*, *Remove label*, *Synchronize data*|
 | `Shift` + `Left Mouse Click` | Add label | Start a new label directly when setting the end of a label |
-| `1`, `2`, `3`, `TAB`         | Add label | Navigate in the pop-up window |
+| `1`, `2`, `3`,... `TAB`      | Add label | Navigate in the pop-up window |
 | `Space`                      | Add label | Can be used instead of `Left Mouse Click` |
 
 ## How do I get the GUI to work on my machine?
