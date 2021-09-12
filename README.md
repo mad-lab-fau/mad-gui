@@ -32,12 +32,14 @@ By clicking on the images below, you will be redirected to YouTube. In case you 
 [<img src="./docs/_static/images/video_thumbnails/sync.png" width="200px">](https://www.youtube.com/watch?v=-GI5agFOPRM "MaD GUI - Synchronize video and sensor data")
 
 ### Shortcuts
+Please watch the videos linked above, if you want to learn more about the different actions.
+
 | Shortcut                     | Action |
 |------------------------------|--------|
 | `a`, `e`, `r`, `s`, `Esc`    | Switch between modes *Add label*, *Edit label*, *Remove label*, *Synchronize data*|
-|------------------------------|--------|
-| `Shift` + Left Mouse Click   | If in Add label` mode, start a new label directly when setting the end of a label|
-| `Left Mouse Click` or `Space`| If in `Add label` mode, set label start / end
+| `Shift` + Left Mouse Click   | *Add label* mode: Start a new label directly when setting the end of a label <br /> *Edit label* mode:|
+| `Left Mouse Click` or `Space`| *Add label* mode: Set label start / end or select `OK` in pop-up window |
+| `1`, `2`, `3`, `TAB`         | *Add label* mode: Navigate in the pop-up window
 
 ## How do I get the GUI to work on my machine?
 Below, we present two options how to obtain and run the GUI.
