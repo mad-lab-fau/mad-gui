@@ -279,6 +279,28 @@ class MainWindow(QMainWindow):
         """Saves which of [sensor data, activity labels, stride labels] the user wants to load/save."""
         self.data_types = types
 
+    def _parse_labels_to_load(self, plot_data: Dict):
+        label_classes_to_load = []
+        for sensor_item in plot_data.values():
+            label_classes_to_load.extend(sensor_item["annotations"].keys())
+
+        loadable_labels = []
+        unknown_labels = []
+        known_label_types = {label.name: label for label in self.global_data.labels}
+        for label_class in label_classes_to_load:
+            if label_class in known_label_types.keys():
+                loadable_labels.append(label_class)
+            else:
+                unknown_labels.append(label_class)
+
+        if len(unknown_labels) > 0:
+            UserInformation.inform(
+                f"The saved data has labels which this GUI does not know.\n\n"
+                f"Unknown label class: {unknown_labels}\n"
+            )
+            warnings.warn("Implement link to help.")
+        return loadable_labels
+
     def load_data_from_pickle(self, file: str):
         """Load data from a .mad_gui file.
 
@@ -297,25 +319,7 @@ class MainWindow(QMainWindow):
         self.setCursor(Qt.BusyCursor)
         loaded_data = pd.read_pickle(file)
 
-        label_classes_to_load = []
-        for sensor_item in loaded_data.values():
-            label_classes_to_load.extend(sensor_item["annotations"].keys())
-
-        loadable_labels = []
-        unknown_labels = []
-        known_label_types = {label.name: label for label in self.global_data.labels}
-        for label_class in label_classes_to_load:
-            if label_class in known_label_types.keys():
-                loadable_labels.append(label_class)
-            else:
-                unknown_labels.append(label_class)
-
-        if len(unknown_labels) > 0:
-            UserInformation.inform(
-                f"The saved data has labels which this GUI does not know.\n\n"
-                f"Unknown label class: {unknown_labels}\n"
-            )
-            warnings.warn("Implement link to help.")
+        loadable_labels = self._parse_labels_to_load(loaded_data)
 
         # Doing it in two lines, and exposing via self to enable testing this whole method
         self.data_selector = DataSelector(parent=self, labels=set(loadable_labels))
@@ -391,6 +395,8 @@ class MainWindow(QMainWindow):
         self.global_data.data_file = data.get("data_file_name", "")
         self.global_data.sync_file = data.get("sync_file", "")
         self.global_data.video_file = data.get("video_file", "")
+
+        self._parse_labels_to_load(data["plot_data_dicts"])
 
         try:
             plot_data = {k: PlotData().from_dict(v) for k, v in data["plot_data_dicts"].items()}

@@ -114,7 +114,7 @@ class PlotData(BaseStateModel):
         return self
 
     def _add_annotations(self, plot_data: Dict):
-        if not hasattr(plot_data, "annotations"):
+        if not plot_data.get("annotations", None):
             return
         for label in plot_data["annotations"].keys():
             self._add_label(plot_data, label)
