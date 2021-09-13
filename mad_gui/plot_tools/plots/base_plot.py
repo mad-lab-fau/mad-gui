@@ -37,6 +37,8 @@ class BasePlot(pg.PlotWidget):
         self._initialize_events()
 
     def _initialize_events(self):
+        if not hasattr(self.plot_data.annotations, "events"):
+            return
         df = self.plot_data.annotations["events"].data
         for _, event in df.iterrows():
             pos = self.snap_to_sample(event.pos / self.plot_data.sampling_rate_hz)

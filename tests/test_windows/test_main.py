@@ -55,7 +55,7 @@ class TestGui:
         }
 
         if load_activities:
-            assert len(activities["Pocket IMU"].data) == 2
+            assert len(activities["Pocket IMU"].data) == 1
         else:
             assert len(activities["Pocket IMU"].data) == 0
         gui.close()
