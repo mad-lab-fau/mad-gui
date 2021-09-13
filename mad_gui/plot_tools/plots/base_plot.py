@@ -67,16 +67,12 @@ class BasePlot(pg.PlotWidget):
             return
         self.clear_labels(label_class)
         for _, activity in df.iterrows():
-            events = [
-                column for column in df.columns if column not in ["identifier", "start", "end", "description"]
-            ]
-
             # make sure there are no np.nans in any string field
             mask = activity.index.isin(["start", "end"])
             activity[~mask] = activity[~mask].fillna("")
 
             # make sure all required fields are available
-            for parameter in ["identifier", "description"]:
+            for parameter in ["identifier", "description", *label_class.events]:
                 if parameter not in activity.index:
                     activity = activity.append(pd.Series(data=[None], index=[parameter]))
 
@@ -85,10 +81,12 @@ class BasePlot(pg.PlotWidget):
                 description=activity.description,
                 start=activity.start,
                 end=activity.end,
-                events=activity[events],
+                events=activity[label_class.events],
                 parent=self,
             )
             self.addItem(new_activity)
+            for event in new_activity.event_labels.values():
+                self.addItem(event)
 
     def set_title(self, title: str):
         """Set the title, which will be shown centered on the top of the plot.

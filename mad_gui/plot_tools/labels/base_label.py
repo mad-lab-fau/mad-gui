@@ -1,4 +1,5 @@
 import numpy as np
+import pandas as pd
 import pyqtgraph as pg
 from mad_gui.components.dialogs import UserInformation
 from mad_gui.components.dialogs.label_annotation_dialog import NestedLabelSelectDialog
@@ -21,12 +22,13 @@ class NoLabelSelected(Exception):
 class BaseEventLabel(pg.InfiniteLine):
     name = "Event Label"
 
-    def __init__(self, parent, pos, span):
+    def __init__(self, parent, pos, span, description: Optional[str] = None):
         self.parent = parent
         self.removable = False
         self.base_pen = mkPen(color="b", style=Qt.DashLine)
-        self.description = None
-        super().__init__(pos=pos, span=span, pen=mkPen(color="b", style=Qt.DashLine))
+        self.description = description
+        pos_seconds = pos / self.parent.plot_data.sampling_rate_hz
+        super().__init__(pos=pos_seconds, span=span, pen=mkPen(color="b", style=Qt.DashLine))
 
     def hoverEvent(self, event: QHoverEvent):  # noqa: N802
         """Actions when hovering over the InfiniteLine`"""
@@ -109,6 +111,7 @@ class BaseRegionLabel(pg.LinearRegionItem):
         start: int,
         end: int,
         parent,
+        events: Optional[pd.Series] = None,
         identifier: int = None,
         description: Optional[str] = None,
         **_kwargs,  # underscore to prevent pylint form triggering
@@ -118,6 +121,9 @@ class BaseRegionLabel(pg.LinearRegionItem):
         self.setMovable(False)
         self._set_border_colors(start, end)
         self._set_border_positions(start, end)
+        self.event_labels = {}
+        if events:
+            self._set_events(events)
         self.configure_children()
         self.standard_brush = pg.mkBrush(QColor(*self.color))
         self.sigRegionChangeFinished.connect(self._region_changed)
@@ -143,9 +149,21 @@ class BaseRegionLabel(pg.LinearRegionItem):
             self.setToolTip(", ".join(self.description))
         self.setEnabled(False)
 
+    def _set_events(self, events: pd.DataFrame):
+        for event, pos in events.iteritems():
+            if pos is None:
+                return
+            self.event_labels[event] = BaseEventLabel(
+                parent=self.parent,
+                pos=pos,
+                description=event,
+                span=(self.min_height, self.max_height),
+            )
+
     def _left_mouse_click_event(self, ev):
         if self.removable and ev.button() == Qt.LeftButton:
-            # TODO: create a signal "i want to be deleted" and let the parent delete it
+            for event in self.even_labels.values():
+                self.parent.removeItem(event)
             self.parent.removeItem(self)
             StateKeeper.set_has_unsaved_changes(True)
         elif self.editable and ev.button() == Qt.LeftButton:
