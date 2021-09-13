@@ -22,12 +22,9 @@ class NoLabelSelected(Exception):
 class BaseEventLabel(pg.InfiniteLine):
     name = "Event Label"
 
-    def __init__(self,
-        parent,
-        pos,
-        span,
-        description: Optional[str] = None,
-        belongs_to_region_label: Optional[bool] = False):
+    def __init__(
+        self, parent, pos, span, description: Optional[str] = None, belongs_to_region_label: Optional[bool] = False
+    ):
         self.parent = parent
         self.removable = False
         self.belongs_to_region_label = belongs_to_region_label
@@ -165,7 +162,7 @@ class BaseRegionLabel(pg.LinearRegionItem):
                 pos=pos,
                 description=event,
                 span=(self.min_height, self.max_height),
-                belongs_to_region_label=True
+                belongs_to_region_label=True,
             )
 
     def _left_mouse_click_event(self, ev):

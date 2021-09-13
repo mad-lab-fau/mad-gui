@@ -71,8 +71,8 @@ class BasePlot(pg.PlotWidget):
             mask = activity.index.isin(["start", "end"])
             activity[~mask] = activity[~mask].fillna("")
             necessary_columns = ["identifier", "description", "events"]
-            #events = getattr(label_class, "events", None)
-            #if events:
+            # events = getattr(label_class, "events", None)
+            # if events:
             #    necessary_columns.extend(events)
 
             # make sure all required fields are available
