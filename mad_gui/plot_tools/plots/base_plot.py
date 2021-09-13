@@ -68,15 +68,15 @@ class BasePlot(pg.PlotWidget):
         self.clear_labels(label_class)
         for _, activity in df.iterrows():
             events = [
-                column for column in df.columns if column not in ["identifier", "start", "end", "type", "details"]
+                column for column in df.columns if column not in ["identifier", "start", "end", "description"]
             ]
 
             # make sure there are no np.nans in any string field
-            mask = activity.index.isin(["start", "end", "tc"])
+            mask = activity.index.isin(["start", "end"])
             activity[~mask] = activity[~mask].fillna("")
 
             # make sure all required fields are available
-            for parameter in ["identifier", "description", "details"]:
+            for parameter in ["identifier", "description"]:
                 if parameter not in activity.index:
                     activity = activity.append(pd.Series(data=[None], index=[parameter]))
 
