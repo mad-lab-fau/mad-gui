@@ -86,7 +86,7 @@ class PlotData(BaseStateModel):
         }
 
     def from_dict(self, plot_data: Dict, selections: Optional[List] = None) -> PlotData:
-        selections = selections or plot_data.keys()
+        selections = selections or plot_data.keys() - {"sampling_rate_hz"}
         self.annotations = dict()
         for selection in selections:
             if selection == "sensor_data":
@@ -100,14 +100,22 @@ class PlotData(BaseStateModel):
                         "docs.io/en/latest/modules/generated/plugins/mad_gui.plugins.BaseImporter.html#mad_g"
                         "ui.plugins.BaseImporter.load_sensor_data"
                     ) from k
-            elif not self._add_label(plot_data, selection):
+                continue
+            if selection == "annotations":
+                self._add_annotations(plot_data)
+                continue
+            # when loading data from pickle, we do not get `annotations` but directly the label names as selections
+            if not self._add_label(plot_data, selection):
                 if not self.additional_data:
                     self.additional_data = {}
                 self.additional_data[selection] = plot_data[selection]
-        # TODO: Make sure to load annotaion data if it is passed in selections
         self.annotations["events"] = AnnotationData()
         self._add_events(getattr(plot_data, "events", None))
         return self
+
+    def _add_annotations(self, plot_data: Dict):
+        for label in plot_data["annotations"].keys():
+            self._add_label(plot_data, label)
 
     def _add_events(self, events: pd.DataFrame):
         if not events:
