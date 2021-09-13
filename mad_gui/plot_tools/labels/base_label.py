@@ -22,9 +22,15 @@ class NoLabelSelected(Exception):
 class BaseEventLabel(pg.InfiniteLine):
     name = "Event Label"
 
-    def __init__(self, parent, pos, span, description: Optional[str] = None):
+    def __init__(self,
+        parent,
+        pos,
+        span,
+        description: Optional[str] = None,
+        belongs_to_region_label: Optional[bool] = False):
         self.parent = parent
         self.removable = False
+        self.belongs_to_region_label = belongs_to_region_label
         self.base_pen = mkPen(color="b", style=Qt.DashLine)
         self.description = description
         pos_seconds = pos / self.parent.plot_data.sampling_rate_hz
@@ -46,7 +52,8 @@ class BaseEventLabel(pg.InfiniteLine):
             if event.enter:
                 # Unfortunately, this does not work
                 # https://mathematica.stackexchange.com/q/66074
-                self.setToolTip(*self.description)
+                # self.setToolTip(", ".join(self.description))
+                pass
             else:
                 self.parent.set_tooltip("investigate")
 
@@ -122,7 +129,7 @@ class BaseRegionLabel(pg.LinearRegionItem):
         self._set_border_colors(start, end)
         self._set_border_positions(start, end)
         self.event_labels = {}
-        if events:
+        if events is not None:
             self._set_events(events)
         self.configure_children()
         self.standard_brush = pg.mkBrush(QColor(*self.color))
@@ -158,11 +165,12 @@ class BaseRegionLabel(pg.LinearRegionItem):
                 pos=pos,
                 description=event,
                 span=(self.min_height, self.max_height),
+                belongs_to_region_label=True
             )
 
     def _left_mouse_click_event(self, ev):
         if self.removable and ev.button() == Qt.LeftButton:
-            for event in self.even_labels.values():
+            for event in self.event_labels.values():
                 self.parent.removeItem(event)
             self.parent.removeItem(self)
             StateKeeper.set_has_unsaved_changes(True)

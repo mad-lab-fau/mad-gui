@@ -70,18 +70,25 @@ class BasePlot(pg.PlotWidget):
             # make sure there are no np.nans in any string field
             mask = activity.index.isin(["start", "end"])
             activity[~mask] = activity[~mask].fillna("")
+            necessary_columns = ["identifier", "description", "events"]
+            #events = getattr(label_class, "events", None)
+            #if events:
+            #    necessary_columns.extend(events)
 
             # make sure all required fields are available
-            for parameter in ["identifier", "description", *label_class.events]:
+            for parameter in necessary_columns:
                 if parameter not in activity.index:
                     activity = activity.append(pd.Series(data=[None], index=[parameter]))
-
+            if hasattr(label_class, "events"):
+                events = activity[label_class.events]
+            else:
+                events = None
             new_activity = label_class(
                 identifier=activity.identifier,
                 description=activity.description,
                 start=activity.start,
                 end=activity.end,
-                events=activity[label_class.events],
+                events=events,
                 parent=self,
             )
             self.addItem(new_activity)

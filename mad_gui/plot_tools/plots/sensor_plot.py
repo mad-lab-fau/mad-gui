@@ -395,6 +395,8 @@ class SensorPlot(BasePlot):
         events = self._iter_labels_from_plot(label_type)
         event_dicts = []
         for event in events:
+            if event.belongs_to_region_label:
+                continue
             pos = event.pos()
             data_dict = {
                 "pos": int(pos.x() * self.plot_data.sampling_rate_hz),
@@ -441,14 +443,15 @@ class SensorPlot(BasePlot):
         label_dicts = []
         for label in labels:
             start, end = label.getRegion()
+
             data_dict = {
                 "identifier": label.id,
                 "start": int(start * self.plot_data.sampling_rate_hz),
                 "end": int(end * self.plot_data.sampling_rate_hz),
                 "description": label.description,
             }
-            # if issubclass(label_type, StrideLabel):
-            #    data_dict.update({"tc": [int(label.lines[2].pos()[0] * self.sampling_rate_hz)]})
+            for event_name, event_label in label.event_labels.items():
+                data_dict.update({event_name: event_label.pos().x() * self.plot_data.sampling_rate_hz})
             label_dicts.append(data_dict)
         df = pd.DataFrame.from_records(label_dicts)
         if df.empty:
