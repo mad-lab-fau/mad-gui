@@ -16,13 +16,6 @@ GUI crashes when opening a video
 Probably your machine is missing some codecs, which are necessary to open the video in the specific format.
 In case your computer runs windows, we recommend to download and install the codes from `K-Lite Codec Pack <https://www.codecguide.com/download_k-lite_codec_pack_standard.htm>`_.
 
-... does not have a `SNAP_CHANNEL` defined
-******************************************
-The label you created is configured such that the start and the end snap to a minimum or maximum within certain
-boundaries around the position you clicked. However, the GUI does not know which of the plotted channels should be used
-to search for a minimum or maximum and therefore does not perform the snapping. Developers can find more information
-in the :ref:`regarding section below <snap channel>`.
-
 MaD GUI is not aware of descriptions for the class
 **************************************************
 Developers can assign a set of descriptions to a label class, as described :ref:`here <creating custom labels>`.
@@ -62,8 +55,7 @@ In case that does not work, please see `this stackoverflow post <https://stackov
 
 `pip install .` stuck at `Processing`
 *************************************
-
-Deactivate the experimental new installer: `poetry config experimental.new-installer false`
+Try to use `pip install git+https://github.com/mad-lab-fau/mad-gui.git`
 
 Dependencies
 ************
@@ -122,15 +114,3 @@ Loader provided annotations that were not understood
 
 You need to pass labels with the attribute `name` equal to the ones stated in the error message to our `start_gui`
 function. Read more about creating labels in our section about :ref:`Customization <customization>`.
-
-.. _snap channel:
-... does not have a `SNAP_CHANNEL` defined
-******************************************
-You have two options to fix this:
-
-1. Make sure the Settings object, which inherits from our `mad_gui.BaseSettings <https://github.com/mad-lab-fau/mad-gui/blob/main/mad_gui/config/settings.py#L1>`_
-and is passed to our `start_gui <https://mad-gui.readthedocs.io/en/latest/modules/generated/mad_gui/mad_gui.start_gui.html#mad_gui.start_gui>`_
-function has an attribute `SNAP_CHANNEL`.
-
-2. Deactivate the snapping by setting the attributes `snap_to_min` and `snap_to_max` of all labels that are passed to
-`start_gui` to `False`.
