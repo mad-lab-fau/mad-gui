@@ -301,6 +301,7 @@ class SensorPlot(BasePlot):
                 # we need this kind of typecheck sinc stride labels inherit from activitiy labels and thus would also
                 # be selected if using `isinstance(...)`
                 self.delete_item(item)
+                # TODO: Make sure that item's event_labels are deleted if they exist
 
     def _clear_data(self):
         for item in self.items():

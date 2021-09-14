@@ -282,7 +282,8 @@ class MainWindow(QMainWindow):
     def _parse_labels_to_load(self, plot_data: Dict):
         label_classes_to_load = []
         for sensor_item in plot_data.values():
-            label_classes_to_load.extend(sensor_item["annotations"].keys())
+            if "annotations" in sensor_item.keys():
+                label_classes_to_load.extend(sensor_item["annotations"].keys())
 
         loadable_labels = []
         unknown_labels = []
