@@ -6,7 +6,10 @@ Customization
 
 .. note::
    In case you are not familiar with PyCharm and virtual environments, you might first want to check out our
-   :ref:`Developer guidelines <developer guidelines>`.
+   :ref:`Developer guidelines <developer guidelines>`. Also, you might want to use our branch `minimal dependencies`, as described in our :ref:`Troubleshooting <dependency issues>` section.
+   
+
+   
 
 Creating an executable script
 #############################
