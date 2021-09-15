@@ -1,8 +1,8 @@
 from __future__ import annotations
 
 import pandas as pd
-from mad_gui.utils.model_base import BaseStateModel, Property
 
+from mad_gui.utils.model_base import BaseStateModel, Property
 from typing import Dict, List, Optional
 
 

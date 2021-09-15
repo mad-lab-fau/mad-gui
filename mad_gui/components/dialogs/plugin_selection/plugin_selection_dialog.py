@@ -1,3 +1,7 @@
+from PySide2 import QtCore
+from PySide2.QtUiTools import loadUiType
+from PySide2.QtWidgets import QDialog
+
 from mad_gui.components.dialogs.user_information import UserInformation
 from mad_gui.components.helper import set_cursor
 from mad_gui.config import Config
@@ -6,10 +10,6 @@ from mad_gui.models.local import PlotData
 from mad_gui.plugins.base import BasePlugin
 from mad_gui.qt_designer import UI_PATH
 from mad_gui.utils.helper import resource_path
-from PySide2 import QtCore
-from PySide2.QtUiTools import loadUiType
-from PySide2.QtWidgets import QDialog
-
 from typing import List, Type
 
 ui_path = resource_path(str(UI_PATH / "plugin_selection.ui"))
@@ -94,9 +94,7 @@ class PluginSelectionDialog(QDialog):
         except Exception as error:  # pylint: disable=broad-except
             # broad exception on purpose because we do not know which exceptions might be thrown by an plugin
             # created by someone else
-            UserInformation().inform(f"Error loading Plugin {plugin_class.name()}"
-                                     f"\n Error:\n"
-                                     f"{str(error)}")
+            UserInformation().inform(f"Error loading Plugin {plugin_class.name()}" f"\n Error:\n" f"{str(error)}")
             return False
 
         try:

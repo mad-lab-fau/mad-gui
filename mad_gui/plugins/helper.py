@@ -1,5 +1,4 @@
 from mad_gui.plugins.base import BasePlugin
-
 from typing import List, Type, TypeVar
 
 T = TypeVar("T", bound=BasePlugin)

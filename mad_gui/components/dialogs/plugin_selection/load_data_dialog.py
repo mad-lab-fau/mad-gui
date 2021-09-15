@@ -2,6 +2,10 @@ import warnings
 from pathlib import Path
 
 import pandas as pd
+from PySide2 import QtCore
+from PySide2.QtGui import Qt
+from PySide2.QtUiTools import loadUiType
+from PySide2.QtWidgets import QDialog, QLabel, QLineEdit, QPushButton
 
 from mad_gui import BaseImporter
 from mad_gui.components.dialogs.user_information import UserInformation
@@ -10,11 +14,6 @@ from mad_gui.config import Config
 from mad_gui.qt_designer import UI_PATH
 from mad_gui.utils.helper import resource_path
 from mad_gui.utils.model_base import BaseStateModel, Property
-from PySide2 import QtCore
-from PySide2.QtGui import Qt
-from PySide2.QtUiTools import loadUiType
-from PySide2.QtWidgets import QDialog, QLabel, QLineEdit, QPushButton
-
 from typing import Any, Dict, List, Optional, Tuple, Type
 
 ui_path = resource_path(str(UI_PATH / "load.ui"))

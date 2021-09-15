@@ -1,10 +1,10 @@
 from pathlib import Path
 
 import pytest
-from mad_gui.models.global_data import PlotData
-from mad_gui.plugins.example import ExampleImporter
 from PySide2.QtCore import Qt, QTimer
 
+from mad_gui.models.global_data import PlotData
+from mad_gui.plugins.example import ExampleImporter
 from tests.test_windows.create_main_window import get_main_window
 
 

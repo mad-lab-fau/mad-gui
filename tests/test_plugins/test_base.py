@@ -1,6 +1,7 @@
 from pathlib import Path
 
 import pytest
+
 from mad_gui.plugins.base import BaseImporter
 from mad_gui.plugins.example import ExampleImporter
 

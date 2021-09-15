@@ -3,6 +3,7 @@ class."""
 
 import numpy as np
 import pandas as pd
+
 from mad_gui.models.local import PlotData
 from mad_gui.models.ui_state import MODES
 from mad_gui.plot_tools.labels.base_label import BaseRegionLabel
@@ -11,7 +12,6 @@ from mad_gui.plot_tools.plots.sensor_plot import SensorPlotState
 from mad_gui.plot_tools.plots.sensor_plot_mode_handler import BaseModeHandler, InvestigateModeHandler
 from mad_gui.plot_tools.plots.video_plot_mode_handler import SyncModeHandler
 from mad_gui.state_keeper import StateKeeper
-
 from typing import Dict, List, Optional, Type
 
 

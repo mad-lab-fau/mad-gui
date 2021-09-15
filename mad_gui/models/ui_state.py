@@ -1,5 +1,6 @@
-from mad_gui.utils.model_base import BaseStateModel, Property
 from typing_extensions import Literal
+
+from mad_gui.utils.model_base import BaseStateModel, Property
 
 MODES = Literal["investigate", "sync", "add", "modify", "remove"]
 

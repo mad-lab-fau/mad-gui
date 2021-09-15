@@ -1,14 +1,14 @@
 """This module keeps all the base classes for mad_gui.plot_tools."""
 import pandas as pd
 import pyqtgraph as pg
-from mad_gui.config import Config
-from mad_gui.models.local import AnnotationData, PlotData
-from mad_gui.plot_tools.labels import SynchronizationLabel
-from mad_gui.plot_tools.labels.base_label import BaseEventLabel, BaseRegionLabel
 from pyqtgraph.GraphicsScene.mouseEvents import MouseClickEvent
 from PySide2.QtCore import Slot
 from PySide2.QtGui import QColor, QCursor, QMouseEvent, QPalette
 
+from mad_gui.config import Config
+from mad_gui.models.local import AnnotationData, PlotData
+from mad_gui.plot_tools.labels import SynchronizationLabel
+from mad_gui.plot_tools.labels.base_label import BaseEventLabel, BaseRegionLabel
 from typing import List, Optional, Type
 
 

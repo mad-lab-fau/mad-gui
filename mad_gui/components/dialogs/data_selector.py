@@ -1,8 +1,9 @@
 """Select which kind of data should be loaded/saved."""
 
-from mad_gui.state_keeper import StateKeeper
 from PySide2.QtCore import Qt
 from PySide2.QtWidgets import QCheckBox, QDialog, QDialogButtonBox, QVBoxLayout
+
+from mad_gui.state_keeper import StateKeeper
 
 
 class DataSelector(QDialog):

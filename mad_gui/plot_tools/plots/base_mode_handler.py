@@ -1,7 +1,8 @@
 import pyqtgraph as pg
-from mad_gui.plot_tools.plots.base_plot import BasePlot
 from PySide2.QtGui import QCursor
 from PySide2.QtWidgets import QApplication
+
+from mad_gui.plot_tools.plots.base_plot import BasePlot
 
 
 class BaseModeHandler:

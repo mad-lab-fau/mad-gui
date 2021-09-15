@@ -2,9 +2,9 @@ from pathlib import Path
 
 import numpy as np
 import pandas as pd
+
 from mad_gui.models.local import PlotData
 from mad_gui.plugins.base import BaseAlgorithm, BaseImporter
-
 from typing import Dict, Tuple, Union
 
 

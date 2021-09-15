@@ -1,5 +1,6 @@
-from mad_gui.config import Config
 from PySide2.QtCore import QObject, QPropertyAnimation, Signal
+
+from mad_gui.config import Config
 
 
 class Sidebar(QObject):

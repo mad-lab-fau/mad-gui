@@ -2,13 +2,13 @@ import argparse
 import sys
 from pathlib import Path
 
+from PySide2.QtWidgets import QApplication
+
 from mad_gui.config import BaseSettings, BaseTheme
 from mad_gui.plot_tools.labels import BaseRegionLabel
 from mad_gui.plugins.base import BasePlugin
 from mad_gui.plugins.example import ExampleAlgorithm, ExampleImporter
 from mad_gui.windows import MainWindow
-from PySide2.QtWidgets import QApplication
-
 from typing import Optional, Sequence, Type
 
 
