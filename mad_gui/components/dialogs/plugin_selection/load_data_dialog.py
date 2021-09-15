@@ -171,7 +171,7 @@ class LoadDataDialog(QDialog):
         return return_dict, loader
 
     def validate_data_format(self, data: Dict):
-        if not isinstance(data, Dict):
+        if not isinstance(data, dict):
             UserInformation.inform(
                 f"{self.loader_.name()}'s load_sensor_data method must return a dict. Click "
                 f"`Learn More` for more information.",

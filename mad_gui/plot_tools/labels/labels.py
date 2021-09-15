@@ -154,7 +154,7 @@ class PartialLabel(pg.LinearRegionItem):
         start = raw_start
         if post_process is not None:
             start = post_process(raw_start)
-        super(PartialLabel, self).__init__(  # pylint: disable=super-with-arguments
+        super(PartialLabel, self).__init__(
             values=(start, start),
             pen=pg.mkPen(Config.theme.FAU_COLORS["dark_blue"]),
             swapMode="block",
