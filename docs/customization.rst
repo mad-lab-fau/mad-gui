@@ -83,6 +83,7 @@ Here you can see an example of how to create an Importer and how to inject it:
                 # following one. This way it is not plotted, but is available for algorithms later on.
                 "additional_data": sensor_data['something_my_algorithm_needs_but_should_not_be_plotted']
                 }
+            }
 
             return data
 
