@@ -91,11 +91,12 @@ class PluginSelectionDialog(QDialog):
             # TODO: Implement loader config
             user_config = {}
             plugin = plugin_class(parent=self, **user_config)
-        except Exception as e:  # pylint: disable=broad-except
+        except Exception as error:  # pylint: disable=broad-except
             # broad exception on purpose because we do not know which exceptions might be thrown by an plugin
             # created by someone else
-            UserInformation().inform("Error loading Plugin {}".format(plugin_class.name()))
-            print(e)
+            UserInformation().inform(f"Error loading Plugin {plugin_class.name()}"
+                                     f"\n Error:\n"
+                                     f"{str(error)}")
             return False
 
         try:

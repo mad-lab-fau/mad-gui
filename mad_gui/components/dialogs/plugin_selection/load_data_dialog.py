@@ -29,7 +29,7 @@ if ".ui" in ui_path:
 
 
 elif ".py" in ui_path:
-    from mad_gui.qt_designer.build.load import Ui_Form as LoadWindow  # pylint: disable=C0412,E0401
+    from mad_gui.qt_designer.build.load import Ui_Form as LoadWindow  # noqa
 
 
 class LoadDataDialogState(BaseStateModel):
@@ -195,7 +195,7 @@ class LoadDataDialog(QDialog):
         for sensor, annotation in annotations.items():
             try:
                 data[sensor]["annotations"] = annotation
-            except KeyError:
+            except KeyError as k:
                 UserInformation.inform(
                     "Loader provided annotations for sensors that have no plot. Click 'Learn More' "
                     "for more information",
@@ -208,7 +208,7 @@ class LoadDataDialog(QDialog):
                     "The dict keys of the annotations must match the dict keys of the sensor data. See "
                     "https://mad-gui.readthedocs.io/en/latest/troubleshooting.html#id2 for more "
                     "information."
-                )
+                ) from k
         return data
 
     def _handle_video_file(self, return_dict, loader):

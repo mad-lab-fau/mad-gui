@@ -43,7 +43,7 @@ ui_path = resource_path(channel_selector_path)
 if ".ui" in ui_path:
     ChannelSelector, _ = loadUiType(ui_path)
 elif ".py" in ui_path:
-    from mad_gui.qt_designer.build.channel_selector import Ui_Form as ChannelSelector  # pylint: disable=E0401
+    from mad_gui.qt_designer.build.channel_selector import Ui_Form as ChannelSelector  # noqa
 
 
 class TimeAxisItem(pg.AxisItem):

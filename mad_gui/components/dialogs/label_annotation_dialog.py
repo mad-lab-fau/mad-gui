@@ -56,8 +56,7 @@ class NestedLabelSelectDialog(QDialog):
         self.main_layout.addWidget(self.buttons)
         self._setup_level(self._get_level_keys(self._label_options), level=0)
         if NestedLabelSelectDialog.latest_selection_:
-            for level, value in enumerate(NestedLabelSelectDialog.latest_selection_):
-                name_button = value  # pylint: disable=unsubscriptable-object
+            for level, name_button in enumerate(NestedLabelSelectDialog.latest_selection_):
                 radiobutton = self.findChild(QRadioButton, name_button)
                 self.level_button_group[level].buttonToggled.emit(radiobutton, True)
 

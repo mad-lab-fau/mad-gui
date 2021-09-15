@@ -538,13 +538,13 @@ class MainWindow(QMainWindow):
             PluginSelectionDialog(
                 plugins=filter_plugins(self.global_data.plugins, BaseAlgorithm), parent=self
             ).process_data(self.global_data.plot_data)
-        except:  # noqa
+        except Exception as error:  # noqa
             print(sys.exc_info()[0])
             raise NotImplementedError(
                 "Possibly there is an error in the implementation of the algorithm. Please "
                 "see our guide in implementing an algorithm: https://mad-gui.readthedocs.io/en/latest/customization.ht"
                 "ml#implement-an-algorithm"
-            )
+            ) from error
 
         set_cursor(self, Qt.ArrowCursor)
         # actually this should be called automatically due to global_data.bind(_plot_data, "plot_data") but that does

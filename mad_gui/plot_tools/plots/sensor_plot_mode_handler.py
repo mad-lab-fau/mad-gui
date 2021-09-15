@@ -74,7 +74,7 @@ class AddModeHandler(BaseModeHandler):
             return
         if self._partial_label is None or not self.plot.inside_plot_range(self.plot.get_mouse_pos_from_event(ev)):
             self._reposition_potential_start(ev)
-            super(AddModeHandler, self).handle_mouse_movement(ev)
+            super(AddModeHandler, self).handle_mouse_movement(ev)  # pylint: disable=super-with-arguments
             return
         pos = self.plot.get_mouse_pos_from_event(ev)
         self._reposition_new_end(pos)
