@@ -40,6 +40,16 @@ You can read something about how to fix it in the Development section below.
 Development
 ###########
 
+.. _dependency issues:
+
+Dependency issues
+*****************
+If you are experiencing issues with dependencies of other projects, try to use our `minimal_dependencies` branch instead of `main`:
+```
+pip install git+https://github.com/mad-lab-fau/mad-gui/tree/minimal_dependencies
+```
+You could also add this as `git+https://github.com/mad-lab-fau/mad-gui/tree/minimal_dependencies` to your `requirements.txt` file.
+
 qt.qpa.plugin Error
 *******************
 
