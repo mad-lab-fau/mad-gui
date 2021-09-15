@@ -74,14 +74,14 @@ Here you can see an example of how to create an Importer and how to inject it:
             # Each value of the dictionary is a pandas dataframe, with columns being the single data streams /
             # sensor channels.
             sensor_data =
-            sensor_data['something_my_algorithm_need']
+            sensor_data['something_my_algorithm_needs_but_should_not_be_plotted'] = 42
             data = {
             "IMU Hip": {
                 "sensor_data": pd.read_csv(file)[['x', 'y', 'z']],
                 "sampling_rate_hz": 50,
                 # note: very other key will become part of the dictionary PlotData.additional_data, as for example the
                 # following one. This way it is not plotted, but is available for algorithms later on.
-                "some_additional_description_of_the_data": -1,
+                "additional_data": sensor_data['something_my_algorithm_needs_but_should_not_be_plotted']
                 }
 
             return data
