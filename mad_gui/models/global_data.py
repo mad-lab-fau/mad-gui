@@ -7,7 +7,7 @@ from mad_gui.utils.model_base import BaseStateModel, Property
 from typing import TYPE_CHECKING, Dict, List, Type
 
 if TYPE_CHECKING:
-    from mad_gui.plugins.base import BaseImporter, BasePlugin  # pylint: disable=ungrouped-imports
+    from mad_gui.plugins.base import BaseImporter, BasePlugin
 
 
 class GlobalData(BaseStateModel):

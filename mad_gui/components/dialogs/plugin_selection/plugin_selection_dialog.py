@@ -16,11 +16,11 @@ ui_path = resource_path(str(UI_PATH / "plugin_selection.ui"))
 if ".ui" in ui_path:
     try:
         UiForm, _ = loadUiType(ui_path)
-    except TypeError:
+    except TypeError as e:
         raise FileNotFoundError(
             "Probably python did not find `pyside2-uic`. See "
             '"https://mad-gui.readthedocs.io/en/latest/troubleshooting.html#pyside2-uic-not-found" for more information'
-        )
+        ) from e
 
 elif ".py" in ui_path:
     from mad_gui.qt_designer.build.plugin_selection import Ui_Form  # noqa
@@ -98,13 +98,13 @@ class PluginSelectionDialog(QDialog):
             print(e)
             return False
 
-        # try:
-        plugin.process_data(self._data)
-        # except Exception as e:  # pylint: disable=broad-except
-        # broad exception on purpose because we do not know which exceptions might be thrown by an plugin
-        # created by someone else
-        #    UserInformation().inform(f"An error occured: {e}")
-        #    return False
+        try:
+            plugin.process_data(self._data)
+        except Exception as error:  # pylint: disable=broad-except
+            # broad exception on purpose because we do not know which exceptions might be thrown by an plugin
+            # created by someone else
+            UserInformation().inform(f"An error occured: {str(error)}")
+            return False
 
         return True
 

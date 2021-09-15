@@ -1,9 +1,8 @@
 import os
-from collections import Callable
 
 from PySide2.QtCore import QObject, Signal, Slot
 
-from typing import Optional
+from typing import Optional, Callable
 
 
 def set_and_bind_property(slot: Slot, model_class: QObject, property_name: str, initial_set: bool = True):

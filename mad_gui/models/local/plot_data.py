@@ -87,7 +87,7 @@ class PlotData(BaseStateModel):
 
     def from_dict(self, plot_data: Dict, selections: Optional[List] = None) -> PlotData:
         selections = selections or plot_data.keys() - {"sampling_rate_hz"}
-        self.annotations = dict()
+        self.annotations = {}
         for selection in selections:
             if selection == "sensor_data":
                 try:

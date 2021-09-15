@@ -30,7 +30,7 @@ class VideoPlot(BasePlot):
         plot_data = PlotData()
         # following two parts are necessary when initializing a plot
         plot_data.data = pd.DataFrame(data=[], columns=["time"])
-        plot_data.annotations = dict()
+        plot_data.annotations = {}
 
         super().__init__(label_classes=[BaseRegionLabel], parent=parent, plot_data=plot_data)
         StateKeeper.video_duration_available.connect(self.update_video_duration)
@@ -39,9 +39,8 @@ class VideoPlot(BasePlot):
         self.state.bind(self._change_mode, "mode", initial_set=False)
         self.video_window = video_window
 
-    def move_video_cursor_line(self, ev):  # pylint: disable=arguments-differ
+    def move_video_cursor_line(self, percent_since_start: float):
         self.video_cursor_line.setValue(self.video_window.slider.value() / 1000)
-        return ev
 
     def _change_mode(self, new_mode: MODES):
         """Adapt tool tip text depending on mode and remove potentially plotted green line indicating a new event.

@@ -401,13 +401,12 @@ class MainWindow(QMainWindow):
 
         try:
             plot_data = {k: PlotData().from_dict(v) for k, v in data["plot_data_dicts"].items()}
-        except:  # noqa
-            print(sys.exc_info()[0])
+        except Exception as e:  # noqa
             raise NotImplementedError(
-                f"Possibly there is an error in the data the was loaded using {loader}. Please "
+                f"Possibly there is an error in the data that was loaded using {loader}. Please "
                 f"see our guide in implementing an importer: https://mad-gui.readthedocs.io/en/la"
                 f"test/customization.html#implement-an-importer"
-            )
+            ) from e
         self.global_data.plot_data = plot_data
         self.load_video(data.get("video_file", None))
         self._set_sync(data.get("sync_file", None))

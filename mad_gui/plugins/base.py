@@ -213,7 +213,7 @@ class BaseExporter(BasePlugin):
         raise NotImplementedError()
 
     @abc.abstractmethod
-    def process_data(self, global_data):  # pylint: disable=unused-argument
+    def process_data(self, global_data):
         """Export data using a Plugin-Exporter.
 
         Parameters

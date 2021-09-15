@@ -19,7 +19,7 @@ class DataSelector(QDialog):
         self.setWindowTitle("Select data types")
 
     def add_checkboxes_to_vbox(self):
-        self.boxes = dict()
+        self.boxes = {}
         self.boxes["sensor_data"] = QCheckBox("Sensor data")
         self.boxes["sensor_data"].setCheckState(Qt.Checked)
         self.vbox.addWidget(self.boxes["sensor_data"])

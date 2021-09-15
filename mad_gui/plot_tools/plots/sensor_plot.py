@@ -43,7 +43,7 @@ ui_path = resource_path(channel_selector_path)
 if ".ui" in ui_path:
     ChannelSelector, _ = loadUiType(ui_path)
 elif ".py" in ui_path:
-    from mad_gui.qt_designer.build.channel_selector import Ui_Form as ChannelSelector  # pylint: disable=C0412,E0401
+    from mad_gui.qt_designer.build.channel_selector import Ui_Form as ChannelSelector  # pylint: disable=E0401
 
 
 class TimeAxisItem(pg.AxisItem):
@@ -478,7 +478,7 @@ class SelectSnapChannel(QDialog):
         self.setWindowTitle("Select channel to use for snapping")
 
     def add_checkboxes_to_vbox(self):
-        self.radio_buttons = dict()
+        self.radio_buttons = {}
         for channel in self.channels:
             self.radio_buttons[channel] = QRadioButton(channel)
             self.radio_buttons[channel].setChecked(Qt.Unchecked)

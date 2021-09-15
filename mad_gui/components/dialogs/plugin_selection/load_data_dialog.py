@@ -1,4 +1,7 @@
+import warnings
 from pathlib import Path
+
+import pandas as pd
 
 from mad_gui import BaseImporter
 from mad_gui.components.dialogs.user_information import UserInformation
@@ -18,11 +21,11 @@ ui_path = resource_path(str(UI_PATH / "load.ui"))
 if ".ui" in ui_path:
     try:
         LoadWindow, _ = loadUiType(ui_path)
-    except TypeError:
+    except TypeError as e:
         raise FileNotFoundError(
             "Probably python did not find `pyside2-uic`. See "
             '"https://mad-gui.readthedocs.io/en/latest/troubleshooting.html#pyside2-uic-not-found" for more information'
-        )
+        ) from e
 
 
 elif ".py" in ui_path:
@@ -141,13 +144,19 @@ class LoadDataDialog(QDialog):
 
         try:
             data = loader.load_sensor_data(self.state.data_file)
-        except:  # noqa
+        except Exception as e:  # noqa
             self.setCursor(Qt.ArrowCursor)
             UserInformation.inform(
                 "There was an error loading the data. Maybe you selected a wrong file or a wrong "
                 "recording system in the dropdown box?"
+                "\n\n"
+                "Complete error message:\n"
+                f"{str(e)}"
             )
+            warnings.warn(str(e))
             return None, None
+
+        self.validate_data_format(data)
 
         if self.state.annotation_file:
             annotations = loader.load_annotations(self.state.annotation_file)
@@ -161,6 +170,25 @@ class LoadDataDialog(QDialog):
             return_dict = self._handle_video_file(return_dict, loader)
 
         return return_dict, loader
+
+    def validate_data_format(self, data: Dict):
+        if not isinstance(data, Dict):
+            UserInformation.inform(
+                f"{self.loader_.name()}'s load_sensor_data method must return a dict. Click "
+                f"`Learn More` for more information.",
+                help_link="https://mad-gui.readthedocs.io/en/latest/customization.html#implement-an-importer",
+            )
+            warnings.warn(f"{self.loader_.name()}'s  `load_sensor_data` method must return a dict.")
+        sensor_data = data.get(data, "sensor_data", None)
+
+        if not isinstance(sensor_data, pd.DataFrame):
+            UserInformation.inform(
+                f"Please make sure, that the dict returned by {self.loader_.name()}'s "
+                f"load_sensor_data method has a key `sensor_data`, which contains a pandas "
+                f"DataFrame. Click `Learn More` for more information.",
+                help_link="https://mad-gui.readthedocs.io/en/latest/customization.html#implement-an-importer",
+            )
+            warnings.warn("The importer's `load_sensor_data` method must return a dict.")
 
     @staticmethod
     def _incorporate_annotations_to_data(data: Dict, annotations: Dict) -> Dict:
