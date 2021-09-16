@@ -6,7 +6,7 @@ Customization
 
 .. note::
    In case you are not familiar with PyCharm and virtual environments, you might first want to check out our
-   :ref:`Developer guidelines <developer guidelines>`. Also, you might want to use our branch `minimal dependencies`, as described in our :ref:`Troubleshooting <dependency issues>` section.
+   :ref:`Developer guidelines <developer guidelines>`. However, if you want to get going quickly just install MaD GUI using `pip install mad_gui` or by adding it to your project's requirements.
    
 
    
