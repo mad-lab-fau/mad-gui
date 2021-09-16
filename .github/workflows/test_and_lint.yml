@@ -42,7 +42,6 @@ jobs:
       run: |
         sudo apt-get update
         pip install --upgrade pip
-        pip install setoptconf==0.2.0
         pip install poetry
         poetry config experimental.new-installer false
         poetry config virtualenvs.in-project true
