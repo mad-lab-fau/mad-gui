@@ -25,6 +25,7 @@ typing-extensions = "^3.10.0"
 
 
 [tool.poetry.dev-dependencies]
+setuptools = "<58" # because of https://github.com/PyCQA/prospector/issues/438
 openpyxl = "^3.0.6"
 pytest = "^6.2.2"
 numpy = "^1.19.2"
@@ -40,7 +41,7 @@ numpydoc = "^1.1.0"
 pydata-sphinx-theme = "^0.6.2"
 sphinx-markdown-tables = "^0.0.15"
 prospector = "^1.2.0"
-setuptools = "^57.0.0"
+
 
 [tool.poetry.scripts]
 mad-gui = "mad_gui:start_gui"
