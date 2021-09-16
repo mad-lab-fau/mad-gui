@@ -43,12 +43,13 @@ jobs:
         sudo apt-get update
         pip install --upgrade pip
         pip install poetry
-        /home/runner/work/mad-gui/mad-gui/.venv/bin/pip install --no-deps setoptconf==0.2.0
+
         poetry config experimental.new-installer false
         poetry config virtualenvs.in-project true
         poetry add anybadge devpi-client pytest-xvfb Qt.py xvfbwrapper
         poetry update --lock
         /home/runner/work/mad-gui/mad-gui/.venv/bin/pip install --upgrade pip
+        /home/runner/work/mad-gui/mad-gui/.venv/bin/pip install --no-deps setoptconf==0.2.0
         poetry install
       if: |
         (steps.cached-poetry-dependencies.outputs.cache-hit != 'true') ||
