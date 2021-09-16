@@ -64,19 +64,18 @@ If you also want to check out synchronization with a video file, click on [this 
 Start the program and then you can open the previously downloaded example data as shown in [How do I use it (videos)?](#how-do-i-use-it-videos)
 
 ### Option B: Using the python package
+
+Info: you should not use `pip install mad_gui` in this case, because the PyPi package comes with a minimal version of dependencies.
+Therefore, the PyPi package is optimal in case you want to build something on top of our GUI, like your own importers or algorithms, as described in our [customization guidelines](https://mad-gui.readthedocs.io/en/latest/customization.html).
+
 ```
 pip install git+https://github.com/mad-lab-fau/mad-gui.git
-```
-Info: you can not use `pip install mad_gui` in this case, because the PyPi package comes with a minimal version of dependencies.
-
-Then, from your command line either simply start the GUI (first line) or pass additional arguments (second line):
-```
-mad-gui
 python -m mad_gui.start_gui --data_dir C:/my_data
 ```
 
 Alternatively, within a python script use our [start_gui](https://github.com/mad-lab-fau/mad-gui/blob/main/mad_gui/start_gui.py#L26) 
 function and hand it over the path where your data resides, `<data_path>` like `C:/data` or `/home/data/`: 
+
 ```
 from mad_gui import start_gui
 start_gui(<data_path>)
