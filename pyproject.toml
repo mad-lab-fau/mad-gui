@@ -1,13 +1,13 @@
 [tool.poetry]
 name = "mad_gui"
-version = "0.2.0-alpha.2"
+version = "0.2.0-alpha.4"
 description = "GUI for annotating and processing IMU data."
 authors = [
     "Malte Ollenschlaeger <malte.ollenschlaeger@fau.de>",
     "Arne Kuederle <arne.kuederle@fau.de>",
     "Ann-Kristin Seifer <ann-kristin.seifer@fau.de>"
 ]
-readme = "README.md"
+readme = "README_pypi.md"
 homepage = "https://github.com/mad-lab-fau/mad-gui"
 repository = "https://github.com/mad-lab-fau/mad-gui"
 classifiers = [
@@ -17,7 +17,7 @@ classifiers = [
 
 [tool.poetry.dependencies]
 python = ">=3.7.1,<3.10"
-pandas = "" # we just initialize empty Dataframes, so we do not specify a verison here
+pandas = ""  # we just initialize empty Dataframes, so we do not specify a verison here
 pyqtgraph = "0.11.0"
 PySide2 = "5.15.1"
 typing-extensions = "^3.10.0"

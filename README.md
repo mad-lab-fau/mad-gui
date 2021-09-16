@@ -34,13 +34,13 @@ By clicking on the images below, you will be redirected to YouTube. In case you 
 ### Shortcuts
 Please watch the videos linked above, if you want to learn more about the different actions.
 
-| Shortcut                     | Mode      |Action |
-|------------------------------|-----------|-------|
-| `a`, `e`, `r`, `s`, `Esc`    | all       | Switch between modes *Add label*, *Edit label*, *Remove label*, *Synchronize data*|
-| `Space`                      | Add label | Can be used instead of `Left Mouse Click` |
-| `1`, `2`, `3`,... `TAB`      | Add label | Navigate in the pop-up window |
-| `Shift` + `Left Mouse Click` | Add label | Start a new label directly when setting the end of a label |
-| `Ctrl` + `Left Mouse Click`  | Add label | Add a single event |
+| Shortcut                     | Mode          |Action |
+|------------------------------|---------------|-------|
+| `a`, `e`, `r`, `s`, `Esc`    | all           | Switch between modes *Add label*, *Edit label*, *Remove label*, *Synchronize data*|
+| `Space`                      | Add label     | Can be used instead of `Left Mouse Click` |
+| `1`, `2`, `3`,... `TAB`      | Add label     | Navigate in the pop-up window |
+| `Shift` + `Left Mouse Click` | Add label     | Start a new label directly when setting the end of a label |
+| `Ctrl` + `Left Mouse Click`  | Add label     | Add a single event |
 
 ## How do I get the GUI to work on my machine?
 Below, we present two options how to obtain and run the GUI.
