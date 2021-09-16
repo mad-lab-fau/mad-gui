@@ -43,7 +43,7 @@ jobs:
         sudo apt-get update
         pip install poetry
         poetry config virtualenvs.in-project true
-        poetry add anybadge devpi-client PySide2 pytest-xvfb Qt.py xvfbwrapper
+        #poetry add anybadge devpi-client pytest-xvfb Qt.py xvfbwrapper
         poetry update --lock
         poetry install
       #if: |
