@@ -25,7 +25,7 @@ typing-extensions = "^3.10.0"
 
 
 [tool.poetry.dev-dependencies]
-setuptools = "57.0.0" # because of https://github.com/PyCQA/prospector/issues/438
+setuptools = "<57.0.0" # because of https://github.com/PyCQA/prospector/issues/438
 openpyxl = "^3.0.6"
 pytest = "^6.2.2"
 numpy = "^1.19.2"
