@@ -46,6 +46,7 @@ jobs:
         poetry config experimental.new-installer false
         poetry config virtualenvs.in-project true
         poetry add anybadge devpi-client pytest-xvfb Qt.py xvfbwrapper
+        /home/runner/work/mad-gui/mad-gui/.venv/bin/pip install --no-deps git+https://github.com/carlio/setoptconf-tmp.git
         poetry update --lock
         poetry install
       #if: |
