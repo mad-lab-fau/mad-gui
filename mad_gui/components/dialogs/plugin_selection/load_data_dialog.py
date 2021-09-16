@@ -185,8 +185,8 @@ class LoadDataDialog(QDialog):
             if not isinstance(sensor_data, pd.DataFrame):
                 UserInformation.inform(
                     f"You tried to load data using {self.loader_.name()}. It contains data for a plot called {plot}. "
-                    f"However, the key `sensor_data` does not contain a pandas DataFrame, but {type(data)} and thus "
-                    f"the data can not be displayed.\n\n"
+                    f"However, the key `sensor_data` does not contain a pandas DataFrame, but {type(sensor_data)} and "
+                    f"thus the data can not be displayed.\n\n"
                     f"Click `Learn More` for more information.",
                     help_link="https://mad-gui.readthedocs.io/en/latest/customization.html#implement-an-importer",
                 )
