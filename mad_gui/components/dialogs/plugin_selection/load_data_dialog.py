@@ -121,7 +121,7 @@ class LoadDataDialog(QDialog):
         if final_data is None or loader is None:
             return
         self.final_data_ = final_data
-        self.loader_ = loader
+
         self.accept()
 
     def _process_data(self):
@@ -130,15 +130,15 @@ class LoadDataDialog(QDialog):
             return None, None
 
         # Get loader from combobox
-        loader_class = self.loaders[self.ui.combo_plugin.currentIndex()]
+        self.loader_ = self.loaders[self.ui.combo_plugin.currentIndex()]
         try:
             # TODO: Implement loader config
             user_config = {}
-            loader = loader_class(parent=self, **user_config)
+            loader = self.loader_(parent=self, **user_config)
         except Exception as e:  # noqa
             # ignore bare except because anything can go wrong in a user-implemented plugin
             print(e)
-            UserInformation().inform(f"Error creating an instance of the plugin {loader_class.name}:\n\n {e}")
+            UserInformation().inform(f"Error creating an instance of the plugin {self.loader_.name}:\n\n {e}")
             return None, None
 
         try:
@@ -170,24 +170,30 @@ class LoadDataDialog(QDialog):
 
         return return_dict, loader
 
-    def validate_data_format(self, data: Dict):
-        if not isinstance(data, dict):
+    def validate_data_format(self, plot_data: Dict):
+        if not isinstance(plot_data, dict):
             UserInformation.inform(
                 f"{self.loader_.name()}'s load_sensor_data method must return a dict. Click "
                 f"`Learn More` for more information.",
                 help_link="https://mad-gui.readthedocs.io/en/latest/customization.html#implement-an-importer",
             )
             warnings.warn(f"{self.loader_.name()}'s  `load_sensor_data` method must return a dict.")
-        sensor_data = data.get(data, "sensor_data", None)
 
-        if not isinstance(sensor_data, pd.DataFrame):
-            UserInformation.inform(
-                f"Please make sure, that the dict returned by {self.loader_.name()}'s "
-                f"load_sensor_data method has a key `sensor_data`, which contains a pandas "
-                f"DataFrame. Click `Learn More` for more information.",
-                help_link="https://mad-gui.readthedocs.io/en/latest/customization.html#implement-an-importer",
-            )
-            warnings.warn("The importer's `load_sensor_data` method must return a dict.")
+        for plot, data in plot_data.items():
+            sensor_data = data.get("sensor_data", None)
+
+            if not isinstance(sensor_data, pd.DataFrame):
+                UserInformation.inform(
+                    f"You tried to load data using {self.loader_.name()}. It contains data for a plot called {plot}. "
+                    f"However, the key `sensor_data` does not contain a pandas DataFrame, but {type(data)} and thus "
+                    f"the data can not be displayed.\n\n"
+                    f"Click `Learn More` for more information.",
+                    help_link="https://mad-gui.readthedocs.io/en/latest/customization.html#implement-an-importer",
+                )
+                warnings.warn(
+                    f"The dict returned by {self.loader_.name()}'s `load_sensor_data` method must return a "
+                    "dict, which has a value `sensor_data`, which in turn keeps a pd.DataFrame."
+                )
 
     @staticmethod
     def _incorporate_annotations_to_data(data: Dict, annotations: Dict) -> Dict:
