@@ -183,16 +183,17 @@ class LoadDataDialog(QDialog):
             sensor_data = data.get("sensor_data", None)
 
             if not isinstance(sensor_data, pd.DataFrame):
-                UserInformation.inform(
-                    f"You tried to load data using {self.loader_.name()}. It contains data for a plot called {plot}. "
-                    f"However, the key `sensor_data` does not contain a pandas DataFrame, but {type(sensor_data)} and "
-                    f"thus the data can not be displayed.\n\n"
-                    f"Click `Learn More` for more information.",
-                    help_link="https://mad-gui.readthedocs.io/en/latest/customization.html#implement-an-importer",
-                )
                 warnings.warn(
-                    f"The dict returned by {self.loader_.name()}'s `load_sensor_data` method must return a "
-                    "dict, which has a value `sensor_data`, which in turn keeps a pd.DataFrame."
+                    f"You tried to load data named {plot} using {self.loader_.name()}'s `load_sensor_data`. However, "
+                    f"the key `sensor_data` keeps data of the type {type(sensor_data)}, although it should be a "
+                    f"pandas DataFrame. See "
+                    "https://mad-gui.readthedocs.io/en/latest/customization.html#implement-an-importer for more info."
+                )
+                text = "Data format was not valid. If you are a developer, see the command line for more detailed " \
+                       "information or click `Learn More` to get to our documentation about importers."
+                UserInformation.inform(
+                    text = str(text),
+                    help_link='https://mad-gui.readthedocs.io/en/latest/customization.html#implement-an-importer',
                 )
 
     @staticmethod
