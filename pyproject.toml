@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "mad_gui"
-version = "0.2.0-alpha.3"
+version = "0.2.0-alpha.4"
 description = "GUI for annotating and processing IMU data."
 authors = [
     "Malte Ollenschlaeger <malte.ollenschlaeger@fau.de>",
