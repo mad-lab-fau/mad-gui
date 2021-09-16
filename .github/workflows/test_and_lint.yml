@@ -48,7 +48,7 @@ jobs:
         poetry config virtualenvs.in-project true
         poetry add anybadge devpi-client pytest-xvfb Qt.py xvfbwrapper
         poetry update --lock
-        /home/runner/work/mad-gui/mad-gui/.venv/bin/pip --upgrade pip
+        /home/runner/work/mad-gui/mad-gui/.venv/bin/pip install --upgrade pip
         poetry install
       if: |
         (steps.cached-poetry-dependencies.outputs.cache-hit != 'true') ||
