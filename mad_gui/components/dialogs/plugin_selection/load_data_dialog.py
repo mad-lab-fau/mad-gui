@@ -178,41 +178,49 @@ class LoadDataDialog(QDialog):
                 "Click `Learn More` for more information.",
                 help_link="https://mad-gui.readthedocs.io/en/latest/customization.html#implement-an-importer",
             )
-            warnings.warn(f"{self.loader_.name()}'s  `load_sensor_data` method must return a dict.")
-
-        if "sensor_data" not in plot_data.keys():
-            UserInformation.inform(
-                "The loader's `load_sensor_data` method must return a dict, where the values in "
-                "turn are dicts again. This nested dict must have a key `sensor_data`, but it has "
-                "not. Click `Learn More` for more information.",
-                help_link="https://mad-gui.readthedocs.io/en/latest/customization.html#implement-an-importer",
-            )
-
-        if "sampling_rate_hz" not in plot_data.keys():
-            UserInformation.inform(
-                "The loader's `load_sensor_data` method must return a dict, where the values in "
-                "turn are dicts again. This nested dict must have a key `sampling_rate_hz`, but it has "
-                "not. Click `Learn More` for more information.",
-                help_link="https://mad-gui.readthedocs.io/en/latest/customization.html#implement-an-importer",
+            raise KeyError(
+                f"{self.loader_.name()}'s  `load_sensor_data` method must return a dict. See "
+                f"https://mad-gui.readthedocs.io/en/latest/customization.html#implement-an-importer"
             )
 
         for plot, data in plot_data.items():
+            if "sensor_data" not in data.keys():
+                UserInformation.inform(
+                    "Missing key `sensor_data` in the nested dict returned by the loader. See console output for "
+                    "more information or click the link below to see what the importer should return",
+                    help_link="https://mad-gui.readthedocs.io/en/latest/customization.html#implement-an-importer",
+                )
+                raise KeyError(
+                    f"{self.loader_.name()} returned data to be plotted with the name {plot}. {plot} does not contain a"
+                    f" key `sensor_data`, but is expected to. `sensor_data` in turn should keep a pd.DataFrame, "
+                    f"where the columns are the channels to plot and each row is one sample to plot. "
+                    f"See https://mad-gui.readthedocs.io/en/latest/customization.html#implement-an-importer"
+                )
+
+            if "sampling_rate_hz" not in data.keys():
+                UserInformation.inform(
+                    "Missing key `sampling_rate_hz` in the nested dict returned by the loader. See console output for "
+                    "more information or click the link below to see what the importer should return",
+                    help_link="https://mad-gui.readthedocs.io/en/latest/customization.html#implement-an-importer",
+                )
+                raise KeyError(
+                    f"{self.loader_.name()} returned data to be plotted with the name {plot}. {plot} does not contain a"
+                    f" key `sampling_rate_hz`, but is expected to. `sampling_rate_hz` in turn should keep a float. "
+                    f"See https://mad-gui.readthedocs.io/en/latest/customization.html#implement-an-importer"
+                )
             sensor_data = data.get("sensor_data", None)
 
             if not isinstance(sensor_data, pd.DataFrame):
-                warnings.warn(
+                UserInformation.inform(
+                    text="Data format was not valid. If you are a developer, see the command line for more detailed "
+                    "information or click `Learn More` to get to our documentation about importers.",
+                    help_link="https://mad-gui.readthedocs.io/en/latest/customization.html#implement-an-importer",
+                )
+                raise KeyError(
                     f"You tried to load data named {plot} using {self.loader_.name()}'s `load_sensor_data`. However, "
                     f"the key `sensor_data` keeps data of the type {type(sensor_data)}, although it should be a "
                     f"pandas DataFrame. See "
                     "https://mad-gui.readthedocs.io/en/latest/customization.html#implement-an-importer for more info."
-                )
-                text = (
-                    "Data format was not valid. If you are a developer, see the command line for more detailed "
-                    "information or click `Learn More` to get to our documentation about importers."
-                )
-                UserInformation.inform(
-                    text=str(text),
-                    help_link="https://mad-gui.readthedocs.io/en/latest/customization.html#implement-an-importer",
                 )
 
     @staticmethod
