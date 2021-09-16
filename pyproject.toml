@@ -7,7 +7,7 @@ authors = [
     "Arne Kuederle <arne.kuederle@fau.de>",
     "Ann-Kristin Seifer <ann-kristin.seifer@fau.de>"
 ]
-readme = "README.md"
+readme = "README_pypi.md"
 homepage = "https://github.com/mad-lab-fau/mad-gui"
 repository = "https://github.com/mad-lab-fau/mad-gui"
 classifiers = [
