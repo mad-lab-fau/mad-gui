@@ -65,10 +65,9 @@ Start the program and then you can open the previously downloaded example data a
 
 ### Option B: Using the python package
 ```
-pip install mad_gui
+pip install git+https://github.com/mad-lab-fau/mad-gui.git
 ```
-Make sure to include the underscore.
-If you do not include it, you will install a different package.
+Info: you can not use `pip install mad_gui` in this case, because the PyPi package comes with a minimal version of dependencies.
 
 Then, from your command line either simply start the GUI (first line) or pass additional arguments (second line):
 ```
