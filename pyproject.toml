@@ -23,7 +23,6 @@ pyqtgraph = "0.11.0"
 PySide2 = "5.15.1"
 typing-extensions = "^3.10.0"
 
-
 [tool.poetry.dev-dependencies]
 openpyxl = "^3.0.6"
 pytest = "^6.2.2"
@@ -39,8 +38,7 @@ recommonmark = "^0.7.1"
 numpydoc = "^1.1.0"
 pydata-sphinx-theme = "^0.6.2"
 sphinx-markdown-tables = "^0.0.15"
-prospector ="1.5.1b0"
-
+prospector ="1.5.1b0" # strict, because of https://github.com/PyCQA/prospector/issues/438
 
 [tool.poetry.scripts]
 mad-gui = "mad_gui:start_gui"

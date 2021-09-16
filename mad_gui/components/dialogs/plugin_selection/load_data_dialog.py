@@ -173,11 +173,28 @@ class LoadDataDialog(QDialog):
     def validate_data_format(self, plot_data: Dict):
         if not isinstance(plot_data, dict):
             UserInformation.inform(
-                f"{self.loader_.name()}'s load_sensor_data method must return a dict. Click "
-                f"`Learn More` for more information.",
+                "The loader's `load_sensor_data` method must return a dict, where the keys are the names you would "
+                "like to give the plots. "
+                "Click `Learn More` for more information.",
                 help_link="https://mad-gui.readthedocs.io/en/latest/customization.html#implement-an-importer",
             )
             warnings.warn(f"{self.loader_.name()}'s  `load_sensor_data` method must return a dict.")
+
+        if "sensor_data" not in plot_data.keys():
+            UserInformation.inform(
+                "The loader's `load_sensor_data` method must return a dict, where the values in "
+                "turn are dicts again. This nested dict must have a key `sensor_data`, but it has "
+                "not. Click `Learn More` for more information.",
+                help_link="https://mad-gui.readthedocs.io/en/latest/customization.html#implement-an-importer",
+            )
+
+        if "sampling_rate_hz" not in plot_data.keys():
+            UserInformation.inform(
+                "The loader's `load_sensor_data` method must return a dict, where the values in "
+                "turn are dicts again. This nested dict must have a key `sampling_rate_hz`, but it has "
+                "not. Click `Learn More` for more information.",
+                help_link="https://mad-gui.readthedocs.io/en/latest/customization.html#implement-an-importer",
+            )
 
         for plot, data in plot_data.items():
             sensor_data = data.get("sensor_data", None)
@@ -189,11 +206,13 @@ class LoadDataDialog(QDialog):
                     f"pandas DataFrame. See "
                     "https://mad-gui.readthedocs.io/en/latest/customization.html#implement-an-importer for more info."
                 )
-                text = "Data format was not valid. If you are a developer, see the command line for more detailed " \
-                       "information or click `Learn More` to get to our documentation about importers."
+                text = (
+                    "Data format was not valid. If you are a developer, see the command line for more detailed "
+                    "information or click `Learn More` to get to our documentation about importers."
+                )
                 UserInformation.inform(
-                    text = str(text),
-                    help_link='https://mad-gui.readthedocs.io/en/latest/customization.html#implement-an-importer',
+                    text=str(text),
+                    help_link="https://mad-gui.readthedocs.io/en/latest/customization.html#implement-an-importer",
                 )
 
     @staticmethod
