@@ -101,10 +101,15 @@ class SensorPlot(BasePlot):
         initial_plot_channels=Optional[List[str]],
         start_time=Optional[datetime.datetime],
         label_classes=List[BaseRegionLabel],
+        event_classes: Optional[List[BaseEventLabel]] = None,
         parent: Optional[QWidget] = None,
     ):
         super().__init__(
-            plot_data=plot_data, initial_plot_channels=initial_plot_channels, label_classes=label_classes, parent=parent
+            plot_data=plot_data,
+            initial_plot_channels=initial_plot_channels,
+            label_classes=label_classes,
+            event_classes=event_classes,
+            parent=parent,
         )
         self.start_time = start_time
         self.is_main_plot = False

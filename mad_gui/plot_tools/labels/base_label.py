@@ -21,17 +21,30 @@ class NoLabelSelected(Exception):
 
 class BaseEventLabel(pg.InfiniteLine):
     name = "Event Label"
+    min_height = 0
+    max_height = 1
+    descriptions: dict = None
 
     def __init__(
-        self, parent, pos, span, description: Optional[str] = None, belongs_to_region_label: Optional[bool] = False
+        self,
+        parent,
+        pos,
+        description: Optional[str] = None,
+        belongs_to_region_label: Optional[bool] = False,
+        min_height: Optional[float] = 0,
+        max_height: Optional[float] = 1,
     ):
         self.parent = parent
         self.removable = False
         self.belongs_to_region_label = belongs_to_region_label
         self.base_pen = mkPen(color="b", style=Qt.DashLine)
         self.description = description
+        self.min_height = min_height or 0
+        self.max_height = max_height or 1
         pos_seconds = pos / self.parent.plot_data.sampling_rate_hz
-        super().__init__(pos=pos_seconds, span=span, pen=mkPen(color="b", style=Qt.DashLine))
+        super().__init__(
+            pos=pos_seconds, span=(self.min_height, self.max_height), pen=mkPen(color="b", style=Qt.DashLine)
+        )
 
     def hoverEvent(self, event: QHoverEvent):  # noqa: N802
         """Actions when hovering over the InfiniteLine`"""
@@ -161,7 +174,8 @@ class BaseRegionLabel(pg.LinearRegionItem):
                 parent=self.parent,
                 pos=pos,
                 description=event,
-                span=(self.min_height, self.max_height),
+                min_height=self.min_height,
+                max_height=self.max_height,
                 belongs_to_region_label=True,
             )
 

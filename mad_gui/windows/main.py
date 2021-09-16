@@ -76,7 +76,16 @@ class MainWindow(QMainWindow):
     Furthermore, it serves as an interface to Input-Output files, which are different for each data source,
     see our `General Information` part of the docs, section `Adding support for other systems`."""
 
-    def __init__(self, parent=None, data_dir=None, settings=BaseSettings, theme=BaseTheme, plugins=None, labels=None):
+    def __init__(
+        self,
+        parent=None,
+        data_dir=None,
+        settings=BaseSettings,
+        theme=BaseTheme,
+        plugins=None,
+        labels=None,
+        events=None,
+    ):
         super().__init__()
 
         if plugins is None:
@@ -88,6 +97,7 @@ class MainWindow(QMainWindow):
         self.ui_state = UiState(parent=self)
         self.plot_state = PlotState(parent=self)
         self.global_data.labels = labels
+        self.global_data.events = events
 
         self.parent = parent
 
@@ -316,7 +326,7 @@ class MainWindow(QMainWindow):
         """
         if file is None:
             # user clicked abort
-            return
+            return None, None
         if file.split(".")[-1] != "mad_gui":
             UserInformation.inform("Can only load files that end with '.mad_gui'.")
             return None, None
@@ -462,6 +472,7 @@ class MainWindow(QMainWindow):
                 initial_plot_channels=getattr(Config.settings, "CHANNELS_TO_PLOT", None),
                 start_time=start_time,
                 label_classes=self.global_data.labels,
+                event_classes=self.global_data.events,
                 parent=self,
             )
             plot_wrapper.addWidget(plot)

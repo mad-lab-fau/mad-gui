@@ -32,7 +32,7 @@ class VideoPlot(BasePlot):
         plot_data.data = pd.DataFrame(data=[], columns=["time"])
         plot_data.annotations = {}
 
-        super().__init__(label_classes=[BaseRegionLabel], parent=parent, plot_data=plot_data)
+        super().__init__(plot_data=plot_data, label_classes=[BaseRegionLabel], parent=parent)
         StateKeeper.video_duration_available.connect(self.update_video_duration)
         self.state = SensorPlotState()
         self.mode_handler = InvestigateModeHandler(self)

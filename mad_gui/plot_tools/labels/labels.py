@@ -151,6 +151,7 @@ class PartialLabel(pg.LinearRegionItem):
         self.label_id = label_id
         self.label_parent = label_parent
         self.post_process = post_process
+        self.events = []
         start = raw_start
         if post_process is not None:
             start = post_process(raw_start)
@@ -187,11 +188,16 @@ class PartialLabel(pg.LinearRegionItem):
 
         if start == end:
             raise InvalidStartEnd()
+        events_series = pd.Series()
+        for event in self.events:
+            s = pd.Series(data=event.pos().x() * self.sampling_rate_hz, index=event.description)
+            events_series = events_series.append(s)
         final_label = self.label_class(
             identifier=self.label_id,
             start=start * self.sampling_rate_hz,
             end=end * self.sampling_rate_hz,
             parent=self.label_parent,
+            events=events_series,
         )
         if self.label_class.descriptions:
             # If it is an activity label, we need to select the activity type

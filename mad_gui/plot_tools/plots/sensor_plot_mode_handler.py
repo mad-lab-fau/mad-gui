@@ -10,7 +10,7 @@ from mad_gui.config import Config
 from mad_gui.plot_tools.labels import PartialLabel
 from mad_gui.plot_tools.labels.base_label import BaseEventLabel, BaseRegionLabel, InvalidStartEnd, NoLabelSelected
 from mad_gui.plot_tools.plots.base_mode_handler import BaseModeHandler
-from typing import Optional, Type
+from typing import Optional
 
 
 class AddModeHandler(BaseModeHandler):
@@ -34,6 +34,8 @@ class AddModeHandler(BaseModeHandler):
                 self._add_event_at_mouse_pos(mouse_position)
             else:
                 self._add_label_at_mouse_pos(mouse_position)
+        elif self.plot.inside_event_range(mouse_position) and ev.modifiers() == Qt.ControlModifier:
+            self._add_event_at_mouse_pos(mouse_position)
         else:
             super().handle_mouse_click(ev)
         if ev.modifiers() == Qt.ShiftModifier:
@@ -80,26 +82,46 @@ class AddModeHandler(BaseModeHandler):
         self._active = False
         self._clear_partial_label()
 
+    def _add_event_to_region(self, position: float):
+        # self._partial_label
+        label_class = self.plot.inside_label_range(position)
+        description = NestedLabelSelectDialog(parent=self.plot.parent.parent).get_label(label_class.event_descriptions)
+        new_event = BaseEventLabel(
+            parent=self.plot,
+            pos=position * self.plot.plot_data.sampling_rate_hz,
+            min_height=label_class.min_height,
+            max_height=label_class.max_height,
+            description=description,
+        )
+        self._partial_label.events.append(new_event)
+        self.plot.addItem(new_event)
+
     def _add_event_at_mouse_pos(self, pos):
         plot = self.plot
-        label_class = plot.inside_label_range(pos)
-        if not label_class:
+        if self._partial_label:
+            self._add_event_to_region(pos)
             return
-        if getattr(label_class, "snap_to_min", False):
+        event_class = plot.inside_event_range(pos)
+        if not event_class:
+            return
+        if getattr(event_class, "snap_to_min", False):
             position = self.plot.snap_to_min(pos.x())
-        elif getattr(label_class, "snap_to_max", False):
+        elif getattr(event_class, "snap_to_max", False):
             position = self.plot.snap_to_max(pos.x())
         else:
             position = self.plot.snap_to_sample(pos.x())
-        new_label = BaseEventLabel(
+
+        description = NestedLabelSelectDialog(parent=self.plot.parent.parent).get_label(event_class.descriptions)
+
+        new_event = event_class(
             parent=self.plot,
             pos=position * self.plot.plot_data.sampling_rate_hz,
-            span=(label_class.min_height, label_class.max_height),
+            min_height=event_class.min_height,
+            max_height=event_class.max_height,
+            description=description,
         )
-        new_label.description = NestedLabelSelectDialog(parent=self.plot.parent.parent).get_label(
-            Config.settings.EVENTS
-        )
-        plot.addItem(new_label)
+
+        plot.addItem(new_event)
 
     def _add_label_at_mouse_pos(self, pos):
         plot = self.plot
@@ -114,9 +136,9 @@ class AddModeHandler(BaseModeHandler):
         # In case we started a label of another type, we clean it just to be sure
         # TODO: This might be a dumn idea, as this will delete your partial label, if you click in the wrong region
         self._clear_partial_label()
-        self._start_new_label(pos, label_class)
+        self._start_new_label(pos)
 
-    def _start_new_label(self, pos, label_class: Type[BaseRegionLabel]):
+    def _start_new_label(self, pos):
         plot = self.plot
         label_class = self.plot.inside_label_range(pos)
         if getattr(label_class, "snap_to_min", False) and getattr(label_class, "snap_to_max", False):
@@ -160,6 +182,8 @@ class AddModeHandler(BaseModeHandler):
             # In cas ethe user opened the label selector, but closed it again, we assume that opening was an accident
             # and allow the user to further modify the label
             return
+        for event in new_label.event_labels.values():
+            plot.addItem(event)
         plot.addItem(new_label)
         self._clear_partial_label()
 
@@ -174,11 +198,20 @@ class AddModeHandler(BaseModeHandler):
             self.plot.removeItem(self._potential_start)
 
         label_class = self.plot.inside_label_range(pos)
-        if label_class:
+        if label_class and not ev.modifiers() == Qt.ControlModifier:
             self._potential_start = InfiniteLine(snapped_pos, pen=mkPen(0, 255, 0, 150, width=2))
             self._potential_start.span = (
                 label_class.min_height,
                 label_class.max_height,
+            )
+            self.plot.addItem(self._potential_start)
+            return
+        event_class = self.plot.inside_event_range(pos)
+        if event_class and ev.modifiers() == Qt.ControlModifier:
+            self._potential_start = InfiniteLine(snapped_pos, pen=mkPen(0, 255, 0, 150, width=2, style=Qt.DashLine))
+            self._potential_start.span = (
+                event_class.min_height,
+                event_class.max_height,
             )
             self.plot.addItem(self._potential_start)
 
@@ -187,6 +220,8 @@ class AddModeHandler(BaseModeHandler):
             self.plot.delete_item(self._potential_start)
             self._potential_start = None
         if self._partial_label is not None:
+            for event in self._partial_label.events:
+                self.plot.delete_item(event)
             self.plot.delete_item(self._partial_label)
             self._partial_label = None
 

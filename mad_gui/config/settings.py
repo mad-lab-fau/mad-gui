@@ -3,6 +3,6 @@ class BaseSettings:
     SENSORS_SYNCHRONIZED = True
 
     SNAP_RANGE_S = 0.1  # in seconds
-    EVENTS = ["R-peak", "tc"]
+    EVENTS = ["Positive peak", "Negative peak"]
 
     PLOT_WIDTH_PLAYING_VIDEO = 20  # in seconds

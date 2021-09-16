@@ -20,29 +20,47 @@ class BasePlot(pg.PlotWidget):
         self,
         plot_data: PlotData = None,
         initial_plot_channels=None,
-        label_classes=List[BaseRegionLabel],
+        label_classes: List[BaseRegionLabel] = None,
+        event_classes: Optional[List[BaseEventLabel]] = None,
         parent=None,
     ):
         super().__init__(parent=None)
         self.parent = parent
         self.plot_data = plot_data
         self.label_classes = label_classes
+        self.event_classes = event_classes
         self.initial_plot_channels = initial_plot_channels or list(plot_data.data.columns)
         self.configure_style()
         self.video_cursor_line = None
         self.cursor_line_pen = pg.mkPen(color="y", width=1)
         self.sync_item = None
         self.sync_info = None
+        self.label_ranges = None
+        self.event_ranges = None
         self._initialize_labels(label_classes)
-        self._initialize_events()
+        self._initialize_events(event_classes)
 
-    def _initialize_events(self):
-        if not hasattr(self.plot_data.annotations, "events"):
+    def _initialize_events(self, event_classes: List):
+        # if not hasattr(self.plot_data.annotations, "events"):
+        #    return
+        # df = self.plot_data.annotations["events"].data
+        # for _, event in df.iterrows():
+        #    pos = self.snap_to_sample(event.pos / self.plot_data.sampling_rate_hz)
+        #    self.addItem(BaseEventLabel(pos=pos, span=(event.min_height, event.max_height), parent=self))
+        if event_classes is None:
             return
-        df = self.plot_data.annotations["events"].data
-        for _, event in df.iterrows():
-            pos = self.snap_to_sample(event.pos / self.plot_data.sampling_rate_hz)
-            self.addItem(BaseEventLabel(pos=pos, span=(event.min_height, event.max_height), parent=self))
+        event_ranges = pd.DataFrame()
+        for event_class in event_classes:
+            if event_class.name not in self.plot_data.annotations.keys():
+                self.plot_data.annotations[event_class.name] = AnnotationData()
+            self.set_events(event_class, self.plot_data.annotations[event_class.name].data)
+            event_range = pd.DataFrame(
+                index=[event_class.name],
+                data=[[event_class.min_height, event_class.max_height]],
+                columns=["min_height", "max_height"],
+            )
+            event_ranges = event_ranges.append(event_range)
+        self.event_ranges = event_ranges
 
     def _initialize_labels(self, labels: List):
         label_ranges = pd.DataFrame()
@@ -60,6 +78,19 @@ class BasePlot(pg.PlotWidget):
             )
             label_ranges = label_ranges.append(label_range)
         self.label_ranges = label_ranges
+
+    @Slot(BaseEventLabel, pd.DataFrame)
+    def set_events(self, label_class: Type[BaseEventLabel], df: pd.DataFrame):
+        if df is None or df.empty:
+            return
+        self.clear_labels(label_class)
+        for _, event in df.iterrows():
+            new_event = label_class(
+                pos=event.position,
+                description=event.description,
+                parent=self,
+            )
+            self.addItem(new_event)
 
     @Slot(BaseRegionLabel, pd.DataFrame)
     def set_labels(self, label_class: Type[BaseRegionLabel], df: pd.DataFrame):
@@ -146,14 +177,28 @@ class BasePlot(pg.PlotWidget):
             return True
         return False
 
-    def inside_label_range(self, pos):
-        for label_name, label_range in self.label_ranges.iterrows():
+    def _inside_range(self, pos, label_ranges: pd.DataFrame):
+        for label_name, label_range in label_ranges.iterrows():
 
             y_min = self.viewRange()[1][0]
             y_max = self.viewRange()[1][1]
 
             if label_range.min_height <= (pos.y() - y_min) / (y_max - y_min) <= label_range.max_height:
-                return self._get_label_class(label_name)
+                return label_name
+        return None
+
+    def inside_event_range(self, pos):
+        if self.event_ranges.empty:
+            return None
+        return self._get_event_class(self._inside_range(pos, self.event_ranges))
+
+    def inside_label_range(self, pos):
+        return self._get_label_class(self._inside_range(pos, self.label_ranges))
+
+    def _get_event_class(self, event_name: str):
+        for label in self.event_classes:
+            if label.name == event_name:
+                return label
         return None
 
     def _get_label_class(self, label_name: str):
