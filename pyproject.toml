@@ -25,8 +25,6 @@ typing-extensions = "^3.10.0"
 
 
 [tool.poetry.dev-dependencies]
-#setuptools = "<58.0.0" # because of https://github.com/PyCQA/prospector/issues/438
-setoptconf-tmp = { git = "https://github.com/carlio/setoptconf-tmp.git", branch = "main" } # because of https://github.com/PyCQA/prospector/issues/438
 openpyxl = "^3.0.6"
 pytest = "^6.2.2"
 numpy = "^1.19.2"
@@ -41,7 +39,6 @@ recommonmark = "^0.7.1"
 numpydoc = "^1.1.0"
 pydata-sphinx-theme = "^0.6.2"
 sphinx-markdown-tables = "^0.0.15"
-# prospector = "^1.2.0"
 prospector ="1.5.1b0"
 
 
