@@ -17,7 +17,7 @@ classifiers = [
 
 [tool.poetry.dependencies]
 python = ">=3.7.1,<3.10"
-pandas = "" # we just initialize empty Dataframes, so we do not specify a verison here
+pandas = ""  # we just initialize empty Dataframes, so we do not specify a verison here
 pyqtgraph = "0.11.0"
 PySide2 = "5.15.1"
 typing-extensions = "^3.10.0"
