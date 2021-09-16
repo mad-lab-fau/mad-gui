@@ -93,7 +93,7 @@ class AddModeHandler(BaseModeHandler):
             position = self.plot.snap_to_sample(pos.x())
         new_label = BaseEventLabel(
             parent=self.plot,
-            pos=position,
+            pos=position * self.plot.plot_data.sampling_rate_hz,
             span=(label_class.min_height, label_class.max_height),
         )
         new_label.description = NestedLabelSelectDialog(parent=self.plot.parent.parent).get_label(

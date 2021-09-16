@@ -122,7 +122,7 @@ class PlotData(BaseStateModel):
     def _add_events(self, events: pd.DataFrame):
         if not events:
             return
-        global_labels = [label for label in self.parent().global_data.labels if label.name in self.annotations.keys()]
+        global_labels = [label for label in self.parent().global_data.labels if label.name in self.annotations]
         for _, event in events.iterrows():
             for label in global_labels:
                 if event.min_height == label.min_height and event.max_height == label.max_height:

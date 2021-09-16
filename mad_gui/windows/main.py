@@ -314,6 +314,9 @@ class MainWindow(QMainWindow):
             However, the user might previously have selected that not all of those should be loaded.
             Which parts should be loaded is stored in `self.data_types`.
         """
+        if file is None:
+            # user clicked abort
+            return
         if file.split(".")[-1] != "mad_gui":
             UserInformation.inform("Can only load files that end with '.mad_gui'.")
             return None, None
