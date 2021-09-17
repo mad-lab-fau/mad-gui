@@ -242,7 +242,7 @@ and then use python3.7 instead of python in the following code snippept.
 
     echo we have to transform some .ui files to .py and put them into our .venv mad-gui library
     echo note: if you did not name your virtual environment .venv in the second step, you can pass the name using `-v <name of venv>`
-    doit prepare_windows_build
+    doit prepare_build
 
     echo actually create the executable
     pyinstaller pyinstaller.spec --onefile
