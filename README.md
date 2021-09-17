@@ -75,7 +75,7 @@ Start the program and then you can open the previously downloaded example data a
 
 ### Option B: Using the python package
 
-Info: We recommend to use `pip install mad_gui` in a [clean python virtual environment](https://docs.python.org/3/library/venv.html#creating-virtual-environments) / [conda environemnt](https://docs.python.org/3/library/venv.html#creating-virtual-environments).
+Info: We recommend to use `pip install mad_gui` in a [clean python virtual environment](https://docs.python.org/3/library/venv.html#creating-virtual-environments) / [conda environment](https://docs.python.org/3/library/venv.html#creating-virtual-environments).
 
 ```
 pip install mad_gui
