@@ -15,6 +15,8 @@ if not os.path.exists(venv_path):
                             "\n In case your venv is in a different location, please change it in `pyinstaller.spec`")
 
 import platform
+from pathlib import Path
+import warnings
 if platform.system() == "Windows":
     site_packages_path = f"{venv_path}/Lib/site-packages"
 elif platform.system() in ["Linux", "Darwin"]:
@@ -29,7 +31,7 @@ else:
 a = Analysis(['mad_gui/start_gui.py'],
              pathex=[HERE, site_packages_path],
              binaries=[],
-             datas=[(f'{site-packages-path}/mad_gui/qt_designer/build/*.py', 'mad_gui/qt_designer/build/'),
+             datas=[(f'{site_packages_path}/mad_gui/qt_designer/build/*.py', 'mad_gui/qt_designer/build/'),
                     (f'{HERE}/mad_gui/qt_designer/window_buttons_rc.py', 'mad_gui/qt_designer/'),
                     (f'{HERE}/mad_gui/qt_designer/ui_video.py', 'mad_gui/qt_designer/')],
              hiddenimports=[],
