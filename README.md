@@ -75,11 +75,10 @@ Start the program and then you can open the previously downloaded example data a
 
 ### Option B: Using the python package
 
-Info: you should not use `pip install mad_gui` in this case, because the PyPi package comes with a minimal version of dependencies.
-Therefore, the PyPi package is optimal in case you want to build something on top of our GUI, like your own importers or algorithms, as described in our [customization guidelines](https://mad-gui.readthedocs.io/en/latest/customization.html).
+Info: We recommend to use `pip install mad_gui` in a [clean python virtual environment](https://docs.python.org/3/library/venv.html#creating-virtual-environments) / [conda environemnt](https://docs.python.org/3/library/venv.html#creating-virtual-environments).
 
 ```
-pip install git+https://github.com/mad-lab-fau/mad-gui.git
+pip install mad_gui
 python -m mad_gui.start_gui --data_dir C:/my_data
 ```
 
