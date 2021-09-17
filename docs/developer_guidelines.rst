@@ -202,26 +202,27 @@ Creating an executable
 ######################
 
 You may want to ship the GUI including your plugin(s) to users, who are not familiar with python and/or do not have the possibilites to install something on their machine.
-In this case, you can create an executable of the GUI as follows:
-
-* install a clean python version (not using anaconda)
-* afterwards, follow these steps in the clean python installation (not in your virtual environment mad_gui!):
+In this case, you can create an executable of the GUI as shown below.
+In case you experience issues, it might be helpful to install a clean python 3.7 from which you create the venv.
 
 .. code-block:: console
 
     echo navigating to the gui's repository
     cd mad_gui
 
-    echo create virutal environment
+    echo create virutal environment (make sure your python is 3.7)
     python -m venv .venv
     echo this creates the virutal environment in the folder `.venv`
     echo the `doit` task `prepare_windows_build` will make use of this folder by default later in this process
 
-    echo activate the virutal environment
+    echo activate the virutal environment 
+    echo WINDOWS
     .venv/Scripts/activate
+    echo UNIX, make sure to include the extra dot and space in the front!
+    . .venv/bin/activate
 
     echo Install project dependencies
-    echo in case pip install gets stuck at 'processing', see our troubleshooting section for a possible solution
+    echo in case pip install gets stuck at 'processing', see our troubleshooting section for a possible solution.
     pip install .
 
 
