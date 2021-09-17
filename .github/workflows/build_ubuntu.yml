@@ -19,8 +19,14 @@ jobs:
         python-version: '3.7'
     - name: Install dependencies
       run: |
+        sudo apt-get update
         python -m pip install --upgrade pip
         pip install poetry
+        sudo apt-get autoclean
+        sudo apt-get install -y --no-install-recommends qtbase5-dev-tools xvfb libegl1-mesa x11-xserver-utils libxkbcommon-x11-0 x11-utils
+        sudo apt-get clean
+        sudo apt-get purge -y build-essential
+        sudo apt-get purge -y cmake
         sudo apt-get install -y build-essential libgl1-mesa-dev
         sudo apt-get install -y libxcb-xinerama0
         sudo apt-get install -y libpulse-dev
@@ -46,7 +52,7 @@ jobs:
     - uses: actions/upload-artifact@v2
       with:
         name: ubuntu_executable
-        path: ./dist/mad-gui
+        path: /home/runner/work/mad-gui/mad-gui/dist/mad_gui
         
 
 
