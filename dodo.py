@@ -83,7 +83,7 @@ def task_prepare_build():
         )
 
     return {
-        "actions": [check_env, set_up_paths, convert_ui_to_py],
+        "actions": [set_up_paths, convert_ui_to_py],
         "verbosity": 2,
     }
 
