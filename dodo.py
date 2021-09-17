@@ -98,5 +98,4 @@ def task_docs():
 
     if platform.system() == "Windows":
         return {"actions": [[HERE / "docs/make.bat", "html"]], "verbosity": 2}
-    else:
-        return {"actions": [["make", "-C", HERE / "docs", "html"]], "verbosity": 2}
+    return {"actions": [["make", "-C", HERE / "docs", "html"]], "verbosity": 2}

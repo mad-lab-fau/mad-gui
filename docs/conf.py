@@ -9,6 +9,7 @@
 
 import os
 import sys
+import warnings
 from importlib import import_module
 from inspect import getsourcefile, getsourcelines
 import markdown
@@ -142,12 +143,12 @@ def linkcode_resolve(domain, info):
                 Path(getsourcefile(mad_gui)).parent.parent
             )
         )
-    except:
-        pass
+    except Exception as e:
+        warnings.warn(f"{str (e)}")
     try:
         code_line = getsourcelines(obj)[-1]
-    except:
-        pass
+    except Exception as e:
+        warnings.warn(f"{str (e)}")
     if filename:
         if code_line:
             return "{}/{}#L{}".format(URL, filename, code_line)
