@@ -40,12 +40,9 @@ If the environment is activated you can see `(mad_gui)` in the commandline befor
 Installing MaD GUI
 ##################
 
-.. note::
-  If you experience dependency issues, you might want to use our branch `minimal dependencies`, as described in our :ref:`Troubleshooting <dependency issues>` section.
-   
 You have two possibilities for installing the dependencies:
 
-Assuming you want to build on top of the MaD GUI and do things that are described in :ref:`customization`, installation
+Recommended: Assuming you want to build on top of the MaD GUI and do things that are described in :ref:`customization`, installation
 can be done as described in :ref:`Installation for Customization (recommended) <install via pip>`.
 
 In case you want to change parts at the core of the GUI, which go beyond the parts described in :ref:`customization`,
