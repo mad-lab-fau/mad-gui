@@ -31,6 +31,7 @@ jobs:
         sudo apt-get install -y libxcb-xinerama0
         sudo apt-get install -y libpulse-dev
         sudo apt-get install -y tk
+        sudo apt-get isntall -y libgcc-ng
         sudo apt-get install -y libqt5gstreamer-dev
         sudo apt-get install -y libgssapi-krb5-2
         sudo apt-get install -y libqt5multimedia5-plugins
