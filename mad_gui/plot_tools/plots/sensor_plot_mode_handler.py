@@ -134,7 +134,7 @@ class AddModeHandler(BaseModeHandler):
             return
 
         # In case we started a label of another type, we clean it just to be sure
-        # TODO: This might be a dumn idea, as this will delete your partial label, if you click in the wrong region
+        # TODO: This might be a dumb idea, as this will delete your partial label, if you click in the wrong region
         self._clear_partial_label()
         self._start_new_label(pos)
 
@@ -163,10 +163,6 @@ class AddModeHandler(BaseModeHandler):
             label_parent=plot,
             post_process=post_process,
         )
-        # TODO: adapt this to add new gait events as long as a list of gait events in new_stride (which does not
-        #  exist yet) does not have the number of elements as plot.get_stride_list.drop_columns(["start",
-        #  "end"]).columns has
-        # plot.new_stride.tc = None
         plot.addItem(self._partial_label)
 
     def _finalize_new_label(self):
@@ -273,10 +269,6 @@ class SyncModeHandler(BaseModeHandler):
             self.plot.add_sync_item()
         if not getattr(Config.settings, "SENSORS_SYNCHRONIZED", False):
             self.plot.set_coupled_plot(None)
-        else:
-            # TODO: only create a sync item in the main plot --> remove in other plot(s) since it gets generated
-            #  automatically
-            pass
 
         for item in self.plot.items():
             if isinstance(item, BaseRegionLabel):

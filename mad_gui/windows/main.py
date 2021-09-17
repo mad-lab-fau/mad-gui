@@ -395,7 +395,6 @@ class MainWindow(QMainWindow):
         :mod:`mad_gui.plugins`.
 
         """
-        # TODO: Add dialog warning if data is already plotted
         view = LoadDataDialog(
             self.global_data.base_dir, loaders=filter_plugins(self.global_data.plugins, BaseImporter), parent=self
         )
@@ -484,8 +483,9 @@ class MainWindow(QMainWindow):
         plots = list(self.sensor_plots.values())
         plots[0].is_main_plot = True
 
-        # Bind the ranges of all plots together, if settings say Consts.settings says so
-        self._link_plots()
+        if getattr(Config.settings, "SENSORS_SYNCHRONIZED", False):
+            # Bind the ranges of all plots together
+            self._link_plots()
         # TODO: if self.plot_state.mode changes from sync to something else, we want to bind the plots again
         set_cursor(self, Qt.ArrowCursor)
 

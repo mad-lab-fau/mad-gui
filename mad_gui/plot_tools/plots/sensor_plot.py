@@ -117,7 +117,6 @@ class SensorPlot(BasePlot):
         self._skip_snap_to = False
         self.state = SensorPlotState()
         self.state.plot_channels = initial_plot_channels or list(plot_data.data.columns)
-        # TODO: Refactor to make nicer
         # We set the data once with auto range and all further updates don't update the range again.
         self._set_plot_data(
             self.plot_data.data,
@@ -300,13 +299,11 @@ class SensorPlot(BasePlot):
         self.setToolTip(tips[mode])
 
     def clear_labels(self, label_class):
-        print("clearing")
         for item in self.items():
             if type(item) == label_class:  # pylint: disable=unidiomatic-typecheck
-                # we need this kind of typecheck sinc stride labels inherit from activitiy labels and thus would also
+                # we need this kind of type check since stride labels inherit from activity labels and thus would also
                 # be selected if using `isinstance(...)`
                 self.delete_item(item)
-                # TODO: Make sure that item's event_labels are deleted if they exist
 
     def _clear_data(self):
         for item in self.items():
@@ -314,6 +311,8 @@ class SensorPlot(BasePlot):
                 self.delete_item(item)
 
     def delete_item(self, item: QObject):
+        for event in self.event_labels.values():
+            self.parent.removeItem(event)
         self.removeItem(item)
 
     def keyPressEvent(self, ev):  # noqa
@@ -442,10 +441,6 @@ class SensorPlot(BasePlot):
         GUI's :class:`mad_gui.models.global_data.GlobalData`.
         """
         labels = self._iter_labels_from_plot(label_type)
-        # columns = ["identifier", "start", "end", "activity", "details"]
-        # TODO: Take care, that we really pass an instance of label_type or use another method!
-        # if issubclass(label_type, StrideLabel):
-        #    columns.extend("tc")
         label_dicts = []
         for label in labels:
             start, end = label.getRegion()
