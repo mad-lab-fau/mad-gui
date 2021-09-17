@@ -29,7 +29,7 @@ jobs:
         python -m pip install --upgrade pip
         pip install .
         pip install pyinstaller doit pillow
-        doit prepare_build -y
+        doit prepare_build
         pyinstaller pyinstaller.spec --onefile
         ls dist
         

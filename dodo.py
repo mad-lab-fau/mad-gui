@@ -44,14 +44,7 @@ def task_prepare_build():
     python_path = sys.executable.split(os.sep)
     venv_path = str(Path(os.sep.join(python_path[:-2])))
 
-    def check_env():
-        answer = input(
-            "For more information about this message see https://github.com/mad-lab-fau/mad-gui/blob/main/docs/developer_guidelines.rst#6-creating-an-executable."
-            f"\n Go on with {venv_path} as the virtual environment exclusively used for packaging? (y/n):"
-        )
-
-        if answer.lower() == "n":
-            raise ValueError("Aborted by user.")
+    print(f"Going on with {venv_path} as the virtual environment exclusively used for using pyinstaller.")
 
     def get_dst_path():
         import platform
