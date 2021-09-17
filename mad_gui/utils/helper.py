@@ -2,6 +2,7 @@ import os
 
 from PySide2.QtCore import QObject, Signal, Slot
 
+import platform
 from typing import Callable, Optional
 
 
@@ -48,7 +49,10 @@ def resource_path(relative_path):
     """ Get absolute path to resource, works for dev and for PyInstaller """
 
     try:
-        paths = os.environ.get("PATH").split(";")
+        if platform.system() == "Windows":
+            paths = os.environ.get("PATH").split(";")
+        elif platform.system() in ["Linux", "Darwin"]:
+            paths = os.listdir("/tmp/")
         base_path = [p for p in paths if "_MEI" in p][0]
         relative_path = str.replace(relative_path, ".ui", ".py")
         relative_path = str.replace(relative_path, "qt_designer", f"qt_designer{os.sep}build")
