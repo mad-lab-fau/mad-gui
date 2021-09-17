@@ -311,8 +311,9 @@ class SensorPlot(BasePlot):
                 self.delete_item(item)
 
     def delete_item(self, item: QObject):
-        for event in self.event_labels.values():
-            self.parent.removeItem(event)
+        if self.event_labels:
+            for event in self.event_labels.values():
+                self.parent.removeItem(event)
         self.removeItem(item)
 
     def keyPressEvent(self, ev):  # noqa
