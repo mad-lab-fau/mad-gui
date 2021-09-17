@@ -9,12 +9,14 @@
 [![Test and Lint](https://github.com/mad-lab-fau/mad-gui/workflows/Test%20and%20Lint/badge.svg)](https://github.com/mad-lab-fau/mad-gui/actions/workflows/test_and_lint.yml)
 [![CodeFactor](https://www.codefactor.io/repository/github/mad-lab-fau/mad-gui/badge/main)](https://www.codefactor.io/repository/github/mad-lab-fau/mad-gui/overview/main)
 [![Documentation Status](https://readthedocs.org/projects/mad-gui/badge/?version=latest)](https://mad-gui.readthedocs.io/en/latest/?badge=latest)
-[![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
+
 
 [![PyPI version shields.io](https://img.shields.io/pypi/v/mad-gui)](https://pypi.org/project/mad-gui/)
 ![PyPI - Downloads](https://img.shields.io/pypi/dm/mad-gui)
 
 ![GitHub all releases](https://img.shields.io/github/downloads/mad-lab-fau/mad-gui/total?style=social)
+
+
 
 
 
@@ -42,7 +44,7 @@ By clicking on the images below, you will be redirected to YouTube. In case you 
 ### Shortcuts
 Please watch the videos linked above, if you want to learn more about the different actions.
 
-| Shortcut                     | Mode          |Action |
+| Shortcut                     | Mode          | Action |
 |------------------------------|---------------|-------|
 | `a`, `e`, `r`, `s`, `Esc`    | all           | Switch between modes *Add label*, *Edit label*, *Remove label*, *Synchronize data*|
 | `Space`                      | Add label     | Can be used instead of `Left Mouse Click` |
@@ -73,11 +75,10 @@ Start the program and then you can open the previously downloaded example data a
 
 ### Option B: Using the python package
 
-Info: you should not use `pip install mad_gui` in this case, because the PyPi package comes with a minimal version of dependencies.
-Therefore, the PyPi package is optimal in case you want to build something on top of our GUI, like your own importers or algorithms, as described in our [customization guidelines](https://mad-gui.readthedocs.io/en/latest/customization.html).
+Info: We recommend to use `pip install mad_gui` in a [clean python virtual environment](https://docs.python.org/3/library/venv.html#creating-virtual-environments) / [conda environment](https://docs.python.org/3/library/venv.html#creating-virtual-environments).
 
 ```
-pip install git+https://github.com/mad-lab-fau/mad-gui.git
+pip install mad_gui
 python -m mad_gui.start_gui --data_dir C:/my_data
 ```
 
@@ -96,7 +97,7 @@ Yes, however it will need someone who is familiar with python to perform the ste
 You do not have experience with python but still want to load data from a specific system? [Contact us!](mailto:malte.ollenschlaeger@fau.de)
 
 Developers can get basic information about the project setup in our [Developer Guidelines](https://mad-gui.readthedocs.io/en/latest/developer_guidelines.html).
-If you want to extend the GUI with your custom plugins, e.g. for loading data of a specific system,
+However, if you only want to extend the GUI with your custom plugins, e.g. for loading data of a specific system,
 or adding an algorithm, the necessary information can be found in our documentation regarding [Customization](https://mad-gui.readthedocs.io/en/latest/customization.html).
 
 ## Can I change something at the core of the GUI?

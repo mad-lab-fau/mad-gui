@@ -40,12 +40,9 @@ If the environment is activated you can see `(mad_gui)` in the commandline befor
 Installing MaD GUI
 ##################
 
-.. note::
-  If you experience dependency issues, you might want to use our branch `minimal dependencies`, as described in our :ref:`Troubleshooting <dependency issues>` section.
-   
 You have two possibilities for installing the dependencies:
 
-Assuming you want to build on top of the MaD GUI and do things that are described in :ref:`customization`, installation
+Recommended: Assuming you want to build on top of the MaD GUI and do things that are described in :ref:`customization`, installation
 can be done as described in :ref:`Installation for Customization (recommended) <install via pip>`.
 
 In case you want to change parts at the core of the GUI, which go beyond the parts described in :ref:`customization`,
@@ -202,26 +199,30 @@ Creating an executable
 ######################
 
 You may want to ship the GUI including your plugin(s) to users, who are not familiar with python and/or do not have the possibilites to install something on their machine.
-In this case, you can create an executable of the GUI as follows:
+In this case, you can create an executable of the GUI as shown below.
+In case you experience issues, it might be helpful to install a clean python 3.7 from which you create the venv.
 
-* install a clean python version (not using anaconda)
-* afterwards, follow these steps in the clean python installation (not in your virtual environment mad_gui!):
+On Windows systems, you need to install a version of python 3.7.
+On Unix systems you need to install `python3.7`, `python3.7-venv`, and `python3.7-dev` and then use python3.7 instead of python in the following code snippept.
 
 .. code-block:: console
 
     echo navigating to the gui's repository
     cd mad_gui
 
-    echo create virutal environment
+    echo create virutal environment (make sure your python is 3.7)
     python -m venv .venv
     echo this creates the virutal environment in the folder `.venv`
     echo the `doit` task `prepare_windows_build` will make use of this folder by default later in this process
 
-    echo activate the virutal environment
+    echo activate the virutal environment 
+    echo WINDOWS
     .venv/Scripts/activate
+    echo UNIX, make sure to include the extra dot and space in the front!
+    . .venv/bin/activate
 
     echo Install project dependencies
-    echo in case pip install gets stuck at 'processing', see our troubleshooting section for a possible solution
+    echo in case pip install gets stuck at 'processing', see our troubleshooting section for a possible solution.
     pip install .
 
 
