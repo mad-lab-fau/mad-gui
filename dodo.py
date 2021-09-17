@@ -80,9 +80,9 @@ def task_prepare_build():
         ui_files = [file for file in os.listdir(dst_path.parent) if ".ui" in file]
         print("\n")
         for file in ui_files:
-            print(f"Converting from: {dst_path.parent}\\{file}")
-            print(f"To: {dst_path}\\{file.split('.')[0]}.py\n")
-            os.popen(f"pyside2-uic -o {dst_path}\\{file.split('.')[0]}.py {dst_path.parent}\\{file}")
+            print(f"Converting from: {dst_path.parent}{os.sep}{file}")
+            print(f"To: {dst_path} {os.sep} {file.split('.')[0]}.py\n")
+            os.popen(f"pyside2-uic -o {dst_path}{os.sep}{file.split('.')[0]}.py {dst_path.parent}{os.sep}{file}")
 
         print(
             "Info: These conversion should take place in the virutal environment you are going to use with "
