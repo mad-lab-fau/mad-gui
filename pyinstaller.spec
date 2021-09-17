@@ -14,12 +14,22 @@ if not os.path.exists(venv_path):
                             "for information why I'm expecting that."\
                             "\n In case your venv is in a different location, please change it in `pyinstaller.spec`")
 
-site_packages_path = f"{venv_path}/Lib/site-packages"
+import platform
+if platform.system() == "Windows":
+    site_packages_path = f"{venv_path}/Lib/site-packages"
+elif platform.system() in ["Linux", "Darwin"]:
+    python_dirs = os.listdir(Path(venv_path) / "lib/")
+    warnings.warn(
+        f"dodo.py: Assuming your python 3.7 installation is in {Path(venv_path)}/lib/{python_dirs[0]}"
+    )
+    site_packages_path = f"{venv_path}/lib/{python_dirs[0]}/site-packages"
+else:
+    raise ValueError("What OS is this?!")
 
 a = Analysis(['mad_gui/start_gui.py'],
              pathex=[HERE, site_packages_path],
              binaries=[],
-             datas=[(f'{venv_path}/Lib/site-packages/mad_gui/qt_designer/build/*.py', 'mad_gui/qt_designer/build/'),
+             datas=[(f'{site-packages-path}/mad_gui/qt_designer/build/*.py', 'mad_gui/qt_designer/build/'),
                     (f'{HERE}/mad_gui/qt_designer/window_buttons_rc.py', 'mad_gui/qt_designer/'),
                     (f'{HERE}/mad_gui/qt_designer/ui_video.py', 'mad_gui/qt_designer/')],
              hiddenimports=[],

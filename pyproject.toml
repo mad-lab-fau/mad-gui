@@ -44,6 +44,9 @@ prospector ="1.5.1b0" # strict, because of https://github.com/PyCQA/prospector/i
 [tool.poetry.scripts]
 mad-gui = "mad_gui:start_gui"
 
+[tool.radon]
+exclude = "plot_tools/*.py"
+
 [tool.isort]
 profile = "black"
 skip_glob = ["tests/test_windows/"]

@@ -42,7 +42,7 @@ class Property:
 
     def __set__(self, instance, value: T):
         """Fake setter for typechecker"""
-        pass  # noqa
+        return
 
 
 class PropertyImpl(QtProperty):

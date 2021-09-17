@@ -1,6 +1,7 @@
 import os
 import platform
 import shutil
+import warnings
 from pathlib import Path
 
 DOIT_CONFIG = {
@@ -35,7 +36,7 @@ def task_test():
     }
 
 
-def task_prepare_windows_build():
+def task_prepare_build():
     """Build a standalone windows executable."""
 
     import sys
@@ -53,7 +54,18 @@ def task_prepare_windows_build():
             raise ValueError("Aborted by user.")
 
     def get_dst_path():
-        return Path(venv_path) / "Lib/site-packages/mad_gui/qt_designer/build/"
+        import platform
+
+        arch = platform.system()
+        if arch == "Windows":
+            return Path(venv_path) / "Lib/site-packages/mad_gui/qt_designer/build/"
+        if arch in ["Linux", "Darwin"]:
+            python_dirs = os.listdir(Path(venv_path) / "lib/")
+            warnings.warn(
+                f"dodo.py: Assuming your python 3.7 installation is in {Path(venv_path)}/lib/{python_dirs[0]}"
+            )
+            return Path(venv_path) / "lib" / python_dirs[0] / "site-packages/mad_gui/qt_designer/build/"
+        raise ValueError("What operating system is this?!")
 
     def set_up_paths():
         if not os.path.exists(get_dst_path().parent):
