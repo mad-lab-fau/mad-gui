@@ -10,6 +10,8 @@
 [![Documentation Status](https://readthedocs.org/projects/mad-gui/badge/?version=latest)](https://mad-gui.readthedocs.io/en/latest/?badge=latest)
 [![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
 [![PyPI version shields.io](https://img.shields.io/pypi/v/mad-gui)](https://pypi.org/project/mad-gui/)
+[![PyPI download total](https://img.shields.io/pypi/dt/ansicolortags.svg)](https://pypi.python.org/pypi/mad-gui/)
+
 
 
 ## Contents of this readme
