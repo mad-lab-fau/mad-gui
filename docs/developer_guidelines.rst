@@ -202,6 +202,9 @@ You may want to ship the GUI including your plugin(s) to users, who are not fami
 In this case, you can create an executable of the GUI as shown below.
 In case you experience issues, it might be helpful to install a clean python 3.7 from which you create the venv.
 
+On Windows systems, you need to install a version of python 3.7.
+On Unix systems you need to install `python3.7`, `python3.7-venv`, and `python3.7-dev` and then use python3.7 instead of python in the following code snippept.
+
 .. code-block:: console
 
     echo navigating to the gui's repository
