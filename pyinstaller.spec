@@ -31,7 +31,7 @@ else:
 a = Analysis(['mad_gui/start_gui.py'],
              pathex=[HERE, site_packages_path],
              binaries=[],
-             datas=[(f'{site-packages-path}/mad_gui/qt_designer/build/*.py', 'mad_gui/qt_designer/build/'),
+             datas=[(f'{site_packages_path}/mad_gui/qt_designer/build/*.py', 'mad_gui/qt_designer/build/'),
                     (f'{HERE}/mad_gui/qt_designer/window_buttons_rc.py', 'mad_gui/qt_designer/'),
                     (f'{HERE}/mad_gui/qt_designer/ui_video.py', 'mad_gui/qt_designer/')],
              hiddenimports=[],
