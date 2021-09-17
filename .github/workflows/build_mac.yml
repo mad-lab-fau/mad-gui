@@ -3,8 +3,8 @@
 name: Create Standalone (mac OS 11)
 
 on:
-  push:
-    branches: [ main ]
+  release:
+    types: [created]
 
 jobs:
   build:
