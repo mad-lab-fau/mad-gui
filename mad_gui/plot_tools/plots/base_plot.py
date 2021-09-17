@@ -37,6 +37,7 @@ class BasePlot(pg.PlotWidget):
         self.sync_info = None
         self.label_ranges = None
         self.event_ranges = None
+        self.event_labels = {}
         self._initialize_labels(label_classes)
         self._initialize_events(event_classes)
 
