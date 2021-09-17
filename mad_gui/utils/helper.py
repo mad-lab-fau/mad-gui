@@ -51,7 +51,7 @@ def resource_path(relative_path):
         paths = os.environ.get("PATH").split(";")
         base_path = [p for p in paths if "_MEI" in p][0]
         relative_path = str.replace(relative_path, ".ui", ".py")
-        relative_path = str.replace(relative_path, "qt_designer", "qt_designer\\build")
+        relative_path = str.replace(relative_path, "qt_designer", f"qt_designer{os.sep}build")
     except IndexError:
         base_path = os.path.abspath(".")
     return os.path.join(base_path, relative_path)
