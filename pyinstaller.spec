@@ -44,40 +44,58 @@ a = Analysis(['mad_gui/start_gui.py'],
              cipher=block_cipher,
              noarchive=False)
 
-splash = Splash('docs/_static/images/splash.jpg',
-                binaries=a.binaries,
-                datas=a.datas,
-                text_pos=(60, 290),
-                text_size=12,
-                text_color='black',
-		text_default='Starting MaD GUI...')
-
-
 pyz = PYZ(a.pure, a.zipped_data,
              cipher=block_cipher)
 
-exe = EXE(pyz,
-          splash,
-          splash.binaries,
-          a.scripts,
-          a.binaries,
-          a.zipfiles,
-          a.datas,
-          [],
-          name='mad_gui',
-          debug=False,
-          bootloader_ignore_signals=False,
-          strip=False,
-          upx=True,
-          upx_exclude=[],
-          runtime_tmpdir=None,
-          console=False,
-          disable_windowed_traceback=False,
-          target_arch=None,
-          codesign_identity=None,
-          entitlements_file=None , icon='mad-runner.ico')
+if platform.system() != "Darwin":
+    splash = Splash('docs/_static/images/splash.jpg',
+                    binaries=a.binaries,
+                    datas=a.datas,
+                    text_pos=(60, 290),
+                    text_size=12,
+                    text_color='black',
+		    text_default='Starting MaD GUI...')
 
-# in case of using --onefile remove splash.binaries from exe above and activate this below
-#coll = COLLECT(exe#,
-#               #splash.binaries,     # <-- splash binaries
-#               )
+
+
+
+    exe = EXE(pyz,
+              splash,
+              splash.binaries,
+              a.scripts,
+              a.binaries,
+              a.zipfiles,
+              a.datas,
+              [],
+              name='mad_gui',
+              debug=False,
+              bootloader_ignore_signals=False,
+              strip=False,
+              upx=True,
+              upx_exclude=[],
+              runtime_tmpdir=None,
+              console=False,
+              disable_windowed_traceback=False,
+              target_arch=None,
+              codesign_identity=None,
+              entitlements_file=None , icon='mad-runner.ico')
+
+else:
+    exe = EXE(pyz,
+              a.scripts,
+              a.binaries,
+              a.zipfiles,
+              a.datas,
+              [],
+              name='mad_gui',
+              debug=False,
+              bootloader_ignore_signals=False,
+              strip=False,
+              upx=True,
+              upx_exclude=[],
+              runtime_tmpdir=None,
+              console=False,
+              disable_windowed_traceback=False,
+              target_arch=None,
+              codesign_identity=None,
+              entitlements_file=None , icon='mad-runner.ico')
