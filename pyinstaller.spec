@@ -15,6 +15,7 @@ if not os.path.exists(venv_path):
                             "\n In case your venv is in a different location, please change it in `pyinstaller.spec`")
 
 import platform
+from pathlib import Path
 if platform.system() == "Windows":
     site_packages_path = f"{venv_path}/Lib/site-packages"
 elif platform.system() in ["Linux", "Darwin"]:
