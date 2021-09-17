@@ -42,5 +42,11 @@ jobs:
         pyinstaller pyinstaller.spec --onefile
         ls dist
         
+      
+    - uses: actions/upload-artifact@v2
+      with:
+        name: ubuntu_executable
+        path: ./dist/mad-gui
+        
 
 
