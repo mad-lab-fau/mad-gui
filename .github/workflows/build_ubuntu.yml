@@ -1,6 +1,6 @@
-# This workflows will create a standalone executable for mac os 11.
+# This workflows will create a standalone executable for Ubuntu.
 
-name: Create Standalone (mac OS 11)
+name: Create Standalone (Ubuntu)
 
 on:
   push:
