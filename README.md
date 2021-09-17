@@ -68,7 +68,7 @@ If you also want to check out synchronization with a video file, click on [this 
 
 | Operating system       | What to do                                        |
 |------------------------|---------------------------------------------------|
-| Windows                | Download our exemplary executable [here](https://github.com/mad-lab-fau/mad-gui/releases/download/v0.2.0-alpha.1/mad_gui.exe). <br /> Note: If prompted with a dialog `Windows protected your PC`, click `More info` and then select `Run anyway` |
+| Windows                | Download our exemplary executable [here](https://github.com/mad-lab-fau/mad-gui/releases/download/v0.2.0-alpha.1/mad_gui.exe). (64 bit Windows systems only) <br /> Note: If prompted with a dialog `Windows protected your PC`, click `More info` and then select `Run anyway` |
 | other                  | [Contact us](mailto:malte.ollenschlaeger@fau.de)  
 
 Start the program and then you can open the previously downloaded example data as shown in [How do I use it (videos)?](#how-do-i-use-it-videos)
