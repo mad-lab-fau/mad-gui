@@ -69,9 +69,9 @@ class BaseImporter(BasePlugin):
     def load_annotations(self, file_path: Union[Path, str]) -> Dict[str, pd.DataFrame]:  # noqa
         """This loads the list of stride and activity annotations from file_path.
 
-        This method is called by the :class:`~mad_gui.LoadDataWindow` in case the user selects a file using the
-        "Select annotation" button. In that case, this method should open the file specified by `file_path` and then
-        create.
+        This method is called by the :class:`~mad_gui.components.dialogs.plugin_selection.LoadDataDialog` in case the
+        user selects a file using the "Select annotation" button. In that case, this method should open the file
+        specified by `file_path` and then create.
 
         NOTE: Your importer does not have to implement this method in case you do not want to deliver such
         functionality to the user.
@@ -86,7 +86,7 @@ class BaseImporter(BasePlugin):
         activity_dict
             Dictionary with keys being the titles of the plots in the main window.
             Each of them keeps a pd.DataFrame as it would be produced by
-            :func:`mad_gui.plot_tools.SensorPlot.get_labels_from_plot`.
+            :func:`mad_gui.plot_tools.plots.SensorPlot.get_labels_from_plot`.
             This means the dataframe should at least have at least the columns `start` and `end`.
 
         Examples
@@ -109,7 +109,7 @@ class BaseImporter(BasePlugin):
     def get_start_time(self, *args, **kwargs) -> datetime.time:  # noqa
         """Get the start time of the corresponding data.
 
-        This may be used by :class:`mad_gui.plot_tools.SensorPlot` to set the channel labels. However, you do not
+        This may be used by :class:`mad_gui.plot_tools.plots.SensorPlot` to set the channel labels. However, you do not
         necessarily have to implement it. If you do not implement it, the x-channel will simply start at 0 seconds.
 
         NOTE: Your importer does not have to implement this method. If you do not implement it, the first sample of
@@ -118,7 +118,7 @@ class BaseImporter(BasePlugin):
         Parameters
         ----------
         sensor_data_path
-            The path of the sensor data that should be displayed in :class:`mad_gui.MainWindow`
+            The path of the sensor data that should be displayed in :class:`mad_gui.windows.MainWindow`
         """
         # Implementing this for backward compa
         return None
@@ -179,24 +179,23 @@ class BaseAlgorithm(BasePlugin):
 
         This method applies an algorithm to the passed data.
         For example it could be a peak detection algorithm, which then for example creates one
-        :class:`mad_gui.plot_tools.BaseRegionLabel` between to consecutive peaks.
+        :class:`mad_gui.plot_tools.labels.BaseRegionLabel` between to consecutive peaks.
         This method can be accessed by the user by clicking the `Use algorithm` button in the GUI's sidebar.
         For more information and an example, see the part of `Implement an algorithm
-        <https://mad-gui.readthedocs.io/en/latest/customization.html#implement-an-algorithm-use-algorithm-button>`_
+        <https://mad-gui.readthedocs.io/en/latest/customization.html#implement-an-algorithm>`_
         in our online documentation.
 
         Parameters
         ----------
         data
             A dictionary, where keys are the names of the plots in the GUI and the values are instances of
-            :class:`mad_gui.models.PlotData`. These in turn keep the plotted sensor data, its sampling frequency,
+            :class:`mad_gui.models.local.PlotData`. These in turn keep the plotted sensor data, its sampling frequency,
             and the plotted annotations.
 
         Returns
         -------
         data
-            An object of the same structure as `data`, that was passed to this method with potentially added or
-            changed annotations.
+            The passed `data`, which you have adapted, e.g. by adding annotations or changing annotations.
 
         """
         # df = some method that uses sensor data to get all the starts and ends for single activities / strides
