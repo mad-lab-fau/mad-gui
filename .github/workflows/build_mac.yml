@@ -3,8 +3,8 @@
 name: Create Standalone (mac OS 11)
 
 on:
-  push:
-    branches: [ main ]
+  release:
+    types: [created]
 
 jobs:
   build:
@@ -32,5 +32,10 @@ jobs:
         doit prepare_build
         pyinstaller pyinstaller.spec --onefile
         ls dist
+        
+    - uses: actions/upload-artifact@v2
+      with:
+        name: mac_11_executable
+        path: /Users/runner/work/mad-gui/mad-gui/dist/mad_gui
         
 
