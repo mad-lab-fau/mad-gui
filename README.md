@@ -80,7 +80,7 @@ Info: We recommend to use `pip install mad_gui` in a [clean python virtual envir
 
 ```
 pip install mad_gui
-python -m mad_gui.start_gui --data_dir C:/my_data
+python -m mad_gui.start_gui
 ```
 
 Alternatively, within a python script use our [start_gui](https://github.com/mad-lab-fau/mad-gui/blob/main/mad_gui/start_gui.py#L26) 
@@ -88,7 +88,7 @@ function and hand it over the path where your data resides, `<data_path>` like `
 
 ```
 from mad_gui import start_gui
-start_gui(<data_path>)
+start_gui()
 ```
 
 Now you can open the previously downloaded example data as shown in [How do I use it (videos)?](#how-do-i-use-it-videos)
