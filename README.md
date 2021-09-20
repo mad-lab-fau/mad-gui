@@ -83,7 +83,7 @@ pip install mad_gui
 python -m mad_gui.start_gui
 ```
 
-Alternatively, within a python script use our [start_gui](https://github.com/mad-lab-fau/mad-gui/blob/main/mad_gui/start_gui.py#L26) 
+Alternatively, within a python script use our [start_gui](https://github.com/mad-lab-fau/mad-gui/blob/main/mad_gui/start_gui.py#L40) 
 function: 
 
 ```
