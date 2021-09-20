@@ -84,7 +84,7 @@ python -m mad_gui.start_gui
 ```
 
 Alternatively, within a python script use our [start_gui](https://github.com/mad-lab-fau/mad-gui/blob/main/mad_gui/start_gui.py#L26) 
-function and hand it over the path where your data resides, `<data_path>` like `C:/data` or `/home/data/`: 
+function: 
 
 ```
 from mad_gui import start_gui
