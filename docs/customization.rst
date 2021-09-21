@@ -149,7 +149,8 @@ If you want to read more about creating custom labels, see :ref:`below <custom l
                 for i_activity, activity in sensor_plot.annotations["Activity"].data.iterrows():
                     sensor_plot.annotations["Activity"].data.iloc[i_activity]['description'] = self.calculate_features(activity, sensor_plot)
 
-        def create_annotations(self, plot_data: PlotData) -> pd.DataFrame:
+        @staticmethod
+        def create_annotations(plot_data: PlotData) -> pd.DataFrame:
             # Some code that creates a pd.DataFrame with the columns `start` and `end`.
             # Each row corresponds to one label to be plotted.
             imu_hip_data = plot_data.data
@@ -161,9 +162,10 @@ If you want to read more about creating custom labels, see :ref:`below <custom l
             ends = ...
             annotations = pd.DataFrame(data=[starts, ends], columns = ['start', 'end'])
             return annotations
-            
+
+        @staticmethod
         def calculate_features(
-            self, plot_data: PlotData, activity: Type[BaseRegionLable]
+            plot_data: PlotData, activity: Type[BaseRegionLable]
         ) -> str:
             return f"Mean value = {plot_data.data.iloc[activity.start:activity.end]['acc_x'].mean()}"
 
