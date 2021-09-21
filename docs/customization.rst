@@ -108,9 +108,10 @@ The algorithm receives `Global Data <https://mad-gui.readthedocs.io/en/latest/mo
 plot_data dictionary, where the keys are the plot names and the values are of type
 `Plot Data <https://mad-gui.readthedocs.io/en/latest/modules/generated/mad_gui/mad_gui.models.local.PlotData.html#mad_gui.models.local.PlotData>`_.
 
-Here you can see an example of how to create an algorithm that Option a) creates labels, that have the name `Activity`.
-Alternatively, your algorithm could be used to calculate some information/features about the plotted labels, which will then be display in the GUI
-as soon as the user hovers over the regarding label.
+In the code snippet below you can see two examples on how to implement an algorithm that:
+
+   * Option a) creates labels, that have the name `Activity`
+   * Option b) creates information, that will be set as the label's `description`. In turn, the user can see this info when hovering over the label.
 
 It is important, that we also pass a label to the GUI, which has the attribute `name = "Activity"` at startup (when calling
 `start_gui <https://mad-gui.readthedocs.io/en/latest/modules/generated/mad_gui/mad_gui.start_gui.html#mad_gui.start_gui>`_, see the lowest part of the code snippet.
