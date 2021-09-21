@@ -169,7 +169,7 @@ Read more about creating custom labels :ref:`below <custom labels>`.
 
 
     # It is important to create this class and pass it to the GUI because otherwise the sensor_plot.annotation will not
-    # have a key `Activity Label` and thus won't know how to plot the labels it receives from
+    # have a key `Activity` and thus won't know how to plot the labels it receives from
     # CustomAlgorithm.process_data above
     class Activity(BaseRegionLabel):
         name = "Activity Label"
