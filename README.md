@@ -66,7 +66,9 @@ If you also want to check out synchronization with a video file, click on [this 
 
 ### Option A: Standalone executable
 
-
+When downloading the files below, your browser may warn you that this is a potentially dangerous file.
+You will only be able to use our GUI by selecting "Keep anyway / download anyway / ...".
+In the case of Microsoft Edge, this possiblity is hidden, but you can select it after downloading es explained [here](https://docs.microsoft.com/en-us/deployedge/microsoft-edge-security-downloads-interruptions#user-experience-for-downloads-lacking-gestures).
 
 | Operating system <img width=200/>      | File to download <img width=200/>| What to do                                        |
 |------------------------|------------------|---------------------------------------------------|
@@ -74,10 +76,6 @@ If you also want to check out synchronization with a video file, click on [this 
 | Ubuntu                 | [Ubuntu (64 bit)](https://github.com/mad-lab-fau/mad-gui/releases/download/v0.2.0-alpha.5/mad_gui_ubuntu.exe) | Download our exemplary executable. Then, in your terminal, navigate to the file loaction and then: `chmod +x ./mad_gui_ubuntu.exe` and then `./mad_gui_ubuntu.exe` <br /> <br />*Note: you might need to install some additional packages. You can use [this script](https://raw.githubusercontent.com/mad-lab-fau/mad-gui/main/unix_dependencies.sh) to to so. Just right click the link, save it on your machine and execute it.*|
 | Mac OS                 | [Mac OS (64 bit)](https://github.com/mad-lab-fau/mad-gui/releases/download/v0.2.0-alpha.5/mad_gui_mac.exe) | Download our exemplary executable. Then, in your terminal, navigate to the file loaction and then: `chmod +x ./mad_gui_mac.exe` and then `./mad_gui_mac.exe` <br /><br /> *Note: If your Mac does not allow you to open this file, perform the actions for "If you want to open an app that hasn’t been notarized or is from an unidentified developer" on the [Apple Support Page](https://support.apple.com/en-us/HT202491). Afterwards, try `./mad_gui_mac.exe` again in your terminal.*|
 | other                  | Supplied upon request |[Contact us](mailto:malte.ollenschlaeger@fau.de)  
-
-If, after downloading one of the files below, your browser tries to "protect" you, see here on how to proceed:
-
-- [Instructions Microsoft Edge](https://docs.microsoft.com/en-us/deployedge/microsoft-edge-security-downloads-interruptions#user-experience-for-downloads-lacking-gestures) -> choose "Keep".
 
 Start the program and then you can open the previously downloaded example data as shown in [How do I use it (videos)?](#how-do-i-use-it-videos)
 
