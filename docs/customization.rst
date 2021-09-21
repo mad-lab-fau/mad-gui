@@ -45,6 +45,8 @@ In case you want to give some feedback to the user via a popup you can use this:
    You do not have to implement all methods of the regarding base class (BaseImporter, BaseAlgorithm, or BaseExporter),
    just the ones you need.
 
+.. _implement importer:
+
 Implement an importer
 *********************
 If the user presses the `Load data` button in the GUI, a `LoadDataWindow <https://github.com/mad-lab-fau/mad-gui/blob/main/mad_gui/components/dialogs/plugin_selection/load_data_dialog.py#L28>`_
@@ -95,43 +97,60 @@ Here you can see an example of how to create an Importer and how to inject it:
         plugins=[CustomImporter],
     )
 
+.. _implement algorithm:
 
 Implement an algorithm
 **********************
 If the user presses the `Use algorithm` button in the GUI, a `PluginSelectionDialog <https://github.com/mad-lab-fau/mad-gui/blob/main/mad_gui/components/dialogs/plugin_selection/plugin_selection_dialog.py#L22>`_
-will pop up, as shown in our `exemplary video about automated annotations <https://youtu.be/VWQKYRRRGVA?t=65>`_
+will pop up, as shown in our `exemplary video about automated annotations <https://youtu.be/VWQKYRRRGVA?t=65>`_.
 In there, the user can select one of the algorithms that were passed to the GUI at startup by selecting it in a dropdown.
-The algorithm receives the plotted data as well as currently plotted labels, as kept in the `Global Data <https://mad-gui.readthedocs.io/en/latest/modules/generated/mad_gui/mad_gui.models.GlobalData.html#mad_gui.models.GlobalData>`_ object,
-namely in its `Plot Data <https://mad-gui.readthedocs.io/en/latest/modules/generated/mad_gui/mad_gui.models.local.PlotData.html#mad_gui.models.local.PlotData>`_ objects.
+The algorithm receives `Global Data <https://mad-gui.readthedocs.io/en/latest/modules/generated/mad_gui/mad_gui.models.GlobalData.html#mad_gui.models.GlobalData>`_'s
+plot_data dictionary, where the keys are the plot names and the values are of type
+`Plot Data <https://mad-gui.readthedocs.io/en/latest/modules/generated/mad_gui/mad_gui.models.local.PlotData.html#mad_gui.models.local.PlotData>`_.
+This in turn keeps the plotted data, as well as a dictionary where you can get annotations from or write new annotations to.
 
 Here you can see an example of how to create an algorithm that creates labels, that have the name `Activity`.
-It is important, that we also pass a label to the GUI, which has the attribute `name = "Activity"`. Otherwise the GUI
-will not know, what the label "Activity" should look like. Read more about creating custom labels :ref:`below <custom labels>`.
+It is important, that we also pass a label to the GUI, which has the attribute `name = "Activity"` at startup (when calling
+`start_gui <https://mad-gui.readthedocs.io/en/latest/modules/generated/mad_gui/mad_gui.start_gui.html#mad_gui.start_gui>`_.
+Otherwise the GUI will not know, what the label "Activity" should look like.
+Read more about creating custom labels :ref:`below <custom labels>`.
 
 .. code-block:: python
 
-    from typing import Tuple, Dict
+    from typing import Dict
+    import pandas as pd
     from mad_gui import start_gui, BaseAlgorithm
     from mad_gui.models.local import PlotData
+    from mad_gui.components.dialogs.user_information import UserInformation
 
     class CustomAlgorithm(BaseAlgorithm):
         @classmethod
         def name(cls):
             return "Find Resting Phases (example MaD GUI)"
 
+        # It is mandatory to implement this method. However, the content can be arbitrary.
         def process_data(self, data: Dict[str, PlotData]) -> Dict[str, PlotData]:
             for sensor_plot in data.values():
                 # sensor_plot.annotations["Activity"] basically is a pd.DataFrame. However, you can see an additional
                 # `.data` in the next line. This is due to internal data handling in the GUI.
                 # You do not need to care about that, just make sure that the method `self.get_annotations(...)
                 # returns a pd.DataFrame.
-                sensor_plot.annotations["Activity Label"].data = self.get_annotations(sensor_plot)
+                annotations = self.get_annotations(sensor_plot)
+                UserInformation.inform(f"Found {len(annotations)} resting phases.")
+                sensor_plot.annotations["Activity Label"].data = annotations
 
-        def get_annotations(plot_data: PlotData) -> pd.DataFrame:
+        def get_annotations(self, plot_data: PlotData) -> pd.DataFrame:
             # Some code that creates a pd.DataFrame with the columns `start` and `end`.
             # Each row corresponds to one label to be plotted.
             imu_hip_data = plot_data.data
             imu_hip_fs = plot_data.sampling_rate_hz
+            # use some algorithm to get all the starts of 'ActivityLabel', e.g. to find all starts of a certain activity
+            # like `running`
+            starts = ...
+            # ...and the same for ends of the activity
+            ends = ...
+            annotations = pd.DataFrame(data=[starts, ends], columns = ['start', 'end'])
+            return annotations
 
 
 

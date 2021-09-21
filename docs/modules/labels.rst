@@ -12,7 +12,6 @@ Classes
    :toctree: generated/plot_tools
    :template: class_no_inheritances.rst
 
-   BaseEventLabel
    BaseRegionLabel
    SegmentedStrideLabel
    SynchronizationLabel

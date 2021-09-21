@@ -124,7 +124,7 @@ class BaseImporter(BasePlugin):
         return None
 
     @staticmethod
-    def get_sync_file(video_file: str) -> str:
+    def _get_sync_file(video_file: str) -> str:
         files = list(Path(video_file).parent.glob("*sync*.xlsx"))
         if len(files) == 0:
             UserInformation.inform(
@@ -142,7 +142,7 @@ class BaseImporter(BasePlugin):
         )
         return None
 
-    def get_video_signal_synchronization(self, video_file: str) -> pd.DataFrame:  # noqa
+    def _get_video_signal_synchronization(self, video_file: str) -> pd.DataFrame:  # noqa
         """Searches for an excel file that has `sync` in its name and returns the sync indices from there.
 
         The Excel file should have as first column (index) "start_sample" and "end_sample" and the columns should be
@@ -168,6 +168,8 @@ class BaseImporter(BasePlugin):
 
 
 class BaseAlgorithm(BasePlugin):
+    """A base class for implementing an algorithm. """
+
     @classmethod
     @abc.abstractmethod
     def name(cls) -> str:

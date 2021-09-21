@@ -1,5 +1,7 @@
 import os
-import platform
+import tempfile
+from datetime import datetime, timedelta
+from pathlib import Path
 
 from PySide2.QtCore import QObject, Signal, Slot
 
@@ -49,13 +51,13 @@ def resource_path(relative_path):
     """ Get absolute path to resource, works for dev and for PyInstaller """
 
     try:
-        if platform.system() == "Windows":
-            paths = os.environ.get("PATH").split(";")
-        elif platform.system() in ["Linux", "Darwin"]:
-            paths = os.listdir("/tmp/")
-        base_path = [p for p in paths if "_MEI" in p][0]
-        relative_path = str.replace(relative_path, ".ui", ".py")
-        relative_path = str.replace(relative_path, "qt_designer", f"qt_designer{os.sep}build")
-    except IndexError:
+        paths = sorted(Path(tempfile.gettempdir()).iterdir(), key=os.path.getctime)[::-1]
+        mei_paths = [p for p in paths if "_MEI" in p.name]
+        time_now = datetime.today()
+        newest_mei = mei_paths[0]
+        date_newest_mei = datetime.fromtimestamp(os.stat(newest_mei).st_ctime)
+        if (time_now - date_newest_mei) > timedelta(seconds=60):
+            raise FileNotFoundError("Did not find a current _MEI folder in tmp.")
+    except (IndexError, FileNotFoundError):
         base_path = os.path.abspath(".")
     return os.path.join(base_path, relative_path)

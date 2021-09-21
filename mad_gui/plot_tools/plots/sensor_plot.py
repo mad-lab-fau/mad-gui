@@ -226,6 +226,12 @@ class SensorPlot(BasePlot):
         ax_bottom = self.getAxis("bottom")
         ax_bottom.setLabel(text="time [seconds]")
 
+        if not isinstance(data.index[0], int):
+            raise TypeError(
+                f"The index of the dataframe created by a loader must contain integers. However, "
+                f"in this case it contained {type(data.index[0])}. You may change that by using "
+                f"`df.reset_index(drop=True)` in your loaders `load_sensor_data`."
+            )
         x_axis = data.index / sampling_rate_hz
         if start_time:
             start_time_qt = QTime(start_time.hour, start_time.minute, start_time.second)

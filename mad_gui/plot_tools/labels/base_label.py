@@ -97,7 +97,7 @@ class BaseRegionLabel(pg.LinearRegionItem):
 
     Parameters
     ----------
-    label_id
+    identifier
         An id for the label. Usually we just give it an increasing number.
     description
         A list of strings, filled by the user via the NestedLabelDialog

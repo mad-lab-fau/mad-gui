@@ -143,11 +143,11 @@ def linkcode_resolve(domain, info):
             )
         )
     except Exception as e:
-        warnings.warn(f"{str (e)}")
+        warnings.warn(f"{info}: {str (e)}")
     try:
         code_line = getsourcelines(obj)[-1]
     except Exception as e:
-        warnings.warn(f"{str (e)}")
+        warnings.warn(f"{info}: {str (e)}")
     if filename:
         if code_line:
             return "{}/{}#L{}".format(URL, filename, code_line)

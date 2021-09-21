@@ -5,7 +5,7 @@ import warnings
 from pathlib import Path
 
 DOIT_CONFIG = {
-    "default_tasks": ["format", "lint", "test", "prepare_windows_build"],
+    "default_tasks": ["format", "lint", "test", "prepare_build"],
     "backend": "json",
 }
 
@@ -44,11 +44,10 @@ def task_prepare_build():
     python_path = sys.executable.split(os.sep)
     venv_path = str(Path(os.sep.join(python_path[:-2])))
 
-    print(f"Going on with {venv_path} as the virtual environment exclusively used for using pyinstaller.")
-
     def get_dst_path():
         import platform
 
+        print(f"Going on with {venv_path} as the virtual environment exclusively used for using pyinstaller.")
         arch = platform.system()
         if arch == "Windows":
             return Path(venv_path) / "Lib/site-packages/mad_gui/qt_designer/build/"

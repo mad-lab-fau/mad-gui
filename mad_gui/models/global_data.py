@@ -36,6 +36,7 @@ class GlobalData(BaseStateModel):
         :meth:`~mad_gui.start_gui`.
     labels
         All the labels that the GUI is aware of (= the ones that were passed to :meth:`~mad_gui.start_gui`)
+
     """
 
     data_file = Property("", dtype=str)
@@ -46,7 +47,7 @@ class GlobalData(BaseStateModel):
 
     plot_data: Dict[str, PlotData] = Property({}, dtype=dict)
 
-    # we need to initialize this with `None` for sphinx
-    plugins: List[Type[BasePlugin]] = None
-    labels: List[Type[BaseRegionLabel]] = None
+    # we need to initialize this for sphinx
+    plugins: List[Type[BasePlugin]] = []
+    labels: List[Type[BaseRegionLabel]] = []
     active_loader: BaseImporter = None
