@@ -67,7 +67,7 @@ If you also want to check out synchronization with a video file, click on [this 
 ### Option A: Standalone executable
 
 If, after downloading one of the files below, your browser tries to "protect" you, see here on how to proceed:
-- [Microsoft Edge](https://docs.microsoft.com/en-us/deployedge/microsoft-edge-security-downloads-interruptions#user-experience-for-downloads-lacking-gestures) --> choose "Keep"
+- [Instructions Microsoft Edge](https://docs.microsoft.com/en-us/deployedge/microsoft-edge-security-downloads-interruptions#user-experience-for-downloads-lacking-gestures) -> choose "Keep"
 
 | Operating system       | What to do                                        |
 |------------------------|---------------------------------------------------|
