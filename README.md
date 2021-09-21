@@ -66,6 +66,9 @@ If you also want to check out synchronization with a video file, click on [this 
 
 ### Option A: Standalone executable
 
+If, after downloading one of the files below, your browser tries to "protect" you, see here on how to proceed:
+- [Microsoft Edge](https://docs.microsoft.com/en-us/deployedge/microsoft-edge-security-downloads-interruptions#user-experience-for-downloads-lacking-gestures) --> choose "Keep"
+
 | Operating system       | What to do                                        |
 |------------------------|---------------------------------------------------|
 | Windows                | - Download our exemplary executable: [Windows (64 bit)](https://github.com/mad-lab-fau/mad-gui/releases/download/v0.2.0-alpha.1/mad_gui.exe) <br />   - Double click the downloaded file <br /> Note: If prompted with a dialog `Windows protected your PC`, click `More info` and then select `Run anyway` |
