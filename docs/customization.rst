@@ -107,13 +107,15 @@ In there, the user can select one of the algorithms that were passed to the GUI 
 The algorithm receives `Global Data <https://mad-gui.readthedocs.io/en/latest/modules/generated/mad_gui/mad_gui.models.GlobalData.html#mad_gui.models.GlobalData>`_'s
 plot_data dictionary, where the keys are the plot names and the values are of type
 `Plot Data <https://mad-gui.readthedocs.io/en/latest/modules/generated/mad_gui/mad_gui.models.local.PlotData.html#mad_gui.models.local.PlotData>`_.
-This in turn keeps the plotted data, as well as a dictionary which keeps the currently plotted annotations. You can simply set these annotations by setting the regaring value, as shown in the code below.
 
-Here you can see an example of how to create an algorithm that creates labels, that have the name `Activity`.
+Here you can see an example of how to create an algorithm that Option a) creates labels, that have the name `Activity`.
+Alternatively, your algorithm could be used to calculate some information/features about the plotted labels, which will then be display in the GUI
+as soon as the user hovers over the regarding label.
+
 It is important, that we also pass a label to the GUI, which has the attribute `name = "Activity"` at startup (when calling
-`start_gui <https://mad-gui.readthedocs.io/en/latest/modules/generated/mad_gui/mad_gui.start_gui.html#mad_gui.start_gui>`_.
+`start_gui <https://mad-gui.readthedocs.io/en/latest/modules/generated/mad_gui/mad_gui.start_gui.html#mad_gui.start_gui>`_, see the lowest part of the code snippet.
 Otherwise the GUI will not know, what the label "Activity" should look like.
-Read more about creating custom labels :ref:`below <custom labels>`.
+If you want to read more about creating custom labels, see :ref:`below <custom labels>`.
 
 .. code-block:: python
 
