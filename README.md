@@ -60,6 +60,22 @@ In this case please refer to [Can I use it with data of my specific system or a 
 
 ## How can I test the GUI using your example data on my computer?
 
+|  Sequence   | Result                                                        |
+|-------------|---------------------------------------------------------------|
+| `a?c`       | Matches `abc`, `axc`, and `aac`. Does not match `ac`, `abbc`, | 
+|             | or `a/c`.                                                     |
+|-------------|---------------------------------------------------------------|
+| `a*c`       | Matches "ac", "abc" and "azzzzzzzc". Does not match "a/c".    |
+|-------------|---------------------------------------------------------------|
+| `foo...bar` | Matches "foobar", "fooxbar", and "fooz/blaz/rebar". Does not  |
+|             | match "fo/obar", "fobar" or "food/bark".                      |
+|-------------|---------------------------------------------------------------|
+| `....obj`   | Matches all files anywhere in the current hierarchy that end  |
+|             | in ".obj". Note that the first three periods are interpreted  |
+|             | as "...", and the fourth one is interpreted as a literal "."  |
+|             | character.                                                    |
+|-------------|---------------------------------------------------------------|
+
 First, you need to download the example data.
 Right click on [this link](https://github.com/mad-lab-fau/mad-gui/raw/main/example_data/sensor_data.csv), select `Save link as...` and save it - you have to change the file ending from \*.txt to \*.csv before saving.
 If you also want to check out synchronization with a video file, click on [this link](https://github.com/mad-lab-fau/mad-gui/releases/download/v0.2.0-alpha.1/video.mp4) and save it on your machine. Next, use one of the following two options (for testing it on Windows, we recommend Option A).
