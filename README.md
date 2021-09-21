@@ -69,14 +69,15 @@ If you also want to check out synchronization with a video file, click on [this 
 | Operating system       | What to do                                        |
 |------------------------|---------------------------------------------------|
 | Windows                | - Download our exemplary executable: [Windows (64 bit)](https://github.com/mad-lab-fau/mad-gui/releases/download/v0.2.0-alpha.1/mad_gui.exe). <br /> - Double click the downloaded file <br /> Note: If prompted with a dialog `Windows protected your PC`, click `More info` and then select `Run anyway` |
-| Ubuntu                 | - Download our exemplary executable: [Ubuntu (64 bit)](https://github.com/mad-lab-fau/mad-gui/releases/download/v0.2.0-alpha.5/mad_gui_ubuntu.exe) <br /> - In your terminal: `chmod +x ./mad_gui_ubuntu.exe` and then `./mad_gui_ubuntu.exe` 
+| Ubuntu                 | - Download our exemplary executable: [Ubuntu (64 bit)](https://github.com/mad-lab-fau/mad-gui/releases/download/v0.2.0-alpha.5/mad_gui_ubuntu.exe) <br /> - In your terminal, navigate to the file loaction and then: `chmod +x ./mad_gui_ubuntu.exe` and then `./mad_gui_ubuntu.exe` <br /> Note: you might need to install some additional packages on Ubuntu, as we do it in our [GitHub Actions](https://github.com/mad-lab-fau/mad-gui/blob/e9b036a22d4fa8ada48897c103e6ee6a2ff6bf61/.github/workflows/test_and_lint.yml#L41).
+| Mac OS                 | - Download our exemplary executable: [Mac (64 bit)](https://github.com/mad-lab-fau/mad-gui/releases/download/v0.2.0-alpha.5/mad_gui_mac) <br /> - In your terminal navigate to the file location and then: `chmod +x ./mad_gui_mac` and then `./mad_gui_mac` <br /> Note: you might need to install some additional packages on, as we do it in our [GitHub Actions](https://github.com/mad-lab-fau/mad-gui/blob/e9b036a22d4fa8ada48897c103e6ee6a2ff6bf61/.github/workflows/test_and_lint.yml#L41).
 | other                  | [Contact us](mailto:malte.ollenschlaeger@fau.de)  
 
 Start the program and then you can open the previously downloaded example data as shown in [How do I use it (videos)?](#how-do-i-use-it-videos)
 
 ### Option B: Using the python package
 
-Info: We recommend to use `pip install mad_gui` in a [clean python virtual environment](https://docs.python.org/3/library/venv.html#creating-virtual-environments) / [conda environment](https://docs.python.org/3/library/venv.html#creating-virtual-environments).
+Info: We recommend to use `pip install mad_gui` in a [clean python virtual environment](https://docs.python.org/3/library/venv.html#creating-virtual-environments) / [conda environment](https://docs.python.org/3/library/venv.html#creating-virtual-environments). This way you do NOT need to clone this github repository.
 
 ```
 pip install mad_gui
