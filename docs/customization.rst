@@ -148,7 +148,9 @@ If you want to read more about creating custom labels, see :ref:`below <custom l
                 #           to change the text of the already plotted labels when hovering over them.
                 # -------------------------------------------------------------------------------------
                 for i_activity, activity in sensor_plot.annotations["Activity"].data.iterrows():
-                    sensor_plot.annotations["Activity"].data.iloc[i_activity]['description'] = self.calculate_features(sensor_plot.data.iloc[activity.start:activity.end])
+                    sensor_plot.annotations["Activity"].data.at[
+                        i_activity, 'description'
+                    ] = self.calculate_features(sensor_plot.data.iloc[activity.start:activity.end])
 
         @staticmethod
         def create_annotations(sensor_data: pd.DataFrame, sampling_rate_hz: float) -> pd.DataFrame:
