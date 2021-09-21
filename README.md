@@ -69,7 +69,7 @@ If you also want to check out synchronization with a video file, click on [this 
 If, after downloading one of the files below, your browser tries to "protect" you, see here on how to proceed:
 - [Instructions Microsoft Edge](https://docs.microsoft.com/en-us/deployedge/microsoft-edge-security-downloads-interruptions#user-experience-for-downloads-lacking-gestures) -> choose "Keep"
 
-| Operating system       |&nbsp; &nbsp; File to download &nbsp; &nbsp;| What to do                                        |
+| Operating system       | File to download | What to do                                        |
 |------------------------|------------------|---------------------------------------------------|
 | Windows                | [Windows (64 bit)](https://github.com/mad-lab-fau/mad-gui/releases/download/v0.2.0-alpha.1/mad_gui.exe)       | Download our exemplary executable. Then open the ownloaded file <br /> <br />*Note: If prompted with a dialog `Windows protected your PC`, click `More info` and then select `Run anyway`* |
 | Ubuntu                 | [Ubuntu (64 bit)](https://github.com/mad-lab-fau/mad-gui/releases/download/v0.2.0-alpha.5/mad_gui_ubuntu.exe) | Download our exemplary executable. Then, in your terminal, navigate to the file loaction and then: `chmod +x ./mad_gui_ubuntu.exe` and then `./mad_gui_ubuntu.exe` <br /> <br />*Note: you might need to install some additional packages. You can use [this script](https://raw.githubusercontent.com/mad-lab-fau/mad-gui/main/unix_dependencies.sh) to to so. Just right click the link, save it on your machine and execute it.*|
