@@ -139,23 +139,23 @@ If you want to read more about creating custom labels, see :ref:`below <custom l
                 # `.data` in the code below. This is due to internal data handling in the GUI.
                 # You do not need to care about that, just make sure that the method `self.create_annotations(...)
                 # returns a pd.DataFrame with the columns `start` and `end`.
-                annotations = self.create_annotations(sensor_plot)
+                annotations = self.create_annotations(sensor_plot.data, sensor_plot.sampling_rate_hz)
                 UserInformation.inform(f"Found {len(annotations)} resting phases.")
                 sensor_plot.annotations["Activity Label"].data = annotations
                 
                 # Opiton b: Use your algorithm to use the plotted data and already plotted annotations 
-                #           to change the text of the plotted labels when hovering over them.
-                # ----------------------------------------------------------------------------------------
+                #           to change the text of the already plotted labels when hovering over them.
+                # -------------------------------------------------------------------------------------
                 for i_activity, activity in sensor_plot.annotations["Activity"].data.iterrows():
-                    sensor_plot.annotations["Activity"].data.iloc[i_activity]['description'] = self.calculate_features(activity, sensor_plot)
+                    sensor_plot.annotations["Activity"].data.iloc[i_activity]['description'] = self.calculate_features(sensor_plot.data.iloc[activity.start:activity.end])
 
         @staticmethod
-        def create_annotations(plot_data: PlotData) -> pd.DataFrame:
-            # Some code that creates a pd.DataFrame with the columns `start` and `end`.
-            # Each row corresponds to one label to be plotted.
-            imu_hip_data = plot_data.data
-            imu_hip_fs = plot_data.sampling_rate_hz
-            # use some algorithm to get all the starts of 'ActivityLabel', e.g. to find all starts of a certain activity
+        def create_annotations(sensor_data: pd.DataFrame, sampling_rate_hz: float) -> pd.DataFrame:
+            """Some code that creates a pd.DataFrame with the columns `start` and `end`.
+            
+            Each row corresponds to one label to be plotted.
+            """
+            # use some algorithm to get all the starts of 'Activity', e.g. to find all starts of a certain activity
             # like `running`
             starts = ...
             # ...and the same for ends of the activity
@@ -164,10 +164,8 @@ If you want to read more about creating custom labels, see :ref:`below <custom l
             return annotations
 
         @staticmethod
-        def calculate_features(
-            plot_data: PlotData, activity: Type[BaseRegionLable]
-        ) -> str:
-            return f"Mean value = {plot_data.data.iloc[activity.start:activity.end]['acc_x'].mean()}"
+        def calculate_features(activity_data: pd.DataFrame) -> str:
+            return f"Mean value acc_x = {activity_data['acc_x'].mean()}"
 
 
 
