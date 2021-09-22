@@ -107,13 +107,16 @@ In there, the user can select one of the algorithms that were passed to the GUI 
 The algorithm receives `Global Data <https://mad-gui.readthedocs.io/en/latest/modules/generated/mad_gui/mad_gui.models.GlobalData.html#mad_gui.models.GlobalData>`_'s
 plot_data dictionary, where the keys are the plot names and the values are of type
 `Plot Data <https://mad-gui.readthedocs.io/en/latest/modules/generated/mad_gui/mad_gui.models.local.PlotData.html#mad_gui.models.local.PlotData>`_.
-This in turn keeps the plotted data, as well as a dictionary where you can get annotations from or write new annotations to.
 
-Here you can see an example of how to create an algorithm that creates labels, that have the name `Activity`.
+In the code snippet below you can see two examples on how to implement an algorithm that:
+
+   * Option a) creates labels, that have the name `Activity`
+   * Option b) creates information, that will be set as the label's `description`. In turn, the user can see this info when hovering over the label.
+
 It is important, that we also pass a label to the GUI, which has the attribute `name = "Activity"` at startup (when calling
-`start_gui <https://mad-gui.readthedocs.io/en/latest/modules/generated/mad_gui/mad_gui.start_gui.html#mad_gui.start_gui>`_.
+`start_gui <https://mad-gui.readthedocs.io/en/latest/modules/generated/mad_gui/mad_gui.start_gui.html#mad_gui.start_gui>`_, see the lowest part of the code snippet.
 Otherwise the GUI will not know, what the label "Activity" should look like.
-Read more about creating custom labels :ref:`below <custom labels>`.
+If you want to read more about creating custom labels, see :ref:`below <custom labels>`.
 
 .. code-block:: python
 
@@ -131,20 +134,31 @@ Read more about creating custom labels :ref:`below <custom labels>`.
         # It is mandatory to implement this method. However, the content can be arbitrary.
         def process_data(self, data: Dict[str, PlotData]) -> Dict[str, PlotData]:
             for sensor_plot in data.values():
+                # Option a: Use your algorithm and the plotted data to create labels, like an Activity (see class below)
+                # ------------------------------------------------------------------------------------------------------
                 # sensor_plot.annotations["Activity"] basically is a pd.DataFrame. However, you can see an additional
-                # `.data` in the next line. This is due to internal data handling in the GUI.
-                # You do not need to care about that, just make sure that the method `self.get_annotations(...)
-                # returns a pd.DataFrame.
-                annotations = self.get_annotations(sensor_plot)
+                # `.data` in the code below. This is due to internal data handling in the GUI.
+                # You do not need to care about that, just make sure that the method `self.create_annotations(...)
+                # returns a pd.DataFrame with the columns `start` and `end`.
+                annotations = self.create_annotations(sensor_plot.data, sensor_plot.sampling_rate_hz)
                 UserInformation.inform(f"Found {len(annotations)} resting phases.")
                 sensor_plot.annotations["Activity Label"].data = annotations
+                
+                # Opiton b: Use your algorithm to use the plotted data and already plotted annotations 
+                #           to change the text of the already plotted labels when hovering over them.
+                # -------------------------------------------------------------------------------------
+                for i_activity, activity in sensor_plot.annotations["Activity"].data.iterrows():
+                    sensor_plot.annotations["Activity"].data.at[
+                        i_activity, 'description'
+                    ] = self.calculate_features(sensor_plot.data.iloc[activity.start:activity.end])
 
-        def get_annotations(self, plot_data: PlotData) -> pd.DataFrame:
-            # Some code that creates a pd.DataFrame with the columns `start` and `end`.
-            # Each row corresponds to one label to be plotted.
-            imu_hip_data = plot_data.data
-            imu_hip_fs = plot_data.sampling_rate_hz
-            # use some algorithm to get all the starts of 'ActivityLabel', e.g. to find all starts of a certain activity
+        @staticmethod
+        def create_annotations(sensor_data: pd.DataFrame, sampling_rate_hz: float) -> pd.DataFrame:
+            """Some code that creates a pd.DataFrame with the columns `start` and `end`.
+            
+            Each row corresponds to one label to be plotted.
+            """
+            # use some algorithm to get all the starts of 'Activity', e.g. to find all starts of a certain activity
             # like `running`
             starts = ...
             # ...and the same for ends of the activity
@@ -152,11 +166,15 @@ Read more about creating custom labels :ref:`below <custom labels>`.
             annotations = pd.DataFrame(data=[starts, ends], columns = ['start', 'end'])
             return annotations
 
+        @staticmethod
+        def calculate_features(activity_data: pd.DataFrame) -> str:
+            return f"Mean value acc_x = {activity_data['acc_x'].mean()}"
+
 
 
 
     # It is important to create this class and pass it to the GUI because otherwise the sensor_plot.annotation will not
-    # have a key `Activity Label` and thus won't know how to plot the labels it receives from
+    # have a key `Activity` and thus won't know how to plot the labels it receives from
     # CustomAlgorithm.process_data above
     class Activity(BaseRegionLabel):
         name = "Activity Label"

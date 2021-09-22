@@ -44,9 +44,10 @@ By clicking on the images below, you will be redirected to YouTube. In case you 
 ### Shortcuts
 Please watch the videos linked above, if you want to learn more about the different actions.
 
-| Shortcut                     | Mode          | Action |
+| Shortcut <img width=50/>                     | Mode <img width=50/>          | Action |
 |------------------------------|---------------|-------|
 | `a`, `e`, `r`, `s`, `Esc`    | all           | Switch between modes *Add label*, *Edit label*, *Remove label*, *Synchronize data*|
+| `Left Mouse Click`           | Add label     | Set start/end of a label|
 | `Space`                      | Add label     | Can be used instead of `Left Mouse Click` |
 | `1`, `2`, `3`,... `TAB`      | Add label     | Navigate in the pop-up window |
 | `Shift` + `Left Mouse Click` | Add label     | Start a new label directly when setting the end of a label |
@@ -66,12 +67,16 @@ If you also want to check out synchronization with a video file, click on [this 
 
 ### Option A: Standalone executable
 
-| Operating system       | What to do                                        |
-|------------------------|---------------------------------------------------|
-| Windows                | - Download our exemplary executable: [Windows (64 bit)](https://github.com/mad-lab-fau/mad-gui/releases/download/v0.2.0-alpha.1/mad_gui.exe). <br /> - Double click the downloaded file <br /> Note: If prompted with a dialog `Windows protected your PC`, click `More info` and then select `Run anyway` |
-| Ubuntu                 | - Download our exemplary executable: [Ubuntu (64 bit)](https://github.com/mad-lab-fau/mad-gui/releases/download/v0.2.0-alpha.5/mad_gui_ubuntu.exe) <br /> - In your terminal, navigate to the file loaction and then: `chmod +x ./mad_gui_ubuntu.exe` and then `./mad_gui_ubuntu.exe` <br /> Note: you might need to install some additional packages on Ubuntu, as we do it in our [GitHub Actions](https://github.com/mad-lab-fau/mad-gui/blob/e9b036a22d4fa8ada48897c103e6ee6a2ff6bf61/.github/workflows/test_and_lint.yml#L41).
-| Mac OS                 | - Download our exemplary executable: [Mac (64 bit)](https://github.com/mad-lab-fau/mad-gui/releases/download/v0.2.0-alpha.5/mad_gui_mac) <br /> - In your terminal navigate to the file location and then: `chmod +x ./mad_gui_mac` and then `./mad_gui_mac` <br /> Note: you might need to install some additional packages on, as we do it in our [GitHub Actions](https://github.com/mad-lab-fau/mad-gui/blob/e9b036a22d4fa8ada48897c103e6ee6a2ff6bf61/.github/workflows/test_and_lint.yml#L41).
-| other                  | [Contact us](mailto:malte.ollenschlaeger@fau.de)  
+When downloading the files below, your browser may warn you that this is a potentially dangerous file.
+You will only be able to use our GUI by selecting "Keep anyway / download anyway / ...".
+In the case of Microsoft Edge, this possiblity is hidden, but you can select it after downloading as explained [here](https://docs.microsoft.com/en-us/deployedge/microsoft-edge-security-downloads-interruptions#user-experience-for-downloads-lacking-gestures).
+
+| Operating system <img width=200/>      | File to download <img width=200/>| What to do                                        |
+|------------------------|------------------|---------------------------------------------------|
+| Windows                | [Windows (64 bit)](https://github.com/mad-lab-fau/mad-gui/releases/download/v0.2.0-alpha.1/mad_gui.exe)       | Download the file on the left. Then open the ownloaded file. <br /> <br />*Note: If prompted with a dialog `Windows protected your PC`, click `More info` and then select `Run anyway`* |
+| Ubuntu                 | [Ubuntu (64 bit)](https://github.com/mad-lab-fau/mad-gui/releases/download/v0.2.0-alpha.5/mad_gui_ubuntu.exe) | Download the file on the left. Then, in your terminal, navigate to the file loaction and then: `chmod +x ./mad_gui_ubuntu.exe` and then `./mad_gui_ubuntu.exe` <br /> <br />*Note: you might need to install some additional packages. You can use [this script](https://raw.githubusercontent.com/mad-lab-fau/mad-gui/main/unix_dependencies.sh) to do so. Just right click the link, save it on your machine and execute it.*|
+| Mac OS                 | [Mac OS (64 bit)](https://github.com/mad-lab-fau/mad-gui/releases/download/v0.2.0-alpha.5/mad_gui_mac.exe) | Download the file on the left. Then, in your terminal, navigate to the file loaction and then: `chmod +x ./mad_gui_mac.exe` and then `./mad_gui_mac.exe` <br /><br /> *Note: If your Mac does not allow you to open this file, perform the actions for "If you want to open an app that hasn’t been notarized or is from an unidentified developer" on the [Apple Support Page](https://support.apple.com/en-us/HT202491). Afterwards, try `./mad_gui_mac.exe` again in your terminal.*|
+| other                  | Supplied upon request |[Contact us](mailto:malte.ollenschlaeger@fau.de)  
 
 Start the program and then you can open the previously downloaded example data as shown in [How do I use it (videos)?](#how-do-i-use-it-videos)
 
