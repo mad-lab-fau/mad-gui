@@ -47,6 +47,8 @@ Please watch the videos linked above, if you want to learn more about the differ
 | Shortcut <img width=50/>                     | Mode <img width=50/>          | Action |
 |------------------------------|---------------|-------|
 | `a`, `e`, `r`, `s`, `Esc`    | all           | Switch between modes *Add label*, *Edit label*, *Remove label*, *Synchronize data*|
+| `Left Mouse Click`           | Add label     | Set start/end of a label|
+|                              | Remove label  | Remove the highlighted label|
 | `Space`                      | Add label     | Can be used instead of `Left Mouse Click` |
 | `1`, `2`, `3`,... `TAB`      | Add label     | Navigate in the pop-up window |
 | `Shift` + `Left Mouse Click` | Add label     | Start a new label directly when setting the end of a label |
