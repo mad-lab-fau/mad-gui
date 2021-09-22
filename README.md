@@ -44,7 +44,7 @@ By clicking on the images below, you will be redirected to YouTube. In case you 
 ### Shortcuts
 Please watch the videos linked above, if you want to learn more about the different actions.
 
-| Shortcut                     | Mode          | Action |
+| Shortcut                     | Mode <img width=200/>          | Action |
 |------------------------------|---------------|-------|
 | `a`, `e`, `r`, `s`, `Esc`    | all           | Switch between modes *Add label*, *Edit label*, *Remove label*, *Synchronize data*|
 | `Space`                      | Add label     | Can be used instead of `Left Mouse Click` |
