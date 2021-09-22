@@ -69,7 +69,7 @@ If you also want to check out synchronization with a video file, click on [this 
 
 When downloading the files below, your browser may warn you that this is a potentially dangerous file.
 You will only be able to use our GUI by selecting "Keep anyway / download anyway / ...".
-In the case of Microsoft Edge, this possiblity is hidden, but you can select it after downloading es explained [here](https://docs.microsoft.com/en-us/deployedge/microsoft-edge-security-downloads-interruptions#user-experience-for-downloads-lacking-gestures).
+In the case of Microsoft Edge, this possiblity is hidden, but you can select it after downloading as explained [here](https://docs.microsoft.com/en-us/deployedge/microsoft-edge-security-downloads-interruptions#user-experience-for-downloads-lacking-gestures).
 
 | Operating system <img width=200/>      | File to download <img width=200/>| What to do                                        |
 |------------------------|------------------|---------------------------------------------------|
