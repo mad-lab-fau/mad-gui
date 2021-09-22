@@ -549,10 +549,9 @@ class MainWindow(QMainWindow):
         self.plot_state.mode = "investigate"
 
         set_cursor(self, Qt.BusyCursor)
+        dialog = PluginSelectionDialog(plugins=filter_plugins(self.global_data.plugins, BaseAlgorithm), parent=self)
         try:
-            PluginSelectionDialog(
-                plugins=filter_plugins(self.global_data.plugins, BaseAlgorithm), parent=self
-            ).process_data(self.global_data.plot_data)
+            dialog.process_data(self.global_data.plot_data)
         except Exception as error:  # noqa
             print(sys.exc_info()[0])
             raise NotImplementedError(
@@ -560,10 +559,11 @@ class MainWindow(QMainWindow):
                 "see our guide in implementing an algorithm: https://mad-gui.readthedocs.io/en/latest/customization.ht"
                 "ml#implement-an-algorithm"
             ) from error
-
+        self.global_data.plot_data = dialog._data
         set_cursor(self, Qt.ArrowCursor)
         # actually this should be called automatically due to global_data.bind(_plot_data, "plot_data") but that does
         # not work currently
+        # we could probably resolve it in mad_gui.plot_tools.plots.SensorPlot in the __init__ but it does not work yet
         self._plot_data(self.global_data.plot_data)
 
     def _save_data(self, data_to_save: PlotData):

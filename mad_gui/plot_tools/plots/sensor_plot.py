@@ -18,7 +18,6 @@ from PySide2.QtWidgets import (
     QWidgetAction,
 )
 
-from mad_gui.components.dialogs import UserInformation
 from mad_gui.config import Config
 from mad_gui.models.local import PlotData
 from mad_gui.models.ui_state import MODES
@@ -127,9 +126,6 @@ class SensorPlot(BasePlot):
             start_time=self.start_time,
         )
         if len(plot_data.data) > 10000 and getattr(Config.settings, "AUTO_DOWNSAMPLE", False):
-            # TODO: create a help link and some documentation in the online docs
-            UserInformation.inform("There is a lot of data here. Therefore, the GUI will downsample the data before "
-                                   "plotting. Loading may take a minute or two, please be patient.")
             self.plotItem.setDownsampling(auto=True)
         self.plotItem.setClipToView(True)
         self.state.bind(
@@ -151,6 +147,15 @@ class SensorPlot(BasePlot):
 
         self._add_channel_selection_menu()
         StateKeeper.video_window_closed.connect(self.remove_video_cursor_line)
+
+    #    for label in label_classes:
+    #        self.plot_data.annotations[label.name].bind(lambda x: self._plot_annotations(x, label), "data")
+
+    # def _plot_annotations(self, data, label_class):
+    #    self.clear_labels(label_class)
+    #    for _, label in data.iterrows():
+    #        label = label_class(start=label.start, end=label.end, description=label.description, parent=self)
+    #        self.addItem(label)
 
     def adapt_to_opening_video_window(self):
         if self.sync_info is not None:

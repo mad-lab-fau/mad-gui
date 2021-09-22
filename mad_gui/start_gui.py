@@ -40,7 +40,10 @@ class MyEvent(BaseEventLabel):
 def start_gui(
     data_dir=Path("."),
     plugins: Optional[Sequence[BasePlugin]] = (ExampleImporter, ExampleAlgorithm),
-    labels: Optional[Sequence[BaseRegionLabel]] = (Activity, Jump),
+    labels: Optional[Sequence[BaseRegionLabel]] = (
+        Activity,
+        Jump,
+    ),
     events: Optional[Sequence[BaseEventLabel]] = (MyEvent,),
     settings: Optional[Type[BaseSettings]] = BaseSettings,
     theme: Optional[Type[BaseTheme]] = BaseTheme,
