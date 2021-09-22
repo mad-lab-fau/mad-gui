@@ -18,6 +18,7 @@ from PySide2.QtWidgets import (
     QWidgetAction,
 )
 
+from mad_gui.components.dialogs import UserInformation
 from mad_gui.config import Config
 from mad_gui.models.local import PlotData
 from mad_gui.models.ui_state import MODES
@@ -125,6 +126,12 @@ class SensorPlot(BasePlot):
             fix_channels=False,
             start_time=self.start_time,
         )
+        if len(plot_data.data) > 10000 and getattr(Config.settings, "AUTO_DOWNSAMPLE", False):
+            # TODO: create a help link and some documentation in the online docs
+            UserInformation.inform("There is a lot of data here. Therefore, the GUI will downsample the data before "
+                                   "plotting. Loading may take a minute or two, please be patient.")
+            self.plotItem.setDownsampling(auto=True)
+        self.plotItem.setClipToView(True)
         self.state.bind(
             Slot(list)(
                 lambda x: self._set_plot_data(
