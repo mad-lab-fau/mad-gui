@@ -15,7 +15,6 @@
 ![PyPI - Downloads](https://img.shields.io/pypi/dm/mad-gui)
 
 ![GitHub all releases](https://img.shields.io/github/downloads/mad-lab-fau/mad-gui/total?style=social)
-
 ![YouTube Channel Views](https://img.shields.io/youtube/channel/views/UCaLchy07OciePfHL9j-8u8A?style=social)
 
 
