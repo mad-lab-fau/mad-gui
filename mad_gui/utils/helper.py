@@ -63,9 +63,10 @@ def resource_path(relative_path):
         relative_path = str.replace(relative_path, ".ui", ".py")
         relative_path = str.replace(relative_path, "qt_designer", f"qt_designer{os.sep}build")
         warnings.warn(
-            f"Found a _MEI folder in {tempfile.gettempdir()}, which is why I assume this is called from a"
-            f"standalone executable. Therefore I'm changing the resource path, because the executables"
-            f"come with pyside2-uic, which would be necessary to transform *.ui to *.py."
+            f"Found a _MEI folder in {tempfile.gettempdir()}, which has bee created <1 minute ago."
+            f" Therefore, I assume this is called from a standalone executable."
+            f" For this reason, I'm changing the resource path, from mad_gui/qt_designer/*.ui to"
+            f" mad_gui/qt_designer/build/*.py"
         )
     except (IndexError, FileNotFoundError) as e:
         print(str(e))
