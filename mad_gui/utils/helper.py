@@ -1,5 +1,6 @@
 import os
 import tempfile
+import warnings
 from datetime import datetime, timedelta
 from pathlib import Path
 
@@ -58,6 +59,15 @@ def resource_path(relative_path):
         date_newest_mei = datetime.fromtimestamp(os.stat(newest_mei).st_ctime)
         if (time_now - date_newest_mei) > timedelta(seconds=60):
             raise FileNotFoundError("Did not find a current _MEI folder in tmp.")
-    except (IndexError, FileNotFoundError):
+        base_path = newest_mei
+        relative_path = str.replace(relative_path, ".ui", ".py")
+        relative_path = str.replace(relative_path, "qt_designer", f"qt_designer{os.sep}build")
+        warnings.warn(
+            f"Found a _MEI folder in {tempfile.gettempdir()}, which is why I assume this is called from a"
+            f"standalone executable. Therefore I'm changing the resource path, because the executables"
+            f"come with pyside2-uic, which would be necessary to transform *.ui to *.py."
+        )
+    except (IndexError, FileNotFoundError) as e:
+        print(str(e))
         base_path = os.path.abspath(".")
     return os.path.join(base_path, relative_path)
