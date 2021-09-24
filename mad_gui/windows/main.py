@@ -65,7 +65,7 @@ if os.environ.get("GITHUB_CI"):
 
 # Make sure that graphs are properly scaled when having multiple screens
 QApplication.setAttribute(Qt.AA_EnableHighDpiScaling)
-os.environ.set["QT_AUTO_SCREEN_SCALE_FACTOR"] = "1"
+os.environ["QT_AUTO_SCREEN_SCALE_FACTOR"] = "1"
 if platform.system() == "Windows" and int(platform.release()) >= 8:
     ctypes.windll.shcore.SetProcessDpiAwareness(True)
 
