@@ -17,7 +17,7 @@
 ![GitHub all releases](https://img.shields.io/github/downloads/mad-lab-fau/mad-gui/total?style=social)
 [![YouTube Channel Views](https://img.shields.io/youtube/channel/views/UCaLchy07OciePfHL9j-8u8A?style=social)](https://m.youtube.com/channel/UCaLchy07OciePfHL9j-8u8A/videos)
 
-| WARNING: This is still an alpha. Things might not work as expected and the GUI may get stuck unexpectedly.|
+| :warning: WARNING: This is still an alpha. Things might not work as expected and the GUI may get stuck unexpectedly.|
 | --- |
 
 ## Contents of this readme
