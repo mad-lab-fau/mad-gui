@@ -69,6 +69,5 @@ def resource_path(relative_path):
             f" mad_gui/qt_designer/build/*.py"
         )
     except (IndexError, FileNotFoundError) as e:
-        print(str(e))
         base_path = os.path.abspath(".")
     return os.path.join(base_path, relative_path)

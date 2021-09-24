@@ -57,11 +57,12 @@ except ModuleNotFoundError:
     pass
 
 # helps to make plot zooming smooth even when line width >1
-pg.setConfigOption("useOpenGL", True)
+pg.setConfigOption("useOpenGL", False)  # deactivating this, because we might get issues if open GL is not available
+# on the machine as in github CI
 
 # CI can't handle openGL
 if os.environ.get("GITHUB_CI"):
-    pg.setConfigOption("useOpenGL", True)
+    pg.setConfigOption("useOpenGL", False)
 
 # Make sure that graphs are properly scaled when having multiple screens
 QApplication.setAttribute(Qt.AA_EnableHighDpiScaling)
@@ -109,6 +110,8 @@ class MainWindow(QMainWindow):
         # Setting up the UI
         self.ui = Window()
         self.ui.setupUi(self)
+        # from PySide2.QtWidgets import QFrame
+        # self.ui.menu_spacer.setFrameShape(QFrame.NoFrame)
         c = theme.COLOR_DARK
 
         self.setStyleSheet(f"background-color: rgb({c.red()}, {c.green()}, {c.blue()});")
