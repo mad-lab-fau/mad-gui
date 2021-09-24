@@ -21,7 +21,7 @@ from PySide2.QtWidgets import (
     QFileDialog,
     QMessageBox,
     QVBoxLayout,
-    QMainWindow,
+    QMainWindow, QApplication,
 )
 from PySide2.QtGui import QPalette
 
@@ -62,8 +62,7 @@ if os.environ.get("GITHUB_CI"):
     pg.setConfigOption("useOpenGL", False)
 
 # Make sure that graphs are properly scaled when having multiple screens
-# QApplication.setAttribute(Qt.AA_EnableHighDpiScaling)
-# .setAttribute(Qt.AA_EnableHighDpiScaling)
+QApplication.setAttribute(Qt.AA_EnableHighDpiScaling)
 
 ui_path = resource_path(str(UI_PATH / "main.ui"))
 if ".ui" in ui_path:
