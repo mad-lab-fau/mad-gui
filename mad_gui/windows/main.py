@@ -10,6 +10,8 @@ import os
 import sys
 import warnings
 from pathlib import Path
+import platform
+import ctypes
 import pickle
 from typing import Dict
 
@@ -21,7 +23,8 @@ from PySide2.QtWidgets import (
     QFileDialog,
     QMessageBox,
     QVBoxLayout,
-    QMainWindow, QApplication,
+    QMainWindow,
+    QApplication,
 )
 from PySide2.QtGui import QPalette
 
@@ -58,11 +61,13 @@ pg.setConfigOption("useOpenGL", True)
 
 # CI can't handle openGL
 if os.environ.get("GITHUB_CI"):
-
     pg.setConfigOption("useOpenGL", False)
 
 # Make sure that graphs are properly scaled when having multiple screens
 QApplication.setAttribute(Qt.AA_EnableHighDpiScaling)
+os.environ.set["QT_AUTO_SCREEN_SCALE_FACTOR"] = "1"
+if platform.system() == "Windows" and int(platform.release()) >= 8:
+    ctypes.windll.shcore.SetProcessDpiAwareness(True)
 
 ui_path = resource_path(str(UI_PATH / "main.ui"))
 if ".ui" in ui_path:
