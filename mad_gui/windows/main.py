@@ -61,7 +61,7 @@ pg.setConfigOption("useOpenGL", True)
 
 # CI can't handle openGL
 if os.environ.get("GITHUB_CI"):
-    pg.setConfigOption("useOpenGL", False)
+    pg.setConfigOption("useOpenGL", True)
 
 # Make sure that graphs are properly scaled when having multiple screens
 QApplication.setAttribute(Qt.AA_EnableHighDpiScaling)
