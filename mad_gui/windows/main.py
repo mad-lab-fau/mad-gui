@@ -110,8 +110,6 @@ class MainWindow(QMainWindow):
         # Setting up the UI
         self.ui = Window()
         self.ui.setupUi(self)
-        # from PySide2.QtWidgets import QFrame
-        # self.ui.menu_spacer.setFrameShape(QFrame.NoFrame)
         c = theme.COLOR_DARK
 
         self.setStyleSheet(f"background-color: rgb({c.red()}, {c.green()}, {c.blue()});")

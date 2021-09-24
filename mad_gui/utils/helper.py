@@ -68,6 +68,6 @@ def resource_path(relative_path):
             f" For this reason, I'm changing the resource path, from mad_gui/qt_designer/*.ui to"
             f" mad_gui/qt_designer/build/*.py"
         )
-    except (IndexError, FileNotFoundError) as e:
+    except (IndexError, FileNotFoundError):
         base_path = os.path.abspath(".")
     return os.path.join(base_path, relative_path)
