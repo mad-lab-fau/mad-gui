@@ -5,3 +5,4 @@ recommonmark>=0.7.1
 numpydoc>=1.1.0
 pydata-sphinx-theme>=0.6.2
 sphinx-markdown-tables>=0.0.15
+sphinxemoji>=0.1.9
