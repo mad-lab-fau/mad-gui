@@ -21,8 +21,10 @@
 
 <div align="center">
   
-| :warning: WARNING :warning: <br /> This is still an alpha. Things might not work as expected. <br /> Experiencing issues? [Report a bug here!](https://github.com/mad-lab-fau/mad-gui/issues/new?assignees=&labels=&template=bug_report.md&title=%5BBUG%5D)|
-| --- |
+:warning: WARNING :warning: <br />
+This is still an alpha. Things might not work as expected. <br />
+Experiencing issues? [Report a bug here!](https://github.com/mad-lab-fau/mad-gui/issues/new?assignees=&labels=&template=bug_report.md&title=%5BBUG%5D)
+
   
 </div>
 
