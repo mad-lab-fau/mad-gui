@@ -27,7 +27,7 @@ elif ".py" in ui_path:
 
 
 class PluginSelectionDialog(QDialog):
-    """A dialog to select the plugin to use to export results from the shown data and labels.
+    """A dialog to select the plugin to use.
 
     See Also
     --------
