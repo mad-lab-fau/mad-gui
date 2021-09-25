@@ -19,6 +19,8 @@
 
 [//]: <> (Warning symbol here.)
 
+|:+1:|
+
 <div align="center">
   
 :warning: WARNING :warning: <br />
