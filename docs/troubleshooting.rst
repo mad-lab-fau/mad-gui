@@ -20,7 +20,7 @@ In case your computer runs windows, we recommend to download and install the cod
 
 MaD GUI is not aware of descriptions for the class
 **************************************************
-Developers can assign a set of descriptions to a label class, as described :ref:`here <creating custom labels>`.
+Developers can assign a set of descriptions to a label class, as described :ref:`here <custom labels>`.
 Apparently, the class that you tried to edit does not have any descriptions assigned to it.
 To solve the problem, add the attribute `description` to the class in the code / talk to your developer.
 

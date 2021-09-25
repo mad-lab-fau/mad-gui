@@ -53,12 +53,10 @@ In there, the user can select one of the importers that were passed to the GUI a
 The loader takes care for:
 
    * transforming data from your recording system to a dictionary using its :meth:`~mad_gui.plugins.BaseImporter.load_sensor_data`
-   * loading annotations from a user format using its :meth:`~mad_gui.plugins.BaseImporter.load_annotations`
+   * optionally: loading annotations from a user format using its :meth:`~mad_gui.plugins.BaseImporter.load_annotations`
 
-Your `Importer` might make use of the methods already implemented in :class:`~mad_gui.plugins.BaseImporter`, which all Importers should inherit
-from.
-
-Here you can see an example of how to create an Importer and how to inject it:
+Your `Importer` must inherit from :class:`~mad_gui.plugins.BaseImporter`, as shown in the following example.
+After creating your importer you have to pass it to the GUI, which is also shown in the example:
 
 .. code-block:: python
 
@@ -105,16 +103,15 @@ In there, the user can select one of the algorithms that were passed to the GUI 
 The algorithm receives `Global Data <https://mad-gui.readthedocs.io/en/latest/modules/generated/mad_gui/mad_gui.models.GlobalData.html#mad_gui.models.GlobalData>`_'s
 plot_data dictionary, where the keys are the plot names and the values are of type
 `Plot Data <https://mad-gui.readthedocs.io/en/latest/modules/generated/mad_gui/mad_gui.models.local.PlotData.html#mad_gui.models.local.PlotData>`_.
+Below we show you what that means and how you can use this data.
 
-In the code snippet below you can see two examples on how to implement an algorithm that:
+You have two general options on how to implement an algorithm. Your algorithm could:
 
-   * Option a) creates labels, that have the name `Activity`
-   * Option b) creates information, that will be set as the label's `description`. In turn, the user can see this info when hovering over the label.
+   * Option a) Create labels
+   * Option b) Analyze existing labels
 
-It is important, that we also pass a label to the GUI, which has the attribute `name = "Activity"` at startup (when calling
-`start_gui <https://mad-gui.readthedocs.io/en/latest/modules/generated/mad_gui/mad_gui.start_gui.html#mad_gui.start_gui>`_, see the lowest part of the code snippet.
-Otherwise the GUI will not know, what the label "Activity" should look like.
-If you want to read more about creating custom labels, see :ref:`below <custom labels>`.
+No matter which option you choose, the general structure will look like the following code snippet.
+The content of `process_data`, however, is different for both options and is shown in the following two subsections.
 
 .. code-block:: python
 
@@ -130,49 +127,12 @@ If you want to read more about creating custom labels, see :ref:`below <custom l
             return "Find Resting Phases (example MaD GUI)"
 
         # It is mandatory to implement this method. However, the content can be arbitrary.
+        # For the content, see the two sections Option A and Option B below
         def process_data(self, data: Dict[str, PlotData]) -> Dict[str, PlotData]:
-            for sensor_plot in data.values():
-                # Option a: Use your algorithm and the plotted data to create labels, like an Activity (see class below)
-                # ------------------------------------------------------------------------------------------------------
-                # sensor_plot.annotations["Activity"] basically is a pd.DataFrame. However, you can see an additional
-                # `.data` in the code below. This is due to internal data handling in the GUI.
-                # You do not need to care about that, just make sure that the method `self.create_annotations(...)
-                # returns a pd.DataFrame with the columns `start` and `end`.
-                annotations = self.create_annotations(sensor_plot.data, sensor_plot.sampling_rate_hz)
-                UserInformation.inform(f"Found {len(annotations)} resting phases.")
-                sensor_plot.annotations["Activity Label"].data = annotations
-                
-                # Opiton b: Use your algorithm to use the plotted data and already plotted annotations 
-                #           to change the text of the already plotted labels when hovering over them.
-                # -------------------------------------------------------------------------------------
-                for i_activity, activity in sensor_plot.annotations["Activity"].data.iterrows():
-                    sensor_plot.annotations["Activity"].data.at[
-                        i_activity, 'description'
-                    ] = self.calculate_features(sensor_plot.data.iloc[activity.start:activity.end])
+            # see sections below for actual content of this method
 
-        @staticmethod
-        def create_annotations(sensor_data: pd.DataFrame, sampling_rate_hz: float) -> pd.DataFrame:
-            """Some code that creates a pd.DataFrame with the columns `start` and `end`.
-            
-            Each row corresponds to one label to be plotted.
-            """
-            # use some algorithm to get all the starts of 'Activity', e.g. to find all starts of a certain activity
-            # like `running`
-            starts = ...
-            # ...and the same for ends of the activity
-            ends = ...
-            annotations = pd.DataFrame(data=[starts, ends], columns = ['start', 'end'])
-            return annotations
-
-        @staticmethod
-        def calculate_features(activity_data: pd.DataFrame) -> str:
-            return f"Mean value acc_x = {activity_data['acc_x'].mean()}"
-
-
-
-
-    # It is important to create this class and pass it to the GUI because otherwise the sensor_plot.annotation will not
-    # have a key `Activity` and thus won't know how to plot the labels it receives from
+    # It is important to create the class below and pass it to the GUI because otherwise the sensor_plot.annotation will
+    # not have a key `Activity` and thus won't know how to plot the labels it receives from
     # CustomAlgorithm.process_data above
     class Activity(BaseRegionLabel):
         name = "Activity Label"
@@ -185,7 +145,78 @@ If you want to read more about creating custom labels, see :ref:`below <custom l
         labels=[Activity]
     )
 
-If you want to see a full example, head to `ExampleImporter <https://github.com/mad-lab-fau/mad-gui/blob/main/mad_gui/plugins/example.py#L29>`_
+In this example we are using the label class `Activity`, however, you can also use custom labels.
+If you want to read more about creating custom labels, see :ref:`below <custom labels>`.
+If you want to see a full working example, head to `ExampleImporter <https://github.com/mad-lab-fau/mad-gui/blob/main/mad_gui/plugins/example.py#L29>`_.
+
+.. _option_a:
+
+Option A: Create labels to be plotted
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Create labels which span a region between to samples given by your algorithm.
+After you return from `process_data`, we will plot the labels automatically for you.
+The labels you want to create (in this case `Activity`) must have been passed to the `start_gui` method on startup.
+
+
+.. note::
+
+    In the code snippet below, line 6 `sensor_plot.annotations["Activity"]` basically is a `pd.DataFrame`.
+    However, you can see an additional `.data` in the code. This is due to internal data handling in the GUI.
+    You do not need to care about that, just make sure that the method `self.create_annotations(...)`
+    returns a pd.DataFrame with the columns `start` and `end`.
+
+.. code-block:: python
+    :linenos:
+
+    def process_data(self, data: Dict[str, PlotData]) -> Dict[str, PlotData]:
+        for sensor_plot in data.values():
+            # Use the currently plotted data to create labels, like an Activity Label
+            annotations = self.create_annotations(sensor_plot.data, sensor_plot.sampling_rate_hz)
+            UserInformation.inform(f"Found {len(annotations)} resting phases.")
+            sensor_plot.annotations["Activity Label"].data = annotations
+
+    @staticmethod
+    def create_annotations(sensor_data: pd.DataFrame, sampling_rate_hz: float) -> pd.DataFrame:
+        """Some code that creates a pd.DataFrame with the columns `start` and `end`.
+
+        Each row corresponds to one label to be plotted.
+        """
+        # use some algorithm to find out where activities should start
+        # like `running`
+        starts = ...
+        # ...and the same for ends of the activity
+        ends = ...
+        annotations = pd.DataFrame(data=[starts, ends], columns = ['start', 'end'])
+        return annotations
+
+.. _option_b:
+
+Option B: Analyze data within existing labels
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Creates information about each exising label/annotation in the plot.
+After you set the `description`, of a label/annotation, we will automatically change the label's tooltip, meaning that
+the user will see the conten of `description` as soon as they hover over the label with the mouse.
+
+.. code-block:: python
+
+        def process_data(self, data: Dict[str, PlotData]) -> Dict[str, PlotData]:
+            for sensor_plot in data.values():
+                for i_activity, activity in sensor_plot.annotations["Activity"].data.iterrows():
+                    # use some method to calculate features for each labelled activity
+                    # the resulting string will be the activity label's tool tip, so it can be seen by the user by
+                    # hovering over the label with the mouse
+                    sensor_plot.annotations["Activity"].data.at[
+                        i_activity, 'description'
+                    ] = self.calculate_features(sensor_plot.data.iloc[activity.start:activity.end])
+
+        def calculate_features(sensor_data: pd.DataFrame) -> str:
+            # here you can for example use an algorithm to calculate features of the data.
+            # you can also inform the user about things you like using a pop-up window:
+            from mad_gui.components.dialogs import UserInformation
+            UserInformation.inform(f"Calculating a feature for data between the samples {sensor_data.index.iloc[0]} and"
+                                   f" {sensor_data.index.iloc[-1]}")
+            return f"Mean value acc_x = {sensor_data['acc_x'].mean()}"
+
 
 Implement an exporter
 *********************
@@ -255,6 +286,9 @@ The following example makes use of the BaseSettings and simply overrides some pr
      # Set the width of IMU plot to this, when hitting the play button for the video.
      PLOT_WIDTH_PLAYING_VIDEO = 20  # in seconds
 
+     # If plotting large datasets, this speeds up plotting, however might result in inaccurate representation of the data
+     AUTO_DOWNSAMPLE = True
+
    start_gui(
     settings=MySettings,
    )
@@ -277,9 +311,13 @@ It could for example look like this:
       min_height = 0
       max_height = 0.2
       name = "Anomaly Label"
+
       # Snapping will be done on the axis and in the range defined in MySettings (see above)
       snap_to_min = True
       # snap_to_max = False  # if setting this to `True`, set `snap_to_min` to `False` or delete it
+
+      # User will be asked to set the label's description when creating a label.
+      # This can have an arbitrary amount of levels with nested dictionaries.
       descriptions = {"normal": None, "anomaly": ["too fast", "too slow"]}
 
    start_gui(labels=[Status])
