@@ -41,10 +41,6 @@ In case you want to give some feedback to the user via a popup you can use this:
    from mad_gui.user_information import UserInformation
    UserInformation.ask_user("Your message")
 
-.. note::
-   You do not have to implement all methods of the regarding base class (BaseImporter, BaseAlgorithm, or BaseExporter),
-   just the ones you need.
-
 .. _implement importer:
 
 Implement an importer
