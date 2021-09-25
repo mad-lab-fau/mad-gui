@@ -17,8 +17,14 @@
 ![GitHub all releases](https://img.shields.io/github/downloads/mad-lab-fau/mad-gui/total?style=social)
 [![YouTube Channel Views](https://img.shields.io/youtube/channel/views/UCaLchy07OciePfHL9j-8u8A?style=social)](https://m.youtube.com/channel/UCaLchy07OciePfHL9j-8u8A/videos)
 
-| :warning: WARNING :warning: <br /> This is still an alpha. <font size="1"> Things might not work as expected. </font> <br /> Experiencing issues? [Report a bug here!](https://github.com/mad-lab-fau/mad-gui/issues/new?assignees=&labels=&template=bug_report.md&title=%5BBUG%5D)|
-| --- |
+<div align="center">
+  
+:warning: WARNING :warning: <br />
+This is still an early version. Things might not work as expected. <br />
+Experiencing issues? [Report a bug here!](https://github.com/mad-lab-fau/mad-gui/issues/new?assignees=&labels=&template=bug_report.md&title=%5BBUG%5D)
+
+  
+</div>
 
 ## Contents of this readme
 - [What is it?](#what-is-it)

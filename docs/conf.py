@@ -26,7 +26,7 @@ copy(Path("../README.md"), Path("./README.md"))
 with open("./README.md", "r") as file:
     readme_md = file.read()
 readme_html = readme_md.replace("./docs/", "")
-readme_html = readme_html.replace(":warning:", "|:warning:|")
+readme_html = readme_html.replace(":warning:", "")  # actually want to replace it with |:warning:| but sphinxemoji does not work
 with open("./README.md", "w") as file:
     file.write(readme_html)
 
@@ -98,6 +98,8 @@ html_theme_options = {"show_prev_next": False}
 html_sidebars = {
    'README': []
 }
+
+sphinxemoji_style = 'twemoji'
 
 # Add any paths that contain custom static files (such as style sheets) here,
 # relative to this directory. They are copied after the builtin static files,
