@@ -8,9 +8,12 @@
 Welcome to MaD-GUI's documentation!
 ===================================
 
+On the right hand side of each page you can find a table of contents.
+On the top of the page you can switch between the different parts of the documentation, which are additionally listed
+here:
+
 .. toctree::
    :maxdepth: 1
-   :caption: Contents:
 
    Getting started <README.md>
    Developer guidelines <developer_guidelines>
@@ -18,13 +21,4 @@ Welcome to MaD-GUI's documentation!
    Contribution guidelines <contribution_guidelines>
    modules/index.rst
    Troubleshooting <troubleshooting>
-
-
-Indices and tables
-==================
-
-* :ref:`genindex`
-* :ref:`modindex`
-* :ref:`search`
-
 

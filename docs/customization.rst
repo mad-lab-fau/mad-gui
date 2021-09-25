@@ -8,14 +8,16 @@ Customization
 
 .. note::
    In case you are not familiar with PyCharm and virtual environments, you might first want to check out our
-   :ref:`Developer guidelines <developer guidelines>`. However, if you want to get going quickly just install MaD GUI using `pip install mad_gui` or by adding it to your project's requirements.
-   
+   :ref:`Developer guidelines <developer guidelines>`. However, if you want to get going quickly just install MaD GUI
+   using `pip install mad_gui` or by adding it to your project's requirements.
 
-   
 
 Creating an executable script
-#############################
-Create a new project with a python file named `start_gui`.
+*****************************
+
+First of all, you need to create a python script with the code below.
+This will enable you to start the GUI.
+
 Insert the following code:
 
 .. code-block:: python
@@ -28,15 +30,13 @@ You can execute this script as described in our :ref:`Developer guidelines <addi
 .. _other systems:
 
 Adding your plugins
-###################
-
-Adding support for other systems
-********************************
+*******************
 
 The GUI can be imported into your python project and then you can inject `Importers`, `Algorithms`, and
 `Exporters`.
-Below we explain, how you can create and inject plugins for the GUI.
-In case you want to give some feedback to the user via a popup you can use this:
+Below we explain, how you can create and inject such plugins to the GUI.
+If - at any point - you want to send a message to the user of the GUI, you create a message box with an OK button like
+this:
 
 .. code-block:: python
 
@@ -46,7 +46,7 @@ In case you want to give some feedback to the user via a popup you can use this:
 .. _implement importer:
 
 Implement an importer
-*********************
+#####################
 If the user presses the `Load data` button in the GUI, a `LoadDataWindow <https://github.com/mad-lab-fau/mad-gui/blob/main/mad_gui/components/dialogs/plugin_selection/load_data_dialog.py#L28>`_
 will pop up, as shown in our `exemplary video about loading data <https://youtu.be/akxcuFOesC8>`_.
 In there, the user can select one of the importers that were passed to the GUI at startup by selecting it in a dropdown.
@@ -57,6 +57,11 @@ The loader takes care for:
 
 Your `Importer` must inherit from :class:`~mad_gui.plugins.BaseImporter`, as shown in the following example.
 After creating your importer you have to pass it to the GUI, which is also shown in the example:
+
+.. raw:: html
+
+   <details>
+   <summary><a> &#128104;&#8205;&#128187; Click the triangle to show/hide our exemplary code snippet.</a></summary>
 
 .. code-block:: python
 
@@ -93,10 +98,14 @@ After creating your importer you have to pass it to the GUI, which is also shown
         plugins=[CustomImporter],
     )
 
+ .. raw:: html
+
+   </details>
+
 .. _implement algorithm:
 
 Implement an algorithm
-**********************
+######################
 If the user presses the `Use algorithm` button in the GUI, a `PluginSelectionDialog <https://github.com/mad-lab-fau/mad-gui/blob/main/mad_gui/components/dialogs/plugin_selection/plugin_selection_dialog.py#L22>`_
 will pop up, as shown in our `exemplary video about automated annotations <https://youtu.be/VWQKYRRRGVA?t=65>`_.
 In there, the user can select one of the algorithms that were passed to the GUI at startup by selecting it in a dropdown.
@@ -113,6 +122,11 @@ You have two general options on how to implement an algorithm. Your algorithm co
 No matter which option you choose, the general structure will look like the following code snippet.
 The content of `process_data`, however, is different for both options and is shown in the following two subsections.
 
+.. raw:: html
+
+   <details>
+   <summary><a> &#128104;&#8205;&#128187; Click the triangle to show/hide our exemplary code snippet.</a></summary>
+
 .. code-block:: python
 
     from typing import Dict
@@ -126,13 +140,14 @@ The content of `process_data`, however, is different for both options and is sho
         def name(cls):
             return "Find Resting Phases (example MaD GUI)"
 
-        # It is mandatory to implement this method. However, the content can be arbitrary.
-        # For the content, see the two sections Option A and Option B below
+        # The content of this method can be as described in the two sections Option A and Option B below
         def process_data(self, data: Dict[str, PlotData]) -> Dict[str, PlotData]:
-            # see sections below for actual content of this method
+            #####################################################################
+            # ----> See the two sections below for content of this method <---- #
+            #####################################################################
 
-    # It is important to create the class below and pass it to the GUI because otherwise the sensor_plot.annotation will
-    # not have a key `Activity` and thus won't know how to plot the labels it receives from
+    # It is important to create the class Activity and pass it to the GUI because otherwise the sensor_plot.annotation
+    # will not have a key `Activity` and thus won't know how to plot the labels it receives from
     # CustomAlgorithm.process_data above
     class Activity(BaseRegionLabel):
         name = "Activity Label"
@@ -149,24 +164,35 @@ In this example we are using the label class `Activity`, however, you can also u
 If you want to read more about creating custom labels, see :ref:`below <custom labels>`.
 If you want to see a full working example, head to `ExampleImporter <https://github.com/mad-lab-fau/mad-gui/blob/main/mad_gui/plugins/example.py#L29>`_.
 
+.. raw:: html
+
+   </details>
+
 .. _option_a:
 
 Option A: Create labels to be plotted
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-Create labels which span a region between to samples given by your algorithm.
-After you return from `process_data`, we will plot the labels automatically for you.
-The labels you want to create (in this case `Activity`) must have been passed to the `start_gui` method on startup.
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+Create labels which span a region between to samples given by your algorithm. After you return from `process_data`, the
+GUI will plot the labels automatically for you. The labels you want to create (in this case `Activity`) must have been
+passed to the `start_gui` method on startup.
+
+.. raw:: html
+
+   <details>
+   <summary><a> &#128104;&#8205;&#128187; Click the triangle to show/hide our exemplary code snippet.</a></summary>
 
 .. note::
 
-    In the code snippet below, line 6 `sensor_plot.annotations["Activity"]` basically is a `pd.DataFrame`.
-    However, you can see an additional `.data` in the code. This is due to internal data handling in the GUI.
-    You do not need to care about that, just make sure that the method `self.create_annotations(...)`
-    returns a pd.DataFrame with the columns `start` and `end`.
+   This code snippet is to be inserted as part of you `CustomAlgorithm` as explained in :ref:`implement algorithm`.
+
+In the code snippet below, line 6 `sensor_plot.annotations["Activity"]` basically is a `pd.DataFrame`.
+However, you can see an additional `.data` in the code. This is due to internal data handling in the GUI.
+You do not need to care about that, just make sure that the method `self.create_annotations(...)`
+returns a pd.DataFrame with the columns `start` and `end`.
 
 .. code-block:: python
-    :linenos:
+   :linenos:
 
     def process_data(self, data: Dict[str, PlotData]) -> Dict[str, PlotData]:
         for sensor_plot in data.values():
@@ -189,41 +215,63 @@ The labels you want to create (in this case `Activity`) must have been passed to
         annotations = pd.DataFrame(data=[starts, ends], columns = ['start', 'end'])
         return annotations
 
+.. raw:: html
+
+   </details>
+
 .. _option_b:
 
 Option B: Analyze data within existing labels
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-Creates information about each exising label/annotation in the plot.
+
+Create information about each exising label/annotation in the plot.
 After you set the `description`, of a label/annotation, we will automatically change the label's tooltip, meaning that
 the user will see the conten of `description` as soon as they hover over the label with the mouse.
 
+.. raw:: html
+
+   <details>
+   <summary><a> &#128104;&#8205;&#128187; Click the triangle to show/hide our exemplary code snippet.</a></summary>
+
+.. note::
+
+   This code snippet is to be inserted as part of you `CustomAlgorithm` as explained in :ref:`implement algorithm`.
+
 .. code-block:: python
 
-        def process_data(self, data: Dict[str, PlotData]) -> Dict[str, PlotData]:
-            for sensor_plot in data.values():
-                for i_activity, activity in sensor_plot.annotations["Activity"].data.iterrows():
-                    # use some method to calculate features for each labelled activity
-                    # the resulting string will be the activity label's tool tip, so it can be seen by the user by
-                    # hovering over the label with the mouse
-                    sensor_plot.annotations["Activity"].data.at[
-                        i_activity, 'description'
-                    ] = self.calculate_features(sensor_plot.data.iloc[activity.start:activity.end])
+   def process_data(self, data: Dict[str, PlotData]) -> Dict[str, PlotData]:
+      for sensor_plot in data.values():
+          for i_activity, activity in sensor_plot.annotations["Activity"].data.iterrows():
+              # use some method to calculate features for each labelled activity
+              # the resulting string will be the activity label's tool tip, so it can be seen by the user by
+              # hovering over the label with the mouse
+              sensor_plot.annotations["Activity"].data.at[
+                  i_activity, 'description'
+              ] = self.calculate_features(sensor_plot.data.iloc[activity.start:activity.end])
 
-        def calculate_features(sensor_data: pd.DataFrame) -> str:
-            # here you can for example use an algorithm to calculate features of the data.
-            # you can also inform the user about things you like using a pop-up window:
-            from mad_gui.components.dialogs import UserInformation
-            UserInformation.inform(f"Calculating a feature for data between the samples {sensor_data.index.iloc[0]} and"
-                                   f" {sensor_data.index.iloc[-1]}")
-            return f"Mean value acc_x = {sensor_data['acc_x'].mean()}"
+   def calculate_features(sensor_data: pd.DataFrame) -> str:
+      # here you can for example use an algorithm to calculate features of the data.
+      # you can also inform the user about things you like using a pop-up window:
+      from mad_gui.components.dialogs import UserInformation
+      UserInformation.inform(f"Calculating a feature for data between the samples {sensor_data.index.iloc[0]} and"
+                             f" {sensor_data.index.iloc[-1]}")
+      return f"Mean value acc_x = {sensor_data['acc_x'].mean()}"
 
+.. raw:: html
+
+   </details>
 
 Implement an exporter
-*********************
+#####################
 This basically works as described in the section of creating an importer.
 Upon pressing the `Export data` button in the GUI, the `ExportResultsDialog <https://github.com/mad-lab-fau/mad-gui/blob/main/mad_gui/components/dialogs/plugin_selection/export_results_dialog.py#L19>`_ will be
 opened, in which your exporter can be selected. Basically, you will receive a `GlobalData <https://mad-gui.readthedocs.io/en/latest/modules/generated/mad_gui/mad_gui.models.GlobalData.html#mad_gui.models.GlobalData>`_ object, which keeps
 all the data form the GUI and you can process / export it in whatever way you want:
+
+.. raw:: html
+
+   <details>
+   <summary><a> &#128104;&#8205;&#128187; Click the triangle to show/hide our exemplary code snippet.</a></summary>
 
 .. code-block:: python
 
@@ -243,8 +291,20 @@ all the data form the GUI and you can process / export it in whatever way you wa
 
 After creating your exporter, make sure to also pass it to the `start_gui` function.
 
+.. raw:: html
+
+   </details>
+
 Setting a Theme
-###############
+***************
+
+You can easily change the two dominating colors by passing your own theme to the GUI.
+
+.. raw:: html
+
+   <details>
+   <summary><a> &#128104;&#8205;&#128187; Click the triangle to show/hide our exemplary code snippet.</a></summary>
+
 
 .. code-block:: python
 
@@ -252,21 +312,29 @@ Setting a Theme
    from PySide2.QtGui import QColor
 
    class MyTheme(BaseTheme):
-     COLOR_DARK = QColor(0, 56, 101)
-     COLOR_LIGHT = QColor(144, 167, 198)
+      COLOR_DARK = QColor(0, 56, 101)
+      COLOR_LIGHT = QColor(144, 167, 198)
 
    start_gui(
     theme=MyTheme,
    )
 
+.. raw:: html
+
+   </details>
 
 .. _setting constants:
 
 Setting Constants
-#################
+*****************
 
 You can create your own settings by creating a class, which inherits from our `BaseSettings <https://github.com/mad-lab-fau/mad-gui/blob/main/mad_gui/config/settings.py#L1>`_.
 The following example makes use of the BaseSettings and simply overrides some properties:
+
+.. raw:: html
+
+   <details>
+   <summary><a> &#128104;&#8205;&#128187; Click the triangle to show/hide our exemplary code snippet.</a></summary>
 
 .. code-block:: python
 
@@ -293,13 +361,23 @@ The following example makes use of the BaseSettings and simply overrides some pr
     settings=MySettings,
    )
 
+.. raw:: html
+
+   </details>
+
 .. _custom labels:
 
+
 Creating custom labels
-######################
+**********************
 You can create labels and pass them to our GUI.
 Your label must inherit form our `BaseRegionLabel <https://mad-gui.readthedocs.io/en/latest/modules/generated/plot_tools/mad_gui.plot_tools.labels.BaseRegionLabel.html#mad_gui.plot_tools.labels.BaseRegionLabel>`_.
 It could for example look like this:
+
+.. raw:: html
+
+   <details>
+   <summary><a> &#128104;&#8205;&#128187; Click the triangle to show/hide our exemplary code snippet.</a></summary>
 
 .. code-block:: python
 
@@ -326,3 +404,7 @@ The `description` defines the possible strings that can be assigned to a label. 
 adding a new label or by clicking on a label when in `Edit label` mode, such that the user can select one of the
 descriptions. In our `exemplary video <https://www.youtube.com/watch?v=VWQKYRRRGVA&t=18s>`_, this is
 `{"stand": None, "walk": ["fast", "slow"], "jump": None}`.
+
+.. raw:: html
+
+   </details>
