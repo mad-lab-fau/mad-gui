@@ -26,7 +26,7 @@ copy(Path("../README.md"), Path("./README.md"))
 with open("./README.md", "r") as file:
     readme_md = file.read()
 readme_html = readme_md.replace("./docs/", "")
-readme_html = readme_html.replace(":warning:", ":")
+readme_html = readme_html.replace(":warning:", "")
 readme_html = readme_html.replace("[//]: <> (Warning symbol here.)", "|:warning:|")
 with open("./README.md", "w") as file:
     file.write(readme_html)
