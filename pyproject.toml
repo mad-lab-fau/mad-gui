@@ -40,6 +40,7 @@ numpydoc = "^1.1.0"
 pydata-sphinx-theme = "^0.6.2"
 sphinx-markdown-tables = "^0.0.15"
 prospector ="1.5.1" # older versions might work but also might crash: https://github.com/PyCQA/prospector/issues/438
+sphinxemoji = "^0.1.9"
 
 [tool.poetry.scripts]
 mad-gui = "mad_gui:start_gui"
