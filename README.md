@@ -17,10 +17,6 @@
 ![GitHub all releases](https://img.shields.io/github/downloads/mad-lab-fau/mad-gui/total?style=social)
 [![YouTube Channel Views](https://img.shields.io/youtube/channel/views/UCaLchy07OciePfHL9j-8u8A?style=social)](https://m.youtube.com/channel/UCaLchy07OciePfHL9j-8u8A/videos)
 
-[//]: <> (Warning symbol here.)
-
-|:+1:|
-
 <div align="center">
   
 :warning: WARNING :warning: <br />
