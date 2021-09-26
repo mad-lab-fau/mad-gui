@@ -16,8 +16,8 @@ here:
    :maxdepth: 1
 
    Getting started <README.md>
-   Developer guidelines <developer_guidelines>
-   Customization <customization>
+   Prepare Development <developer_guidelines>
+   Development <customization>
    Contribution guidelines <contribution_guidelines>
    modules/index.rst
    Troubleshooting <troubleshooting>

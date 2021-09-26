@@ -19,7 +19,7 @@
 
 <div align="center">
   
-:warning: WARNING :warning: <br />
+:warning: ![WARNING](https://img.shields.io/badge/-WARNING-yellow) :warning: <br />
 This is still an early version. Things might not work as expected. <br />
 Experiencing issues? [Report a bug here!](https://github.com/mad-lab-fau/mad-gui/issues/new?assignees=&labels=&template=bug_report.md&title=%5BBUG%5D)
 
@@ -60,18 +60,18 @@ Please watch the videos linked above, if you want to learn more about the differ
 | `Ctrl` + `Left Mouse Click`  | Add label     | Add a single event |
 
 ## How do I get the GUI to work on my machine?
-Below, we present two options how to obtain and run the GUI.
+In the next section, we present two options how to obtain and run the GUI.
 However, this will only enable you to look at our example data.
 You want to load data of a specific format/system or want to use a specific algorithm? 
 In this case please refer to [Can I use it with data of my specific system or a specific algorithm?](#can-i-use-it-with-data-of-my-specific-system-or-a-specific-algorithm)
 
-## How can I test the GUI using your example data on my computer?
+### How can I test the GUI using your example data on my computer?
 
 First, you need to download the example data.
 Click on [this link](https://github.com/mad-lab-fau/mad-gui/raw/main/example_data/sensor_data.zip), and extract the file to your computer.
 If you also want to check out synchronization with a video file, click on [this link](https://github.com/mad-lab-fau/mad-gui/releases/download/v0.2.0-alpha.1/video.mp4) and save it on your machine. Next, use one of the following two options (for testing it on Windows, we recommend Option A).
 
-### Option A: Standalone executable
+#### Option A: Standalone executable
 
 When downloading the files below, your browser may warn you that this is a potentially dangerous file.
 You will only be able to use our GUI by selecting "Keep anyway / download anyway / ...".
@@ -88,7 +88,7 @@ In the case of Microsoft Edge, this possiblity is hidden, but you can select it 
 
 Start the program and then you can open the previously downloaded example data as shown in [How do I use it (videos)?](#how-do-i-use-it-videos)
 
-### Option B: Using the python package
+#### Option B: Using the python package
 
 Info: We recommend to use `pip install mad_gui` in a [clean python virtual environment](https://docs.python.org/3/library/venv.html#creating-virtual-environments) / [conda environment](https://docs.python.org/3/library/venv.html#creating-virtual-environments). This way you do NOT need to clone this github repository.
 
