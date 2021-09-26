@@ -71,7 +71,7 @@ First, you need to download the example data.
 Click on [this link](https://github.com/mad-lab-fau/mad-gui/raw/main/example_data/sensor_data.zip), and extract the file to your computer.
 If you also want to check out synchronization with a video file, click on [this link](https://github.com/mad-lab-fau/mad-gui/releases/download/v0.2.0-alpha.1/video.mp4) and save it on your machine. Next, use one of the following two options (for testing it on Windows, we recommend Option A).
 
-### Option A: Standalone executable
+#### Option A: Standalone executable
 
 When downloading the files below, your browser may warn you that this is a potentially dangerous file.
 You will only be able to use our GUI by selecting "Keep anyway / download anyway / ...".
@@ -88,7 +88,7 @@ In the case of Microsoft Edge, this possiblity is hidden, but you can select it 
 
 Start the program and then you can open the previously downloaded example data as shown in [How do I use it (videos)?](#how-do-i-use-it-videos)
 
-### Option B: Using the python package
+#### Option B: Using the python package
 
 Info: We recommend to use `pip install mad_gui` in a [clean python virtual environment](https://docs.python.org/3/library/venv.html#creating-virtual-environments) / [conda environment](https://docs.python.org/3/library/venv.html#creating-virtual-environments). This way you do NOT need to clone this github repository.
 
