@@ -7,7 +7,7 @@ Troubleshooting
 ***************
 
 .. note::
-   If this troubleshooting guide does not help you to solve the problem, send us an `e-mail <mailto:mad-digait@fau.de>`_.
+   If this troubleshooting guide does not help you to solve the problem, click `here <https://github.com/mad-lab-fau/mad-gui/issues/new?assignees=&labels=&template=bug_report.md&title=%5BBUG%5D>`_ to report a bug, click `here <https://github.com/mad-lab-fau/mad-gui/issues/new?assignees=&labels=&template=feature_request.md&title=%5BFEATURE%5D+implement+the+possibility+of+...>`_ to open a feature request, or send us an `e-mail <mailto:malte.ollenschlaeger@fau.de>`_.
 
 
 Using the GUI
@@ -121,6 +121,6 @@ function. Read more about creating labels in our section about :ref:`customizati
 The plugin I created does not show up in the GUI
 ************************************************
 Please make sure that your plugin inherits from one of `BaseImporter`, `BaseAlgorithm`, or `BaseExporter`, as we
-describe in in our section :ref:`other systems`.
+describe it in our section :ref:`other systems`.
 Additionally, you should make sure to pass your plugin to the `start_gui` function, which is also described in the part
 of :ref:`other systems`.
