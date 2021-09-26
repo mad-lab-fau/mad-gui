@@ -6,8 +6,8 @@
 Prepare Development
 *******************
 
-In the first four sections we give some information about the project setup.
-If you are familiar with PyCharm and python virtual environments, you may directly jump to :ref:`Adapting the GUI <adapting the gui>`.
+This chapter helps you to set up your development environment.
+In case you are already familiar with your IDE / PyCharm and python virtual environments, you may directly jump to :ref:`Adapting the GUI <adapting the gui>` at the bottom of this page.
 
 .. _installing software:
 
