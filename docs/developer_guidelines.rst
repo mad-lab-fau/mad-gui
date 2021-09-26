@@ -322,7 +322,7 @@ These can then for example take care for loading data of a specific format.
 Furthermore, you have the possibility to inject algorithms this way.
 If you want to do that, you will need our section about :ref:`Customization <customization>`.
 
-In case you is something that you want to change in the GUI, which is not possible using the described ways for customization,
+In case there is something that you want to change in the GUI, which is not possible using the described ways for customization,
 you will need our :ref:`Contribution Guidelines <contribution guidelines>`.
 
 
