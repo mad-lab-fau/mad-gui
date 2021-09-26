@@ -60,7 +60,7 @@ Please watch the videos linked above, if you want to learn more about the differ
 | `Ctrl` + `Left Mouse Click`  | Add label     | Add a single event |
 
 ## How do I get the GUI to work on my machine?
-Below, we present two options how to obtain and run the GUI.
+In the next section, we present two options how to obtain and run the GUI.
 However, this will only enable you to look at our example data.
 You want to load data of a specific format/system or want to use a specific algorithm? 
 In this case please refer to [Can I use it with data of my specific system or a specific algorithm?](#can-i-use-it-with-data-of-my-specific-system-or-a-specific-algorithm)
