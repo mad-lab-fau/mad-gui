@@ -401,9 +401,17 @@ class MainWindow(QMainWindow):
         :mod:`mad_gui.plugins`.
 
         """
-        view = LoadDataDialog(
-            self.global_data.base_dir, loaders=filter_plugins(self.global_data.plugins, BaseImporter), parent=self
-        )
+        loaders = filter_plugins(self.global_data.plugins, BaseImporter)
+        if len(loaders) == 0:
+            UserInformation.inform(
+                "There were no loaders passed to the GUI. Read more about the fact why the plugin you created does "
+                "not show up in the GUI by clicking the link below.",
+                help_link="https://mad-gui.readthedocs.io/en/latest/troubleshooting.html#the-plugin-i-created-does-not-"
+                "show-up-in-the-GUI",
+            )
+            return
+
+        view = LoadDataDialog(self.global_data.base_dir, loaders=loaders, parent=self)
 
         data, loader = view.get_data()
 
@@ -542,19 +550,30 @@ class MainWindow(QMainWindow):
             UserInformation(parent=self).inform("Please load sensor data before continuing.")
             return
 
-        if not UserInformation(parent=self).confirm(
-            "Warning: Calculating new annotations might delete all currently "
-            "displayed annotations!\nIt is up to the implemented algorithm, "
-            "if the new annotations are added or if they replace the currently displayed "
-            "annotations. Do you want to continue?"
-        ):
-            return
+        # if not UserInformation(parent=self).confirm(
+        #    "Warning: Calculating new annotations might delete all currently "
+        #    "displayed annotations!\nIt is up to the implemented algorithm, "
+        #    "if the new annotations are added or if they replace the currently displayed "
+        #    "annotations. Do you want to continue?"
+        # ):
+        #    return
 
         # Set state to investigate to force updating global state from plot
         self.plot_state.mode = "investigate"
 
+        algorithms = filter_plugins(self.global_data.plugins, BaseAlgorithm)
+
+        if len(algorithms) == 0:
+            UserInformation.inform(
+                "There were no algorithms passed to the GUI. Read more about the fact why the plugin you created does "
+                "not show up in the GUI by clicking the link below.",
+                help_link="https://mad-gui.readthedocs.io/en/latest/troubleshooting.html#the-plugin-i-created-does-not-"
+                "show-up-in-the-GUI",
+            )
+            return
+
         set_cursor(self, Qt.BusyCursor)
-        dialog = PluginSelectionDialog(plugins=filter_plugins(self.global_data.plugins, BaseAlgorithm), parent=self)
+        dialog = PluginSelectionDialog(plugins=algorithms, parent=self)
         try:
             dialog.process_data(self.global_data.plot_data)
         except Exception as error:  # noqa

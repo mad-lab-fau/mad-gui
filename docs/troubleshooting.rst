@@ -49,7 +49,9 @@ qt.qpa.plugin Error
 
     qt.qpa.plugin: Could not load the Qt platform plugin "windows" in "" even though it was found.
  
-So far, developers of MaD GUI only had problems that could be solved by adding a new system variable `QT_QPA_PLATFORM_PLUGIN_PATH` with the value `...\Lib\site-packages\PySide2\plugins\platform` (replace the three dots to match the path to your python instalation, e.g. C:\Users\name\anaconda3\env\mad_gui` ` to your machine. In case you are using Windows, you can find more about setting system variables `here <https://superuser.com/questions/949560/how-do-i-set-system-environment-variables-in-windows-10>`_.
+So far, developers of MaD GUI only had problems that could be solved by adding a new system variable
+`QT_QPA_PLATFORM_PLUGIN_PATH` with the value `.../Lib/site-packages/PySide2/plugins/platform` (replace the three dots to
+match the path to your python instalation, e.g. C:/Users/name/anaconda3/env/mad_gui` ` to your machine. In case you are using Windows, you can find more about setting system variables `here <https://superuser.com/questions/949560/how-do-i-set-system-environment-variables-in-windows-10>`_.
 
 In case that does not work, please see `this stackoverflow post <https://stackoverflow.com/questions/41994485/how-to-fix-could-not-find-or-load-the-qt-platform-plugin-windows-while-using-m>`_, in which you'll find a ton of possible reasons and fixes. However, please be keep in mind that the MaD GUI uses `PySide2` and not `PyQt4` or something, which is mentioned in some answers. You might therefore need to replace something from the answers to make it suit to your problem.
 
@@ -85,7 +87,7 @@ PySide2-uic not found
 
 .. code-block:: console
 
-    "...mad_gui\components\dialogs\....py", line .., in <module>
+    "...mad_gui/components/dialogs/....py", line .., in <module>
     FileNotFoundError: Probably python did not find pyside2-uic
 
 Probably python can't find pyside2-uic. Look for a folder called `Scripts` in your python env.
@@ -108,11 +110,17 @@ Loader provided annotations for sensors that have no plot
 
 Apparently you tried to plot annotations for a sensor, which is not in the keys of `MainWindow.sensor_plots`.
 To fix that, make sure that your loaded returns a plot for this sensor.
-See our section about `Customization <https://mad-gui.readthedocs.io/en/latest/customization.html#implement-an-importer>`_
-for more information.
+See our section about :ref:`custom labels` for more information.
 
 Loader provided annotations that were not understood
 ****************************************************
 
 You need to pass labels with the attribute `name` equal to the ones stated in the error message to our `start_gui`
-function. Read more about creating labels in our section about :ref:`Customization <customization>`.
+function. Read more about creating labels in our section about :ref:`customization`.
+
+The plugin I created does not show up in the GUI
+************************************************
+Please make sure that your plugin inherits from one of `BaseImporter`, `BaseAlgorithm`, or `BaseExporter`, as we
+describe in in our section :ref:`other systems`.
+Additionally, you should make sure to pass your plugin to the `start_gui` function, which is also described in the part
+of :ref:`other systems`.

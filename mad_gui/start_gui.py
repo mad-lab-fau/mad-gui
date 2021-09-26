@@ -26,7 +26,7 @@ class Jump(BaseRegionLabel):
     max_height = 0.7
     name = "Jump"
     event_descriptions = {"first peak": None, "second peak": None}
-    # descriptions = {"high": None, "not so high": None}
+    # descriptions = {...}
 
 
 class MyEvent(BaseEventLabel):

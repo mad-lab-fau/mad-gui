@@ -52,8 +52,8 @@ you should use poetry as described in :ref:`Installation for Contributing <insta
 
 .. _install via pip:
 
-1. Installation for Customization (recommended)
-***********************************************
+Installation for Development (recommended)
+******************************************
 
 Make sure `mad_gui` virtual environment is still activated (see :ref:`Preparing environment <preparing environment>`).
 Depending on how you are handling dependency management, you can use one of the three suggestions:
@@ -67,11 +67,16 @@ Otherwise, you will be installing something else.
 
 .. _install via poetry:
 
-2. Installation for Contributing
-********************************
-
-2.1 Retrieving the repository
+Installation for Contributing
 *****************************
+
+.. raw:: html
+
+    <details>
+    <summary><a> Click the triangle to unfold </a></summary>
+
+Retrieving the repository
+^^^^^^^^^^^^^^^^^^^^^^^^^
 If you are familiar with git, simply clone the repository:
 
 `git clone https://github.com/mad-lab-fau/mad-gui.git`
@@ -80,11 +85,11 @@ If you are not familiar with git, go to the start page of the repository, click 
 Afterwards, extract the contents from the zip file.
 
 .. image:: _static/images/downloading.png
-    :width: 400
-    :alt: Downloading the package
+   :width: 400
+   :alt: Downloading the package
 
-2.2 Actual installation
-***********************
+Actual installation
+^^^^^^^^^^^^^^^^^^^
 Stay in the anaconda prompt and switch to the directory, where you have downloaded the repository to.
 Most likely, you will need commands like these:
 
@@ -120,6 +125,9 @@ You just have to set up your IDE to use the conda env you created (see next sect
     - Run `poetry install --no-root`. Poetry will create a new venv in the folder `.venv`, because it detects and handles the conda base env
       `different than other envs <https://github.com/maksbotan/poetry/blob/b1058fc2304ea3e2377af357264abd0e1a791a6a/poetry/utils/env.py#L295>`_.
     - Everything else should work like you are not using conda
+
+.. raw:: html
+   </details>
 
 .. _Configuring PyCharm:
 

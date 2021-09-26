@@ -7,9 +7,11 @@ Contribution Guidelines
 ***********************
 
 .. warning::
-   Usually you should not need this chapter. Please check :ref:`customization` to see whether you can accomplish what you need before using that chapter.
+   Usually you should not need this chapter. Please check :ref:`customization` to see whether you can accomplish what
+   you need before using that chapter.
 
 .. _preparing an environment:
+
 Before you start working, you will have to create a virtual environment and install our GUI.
 For more information on this, see our :ref:`Developer guidelines <developer guidelines>`.
 
