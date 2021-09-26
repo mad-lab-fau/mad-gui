@@ -2,9 +2,9 @@
 
 .. _customization:
 
-*************
-Customization
-*************
+***********
+Development
+***********
 
 .. note::
    In case you are not familiar with PyCharm and virtual environments, you might first want to check out our
