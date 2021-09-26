@@ -60,7 +60,7 @@ After creating your importer you have to pass it to the GUI, which is also shown
 .. raw:: html
 
    <details>
-   <summary><a> &#128104;&#8205;&#128187; Click the triangle to show/hide our exemplary code snippet.</a></summary>
+   <summary>&#128104;&#8205;&#128187; Click to show/hide our exemplary code snippet.</summary>
 
 .. code-block:: python
 
@@ -119,7 +119,7 @@ Two possible use-cases are explained in the subsections after this code snippet.
 .. raw:: html
 
    <details>
-   <summary><a> &#128104;&#8205;&#128187; Click the triangle to show/hide our exemplary code snippet.</a></summary>
+   <summary> &#128104;&#8205;&#128187; Click to show/hide our exemplary code snippet.</summary>
 
 .. code-block:: python
 
@@ -183,7 +183,7 @@ GUI will plot the labels automatically for you, as shown in this image (click to
 .. raw:: html
 
    <details>
-   <summary><a> &#128104;&#8205;&#128187; Click the triangle to show/hide our exemplary code snippet.</a></summary>
+   <summary>&#128104;&#8205;&#128187; Click to show/hide our exemplary code snippet.</summary>
 
 .. note::
 
@@ -250,7 +250,7 @@ The GUI will automatically take care for showing that string when the user hover
 .. raw:: html
 
    <details>
-   <summary><a> &#128104;&#8205;&#128187; Click the triangle to show/hide our exemplary code snippet.</a></summary>
+   <summary>&#128104;&#8205;&#128187; Click to show/hide our exemplary code snippet.</summary>
 
 .. note::
 
@@ -297,7 +297,7 @@ all the data form the GUI and you can process / export it in whatever way you wa
 .. raw:: html
 
    <details>
-   <summary><a> &#128104;&#8205;&#128187; Click the triangle to show/hide our exemplary code snippet.</a></summary>
+   <summary>&#128104;&#8205;&#128187; Click to show/hide our exemplary code snippet.</summary>
 
 .. code-block:: python
 
@@ -329,7 +329,7 @@ You can easily change the two dominating colors by passing your own theme to the
 .. raw:: html
 
    <details>
-   <summary><a> &#128104;&#8205;&#128187; Click the triangle to show/hide our exemplary code snippet.</a></summary>
+   <summary>&#128104;&#8205;&#128187; Click to show/hide our exemplary code snippet.</summary>
 
 
 .. code-block:: python
@@ -360,7 +360,7 @@ The following example makes use of the BaseSettings and simply overrides some pr
 .. raw:: html
 
    <details>
-   <summary><a> &#128104;&#8205;&#128187; Click the triangle to show/hide our exemplary code snippet.</a></summary>
+   <summary>&#128104;&#8205;&#128187; Click to show/hide our exemplary code snippet.</summary>
 
 .. code-block:: python
 
@@ -403,7 +403,7 @@ It could for example look like this:
 .. raw:: html
 
    <details>
-   <summary><a> &#128104;&#8205;&#128187; Click the triangle to show/hide our exemplary code snippet.</a></summary>
+   <summary>&#128104;&#8205;&#128187; Click to show/hide our exemplary code snippet.</summary>
 
 .. code-block:: python
 
