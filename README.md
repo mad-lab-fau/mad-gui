@@ -65,7 +65,7 @@ However, this will only enable you to look at our example data.
 You want to load data of a specific format/system or want to use a specific algorithm? 
 In this case please refer to [Can I use it with data of my specific system or a specific algorithm?](#can-i-use-it-with-data-of-my-specific-system-or-a-specific-algorithm)
 
-## How can I test the GUI using your example data on my computer?
+### How can I test the GUI using your example data on my computer?
 
 First, you need to download the example data.
 Click on [this link](https://github.com/mad-lab-fau/mad-gui/raw/main/example_data/sensor_data.zip), and extract the file to your computer.
