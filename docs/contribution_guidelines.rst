@@ -7,8 +7,8 @@ Contribution Guidelines
 ***********************
 
 .. warning::
-   Usually you should not need this chapter. Please check :ref:`customization` to see whether you can accomplish what
-   you need before using that chapter.
+   Usually you should not need this chapter. Please check :ref:`Development <customization>` to see whether you can accomplish what
+   you need before using these contribution guidelines.
 
 .. _preparing an environment:
 
