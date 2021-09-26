@@ -44,10 +44,10 @@ Installing MaD GUI
 
 You have two possibilities for installing the dependencies:
 
-Recommended: Assuming you want to build on top of the MaD GUI and do things that are described in :ref:`customization`, installation
+Recommended: Assuming you want to build on top of the MaD GUI and do things that are described in :ref:`Customization <customization>`, installation
 can be done as described in :ref:`Installation for Customization (recommended) <install via pip>`.
 
-In case you want to change parts at the core of the GUI, which go beyond the parts described in :ref:`customization`,
+In case you want to change parts at the core of the GUI, which go beyond the parts described in :ref:`Customization <customization>`,
 you should use poetry as described in :ref:`Installation for Contributing <install via poetry>`
 
 .. _install via pip:
@@ -204,50 +204,101 @@ You may want to ship the GUI including your plugin(s) to users, who are not fami
 In this case, you can create an executable of the GUI as shown below.
 In case you experience issues, it might be helpful to install a clean python 3.7 from which you create the venv.
 
+.. raw:: html
+
+   <details>
+   <summary><a> &#128104;&#8205;&#128187; Windows: Click the triangle to show/hide our exemplary code snippet.</a></summary>
+
 On Windows systems, you need to install a version of python 3.7.
-On Unix systems you need 
-- `python3.7`
-- `python3.7-venv`
-- `python3.7-dev`
-- `python3.7-tk` 
-and then use python3.7 instead of python in the following code snippept.
 
 .. code-block:: console
 
-    echo navigating to the gui's repository
+    REM navigating to the gui's repository
     cd mad_gui
 
-    echo create virutal environment (make sure your python is 3.7)
+    REM create virutal environment (make sure your python is 3.7)
     python -m venv .venv
-    echo this creates the virutal environment in the folder `.venv`
-    echo the `doit` task `prepare_windows_build` will make use of this folder by default later in this process
+    REM this creates the virutal environment in the folder `.venv`
+    REM the `doit` task `prepare_build` will make use of this folder by default later in this process
 
-    echo activate the virutal environment 
-    echo WINDOWS
+    REM activate the virutal environment
     .venv/Scripts/activate
-    echo UNIX, make sure to include the extra dot and space in the front!
-    . .venv/bin/activate
 
-    echo Install project dependencies
-    echo in case pip install gets stuck at 'processing', see our troubleshooting section for a possible solution.
+    REM Install project dependencies
+    REM in case pip install gets stuck at 'processing', abort using Ctrl+Z and start over with the same command
     pip install .
 
-
-    echo get PyInstaller (make sure pyinstaller is NOT installed in your global python!)
+    REM get PyInstaller (make sure pyinstaller is NOT installed in your global python!)
     pip install pyinstaller
 
-    echo we need this to perform the following task
+    REM we need this to perform the following task
     pip install doit
     
-    echo for pyinstaller to be able to transform from png to jpg (if we use png directly, we get strange pink borders)
+    REM for pyinstaller to be able to transform from png to jpg (if we use png directly, we get strange pink borders)
     pip install pillow
 
-    echo we have to transform some .ui files to .py and put them into our .venv mad-gui library
-    echo note: if you did not name your virtual environment .venv in the second step, you can pass the name using `-v <name of venv>`
+    REM we have to transform some .ui files to .py and put them into our .venv mad-gui library
+    REM note: it will try to do that in the currently activated virtual environment, in this case .venv
+
+    REM actually create the executable
+    pyinstaller pyinstaller.spec --onefile
+
+.. raw:: html
+
+   </details>
+
+.. raw:: html
+
+   <details>
+   <summary><a> &#128104;&#8205;&#128187; Unix: Click the triangle to show/hide our exemplary code snippet.</a></summary>
+
+On Unix systems you need to install
+
+- `python3.7`
+- `python3.7-venv`
+- `python3.7-dev`
+- `python3.7-tk`
+
+and then use python3.7 instead of python in the following code snippet.
+
+.. code-block:: console
+
+    # navigating to the gui's repository
+    cd mad_gui
+
+    # create virutal environment (make sure your python is 3.7)
+    python -m venv .venv
+    # this creates the virutal environment in the folder `.venv`
+    # the `doit` task `prepare_windows_build` will make use of this folder by default later in this process
+
+    # activate the virutal environment
+    # make sure to include the extra dot and space in the front!
+    . .venv/bin/activate
+
+    # Install project dependencies
+    # in case pip install gets stuck at 'processing', abort using Ctrl+Z and start over with the same command
+    pip install .
+
+    # get PyInstaller (make sure pyinstaller is NOT installed in your global python!)
+    pip install pyinstaller
+
+    # we need this to perform the following task
+    pip install doit
+
+    # for pyinstaller to be able to transform from png to jpg (if we use png directly, we get strange pink borders)
+    pip install pillow
+
+    # we have to transform some .ui files to .py and put them into our .venv mad-gui library
+    # note: it will try to do that in the currently activated virtual environment, in this case .ven
     doit prepare_build -y
 
-    echo actually create the executable
+    # actually create the executable
     pyinstaller pyinstaller.spec --onefile
+
+.. raw:: html
+
+   </details>
+   <br />
 
 Afterwards, you will find the file in the `dist` folder.
 Sometimes pyinstaller does not find all the imports. In that case, you might need to make use of its

@@ -11,7 +11,6 @@ Customization
    :ref:`Developer guidelines <developer guidelines>`. However, if you want to get going quickly just install MaD GUI
    using `pip install mad_gui` or by adding it to your project's requirements.
 
-
 Creating an executable script
 *****************************
 
