@@ -13,7 +13,7 @@ Contribution Guidelines
 .. _preparing an environment:
 
 Before you start working, you will have to create a virtual environment and install our GUI.
-For more information on this, see our :ref:`Developer guidelines <developer guidelines>`.
+For more information on this, see our section :ref:`Prepare development <developer guidelines>`.
 
 
 Design
