@@ -57,10 +57,6 @@ The loader takes care for:
 Your `Importer` must inherit from :class:`~mad_gui.plugins.BaseImporter`, as shown in the following example.
 After creating your importer you have to pass it to the GUI, which is also shown in the example:
 
-.. raw:: html
-
-   <details>
-   <summary>&#128104;&#8205;&#128187; Click to show/hide our exemplary code snippet.</summary>
 
 .. code-block:: python
 
@@ -71,21 +67,23 @@ After creating your importer you have to pass it to the GUI, which is also shown
     class CustomImporter(BaseImporter):
         @classmethod
         def name(cls) -> str:
-            # This will be shown as string in the dropdown menu of the LoadDataWindow upon
-            # pressing the button "Load Data" in the GUI
-            return "Custom importer"
+            ################################################
+            ### set your importer's name as return value ###
+            ################################################
+            return "My Importer"
 
-        def load_sensor_data(self, file) -> Dict:
-            # We create a dictionary with one key for each plot we want to generate.
-            # Each value of the dictionary is a pandas dataframe,
-            # with columns being the single data streams / sensor channels.
+        def load_sensor_data(self, file_path: str) -> Dict:
+            #############################################################
+            ### Implement a method that uses the argument `file_path` ###
+            ### to a) create a pandas dataframe, which you then write ###
+            ### it to `sensor_data` and b) load the sampling rate     ###
+            #############################################################
+            sensor_data = 
+            sampling_rate = 
             data = {
             "IMU Hip": {
-                "sensor_data": pd.read_csv(file)[['x', 'y', 'z']],
-                "sampling_rate_hz": 50,
-                # note: all other items will become part of the dictionary PlotData.additional_data,
-                # This data it is not plotted, but is available for algorithms later on.
-                "additional_data": Path(file).name
+                "sensor_data": sensor_data,
+                "sampling_rate_hz": sampling_rate,
                 }
             }
 
@@ -96,9 +94,6 @@ After creating your importer you have to pass it to the GUI, which is also shown
         plugins=[CustomImporter],
     )
 
-.. raw:: html
-
-   </details>
 
 .. _implement algorithm:
 
@@ -116,10 +111,6 @@ The general structure of your algorithm-class will look as shown below.
 The content of `process_data`, however, depends on the exact use-case of the algorithm.
 Two possible use-cases are explained in the subsections after this code snippet.
 
-.. raw:: html
-
-   <details>
-   <summary> &#128104;&#8205;&#128187; Click to show/hide our exemplary code snippet.</summary>
 
 .. code-block:: python
 
@@ -159,10 +150,6 @@ In this example we are using the label class `Activity`, however, you can also u
 If you want to read more about creating custom labels, see :ref:`below <custom labels>`.
 If you want to see a full working example, head to `ExampleImporter <https://github.com/mad-lab-fau/mad-gui/blob/main/mad_gui/plugins/example.py#L29>`_.
 
-.. raw:: html
-
-   </details>
-
 .. _option_a:
 
 Option A: Create labels to be plotted
@@ -175,15 +162,7 @@ GUI will plot the labels automatically for you, as shown in this image (click to
     :alt: Automated labelling by a plugin-algorithm
     :height: 200
 
-.. raw:: html
 
-   <br />
-   <br />
-
-.. raw:: html
-
-   <details>
-   <summary>&#128104;&#8205;&#128187; Click to show/hide our exemplary code snippet.</summary>
 
 .. note::
 
@@ -219,10 +198,6 @@ returns a pd.DataFrame with the columns `start` and `end`.
         annotations = pd.DataFrame(data=[starts, ends], columns = ['start', 'end'])
         return annotations
 
-.. raw:: html
-
-   </details>
-
 .. _option_b:
 
 Option B: Analyze data within existing labels
@@ -240,17 +215,6 @@ The GUI will automatically take care for showing that string when the user hover
 .. image:: _static/images/development/algorithm_analyzing.png
     :alt: Automated analysis by a plugin-algorithm
     :height: 200
-
-.. raw:: html
-
-   <br />
-   <br />
-
-
-.. raw:: html
-
-   <details>
-   <summary>&#128104;&#8205;&#128187; Click to show/hide our exemplary code snippet.</summary>
 
 .. note::
 
@@ -283,21 +247,12 @@ The GUI will automatically take care for showing that string when the user hover
                              f" {sensor_data.index.iloc[-1]}")
       return f"Mean value acc_x = {sensor_data['acc_x'].mean()}"
 
-.. raw:: html
-
-   </details>
-
 Implement an exporter
 #####################
 This basically works as described in the section of creating an importer.
 Upon pressing the `Export data` button in the GUI, the `ExportResultsDialog <https://github.com/mad-lab-fau/mad-gui/blob/main/mad_gui/components/dialogs/plugin_selection/export_results_dialog.py#L19>`_ will be
 opened, in which your exporter can be selected. Basically, you will receive a `GlobalData <https://mad-gui.readthedocs.io/en/latest/modules/generated/mad_gui/mad_gui.models.GlobalData.html#mad_gui.models.GlobalData>`_ object, which keeps
 all the data form the GUI and you can process / export it in whatever way you want:
-
-.. raw:: html
-
-   <details>
-   <summary>&#128104;&#8205;&#128187; Click to show/hide our exemplary code snippet.</summary>
 
 .. code-block:: python
 
@@ -317,20 +272,11 @@ all the data form the GUI and you can process / export it in whatever way you wa
 
 After creating your exporter, make sure to also pass it to the `start_gui` function.
 
-.. raw:: html
-
-   </details>
 
 Setting a Theme
 ***************
 
 You can easily change the two dominating colors by passing your own theme to the GUI.
-
-.. raw:: html
-
-   <details>
-   <summary>&#128104;&#8205;&#128187; Click to show/hide our exemplary code snippet.</summary>
-
 
 .. code-block:: python
 
@@ -345,9 +291,6 @@ You can easily change the two dominating colors by passing your own theme to the
     theme=MyTheme,
    )
 
-.. raw:: html
-
-   </details>
 
 .. _setting constants:
 
@@ -356,11 +299,6 @@ Setting Constants
 
 You can create your own settings by creating a class, which inherits from our `BaseSettings <https://github.com/mad-lab-fau/mad-gui/blob/main/mad_gui/config/settings.py#L1>`_.
 The following example makes use of the BaseSettings and simply overrides some properties:
-
-.. raw:: html
-
-   <details>
-   <summary>&#128104;&#8205;&#128187; Click to show/hide our exemplary code snippet.</summary>
 
 .. code-block:: python
 
@@ -387,10 +325,6 @@ The following example makes use of the BaseSettings and simply overrides some pr
     settings=MySettings,
    )
 
-.. raw:: html
-
-   </details>
-
 .. _custom labels:
 
 
@@ -399,11 +333,6 @@ Creating custom labels
 You can create labels and pass them to our GUI.
 Your label must inherit form our `BaseRegionLabel <https://mad-gui.readthedocs.io/en/latest/modules/generated/plot_tools/mad_gui.plot_tools.labels.BaseRegionLabel.html#mad_gui.plot_tools.labels.BaseRegionLabel>`_.
 It could for example look like this:
-
-.. raw:: html
-
-   <details>
-   <summary>&#128104;&#8205;&#128187; Click to show/hide our exemplary code snippet.</summary>
 
 .. code-block:: python
 
@@ -431,6 +360,3 @@ adding a new label or by clicking on a label when in `Edit label` mode, such tha
 descriptions. In our `exemplary video <https://www.youtube.com/watch?v=VWQKYRRRGVA&t=18s>`_, this is
 `{"stand": None, "walk": ["fast", "slow"], "jump": None}`.
 
-.. raw:: html
-
-   </details>
