@@ -7,9 +7,7 @@ Development
 ***********
 
 .. note::
-   In case you are not familiar with PyCharm and virtual environments, you might first want to check out our
-   :ref:`Developer guidelines <developer guidelines>`. However, if you want to get going quickly just install MaD GUI
-   using `pip install mad_gui` or by adding it to your project's requirements.
+   In case you experience issues, please try to find a solution in :ref:`troubleshooting`.
 
 Creating an executable script
 *****************************
@@ -44,8 +42,9 @@ this:
 
 .. _implement importer:
 
-Implement an importer
-#####################
+Loading and displaying data using your custom importer
+#######################################################
+
 If the user presses the `Load data` button in the GUI, a `LoadDataWindow <https://github.com/mad-lab-fau/mad-gui/blob/main/mad_gui/components/dialogs/plugin_selection/load_data_dialog.py#L40>`_
 will pop up, as shown in our `exemplary video about loading data <https://youtu.be/akxcuFOesC8>`_.
 In there, the user can select one of the importers that were passed to the GUI at startup by selecting it in a dropdown.
@@ -89,6 +88,9 @@ After creating your importer you have to pass it to the GUI, which is also shown
 
             return data
 
+#####################################
+### pass your plugin to start_gui ###
+#####################################
     start_gui(
         data_dir=".",
         plugins=[CustomImporter],
@@ -97,8 +99,9 @@ After creating your importer you have to pass it to the GUI, which is also shown
 
 .. _implement algorithm:
 
-Implement an algorithm
-######################
+Creat annotations or calculate features for exisiting annotations
+#################################################################
+
 If the user presses the `Use algorithm` button in the GUI, a `PluginSelectionDialog <https://github.com/mad-lab-fau/mad-gui/blob/main/mad_gui/components/dialogs/plugin_selection/plugin_selection_dialog.py#L29>`_
 will pop up, as shown in our `exemplary video about automated annotations <https://youtu.be/VWQKYRRRGVA?t=65>`_.
 In there, the user can select one of the algorithms that were passed to the GUI at startup by selecting it in a dropdown.
@@ -247,8 +250,8 @@ The GUI will automatically take care for showing that string when the user hover
                              f" {sensor_data.index.iloc[-1]}")
       return f"Mean value acc_x = {sensor_data['acc_x'].mean()}"
 
-Implement an exporter
-#####################
+Export data
+###########
 This basically works as described in the section of creating an importer.
 Upon pressing the `Export data` button in the GUI, the `ExportResultsDialog <https://github.com/mad-lab-fau/mad-gui/blob/main/mad_gui/components/dialogs/plugin_selection/export_results_dialog.py#L19>`_ will be
 opened, in which your exporter can be selected. Basically, you will receive a `GlobalData <https://mad-gui.readthedocs.io/en/latest/modules/generated/mad_gui/mad_gui.models.GlobalData.html#mad_gui.models.GlobalData>`_ object, which keeps
