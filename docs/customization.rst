@@ -9,28 +9,26 @@ Development
 .. note::
    In case you experience issues, please try to find a solution in :ref:`troubleshooting`.
 
-Creating an executable script
-*****************************
+About plugins (IMPORTANT)
+*************************
 
-First of all, you need to create a python script with the code below.
-This will enable you to start the GUI.
-
-Insert the following code:
+You can create your own plugins as we describe it on this page.
+If you want to make use of the specific plugin in the GUI, **you have to pass that plugin to our `start_gui` function.**
+Your plugin will then receive data from our GUI, e.g. when your plugin was selected to load data or when it was
+selected as an algorithm.
 
 .. code-block:: python
 
     from mad_gui import start_gui
-    start_gui(data_dir=<put a directory here as string, e.g. "/home" or "C:/">)
+    start_gui(plugins=[MyImporter, MyAlgorithm])
 
-You can execute this script as described in our :ref:`Developer guidelines <adding a script for execution>`.
+ You can execute this script as described in our :ref:`Developer guidelines <adding a script for execution>`.
 
 .. _other systems:
 
 Adding your plugins
 *******************
 
-The GUI can be imported into your python project and then you can inject `Importers`, `Algorithms`, and
-`Exporters`.
 Below we explain, how you can create and inject such plugins to the GUI.
 If - at any point - you want to send a message to the user of the GUI, you create a message box with an OK button like
 this:
@@ -45,17 +43,36 @@ this:
 Loading and displaying data using your custom importer
 #######################################################
 
+In the GIF you can see what the rough steps are.
+You can find a detailed step-by-step explanation below.
+
+.. image:: _static/gifs/importer.gif
+    :alt: Workflow for implementing an importer
+
 If the user presses the `Load data` button in the GUI, a `LoadDataWindow <https://github.com/mad-lab-fau/mad-gui/blob/main/mad_gui/components/dialogs/plugin_selection/load_data_dialog.py#L40>`_
-will pop up, as shown in our `exemplary video about loading data <https://youtu.be/akxcuFOesC8>`_.
+will pop up, as shown in the GIF and our `exemplary video about loading data <https://youtu.be/akxcuFOesC8>`_.
 In there, the user can select one of the importers that were passed to the GUI at startup by selecting it in a dropdown.
-The loader takes care for:
+After the user presses `Start processing`, the path to the selected file will be passed to the selected loader's
+`load_sensor_data` method.
 
-   * transforming data from your recording system to a dictionary using its :meth:`~mad_gui.plugins.BaseImporter.load_sensor_data`
-   * optionally: loading annotations from a user format using its :meth:`~mad_gui.plugins.BaseImporter.load_annotations`
+**Steps to implement your importer (click to unfold/fold the sections):**
 
-Your `Importer` must inherit from :class:`~mad_gui.plugins.BaseImporter`, as shown in the following example.
-After creating your importer you have to pass it to the GUI, which is also shown in the example:
+.. raw:: html
 
+   <details>
+   <summary><u>1. create a file that will include your custom importer, e.g. `custom_importer.py` (click to show image)</u></summary>
+
+.. image:: _static/images/development/importer_create_file.png
+    :alt: Creating a file for the plugin
+
+.. raw:: html
+
+   </details>
+
+.. raw:: html
+
+   <details>
+   <summary><u>2. develop your custom importer in that file, e.g. in the code snippet (click to show code)</u></summary>
 
 .. code-block:: python
 
@@ -88,19 +105,43 @@ After creating your importer you have to pass it to the GUI, which is also shown
 
             return data
 
-#####################################
-### pass your plugin to start_gui ###
-#####################################
-    start_gui(
-        data_dir=".",
-        plugins=[CustomImporter],
-    )
+.. raw:: html
 
+   </details>
+
+
+.. raw:: html
+
+   <details>
+   <summary><u>3. pass it to the `start_gui` method (click to show code / image)</u></summary>
+
+.. code-block:: python
+
+   from mad_gui import start_gui
+   from custom_importer import CustomImporter
+   start_gui(plugins=[CustomImporter])
+
+.. image:: _static/images/development/importer_pass_to_gui.png
+    :alt: Making the plugin available in the GUI
+
+.. raw:: html
+
+   </details>
+   <br />
+
+Now you can select the importer in the GUI by pressing `Load Data` and then selecting it in the dropdown on the upper
+left in the pop-up window.
+
+.. note::
+    In case loading your file does not work, we highly recommend to set breakpoints into your loader and check, whether
+    everything does what you expect it to do. Also you might want to look at our
+    `BaseImporter's documentation <https://mad-gui.readthedocs.io/en/latest/modules/generated/plugins/mad_gui.plugins.BaseImporter.html#mad_gui.plugins.BaseImporter.load_sensor_data>`_
+    or our section about :ref:`troubleshooting`.
 
 .. _implement algorithm:
 
-Creat annotations or calculate features for exisiting annotations
-#################################################################
+Create annotations or calculate features for exisiting annotations
+##################################################################
 
 If the user presses the `Use algorithm` button in the GUI, a `PluginSelectionDialog <https://github.com/mad-lab-fau/mad-gui/blob/main/mad_gui/components/dialogs/plugin_selection/plugin_selection_dialog.py#L29>`_
 will pop up, as shown in our `exemplary video about automated annotations <https://youtu.be/VWQKYRRRGVA?t=65>`_.
