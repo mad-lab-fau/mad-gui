@@ -57,7 +57,7 @@ except ModuleNotFoundError:
     pass
 
 # helps to make plot zooming smooth even when line width >1
-pg.setConfigOption("useOpenGL", False)  # deactivating this, because we might get issues if open GL is not available
+pg.setConfigOption("useOpenGL", True)
 
 # CI can't handle openGL
 if os.environ.get("GITHUB_CI"):
@@ -545,7 +545,7 @@ class MainWindow(QMainWindow):
         :func:`mad_gui.plot_tools.SensorPlot._set_stride_labels`.
 
         """
-        if not self.is_data_plotted() or self.global_data.active_loader is None:
+        if not self.is_data_plotted():
             UserInformation(parent=self).inform("Please load sensor data before continuing.")
             return
 
