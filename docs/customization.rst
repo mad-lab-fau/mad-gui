@@ -146,8 +146,8 @@ Two possible use-cases are explained in the subsections after this code snippet.
     # the labels it receives from CustomAlgorithm.process_data via its process_data method
     class Activity(BaseRegionLabel):
         name = "Activity Label"
-        min_height = 0.8
-        max_height = 1
+        min_height = 0
+        max_height = 0.8
 
     start_gui(
         data_dir=".", # you can also put a directory of your choice here, e.g. "/home" or "C:/"
