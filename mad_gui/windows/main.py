@@ -58,7 +58,6 @@ except ModuleNotFoundError:
 
 # helps to make plot zooming smooth even when line width >1
 pg.setConfigOption("useOpenGL", False)  # deactivating this, because we might get issues if open GL is not available
-# on the machine as in github CI
 
 # CI can't handle openGL
 if os.environ.get("GITHUB_CI"):
