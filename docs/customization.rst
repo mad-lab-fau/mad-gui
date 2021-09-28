@@ -8,6 +8,7 @@ Development
 
 .. note::
    In case you experience issues, please try to find a solution in :ref:`troubleshooting`.
+   
 
 About plugins (IMPORTANT)
 *************************
@@ -22,7 +23,8 @@ selected as an algorithm.
     from mad_gui import start_gui
     start_gui(plugins=[MyImporter, MyAlgorithm])
 
- You can execute this script as described in our :ref:`Developer guidelines <adding a script for execution>`.
+.. note::
+    You can execute this script as described in our :ref:`Developer guidelines <adding a script for execution>`.
 
 .. _other systems:
 
