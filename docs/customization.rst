@@ -62,7 +62,7 @@ After the user presses `Start processing`, the path to the selected file will be
 .. raw:: html
 
    <details>
-   <summary><u>1. create a file that will include your custom importer, e.g. `custom_importer.py` (click to show image)</u></summary>
+   <summary>1. create a file that will include your custom importer, e.g. `custom_importer.py` <u><p style="color:#0000FF">(click to show image)</u></summary>
 
 .. image:: _static/images/development/importer_create_file.png
     :alt: Creating a file for the plugin
@@ -74,7 +74,7 @@ After the user presses `Start processing`, the path to the selected file will be
 .. raw:: html
 
    <details>
-   <summary><u>2. develop your custom importer in that file, e.g. in the code snippet (click to show code)</u></summary>
+   <summary>2. develop your custom importer in that file, e.g. in the code snippet <u>(click to show code)</u></summary>
 
 .. code-block:: python
 
@@ -115,7 +115,7 @@ After the user presses `Start processing`, the path to the selected file will be
 .. raw:: html
 
    <details>
-   <summary><u>3. pass it to the `start_gui` method (click to show code / image)</u></summary>
+   <summary><u>3. pass it to the `start_gui` method <u>(click to show code / image)</u></summary>
 
 .. code-block:: python
 
