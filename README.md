@@ -110,7 +110,7 @@ Now you can open the previously downloaded example data as shown in [How do I us
 Yes, however it will need someone who is familiar with python.
 This person needs to perform the steps described in [Development](https://mad-gui.readthedocs.io/en/latest/customization.html).
 There we describe, how to load data of any format and how to implement algorithms.
-Some supplementary basic information can be found in our [Developer Guidelines](https://mad-gui.readthedocs.io/en/latest/developer_guidelines.html)
+Some supplementary basic information can be found in our [Developer Guidelines](https://mad-gui.readthedocs.io/en/latest/developer_guidelines.html).
 
 You do not have experience with python but still want to load data from a specific system? [Contact us!](mailto:malte.ollenschlaeger@fau.de)
 
