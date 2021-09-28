@@ -31,7 +31,7 @@ Experiencing issues? [Report a bug here!](https://github.com/mad-lab-fau/mad-gui
 - [How do I use it (videos)](#how-do-i-use-it-videos)
 - [How do I get the GUI to work on my machine?](#how-do-i-get-the-gui-to-work-on-my-machine)
 - [How can I test the GUI using your example data on my computer?](#how-can-i-test-the-gui-using-your-example-data-on-my-computer)
-- [Can I load data of my specific system or use my own algorithm?](#can-i-load-data-of-my-specific-system-or-use-my-algorithm)
+- [Can I load data of my specific system or use my own algorithm?](#can-i-load-data-of-my-specific-system-or-use-my-own-algorithm)
 - [Can I change something at the core of the GUI?](#can-i-change-something-at-the-core-of-the-gui)
 
 
