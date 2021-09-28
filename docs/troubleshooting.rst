@@ -39,8 +39,25 @@ This means, that the GUI does not know anything about the kind of annotations th
 You can read something about how to fix it in the Development section below.
 
 
+.. _troubleshooting development:
+
 Development
 ###########
+
+The plugin I created does not show up in the GUI
+************************************************
+Please make sure that your plugin inherits from one of `BaseImporter`, `BaseAlgorithm`, or `BaseExporter`, as we
+describe it in our section :ref:`other systems`.
+Additionally, you should make sure to pass your plugin to the `start_gui` function, which is also described in the part
+of :ref:`other systems`:
+
+.. code-block:: python
+
+    from mad_gui import start_gui
+    from my_file imoprt MyPlugin
+
+    start_gui(plugins=[MyPlugin]) # don't miss out the brackets, `Plugins` must be an iterable!
+
 
 qt.qpa.plugin Error
 *******************
@@ -118,9 +135,3 @@ Loader provided annotations that were not understood
 You need to pass labels with the attribute `name` equal to the ones stated in the error message to our `start_gui`
 function. Read more about creating labels in our section about :ref:`customization`.
 
-The plugin I created does not show up in the GUI
-************************************************
-Please make sure that your plugin inherits from one of `BaseImporter`, `BaseAlgorithm`, or `BaseExporter`, as we
-describe it in our section :ref:`other systems`.
-Additionally, you should make sure to pass your plugin to the `start_gui` function, which is also described in the part
-of :ref:`other systems`.

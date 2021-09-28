@@ -7,7 +7,7 @@ Development
 ***********
 
 .. note::
-   In case you experience issues, please try to find a solution in :ref:`troubleshooting`.
+   In case you experience issues, please try to find a solution in :ref:`Troubleshooting for Developers <troubleshooting developers>`.
    
 
 About plugins (IMPORTANT)
@@ -24,7 +24,7 @@ selected as an algorithm.
     start_gui(plugins=[MyImporter, MyAlgorithm])
 
 .. note::
-    You can execute this script as described in our :ref:`Developer guidelines <adding a script for execution>`.
+    You can execute such a script as described in our section :ref:`Prepare Development <adding a script for execution>`.
 
 .. _other systems:
 
@@ -46,14 +46,16 @@ Loading and displaying data using your custom importer
 #######################################################
 
 In the GIF you can see what the rough steps are.
-You can find a detailed step-by-step explanation below.
+You can find a more **detailed step-by-step explanation below the GIF**.
 
 .. image:: _static/gifs/importer.gif
     :alt: Workflow for implementing an importer
 
-If the user presses the `Load data` button in the GUI, a `LoadDataWindow <https://github.com/mad-lab-fau/mad-gui/blob/main/mad_gui/components/dialogs/plugin_selection/load_data_dialog.py#L40>`_
+If the user presses the `Load data` button in the GUI, a window for selecting the importer and data to be loaded
 will pop up, as shown in the GIF and our `exemplary video about loading data <https://youtu.be/akxcuFOesC8>`_.
-In there, the user can select one of the importers that were passed to the GUI at startup by selecting it in a dropdown.
+The user can select one of the importers that were passed to the GUI at startup by selecting it in a dropdown.
+
+
 After the user presses `Start processing`, the path to the selected file will be passed to the selected loader's
 `load_sensor_data` method.
 
@@ -62,7 +64,7 @@ After the user presses `Start processing`, the path to the selected file will be
 .. raw:: html
 
    <details>
-   <summary>1. create a file that will include your custom importer, e.g. `custom_importer.py` <u><p style="color:#0000FF">(click to show image)</u></summary>
+   <summary>1. create a file that will include your custom importer, e.g. `custom_importer.py` <u><font color="#0000FF">(click to show image)</font></u></summary>
 
 .. image:: _static/images/development/importer_create_file.png
     :alt: Creating a file for the plugin
@@ -74,9 +76,11 @@ After the user presses `Start processing`, the path to the selected file will be
 .. raw:: html
 
    <details>
-   <summary>2. develop your custom importer in that file, e.g. in the code snippet <u>(click to show code)</u></summary>
+   <summary>2. develop your custom importer in that file, as shown in this code snippet <u><font color="#0000FF">(click to show code)</font></u></summary>
 
 .. code-block:: python
+
+   """These are the contents of custom_importer.py, which holds my first importer."""
 
     from typing import Dict
     import pandas as pd
@@ -86,18 +90,28 @@ After the user presses `Start processing`, the path to the selected file will be
         @classmethod
         def name(cls) -> str:
             ################################################
-            ### set your importer's name as return value ###
+            ###                   README                 ###
+            ### Set your importer's name as return value ###
+            ### This name will show up in the dropdown.   ###
             ################################################
             return "My Importer"
 
         def load_sensor_data(self, file_path: str) -> Dict:
-            #############################################################
-            ### Implement a method that uses the argument `file_path` ###
-            ### to a) create a pandas dataframe, which you then write ###
-            ### it to `sensor_data` and b) load the sampling rate     ###
-            #############################################################
+            ##################################################################
+            ###                       README                               ###
+            ### a) Use the argument `file_path` to load data. Transform    ###
+            ###    it to a pandas dataframe (columns are sensor channels). ###
+            ###    Assign it to sensor_data.                               ###
+            ###                                                            ###
+            ### b) load the sampling rate (int or float)                   ###
+            ##################################################################
             sensor_data = 
-            sampling_rate = 
+            sampling_rate =
+
+            # CAUTION: if you only want to have one plot you do not need to
+            # change the following lines!
+            # If you want several plots, just add another sensor like "IMU foot"
+            # to the `data` dictionary.
             data = {
             "IMU Hip": {
                 "sensor_data": sensor_data,
@@ -115,12 +129,13 @@ After the user presses `Start processing`, the path to the selected file will be
 .. raw:: html
 
    <details>
-   <summary><u>3. pass it to the `start_gui` method <u>(click to show code / image)</u></summary>
+   <summary>3. pass it to the `start_gui` function <u><font color="#0000FF">(click to show image)</font></u></summary>
 
 .. code-block:: python
 
    from mad_gui import start_gui
    from custom_importer import CustomImporter
+
    start_gui(plugins=[CustomImporter])
 
 .. image:: _static/images/development/importer_pass_to_gui.png
@@ -135,14 +150,14 @@ Now you can select the importer in the GUI by pressing `Load Data` and then sele
 left in the pop-up window.
 
 .. note::
-    In case loading your file does not work, we highly recommend to set breakpoints into your loader and check, whether
-    everything does what you expect it to do. Also you might want to look at our
-    `BaseImporter's documentation <https://mad-gui.readthedocs.io/en/latest/modules/generated/plugins/mad_gui.plugins.BaseImporter.html#mad_gui.plugins.BaseImporter.load_sensor_data>`_
-    or our section about :ref:`troubleshooting`.
+    In case loading your file does not work, we recommend to set breakpoints into your loader and check, whether
+    everything does what you expect it to do. Also you might want to look at our section about
+    :ref:`Troubleshooting development <troubleshooting development>` or at
+    `load_sensor_data's documentation <https://mad-gui.readthedocs.io/en/latest/modules/generated/plugins/mad_gui.plugins.BaseImporter.html#mad_gui.plugins.BaseImporter.load_sensor_data>`_.
 
 .. _implement algorithm:
 
-Create annotations or calculate features for exisiting annotations
+Create annotations or calculate features for existing annotations
 ##################################################################
 
 If the user presses the `Use algorithm` button in the GUI, a `PluginSelectionDialog <https://github.com/mad-lab-fau/mad-gui/blob/main/mad_gui/components/dialogs/plugin_selection/plugin_selection_dialog.py#L29>`_
@@ -196,7 +211,7 @@ In this example we are using the label class `Activity`, however, you can also u
 If you want to read more about creating custom labels, see :ref:`below <custom labels>`.
 If you want to see a full working example, head to `ExampleImporter <https://github.com/mad-lab-fau/mad-gui/blob/main/mad_gui/plugins/example.py#L29>`_.
 
-.. _option_a:
+.. _option a:
 
 Option A: Create labels to be plotted
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^

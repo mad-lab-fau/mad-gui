@@ -26,7 +26,9 @@ copy(Path("../README.md"), Path("./README.md"))
 with open("./README.md", "r") as file:
     readme_md = file.read()
 readme_html = readme_md.replace("./docs/", "")
-readme_html = readme_html.replace(":warning:", "")  # actually want to replace it with |:warning:| but sphinxemoji does not work
+readme_html = readme_html.replace(
+    ":warning:", ""
+)  # actually want to replace it with |:warning:| but sphinxemoji does not work
 with open("./README.md", "w") as file:
     file.write(readme_html)
 
@@ -92,14 +94,34 @@ numpydoc_class_members_toctree = False
 html_theme = "pydata_sphinx_theme"
 html_logo = "_static/images/logo_mad_man.png"
 html_favicon = "_static/images/mad-runner.ico"
-html_static_path = ['_static']
-html_css_files = ['css/custom.css']
-html_theme_options = {"show_prev_next": False}
-html_sidebars = {
-   'README': []
+html_static_path = ["_static"]
+html_css_files = ["css/custom.css"]
+html_theme_options = {
+    "show_prev_next": False,
+    "icon_links": [
+        {
+            "name": "GitHub",
+            "url": "https://github.com/mad-lab-fau/mad-gui",
+            "icon": "fab fa-github-square",
+        },
+        {
+            "name": "Twitter",
+            "url": "https://twitter.com/fau_mad_lab",
+            "icon": "fab fa-twitter-square",
+        },
+        {
+            "name": "YouTube",
+            "url": "https://www.youtube.com/channel/UCaLchy07OciePfHL9j-8u8A/videos",
+            "icon": "fab fa-youtube-square",
+        },
+    ],
 }
 
-sphinxemoji_style = 'twemoji'
+html_sidebars = {
+    "README": [],
+}
+
+sphinxemoji_style = "twemoji"
 
 # Add any paths that contain custom static files (such as style sheets) here,
 # relative to this directory. They are copied after the builtin static files,
@@ -141,11 +163,7 @@ def linkcode_resolve(domain, info):
     code_line = None
     filename = ""
     try:
-        filename = str(
-            Path(getsourcefile(obj)).relative_to(
-                Path(getsourcefile(mad_gui)).parent.parent
-            )
-        )
+        filename = str(Path(getsourcefile(obj)).relative_to(Path(getsourcefile(mad_gui)).parent.parent))
     except Exception as e:
         warnings.warn(f"{info}: {str (e)}")
     try:

@@ -269,17 +269,17 @@ On Unix systems you need to install
 
 and then use python3.7 instead of python in the following code snippet.
 
-.. code-block:: console
+.. code-block:: guess
 
     # navigating to the gui's repository
     cd mad_gui
 
-    # create virutal environment (make sure your python is 3.7)
+    # create virtual environment (make sure your python is 3.7)
     python -m venv .venv
-    # this creates the virutal environment in the folder `.venv`
+    # this creates the virtual environment in the folder `.venv`
     # the `doit` task `prepare_windows_build` will make use of this folder by default later in this process
 
-    # activate the virutal environment
+    # activate the virtual environment
     # make sure to include the extra dot and space in the front!
     . .venv/bin/activate
 
