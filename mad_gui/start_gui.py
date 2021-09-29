@@ -14,7 +14,7 @@ from typing import Optional, Sequence, Type
 
 class Activity(BaseRegionLabel):
     # This label will always be shown at the upper 20% of the plot view
-    min_height = 0.8
+    min_height = 0
     max_height = 1
     name = "Activity Label"
     descriptions = {"stand": None, "walk": ["fast", "slow"], "jump": None}
@@ -42,7 +42,7 @@ def start_gui(
     plugins: Optional[Sequence[BasePlugin]] = (ExampleImporter, ExampleAlgorithm),
     labels: Optional[Sequence[BaseRegionLabel]] = (
         Activity,
-        Jump,
+        #Jump,
     ),
     events: Optional[Sequence[BaseEventLabel]] = (MyEvent,),
     settings: Optional[Type[BaseSettings]] = BaseSettings,

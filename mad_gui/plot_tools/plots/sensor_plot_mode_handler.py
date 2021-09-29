@@ -244,6 +244,8 @@ class EditModeHandler(BaseModeHandler):
         for item in self.plot.items():
             if isinstance(item, (BaseRegionLabel, BaseEventLabel)):
                 item.make_readonly()
+        # in case the mouse is hovering over a label, we still have the pointing hand cursor
+        self.plot.setCursor(Qt.ArrowCursor)
 
 
 class RemoveModeHandler(BaseModeHandler):
