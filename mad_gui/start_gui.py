@@ -7,7 +7,7 @@ from PySide2.QtWidgets import QApplication
 from mad_gui.config import BaseSettings, BaseTheme
 from mad_gui.plot_tools.labels import BaseEventLabel, BaseRegionLabel
 from mad_gui.plugins.base import BasePlugin
-from mad_gui.plugins.example import StationaryMomentsDetector, ExampleImporter, EnergyCalculator
+from mad_gui.plugins.example import EnergyCalculator, ExampleImporter, StationaryMomentsDetector
 from mad_gui.windows import MainWindow
 from typing import Optional, Sequence, Type
 
@@ -42,7 +42,7 @@ def start_gui(
     plugins: Optional[Sequence[BasePlugin]] = (ExampleImporter, StationaryMomentsDetector, EnergyCalculator),
     labels: Optional[Sequence[BaseRegionLabel]] = (
         Activity,
-        #Jump,
+        # Jump,
     ),
     events: Optional[Sequence[BaseEventLabel]] = (MyEvent,),
     settings: Optional[Type[BaseSettings]] = BaseSettings,

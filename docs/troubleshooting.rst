@@ -32,10 +32,10 @@ In case it does not find such a file, you have two options:
    - work with video and data without synchronization -> you have to shift sensor data and video separately
    - use the GUI's synchronization mode to synchronize video and data
 
-Loader provided annotations that were not understood
-****************************************************
+Loader provided labels that were not understood
+***********************************************
 
-This means, that the GUI does not know anything about the kind of annotations the loader wants to plot.
+This means, that the GUI does not know anything about the kind of labels the loader wants to plot.
 You can read something about how to fix it in the Development section below.
 
 
