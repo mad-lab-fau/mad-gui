@@ -7,49 +7,51 @@ Development
 ***********
 
 .. note::
-   In case you experience issues, please try to find a solution in :ref:`Troubleshooting for Developers <troubleshooting developers>`.
-   
+   In case you experience issues, please try to find a solution in :ref:`Troubleshooting for Developers <troubleshooting development>`.
+
 
 About plugins (IMPORTANT)
 *************************
 
 You can create your own plugins as we describe it on this page.
-If you want to make use of the specific plugin in the GUI, **you have to pass that plugin to our `start_gui` function.**
-Your plugin will then receive data from our GUI, e.g. when your plugin was selected to load data or when it was
+The GUI supports three categories of plugins:
+
+   - :ref:`implement importer`
+   - :ref:`implement algorithm`
+   - :ref:`implement exporter`
+
+Your plugin will receive data from our GUI at runtime, e.g. when your plugin was selected to load data or when it was
 selected as an algorithm.
+
+If you want to use the specific plugin in the GUI, **you have to pass that plugin to our `start_gui` function**:
 
 .. code-block:: python
 
     from mad_gui import start_gui
-    start_gui(plugins=[MyImporter, MyAlgorithm])
+    start_gui(plugins=[MyFirstPlugin, MySecondPlugin])
 
-.. note::
-    You can execute such a script as described in our section :ref:`Prepare Development <adding a script for execution>`.
+You can execute the above code as a script as described in our section :ref:`Prepare Development <adding a script for execution>`.
+
 
 .. _other systems:
 
-Adding your plugins
-*******************
+Adding plugins
+**************
 
 Below we explain, how you can create and inject such plugins to the GUI.
-There is always a list that describes the single steps and the regarding details are shown as soon as you click on
-the respective item in the list.
-If - at any point - you want to send a message to the user of the GUI, you create a message box with an OK button like
-this:
-
-.. code-block:: python
-
-   from mad_gui.user_information import UserInformation
-   UserInformation.ask_user("Your message")
+There is always a list that describes the single steps.
+For each step, the **details are shown as soon as you click on
+the respective item in the list**.
 
 .. _implement importer:
 
-Loading and displaying data using your custom importer
-#######################################################
+Load and display data of a specific system
+##########################################
 
-These are the necessary steps to implement your importer **(click to unfold/fold the sections to see details)**.
-If you perform the steps from the list below, your importer will be included into the GUI as shown in
-`this GIF <_static/gifs/importer.gif>`_ (no need to get everything from the GIF, details are in the list below).
+You will have to create a plugin, an importer, which enables our GUI to load the specific type of data.
+If you perform the steps from the list below **(click to unfold/fold the sections to see details)**, your importer will
+be included into the GUI as shown in `this GIF <_static/gifs/importer.gif>`_
+(no need to get everything from the GIF, details are in the list below).
 
 .. raw:: html
 
@@ -304,8 +306,11 @@ The GUI will automatically take care for showing that string when the user hover
                              f" {sensor_data.index.iloc[-1]}")
       return f"Mean value acc_x = {sensor_data['acc_x'].mean()}"
 
-Export data
-###########
+.. _implement exporter:
+
+Export displayed annotations
+############################
+
 This basically works as described in the section of creating an importer.
 Upon pressing the `Export data` button in the GUI, the `ExportResultsDialog <https://github.com/mad-lab-fau/mad-gui/blob/main/mad_gui/components/dialogs/plugin_selection/export_results_dialog.py#L19>`_ will be
 opened, in which your exporter can be selected. Basically, you will receive a `GlobalData <https://mad-gui.readthedocs.io/en/latest/modules/generated/mad_gui/mad_gui.models.GlobalData.html#mad_gui.models.GlobalData>`_ object, which keeps
@@ -329,6 +334,19 @@ all the data form the GUI and you can process / export it in whatever way you wa
             # See the API Reference for more information about our GlobalData object
 
 After creating your exporter, make sure to also pass it to the `start_gui` function.
+
+Send a message to the user
+**************************
+
+If - at any point - you want to send a message to the user of the GUI, you create a message box with an OK button like
+this:
+
+.. code-block:: python
+
+   from mad_gui.user_information import UserInformation
+   UserInformation.inform_user("Your message")
+   yes_no = UserInformation().ask_user("Yes or No?") # will return from PySide2.QtWidgets.QMessageBox.Yes
+                                                     # or from PySide2.QtWidgets.QMessageBox.No
 
 
 Setting a Theme

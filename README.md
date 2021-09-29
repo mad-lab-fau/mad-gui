@@ -31,7 +31,8 @@ Experiencing issues? [Report a bug here!](https://github.com/mad-lab-fau/mad-gui
 - [How do I use it (videos)](#how-do-i-use-it-videos)
 - [How do I get the GUI to work on my machine?](#how-do-i-get-the-gui-to-work-on-my-machine)
 - [How can I test the GUI using your example data on my computer?](#how-can-i-test-the-gui-using-your-example-data-on-my-computer)
-- [Can I load data of my specific system or use my own algorithm?](#can-i-load-data-of-my-specific-system-or-use-my-own-algorithm)
+- [Can the GUI load and display data of my specific system?](#can-the-gui-load-and-display-data-of-my-specific-system)
+- [Can the GUI use my own algorithm?](#can-the-gui-use-my-own-algorithm)
 - [Can I change something at the core of the GUI?](#can-i-change-something-at-the-core-of-the-gui)
 
 
@@ -106,13 +107,16 @@ start_gui()
 
 Now you can open the previously downloaded example data as shown in [How do I use it (videos)?](#how-do-i-use-it-videos)
 
-## Can I load data of my specific system or use my own algorithm?
+## Can the GUI load and display data of my specific system?
 Yes, however it will need someone who is familiar with python.
 This person needs to perform the steps described in [Development](https://mad-gui.readthedocs.io/en/latest/customization.html).
-There we describe, how to load data of any format and how to implement algorithms.
 Some supplementary basic information can be found in our section [Prepare Development](https://mad-gui.readthedocs.io/en/latest/developer_guidelines.html).
 
 You do not have experience with python but still want to load data from a specific system? [Contact us!](mailto:malte.ollenschlaeger@fau.de)
 
+
+## Can the GUI use my own algorithm?
+Yes, for more information see the answer of [Can the GUI load and display data of my specific system?](#can-the-gui-load-and-display-data-of-my-specific-system).
+
 ## Can I change something at the core of the GUI?
-Sure, for more information, please take a look at our [Contribution Guidelines](https://mad-gui.readthedocs.io/en/latest/contribution_guidelines.html#contribution-guidelines).
+Yes, for more information, please take a look at our [Contribution Guidelines](https://mad-gui.readthedocs.io/en/latest/contribution_guidelines.html#contribution-guidelines).
