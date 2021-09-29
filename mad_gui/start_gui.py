@@ -16,7 +16,7 @@ class Activity(BaseRegionLabel):
     # This label will always be shown at the upper 20% of the plot view
     min_height = 0.8
     max_height = 1
-    name = "Activity"
+    name = "Activity Label"
     descriptions = {"stand": None, "walk": ["fast", "slow"], "jump": None}
 
 

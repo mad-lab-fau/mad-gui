@@ -37,7 +37,7 @@ class ExampleAlgorithm(BaseAlgorithm):
 
     def process_data(self, plot_data: Dict[str, PlotData]):
         for sensor_plot in plot_data.values():
-            sensor_plot.annotations["Activity"].data = self.get_annotations(sensor_plot.data)
+            sensor_plot.annotations["Activity Label"].data = self.get_annotations(sensor_plot.data)
 
     @staticmethod
     def _get_standing_windows(data: pd.DataFrame, window_length: int):

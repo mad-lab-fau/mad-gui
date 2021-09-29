@@ -304,7 +304,8 @@ class BaseRegionLabel(pg.LinearRegionItem):
         child_counter = 0
         for i_child in self.childItems():
             # make cursor horizontal when hovering
-            i_child.hoverEvent = self._hover_border_event
+            i_child.hoverEvent = lambda event: self._hover_border_event(event)
+            i_child.parentLabel = self
             i_child.span = (self.min_height, self.max_height)
             # color of gait event lines
             if child_counter == 0:
@@ -346,10 +347,11 @@ class BaseRegionLabel(pg.LinearRegionItem):
         """Actions when hovering over the child item of type `pyqtgraph.InfiniteLine`"""
         mode = self.parent.state.mode
         if mode in ["edit", "sync"]:
-            if event.enter and self.isEnabled():
+            if event.enter:
                 self.parent.setCursor(Qt.SizeHorCursor)
-            if event.exit and mode == "edit":
+                self.setEnabled(True)
+            if event.exit and self.mouseHovering:
                 self.parent.setCursor(Qt.PointingHandCursor)
-            elif event.exit:
+            elif event.exit and not self.mouseHovering:
                 self.parent.setCursor(Qt.ArrowCursor)
                 self.setEnabled(False)

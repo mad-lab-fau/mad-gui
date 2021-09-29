@@ -37,17 +37,19 @@ You can execute the above code as a script as described in our section :ref:`Pre
 Adding plugins
 **************
 
-Below we explain, how you can create and inject such plugins to the GUI.
+Below we explain, how you can create and inject plugins to the GUI.
 There is always a list that describes the single steps.
 For each step, the **details are shown as soon as you click on
 the respective item in the list**.
+All plugins are based on our base classes of algorithms, for which you can find the documentation `here <https://mad-gui.readthedocs.io/en/latest/modules/plugins.html>`_.
 
 .. _implement importer:
 
 Load and display data of a specific system
 ##########################################
 
-You will have to create a plugin, an importer, which enables our GUI to load the specific type of data.
+You will have to create a plugin, an importer, which inherits from our `BaseImporter <https://mad-gui.readthedocs.io/en/latest/modules/generated/plugins/mad_gui.plugins.BaseImporter.html>`_.
+It enables our GUI to load your specific type of data.
 If you perform the steps from the list below **(click to unfold/fold the sections to see details)**, your importer will
 be included into the GUI as shown in `this GIF <_static/gifs/importer.gif>`_
 (no need to get everything from the GIF, details are in the list below).
@@ -55,7 +57,7 @@ be included into the GUI as shown in `this GIF <_static/gifs/importer.gif>`_
 .. raw:: html
 
    <details>
-   <summary>1. Create a file that will include your custom importer <u><font color="#0000FF">(click to show image)</font></u></summary>
+   <summary><font color="#0000FF">1. Create a file that will include your custom importer </font>(click to show image)</summary>
 
 .. image:: _static/images/development/importer_create_file.png
     :alt: Creating a file for the plugin
@@ -67,7 +69,7 @@ be included into the GUI as shown in `this GIF <_static/gifs/importer.gif>`_
 .. raw:: html
 
    <details>
-   <summary>2. develop your custom importer in that file, as shown in this code snippet <u><font color="#0000FF">(click to show code)</font></u></summary>
+   <summary><font color="#0000FF">2. Develop your custom importer in that file, as shown in this code snippet</font> (click to show code)</summary>
 
 .. code-block:: python
 
@@ -120,7 +122,7 @@ be included into the GUI as shown in `this GIF <_static/gifs/importer.gif>`_
 .. raw:: html
 
    <details>
-   <summary>3. pass it to the `start_gui` function <u><font color="#0000FF">(click to show code and image)</font></u></summary>
+   <summary><font color="#0000FF"> 3. Pass the developed importer class to the `start_gui` function </font>(click to show code and image)</summary>
 
 .. code-block:: python
 
@@ -140,7 +142,7 @@ be included into the GUI as shown in `this GIF <_static/gifs/importer.gif>`_
 After you have performed the steps from the above list, you can select the importer in the GUI by pressing `Load Data`
 and then selecting it in the dropdown on the upper left in the pop-up window.
 From user perspective it should work as we have described in our
-`exemplary video about loading data <https://youtu.be/akxcuFOesC8?t=10>`_
+`exemplary video about loading data <https://youtu.be/akxcuFOesC8?t=10>`_.
 
 If the user presses `Start processing`, the path to the selected file will be passed to the selected loader's
 `load_sensor_data` method, as shown in `the GIF <_static/gifs/importer.gif>`_.
@@ -157,18 +159,29 @@ After returning the dictionary from this method to the GUI, the GUI will plot th
 Create annotations or calculate features for existing annotations
 ##################################################################
 
-If the user presses the `Use algorithm` button in the GUI, a `PluginSelectionDialog <https://github.com/mad-lab-fau/mad-gui/blob/main/mad_gui/components/dialogs/plugin_selection/plugin_selection_dialog.py#L29>`_
-will pop up, as shown in our `exemplary video about automated annotations <https://youtu.be/VWQKYRRRGVA?t=65>`_.
-In there, the user can select one of the algorithms that were passed to the GUI at startup by selecting it in a dropdown.
-The algorithm receives `Global Data <https://mad-gui.readthedocs.io/en/latest/modules/generated/mad_gui/mad_gui.models.GlobalData.html#mad_gui.models.GlobalData>`_'s
-plot_data dictionary, where the keys are the plot names and the values are of type
-`Plot Data <https://mad-gui.readthedocs.io/en/latest/modules/generated/mad_gui/mad_gui.models.local.PlotData.html#mad_gui.models.local.PlotData>`_.
-Below we show you what that means and how you can use this data.
+You will have to create a plugin, an algorithm, which inherits from our `BaseAlgorithm <https://mad-gui.readthedocs.io/en/latest/modules/generated/plugins/mad_gui.plugins.BaseAlgorithm.html#mad_gui.plugins.BaseAlgorithm>`_.
+The user can then select it after pressing the `Use algorithm` button in the GUI, as shown in our
+`exemplary video about automated annotations <https://youtu.be/VWQKYRRRGVA?t=65>`_.
 
-The general structure of your algorithm-class will look as shown below.
-The content of `process_data`, however, depends on the exact use-case of the algorithm.
-Two possible use-cases are explained in the subsections after this code snippet.
+The basic implementation of an algorithm is explained in this section.
+In the list below you can see the necessary steps **(click to unfold/fold the sections to see details)**.
 
+.. raw:: html
+
+   <details>
+   <summary><font color="#0000FF">1. Create a file that will include your custom algorithm </font>(click to show image)</summary>
+
+.. image:: _static/images/development/algorithm_create_file.png
+    :alt: Creating a file for the plugin
+
+.. raw:: html
+
+   </details>
+
+.. raw:: html
+
+   <details>
+   <summary><font color="#0000FF">2. Develop your custom algorithm in that file, as shown in this code snippet</font> (click to show code)</summary>
 
 .. code-block:: python
 
@@ -186,32 +199,93 @@ Two possible use-cases are explained in the subsections after this code snippet.
 
         # The content of this method can be as described in the two sections Option A and Option B below
         def process_data(self, data: Dict[str, PlotData]) -> Dict[str, PlotData]:
-            #####################################################################
-            # ----> See the two sections below for content of this method <---- #
-            #####################################################################
+            #######################################################################
+            # ----> See sectionx 3, 3.1, and 3.2 for content of this method <---- #
+            #######################################################################
 
-    # It is important to create the class Activity and pass it to the GUI because otherwise
-    # the sensor_plot.annotation will not have a key `Activity` and thus won't know how to plot
-    # the labels it receives from CustomAlgorithm.process_data via its process_data method
-    class Activity(BaseRegionLabel):
-        name = "Activity Label"
-        min_height = 0
-        max_height = 0.8
+Go on with the next sections, see what code needs to go into `process_data`.
+If you want to know more about the data type Plot Data, please refer to
+`the regarding documentation <https://mad-gui.readthedocs.io/en/latest/modules/generated/mad_gui/mad_gui.models.local.PlotData.html#mad_gui.models.local.PlotData>`_.
 
-    start_gui(
-        data_dir=".", # you can also put a directory of your choice here, e.g. "/home" or "C:/"
-        plugins=[CustomAlgorithm],
-        labels=[Activity]
-    )
+.. raw:: html
 
-In this example we are using the label class `Activity`, however, you can also use custom labels.
-If you want to read more about creating custom labels, see :ref:`below <custom labels>`.
-If you want to see a full working example, head to `ExampleImporter <https://github.com/mad-lab-fau/mad-gui/blob/main/mad_gui/plugins/example.py#L29>`_.
+   </details>
+
+.. raw:: html
+
+   <details>
+   <summary><font color="#0000FF">3. Fill the method `process_data` with content (either 3.1 or 3.2)</font></summary>
+
+The above code snippet is not complete. Depending on whether you want your algorithm to create labels or to calculate
+features from existing annotations, the content of your plugin's `process_data` will be as descrbied in the following
+two subsections 3.1 and 3.2, see below.
+
+.. raw:: html
+
+   </details>
+
+.. raw:: html
+
+   <details>
+   <summary><font color="#0000FF">3.1 Calculate features for existing labels</font> (click to show code)</summary>
 
 .. _option a:
 
-Option A: Create labels to be plotted
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Create information about each existing label/annotation in the plot.
+The existing labels maybe were plotted by an algorithm, or maybe they were added manually in the GUI by using the
+`Add label` mode, both examples are shown in our `exemplary video about annotations <https://youtu.be/VWQKYRRRGVA">`_.
+
+To show some results for each of the annotations, you just need to put a string into each label's `description`, as
+shown in the code snippet below.
+The GUI will automatically take care for showing that string when the user hovers over a label, as shown in this image
+(click to zoom):
+
+.. image:: _static/images/development/algorithm_analyzing.png
+    :alt: Automated analysis by a plugin-algorithm
+    :height: 200
+
+.. note::
+
+   This code snippet is to be inserted into your `CustomAlgorithm` as explained in :ref:`implement algorithm`.
+
+.. code-block:: python
+
+   def process_data(self, data: Dict[str, PlotData]) -> Dict[str, PlotData]:
+      for sensor_plot in data.values():
+          if len(sensor_plot.annotations["Activity"]) == 0:
+            UserInformation.inform("There are no labels in the plot, therefor nothing is analyzed")
+          for i_activity, activity in sensor_plot.annotations["Activity Label"].data.iterrows():
+              # use some method to calculate features for each labelled activity
+              # the resulting string will be the activity label's tool tip,
+              # so it can be seen by the user by hovering over the label with the mouse
+              sensor_plot.annotations["Activity Label"].data.at[
+                  i_activity, 'description'
+              ] = self.calculate_features(sensor_plot.data.iloc[activity.start:activity.end],
+                                          sensor_plot.sampling_rate_hz
+                                         )
+
+   @staticmethod
+   def calculate_features(sensor_data: pd.DataFrame, fs: sampling_rate_hz) -> str:
+      # here you can for example use an algorithm to calculate features of the data.
+      return f"Mean value acc_x = {sensor_data['acc_x'].mean()}"
+
+In this example we are using the label class `Activity`, however, you can also use custom labels.
+If you want to read more about creating custom labels, see :ref:`below <custom labels>`.
+
+.. raw:: html
+
+   </details>
+
+.. raw:: html
+
+   <details>
+   <summary><font color="#0000FF">3.2 Create labels to be plotted</font> (click to show code)</summary>
+
+.. _option b:
+
+.. note::
+   Creating annotations/labels using an algorithm is different from manually adding annotations in the GUI.
+   To see the difference, you might want to take a look at our regarding `example video <https://www.youtube.com/watch?v=VWQKYRRRGVA>`_.
 
 Create labels which span a region between to samples given by your algorithm. After you return from `process_data`, the
 GUI will plot the labels automatically for you, as shown in this image (click to zoom):
@@ -220,12 +294,11 @@ GUI will plot the labels automatically for you, as shown in this image (click to
     :alt: Automated labelling by a plugin-algorithm
     :height: 200
 
-
-
 .. note::
 
-   This code snippet is to be inserted into your `CustomAlgorithm` as explained in :ref:`implement algorithm`.
-   The labels you want to create (in this case `Activity`) must have been passed to the `start_gui` method on startup.
+   This code snippet is to be inserted into your `CustomAlgorithm`
+   The labels you want to create (in this case `Activity`) must have been passed to the `start_gui` method on startup:
+   `start_gui(labels=[Activity]`
 
 In the code snippet below, line 6 `sensor_plot.annotations["Activity"]` basically is a `pd.DataFrame`.
 However, you can see an additional `.data` in the code. This is due to internal data handling in the GUI.
@@ -256,54 +329,29 @@ returns a pd.DataFrame with the columns `start` and `end`.
         annotations = pd.DataFrame(data=[starts, ends], columns = ['start', 'end'])
         return annotations
 
-.. _option_b:
+    # It is important to create the class Activity and pass it to the GUI because otherwise
+    # the sensor_plot.annotation will not have a key `Activity` and thus won't know how to plot
+    # the labels it receives from CustomAlgorithm.process_data via its process_data method
+    class Activity(BaseRegionLabel):
+        name = "Activity Label"
+        min_height = 0
+        max_height = 0.8
 
-Option B: Analyze data within existing labels
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+In this example we are using the label class `Activity`, however, you can also use custom labels.
+If you want to read more about creating custom labels, see :ref:`below <custom labels>`.
 
-Create information about each existing label/annotation in the plot.
-The existing labels maybe were plotted by an algorithm, as shown in :ref:`option a`, or maybe they were added manually
-in the GUI by using the `Add label` mode.
+.. raw:: html
 
-To show some results for each of the annotations, you just need to put a string into each label's `description`, as
-shown in the code snippet below.
-The GUI will automatically take care for showing that string when the user hovers over a label, as shown in this image
-(click to zoom):
+   </details>
 
-.. image:: _static/images/development/algorithm_analyzing.png
-    :alt: Automated analysis by a plugin-algorithm
-    :height: 200
-
-.. note::
-
-   This code snippet is to be inserted into your `CustomAlgorithm` as explained in :ref:`implement algorithm`.
-
-.. code-block:: python
-
-   from mad_gui.components.dialogs import UserInformation
-
-   def process_data(self, data: Dict[str, PlotData]) -> Dict[str, PlotData]:
-      for sensor_plot in data.values():
-          if len(sensor_plot.annotations["Activity"]) == 0:
-            UserInformation.inform("There are no labels in the plot, therefor nothing is analyzed")
-          for i_activity, activity in sensor_plot.annotations["Activity"].data.iterrows():
-              # use some method to calculate features for each labelled activity
-              # the resulting string will be the activity label's tool tip,
-              # so it can be seen by the user by hovering over the label with the mouse
-              sensor_plot.annotations["Activity"].data.at[
-                  i_activity, 'description'
-              ] = self.calculate_features(sensor_plot.data.iloc[activity.start:activity.end],
-                                          sensor_plot.sampling_rate_hz
-                                         )
-
-   @staticmethod
-   def calculate_features(sensor_data: pd.DataFrame, fs: sampling_rate_hz) -> str:
-      # here you can for example use an algorithm to calculate features of the data.
-      # you can also inform the user about things you like using a pop-up window:
-      UserInformation.inform(f"Calculating a feature for data between the samples"
-                             f" {sensor_data.index.iloc[0]} and"
-                             f" {sensor_data.index.iloc[-1]}")
-      return f"Mean value acc_x = {sensor_data['acc_x'].mean()}"
+4. pass algorithm and label to gui, and start it
+    # It is important to create the class Activity and pass it to the GUI because otherwise
+    # the sensor_plot.annotation will not have a key `Activity` and thus won't know how to plot
+    # the labels it receives from CustomAlgorithm.process_data via its process_data method
+    class Activity(BaseRegionLabel):
+        name = "Activity Label"
+        min_height = 0
+        max_height = 0.8
 
 .. _implement exporter:
 
@@ -333,6 +381,44 @@ all the data form the GUI and you can process / export it in whatever way you wa
             # See the API Reference for more information about our GlobalData object
 
 After creating your exporter, make sure to also pass it to the `start_gui` function.
+
+
+.. _custom labels:
+
+
+Creating custom labels
+**********************
+You can create labels and pass them to our GUI.
+Your label must inherit form our `BaseRegionLabel <https://mad-gui.readthedocs.io/en/latest/modules/generated/plot_tools/mad_gui.plot_tools.labels.BaseRegionLabel.html#mad_gui.plot_tools.labels.BaseRegionLabel>`_.
+It could for example look like this:
+
+.. code-block:: python
+
+   from mad_gui.plot_tools.base_label import BaseRegionLabel
+   from mad_gui import start_gui
+
+   class Status(BaseRegionLabel):
+      # This label will always be shown at the lowest 20% of the plot view
+      min_height = 0
+      max_height = 0.2
+      name = "Anomaly Label"
+
+      # Snapping will be done on the axis and in the range defined in MySettings (see above)
+      snap_to_min = True
+      # snap_to_max = False  # if setting this to `True`, set `snap_to_min` to `False` or delete it
+
+      # User will be asked to set the label's description when creating a label.
+      # This can have an arbitrary amount of levels with nested dictionaries.
+      descriptions = {"normal": None, "anomaly": ["too fast", "too slow"]}
+
+   start_gui(labels=[Status])
+
+The `description` defines the possible strings that can be assigned to a label. They will automatically show up after
+adding a new label or by clicking on a label when in `Edit label` mode, such that the user can select one of the
+descriptions. In our `exemplary video <https://www.youtube.com/watch?v=VWQKYRRRGVA&t=18s>`_, this is
+`{"stand": None, "walk": ["fast", "slow"], "jump": None}`.
+
+
 
 Send a message to the user
 **************************
@@ -401,39 +487,3 @@ The following example makes use of the BaseSettings and simply overrides some pr
    start_gui(
     settings=MySettings,
    )
-
-.. _custom labels:
-
-
-Creating custom labels
-**********************
-You can create labels and pass them to our GUI.
-Your label must inherit form our `BaseRegionLabel <https://mad-gui.readthedocs.io/en/latest/modules/generated/plot_tools/mad_gui.plot_tools.labels.BaseRegionLabel.html#mad_gui.plot_tools.labels.BaseRegionLabel>`_.
-It could for example look like this:
-
-.. code-block:: python
-
-   from mad_gui.plot_tools.base_label import BaseRegionLabel
-   from mad_gui import start_gui
-
-   class Status(BaseRegionLabel):
-      # This label will always be shown at the lowest 20% of the plot view
-      min_height = 0
-      max_height = 0.2
-      name = "Anomaly Label"
-
-      # Snapping will be done on the axis and in the range defined in MySettings (see above)
-      snap_to_min = True
-      # snap_to_max = False  # if setting this to `True`, set `snap_to_min` to `False` or delete it
-
-      # User will be asked to set the label's description when creating a label.
-      # This can have an arbitrary amount of levels with nested dictionaries.
-      descriptions = {"normal": None, "anomaly": ["too fast", "too slow"]}
-
-   start_gui(labels=[Status])
-
-The `description` defines the possible strings that can be assigned to a label. They will automatically show up after
-adding a new label or by clicking on a label when in `Edit label` mode, such that the user can select one of the
-descriptions. In our `exemplary video <https://www.youtube.com/watch?v=VWQKYRRRGVA&t=18s>`_, this is
-`{"stand": None, "walk": ["fast", "slow"], "jump": None}`.
-
