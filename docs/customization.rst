@@ -32,6 +32,8 @@ Adding your plugins
 *******************
 
 Below we explain, how you can create and inject such plugins to the GUI.
+There is always a list that describes the single steps and the regarding details are shown as soon as you click on
+the respective item in the list.
 If - at any point - you want to send a message to the user of the GUI, you create a message box with an OK button like
 this:
 
@@ -45,21 +47,9 @@ this:
 Loading and displaying data using your custom importer
 #######################################################
 
-In the GIF you can see what the rough steps are.
-You can find a more **detailed step-by-step explanation below the GIF**.
-
-.. image:: _static/gifs/importer.gif
-    :alt: Workflow for implementing an importer
-
-If the user presses the `Load data` button in the GUI, a window for selecting the importer and data to be loaded
-will pop up, as shown in the GIF and our `exemplary video about loading data <https://youtu.be/akxcuFOesC8>`_.
-The user can select one of the importers that were passed to the GUI at startup by selecting it in a dropdown.
-
-
-After the user presses `Start processing`, the path to the selected file will be passed to the selected loader's
-`load_sensor_data` method.
-
-**Steps to implement your importer (click to unfold/fold the sections):**
+These are the necessary steps to implement your importer **(click to unfold/fold the sections to see details)**.
+If you perform the steps from the list below, your importer will be included into the GUI as shown in
+`this GIF <_static/gifs/importer.gif>`_ (no need to get everything from the GIF, details are in the list below).
 
 .. raw:: html
 
@@ -105,7 +95,7 @@ After the user presses `Start processing`, the path to the selected file will be
             ###                                                            ###
             ### b) load the sampling rate (int or float)                   ###
             ##################################################################
-            sensor_data = 
+            sensor_data =
             sampling_rate =
 
             # CAUTION: if you only want to have one plot you do not need to
@@ -146,8 +136,14 @@ After the user presses `Start processing`, the path to the selected file will be
    </details>
    <br />
 
-Now you can select the importer in the GUI by pressing `Load Data` and then selecting it in the dropdown on the upper
-left in the pop-up window.
+After you have performed the steps from the above list, you can select the importer in the GUI by pressing `Load Data`
+and then selecting it in the dropdown on the upper left in the pop-up window.
+From user perspective it should work as we have described in our
+`exemplary video about loading data <https://youtu.be/akxcuFOesC8>`_
+
+If the user presses `Start processing`, the path to the selected file will be passed to the selected loader's
+`load_sensor_data` method.
+After returning the dictionary from this method, the GUI will plot the data.
 
 .. note::
     In case loading your file does not work, we recommend to set breakpoints into your loader and check, whether
