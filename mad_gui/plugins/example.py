@@ -30,7 +30,7 @@ class ExampleImporter(BaseImporter):
         return
 
 
-class ExampleAlgorithm(BaseAlgorithm):
+class StationaryMomentsDetector(BaseAlgorithm):
     @classmethod
     def name(cls):
         return "Find Resting Phases (example MaD GUI)"
@@ -82,3 +82,26 @@ class ExampleAlgorithm(BaseAlgorithm):
         annotations = self._binary_to_df(flags_standing)
         annotations["description"] = "standing"
         return annotations
+
+
+class EnergyCalculator(BaseAlgorithm):
+    @classmethod
+    def name(cls):
+        return "Mean energy of acceleration (example MaD GUI)"
+
+    def process_data(self, plot_data: Dict[str, PlotData]):
+        for sensor_plot in plot_data.values():
+            for i_activity, activity in sensor_plot.annotations["Activity Label"].data.iterrows():
+                description = sensor_plot.annotations["Activity Label"].data.at[i_activity, "description"]
+                sensor_plot.annotations["Activity Label"].data.at[i_activity, "description"] = (
+                    description
+                    + " ("
+                    + self.calculate_features(sensor_plot.data.iloc[activity.start : activity.end])
+                    + ")"
+                )
+
+    @staticmethod
+    def calculate_features(sensor_data: pd.DataFrame) -> str:
+        signal = sensor_data[["acc_x", "acc_y", "acc_z"]]
+        energy = np.sqrt((signal ** 2).sum(axis=1).mean())
+        return f"mean acceleration = {energy:.2f}"

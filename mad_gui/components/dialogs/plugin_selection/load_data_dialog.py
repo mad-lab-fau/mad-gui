@@ -103,6 +103,7 @@ class LoadDataDialog(QDialog):
 
         style_cb = self.parent.ui.btn_add_label.styleSheet().replace("QPushButton", "QComboBox")
         self.ui.combo_plugin.setStyleSheet(style_cb)
+        self.ui.combo_plugin.view().setStyleSheet(style_cb.replace("QComboBox", "QListView"))
 
     def _handle_file_select(self, property_name):
         file_name = ask_for_file_name(self.base_dir, parent=self)
