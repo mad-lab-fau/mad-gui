@@ -54,7 +54,7 @@ If you perform the steps from the list below, your importer will be included int
 .. raw:: html
 
    <details>
-   <summary>1. create a file that will include your custom importer, e.g. `custom_importer.py` <u><font color="#0000FF">(click to show image)</font></u></summary>
+   <summary>1. Create a file that will include your custom importer <u><font color="#0000FF">(click to show image)</font></u></summary>
 
 .. image:: _static/images/development/importer_create_file.png
     :alt: Creating a file for the plugin
@@ -119,7 +119,7 @@ If you perform the steps from the list below, your importer will be included int
 .. raw:: html
 
    <details>
-   <summary>3. pass it to the `start_gui` function <u><font color="#0000FF">(click to show image)</font></u></summary>
+   <summary>3. pass it to the `start_gui` function <u><font color="#0000FF">(click to show code and image)</font></u></summary>
 
 .. code-block:: python
 
