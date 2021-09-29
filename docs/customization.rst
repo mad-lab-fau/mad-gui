@@ -9,7 +9,6 @@ Development
 .. note::
    In case you experience issues, please try to find a solution in :ref:`Troubleshooting for Developers <troubleshooting developers>`.
    
-
 About plugins (IMPORTANT)
 *************************
 
