@@ -142,8 +142,8 @@ From user perspective it should work as we have described in our
 `exemplary video about loading data <https://youtu.be/akxcuFOesC8?t=10>`_
 
 If the user presses `Start processing`, the path to the selected file will be passed to the selected loader's
-`load_sensor_data` method.
-After returning the dictionary from this method, the GUI will plot the data.
+`load_sensor_data` method, as shown in `the GIF <_static/gifs/importer.gif>`_.
+After returning the dictionary from this method to the GUI, the GUI will plot the data.
 
 .. note::
     In case loading your file does not work, we recommend to set breakpoints into your loader and check, whether
