@@ -139,7 +139,7 @@ If you perform the steps from the list below, your importer will be included int
 After you have performed the steps from the above list, you can select the importer in the GUI by pressing `Load Data`
 and then selecting it in the dropdown on the upper left in the pop-up window.
 From user perspective it should work as we have described in our
-`exemplary video about loading data <https://youtu.be/akxcuFOesC8>`_
+`exemplary video about loading data <https://youtu.be/akxcuFOesC8?t=10>`_
 
 If the user presses `Start processing`, the path to the selected file will be passed to the selected loader's
 `load_sensor_data` method.
