@@ -220,7 +220,8 @@ If you want to know more about the data type Plot Data, please refer to
    <details>
    <summary><font color="#0000FF">3. Fill the method `process_data` with content (either 3.1 or 3.2)</font></summary>
 
-The above code snippet is not complete. Depending on whether you want your algorithm to calculate
+
+The code snippet from 2. is not complete. Depending on whether you want your algorithm to calculate
 features from existing annotations or to create labels for the plotted data, the content of your plugin's `process_data`
 will be as descrbied in one of the following two subsections 3.1 and 3.2.
 
