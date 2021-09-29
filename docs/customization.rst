@@ -319,8 +319,9 @@ all the data form the GUI and you can process / export it in whatever way you wa
     class CustomExporter(BaseImporter):
         @classmethod
         def name(cls) -> str:
-            # This will be shown as string in the dropdown menu of mad_gui.components.dialogs.ExportResultsDialog upon
-            # pressing the button "Export data" in the GUI
+            # This will be shown as string in the dropdown menu of
+            # mad_gui.components.dialogs.ExportResultsDialog upon pressing
+            # the button "Export data" in the GUI
             return "Custom exporter"
 
         def process_data(global_data):
@@ -369,13 +370,15 @@ The following example makes use of the BaseSettings and simply overrides some pr
      SNAP_RANGE_S = 0.2
 
      # in all your labels you can add an event by using `Ctrl` as modifier when in `Add label` mode
-     # when adding an event the user will be prompted to select one of these two strings as a `description` for the event
+     # when adding an event the user will be prompted to select one of these two strings as a
+     # `description` for the event
      EVENTS = ["important event", "other type of important event"]
 
      # Set the width of IMU plot to this, when hitting the play button for the video.
      PLOT_WIDTH_PLAYING_VIDEO = 20  # in seconds
 
-     # If plotting large datasets, this speeds up plotting, however might result in inaccurate representation of the data
+     # If plotting large datasets, this speeds up plotting, however might result in inaccurate
+     # representation of the data
      AUTO_DOWNSAMPLE = True
 
    start_gui(
