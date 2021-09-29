@@ -304,8 +304,9 @@ class BaseRegionLabel(pg.LinearRegionItem):
         child_counter = 0
         for i_child in self.childItems():
             # make cursor horizontal when hovering
-            i_child.hoverEvent = lambda event: self._hover_border_event(event)
-            i_child.parentLabel = self
+            # Pylint is right, that there are other ways, but in the hover-border-event, we want to refer to `self`
+            # as this regionlabel and not as the border of the regionlabel
+            i_child.hoverEvent = lambda event: self._hover_border_event(event)  # pylint: disable=unnecessary-lambda
             i_child.span = (self.min_height, self.max_height)
             # color of gait event lines
             if child_counter == 0:

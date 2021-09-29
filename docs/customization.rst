@@ -231,22 +231,19 @@ two subsections 3.1 and 3.2, see below.
 
 .. _option a:
 
-Create information about each existing label/annotation in the plot.
-The existing labels maybe were plotted by an algorithm, or maybe they were added manually in the GUI by using the
-`Add label` mode, both examples are shown in our `exemplary video about annotations <https://youtu.be/VWQKYRRRGVA">`_.
-
-To show some results for each of the annotations, you just need to put a string into each label's `description`, as
-shown in the code snippet below.
-The GUI will automatically take care for showing that string when the user hovers over a label, as shown in this image
-(click to zoom):
-
-.. image:: _static/images/development/algorithm_analyzing.png
-    :alt: Automated analysis by a plugin-algorithm
-    :height: 200
-
 .. note::
 
    This code snippet is to be inserted into your `CustomAlgorithm` as explained in :ref:`implement algorithm`.
+
+This assumes, there are already labels in the GUI.
+The existing labels may have been plotted by an algorithm, or may have been added manually in the GUI by using the
+`Add label` mode, both examples are shown in our `exemplary video about annotations <https://youtu.be/VWQKYRRRGVA">`_.
+
+Using the custom algorithm, you can create information about each existing label/annotation in the plot.
+The GUI will take care for showing the results as soon as the user hovers of the label/annotation with the mouse, as
+you can see in `this GIF <_static/gifs/algorithm_label.gif>`_.
+
+You just need to put a string into each label's `description`, as shown in the code snippet below:
 
 .. code-block:: python
 
@@ -284,21 +281,14 @@ If you want to read more about creating custom labels, see :ref:`below <custom l
 .. _option b:
 
 .. note::
-   Creating annotations/labels using an algorithm is different from manually adding annotations in the GUI.
-   To see the difference, you might want to take a look at our regarding `example video <https://www.youtube.com/watch?v=VWQKYRRRGVA>`_.
-
-Create labels which span a region between to samples given by your algorithm. After you return from `process_data`, the
-GUI will plot the labels automatically for you, as shown in this image (click to zoom):
-
-.. image:: _static/images/development/algorithm_labelling.png
-    :alt: Automated labelling by a plugin-algorithm
-    :height: 200
-
-.. note::
 
    This code snippet is to be inserted into your `CustomAlgorithm`
    The labels you want to create (in this case `Activity`) must have been passed to the `start_gui` method on startup:
-   `start_gui(labels=[Activity]`
+   `start_gui(labels=[Activity])`
+
+A plugin like this can be used to create labels which span a region between to samples given by your algorithm.
+After returning from `process_data`, the GUI will plot the labels automatically for you, as shown in
+`this GIF <_static/gifs/algorithm_feature.gif>`_.:
 
 In the code snippet below, line 6 `sensor_plot.annotations["Activity"]` basically is a `pd.DataFrame`.
 However, you can see an additional `.data` in the code. This is due to internal data handling in the GUI.
