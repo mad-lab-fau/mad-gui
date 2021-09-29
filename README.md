@@ -116,7 +116,10 @@ You do not have experience with python but still want to load data from a specif
 
 
 ## Can the GUI use my own algorithm?
-Yes, for more information see the answer of [Can the GUI load and display data of my specific system?](#can-the-gui-load-and-display-data-of-my-specific-system).
+Yes, however it will need someone who is familiar with python.
+This person needs to perform the steps described in [Development](https://mad-gui.readthedocs.io/en/latest/customization.html).
+Some supplementary basic information can be found in our section [Prepare Development](https://mad-gui.readthedocs.io/en/latest/developer_guidelines.html).
 
+You do not have experience with python but still want to load data from a specific system? [Contact us!](mailto:malte.ollenschlaeger@fau.de)
 ## Can I change something at the core of the GUI?
 Yes, for more information, please take a look at our [Contribution Guidelines](https://mad-gui.readthedocs.io/en/latest/contribution_guidelines.html#contribution-guidelines).
