@@ -185,7 +185,7 @@ In the list below you can see the necessary steps **(click to unfold/fold the se
 
 .. code-block:: python
 
-    """This is the content of custom_algorithm.py, which holds my first algorithm plugin."
+    """This is the content of custom_algorithm.py, which holds my first algorithm plugin."""
 
     from typing import Dict
     import pandas as pd
