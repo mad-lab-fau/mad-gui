@@ -30,11 +30,11 @@ class Jump(BaseRegionLabel):
 
 
 class MyEvent(BaseEventLabel):
-    min_height = 0.5
-    max_height = 0.8
+    min_height = 0
+    max_height = 1
     name = "Peak"
     descriptions = {"Positive peak": None, "Negative peak": None}
-    snap_to_min = True
+    snap_to_min = False
 
 
 def start_gui(

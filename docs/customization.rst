@@ -159,6 +159,15 @@ After returning the dictionary from this method to the GUI, the GUI will plot th
 Plugin: Calculate features for existing annotations or create new annotations
 #############################################################################
 
+You have two possibilities:
+
+- calculate features for existing annotations (see 00:50 in the video below)
+- create annotations using an algorithm (see 00:40 in the video below)
+
+.. raw:: html
+
+   <iframe width="560" height="315" src="https://www.youtube.com/embed/VWQKYRRRGVA?start=3" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
 You will have to create a plugin, an algorithm, which inherits from our `BaseAlgorithm <https://mad-gui.readthedocs.io/en/latest/modules/generated/plugins/mad_gui.plugins.BaseAlgorithm.html#mad_gui.plugins.BaseAlgorithm>`_.
 The user can then select it after pressing the `Use algorithm` button in the GUI, as shown in our
 `exemplary video about automated annotations <https://youtu.be/VWQKYRRRGVA?t=65>`_.
@@ -351,12 +360,12 @@ Also you have to pass the algorithm itself to the GUI:
    from custom_algorithm import CustomAlgorithm
    from mad_gui import start_gui
 
-    class MyLabel(BaseRegionLabel):
-        name = "Exemplary Label"
-        min_height = 0
-        max_height = 1
+   class MyLabel(BaseRegionLabel):
+     name = "Exemplary Label"
+     min_height = 0
+     max_height = 1
 
-    start_gui(plugins=[MyAlgorithm], labels=[MyLabel])
+   start_gui(plugins=[MyAlgorithm], labels=[MyLabel])
 
 However, you can also use other custom labels.
 All necessary information about custom labels, should be available in :ref:`custom labels`.

@@ -94,7 +94,7 @@ class EnergyCalculator(BaseAlgorithm):
             for i_activity, activity in sensor_plot.annotations["Activity Label"].data.iterrows():
                 description = sensor_plot.annotations["Activity Label"].data.at[i_activity, "description"]
                 sensor_plot.annotations["Activity Label"].data.at[i_activity, "description"] = (
-                    description
+                    str(description)
                     + " ("
                     + self.calculate_features(sensor_plot.data.iloc[activity.start : activity.end])
                     + ")"

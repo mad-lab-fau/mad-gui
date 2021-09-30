@@ -260,6 +260,9 @@ class SensorPlot(BasePlot):
         else:
             self.enableAutoRange()
 
+        # make it responsive even for zoomed-in large datasets
+        self.getPlotItem().setClipToView(True)
+
         for channel_name in channels_to_plot:
             # make sure we use the same color for one channel even if only few channels are plotted
             color_index = np.argmax([channel_name == item for item in data.columns])
@@ -270,18 +273,18 @@ class SensorPlot(BasePlot):
                 data_zero_mean = data_to_plot - data_to_plot.mean()
                 data_to_plot = data_zero_mean / (data_zero_mean.max() - data_zero_mean.min())
             try:
-                self.plot(
-                    x=x_axis,
-                    y=data_to_plot,
-                    pen=pg.mkPen(width=2, color=color),
-                )
+                item = pg.PlotDataItem()
+                self.plotItem.vb.addItem(item)
+                item.setData(x=x_axis, y=data_to_plot, pen=pg.mkPen(width=2, color=color))
+                # self.plot(
+                #    x=x_axis,
+                #    y=data_to_plot,
+                #    pen=pg.mkPen(width=2, color=color),
+                # )
             except TypeError:
                 warnings.warn(f"Cannot plot channel {channel_name} because of a type error.")
 
         self.autoRange()
-
-        # make it responsive even for zoomed-in large datasets
-        self.getPlotItem().setClipToView(True)
 
     def _change_mode(self, new_mode: MODES):
         """Adapt tool tip text depending on mode and remove potentially plotted green line indicating a new event.

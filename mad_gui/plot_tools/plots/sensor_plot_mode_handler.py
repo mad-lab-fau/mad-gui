@@ -2,7 +2,7 @@ from __future__ import annotations
 
 from pyqtgraph import InfiniteLine, mkPen
 from PySide2.QtCore import QEvent, Qt
-from PySide2.QtGui import QMouseEvent
+from PySide2.QtGui import QMouseEvent, QPen
 
 from mad_gui.components.dialogs import NestedLabelSelectDialog
 from mad_gui.components.dialogs.user_information import UserInformation
@@ -204,7 +204,7 @@ class AddModeHandler(BaseModeHandler):
             return
         event_class = self.plot.inside_event_range(pos)
         if event_class and ev.modifiers() == Qt.ControlModifier:
-            self._potential_start = InfiniteLine(snapped_pos, pen=mkPen(0, 255, 0, 150, width=2, style=Qt.DashLine))
+            self._potential_start = InfiniteLine(snapped_pos, pen=mkPen(255, 0, 255, 150, width=2, style=Qt.DashLine))
             self._potential_start.span = (
                 event_class.min_height,
                 event_class.max_height,
