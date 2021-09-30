@@ -272,6 +272,7 @@ You just need to put a string into each annotation's `description`, as shown in 
               ] = self.calculate_features(sensor_plot.data.iloc[activity.start:activity.end],
                                           sensor_plot.sampling_rate_hz
                                          )
+         UserInformation.inform("Algorithm executed. Move the mouse over a label to see the result in a pop-up.")
 
    @staticmethod
    def calculate_features(sensor_data: pd.DataFrame, fs: sampling_rate_hz) -> str:
@@ -311,10 +312,10 @@ returns a pd.DataFrame with the columns `start` and `end`.
    :linenos:
 
     def process_data(self, data: Dict[str, PlotData]) -> Dict[str, PlotData]:
-        for sensor_plot in data.values():
+        for plot_name, sensor_plot in data.items():
             # Use the currently plotted data to create annotations, like an MyLabel Label
             annotations = self.create_annotations(sensor_plot.data, sensor_plot.sampling_rate_hz)
-            UserInformation.inform(f"Found {len(annotations)} resting phases.")
+            UserInformation.inform(f"Found {len(annotations)} for {plot_name}.")
             sensor_plot.annotations["Exemplary Label"].data = annotations
 
     @staticmethod
