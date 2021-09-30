@@ -2,7 +2,7 @@ from __future__ import annotations
 
 from pyqtgraph import InfiniteLine, mkPen
 from PySide2.QtCore import QEvent, Qt
-from PySide2.QtGui import QMouseEvent, QPen
+from PySide2.QtGui import QMouseEvent
 
 from mad_gui.components.dialogs import NestedLabelSelectDialog
 from mad_gui.components.dialogs.user_information import UserInformation
