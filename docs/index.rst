@@ -15,10 +15,14 @@ here:
 .. toctree::
    :maxdepth: 1
 
-   Getting started <README.md>
-   Prepare Development <developer_guidelines>
-   Development <customization>
-   Contribution guidelines <contribution_guidelines>
+   Readme <README.md>
+   Preparation <developer_guidelines>
+   Development <development>
+   Importer <plugin_importer>
+   Algorithm <plugin_algorithm>
+   Exporter <plugin_exporter>
    modules/index.rst
    Troubleshooting <troubleshooting>
+..
+   Contributing <contribution_guidelines>
 

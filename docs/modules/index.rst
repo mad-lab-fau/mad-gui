@@ -1,8 +1,8 @@
 .. _api_ref:
 
-=============
-API Reference
-=============
+===
+API
+===
 
 To keep the API reference simple, we have only included the parts that you will likely have to understand when you want
 to make use of the :ref:`customization`.

@@ -28,7 +28,7 @@ Experiencing issues? [Report a bug here!](https://github.com/mad-lab-fau/mad-gui
 
 ## Contents of this readme
 - [What is it?](#what-is-it)
-- [How do I use it (videos)](#how-do-i-use-it-videos)
+- [How do I use it (videos)](#how-do-i-use-it)
 - [How do I get the GUI to work on my machine?](#how-do-i-get-the-gui-to-work-on-my-machine)
 - [How can I test the GUI using your example data on my computer?](#how-can-i-test-the-gui-using-your-example-data-on-my-computer)
 - [Can the GUI load and display data of my specific system?](#can-the-gui-load-and-display-data-of-my-specific-system)
@@ -41,12 +41,15 @@ The MaD GUI is a framework for processing time series data.
 Its use-cases include visualization, annotation (manual or automated), and algorithmic processing of visualized data and annotations.
 
 ## How do I use it?
-### Videos
-By clicking on the images below, you will be redirected to YouTube. In case you want to follow along on your own machine, check out the section [How do I get the GUI to work on my machine?](#how-do-i-get-the-gui-to-work-on-my-machine) first.
 
-[<img src="./docs/_static/images/video_thumbnails/loading_and_navigating.png" width="200px">](https://www.youtube.com/watch?v=akxcuFOesC8 "MaD GUI - Loading data and navigating in the plot")
-[<img src="./docs/_static/images/video_thumbnails/annotations.png" width="200px">](https://www.youtube.com/watch?v=VWQKYRRRGVA "MaD GUI - Labelling data manually or using an algorithm")
-[<img src="./docs/_static/images/video_thumbnails/sync.png" width="200px">](https://www.youtube.com/watch?v=-GI5agFOPRM "MaD GUI - Synchronize video and sensor data")
+In case you want to follow along on your own machine, check out the section [How do I get the GUI to work on my machine?](#how-do-i-get-the-gui-to-work-on-my-machine) first.
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/akxcuFOesC8" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+<br />
+<iframe width="560" height="315" src="https://www.youtube.com/embed/VWQKYRRRGVA" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+<br />
+<iframe width="560" height="315" src="https://www.youtube.com/embed/-GI5agFOPRM" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
 
 ### Shortcuts
 Please watch the videos linked above, if you want to learn more about the different actions.
@@ -109,17 +112,17 @@ Now you can open the previously downloaded example data as shown in [How do I us
 
 ## Can the GUI load and display data of my specific system?
 Yes, however it will need someone who is familiar with python.
-This person needs to perform the steps described in [Development](https://mad-gui.readthedocs.io/en/latest/customization.html).
-Some supplementary basic information can be found in our section [Prepare Development](https://mad-gui.readthedocs.io/en/latest/developer_guidelines.html).
+This person needs to perform the steps described in [Development](https://mad-gui.readthedocs.io/en/latest/development.html).
+Some supplementary basic information can be found in our section [Preparation](https://mad-gui.readthedocs.io/en/latest/developer_guidelines.html).
 
 You do not have experience with python but still want to load data from a specific system? [Contact us!](mailto:malte.ollenschlaeger@fau.de)
 
 
 ## Can the GUI use my own algorithm?
 Yes, however it will need someone who is familiar with python.
-This person needs to perform the steps described in [Development](https://mad-gui.readthedocs.io/en/latest/customization.html).
-Some supplementary basic information can be found in our section [Prepare Development](https://mad-gui.readthedocs.io/en/latest/developer_guidelines.html).
+This person needs to perform the steps described in [Development](https://mad-gui.readthedocs.io/en/latest/development.html).
+Some supplementary basic information can be found in our section [Preparation](https://mad-gui.readthedocs.io/en/latest/developer_guidelines.html).
 
 You do not have experience with python but still want to load data from a specific system? [Contact us!](mailto:malte.ollenschlaeger@fau.de)
 ## Can I change something at the core of the GUI?
-Yes, for more information, please take a look at our [Contribution Guidelines](https://mad-gui.readthedocs.io/en/latest/contribution_guidelines.html#contribution-guidelines).
+Yes, for more information, please [get in touch](mailto:malte.ollenschlaeger@fau.de).
