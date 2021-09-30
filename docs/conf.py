@@ -19,9 +19,6 @@ from shutil import copy
 sys.path.insert(0, os.path.abspath(".."))
 import mad_gui
 
-# -- Copy README file --------------------------------------------------------
-copy(Path("../README_full.md"), Path("./README.md"))
-
 # -- replace image paths in README---------------------------------------------
 with open("./README.md", "r") as file:
     readme_md = file.read()
