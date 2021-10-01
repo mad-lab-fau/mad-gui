@@ -19,13 +19,26 @@ from shutil import copy
 sys.path.insert(0, os.path.abspath(".."))
 import mad_gui
 
-# -- replace image paths in README---------------------------------------------
+# -- Copy README file --------------------------------------------------------
+copy(Path("../README.md"), Path("./README.md"))
+
+# -- replace few things in README---------------------------------------------
 with open("./README.md", "r") as file:
     readme_md = file.read()
 readme_html = readme_md.replace("./docs/", "")
 readme_html = readme_html.replace(
     ":warning:", ""
 )  # actually want to replace it with |:warning:| but sphinxemoji does not work
+
+# replace link to youtube by embedded videos
+readme_html = readme_html.replace(
+    '[<img src="./docs/_static/images/video_thumbnails/loading_and_navigating.png" '
+    'width="200px">](https://www.youtube.com/watch?v=akxcuFOesC8 "MaD GUI - Loading data and navigating in the plot")',
+    '<iframe width="560" height="315" src="https://www.youtube.com/embed/akxcuFOesC8" '
+    'title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>',
+)
+
+
 with open("./README.md", "w") as file:
     file.write(readme_html)
 
