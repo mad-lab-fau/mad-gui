@@ -19,13 +19,13 @@ Then you can implement your algorithm based on one of the two examples we give b
 
 - 1.2 Algorithm, which creates features for existing annotations:
 
-   - see what that means `in a video <https://www.youtube.com/watch?v=VWQKYRRRGVA&t=9s>`_ (00:40 to 00:50)
-   - use the :ref:`code example <algorithm annotations>`
+    - see what that means `in a video <https://www.youtube.com/watch?v=VWQKYRRRGVA&t=9s>`_ (00:40 to 00:50)
+    - use the :ref:`code example <algorithm annotations>`
 
 - 1.3 Algorithm, which creates features for existing annotations:
 
-   - see what that means `in a video <https://www.youtube.com/watch?v=VWQKYRRRGVA&t=9s>`_ (00:50 to 01:00)
-   - use the :ref:`code example <algorithm features>`
+    - see what that means `in a video <https://www.youtube.com/watch?v=VWQKYRRRGVA&t=9s>`_ (00:50 to 01:00)
+    - use the :ref:`code example <algorithm features>`
 
 The user will be able to select your plugin after pressing the button `Use algorithm`, as shown in our
 `exemplary video <https://www.youtube.com/watch?v=VWQKYRRRGVA>`_.
@@ -38,16 +38,23 @@ Algorithm, which creates annotations to be plotted
 A plugin like this can be used to create annotations which span a region between to samples.
 Your algorithm may for example be able to find regions where the sensor was not moving.
 The GUI will plot the annotations automatically after it returns from your algorithm's `process_data` method.
-You can see an example in `this GIF <_static/gifs/algorithm_label.gif>`_.
+You can see an example in `this GIF <_static/gifs/algorithm_label.gif>`_ or `this video from 00:00 to 00:00
+<https://www.youtube.com/watch?v=VWQKYRRRGVA&t=9s>`_.
 
 .. admonition:: Getting started quickly
    :class: tip
 
-   The code snippet below is a working example. To adapt it to your use case, you only need to modify the methods
-   **name** and **calculate_features**.
+   The code below is a working example. To adapt it to your use case, you only need to modify the methods
+   **create_annotations** of `CustomAlgorithm`. You can test with our
+   `example data <https://github.com/mad-lab-fau/mad-gui/raw/main/example_data/sensor_data.zip>`_ like this:
 
-Only in case you are passing labels to our GUI using like `start_gui(labels=[MyCustomLabel, MyOtherCustomLabel])`,
-you need to change something in `process_data` in case. For a first try, we recommend to NOT pass labels!
+   .. code-block:: python
+
+       from mad_gui import start_gui
+       from mad_gui.plugins import ExampleImporter
+       from my_algorithm import CustomAlgorithm # you need to create this file and class, see below
+
+       start_gui(plugins=[ExampleImporter, CustomAlgorithm])
 
 If you want to know more about the data type `Plot Data`, which you will receive as an argument, please refer to
 `the regarding documentation <https://mad-gui.readthedocs.io/en/latest/modules/generated/mad_gui/mad_gui.models.local.PlotData.html#mad_gui.models.local.PlotData>`_.
@@ -71,39 +78,40 @@ However, we assume you can get along with this code snippet and without reading 
             warnings.warn("Please give you algorithm a meaningful name.")
             return name
 
-    def process_data(self, data: Dict[str, PlotData]):
-        for plot_name, sensor_plot in data.items():
-            # Use the currently plotted data to create annotations
-            annotations = self.create_annotations(sensor_plot.data, sensor_plot.sampling_rate_hz)
-            UserInformation.inform(f"Found {len(annotations)} for {plot_name}.")
-            sensor_plot.annotations["Activity"].data = annotations
+        def process_data(self, data: Dict[str, PlotData]):
+            for plot_name, sensor_plot in data.items():
+                # Use the currently plotted data to create annotations
+                annotations = self.create_annotations(sensor_plot.data, sensor_plot.sampling_rate_hz)
+                UserInformation.inform(f"Found {len(annotations)} annotations for {plot_name}.")
+                sensor_plot.annotations["Activity"].data = annotations
 
-    @staticmethod
-    def create_annotations(sensor_data: pd.DataFrame, sampling_rate_hz: float) -> pd.DataFrame:
-        """Some code that creates a pd.DataFrame with the columns `start` and `end`.
+        @staticmethod
+        def create_annotations(sensor_data: pd.DataFrame, sampling_rate_hz: float) -> pd.DataFrame:
+            """Some code that creates a pd.DataFrame with the columns `start` and `end`.
 
-        Each row corresponds to one annotation to be plotted.
-        """
-        #########################################################################
-        ###                                 README                            ###
-        ### Here you create a dataframe, which has the columns start and end. ###
-        ###  For each of the columns, the GUI will then plot one annotation.  ###
-        ###               You could for example do something like             ###
-        ###     starts, ends = my_algorithm_to_find_regions(sensor_data)      ###
-        #########################################################################
-        starts = [int(0.1 * len(data)), int(0.5 * len(data))] # must be a list
-        ends = [int(0.4 * len(data)), int(0.9) * len(data))] # must be a list
+            Each row corresponds to one annotation to be plotted.
+            """
+            #########################################################################
+            ###                                 README                            ###
+            ### Here you create a dataframe, which has the columns start and end. ###
+            ###  For each of the columns, the GUI will then plot one annotation.  ###
+            ###               You could for example do something like             ###
+            ###     starts, ends = my_algorithm_to_find_regions(sensor_data)      ###
+            #########################################################################
+            data_length = len(sensor_data)
+            starts = [int(0.1 * data_length), int(0.5 * data_length)]  # must be a list
+            ends = [int(0.4 * data_length), int(0.9 * data_length)]  # must be a list
 
-        warnings.warn("Using exemplary labels, please find starts and ends on your own.")
+            warnings.warn("Using exemplary labels, please find starts and ends on your own.")
 
-        annotations = pd.DataFrame(data=[starts, ends], columns = ['start', 'end'])
-        return annotations
+            annotations = pd.DataFrame(data=[starts, ends], columns = ['start', 'end'])
+            return annotations
 
 .. admonition:: Using your algorithm in the GUI
    :class: tip
 
-    As a last step, you need to pass the algorithm (and optionally other plugins) to the start_gui
-    function, see :ref:`Pass algorithm to the GUI <pass algorithm>`.
+   As a last step, you need to pass the algorithm (and optionally other plugins) to the start_gui
+   function, see `Readme: Developing Plugins <https://mad-gui.readthedocs.io/en/latest/README.html#developing-plugins>`_.
 
 .. _algorithm features:
 
@@ -116,7 +124,8 @@ For example the user might have created annotations manually or by using an algo
 Now, you might want to know the mean value of the sensor signal in each of the annotated regions.
 For this task you can create an algorithm as we describe it in this section.
 After execution of the algorithm, the GUI will take care for showing the results as soon as the user hovers of the
-annotation with the mouse, as you can see in `this GIF <_static/gifs/algorithm_feature.gif>`_.
+annotation with the mouse, as you can see in `this GIF <_static/gifs/algorithm_feature.gif>`_ or `this video from 00:00 to 00:00
+<https://www.youtube.com/watch?v=VWQKYRRRGVA&t=9s>`_.
 
 You can copy and paste the code snippet into your file for an algorithm.
 If you want to know more about the data type `Plot Data`, which you will receive as an argument, please refer to
@@ -126,8 +135,18 @@ However, we assume you can get along with this code snippet and without reading 
 .. admonition:: Getting started quickly
    :class: tip
 
-   The code snippet below is a working example. To adapt it to your use case, you only need to modify the methods
-   **name** and **calculate_features**.
+   The code below is a working example. To adapt it to your use case, you only need to modify the methods
+   **name** and **calculate_features** of `CustomAlgorithm`. You can test with our
+   `example data <https://github.com/mad-lab-fau/mad-gui/raw/main/example_data/sensor_data.zip>`_ like this:
+
+   .. code-block:: python
+
+       from mad_gui import start_gui
+       from mad_gui.plugins import ExampleImporter
+       from my_algorithm import CustomAlgorithm # you need to create this file and class, see below
+
+       start_gui(plugins=[ExampleImporter, CustomAlgorithm])
+
 
 Only in case you are passing labels to our GUI using like `start_gui(labels=[MyCustomLabel, MyOtherCustomLabel])`,
 you need to change something in `process_data` in case. For a first try, we recommend to NOT pass labels!
@@ -157,12 +176,13 @@ you need to change something in `process_data` in case. For a first try, we reco
             as soon as the user presses the `Use Algorithm` button and selects this algorithm.
             """
             # iterate over all existing plots
-            for plot_name, plot_data in data.values():
+            for plot_name, plot_data in data.items():
                 if plot_data.annotations["Activity"].data.empty:
                     UserInformation.inform(
                         f"There are no annotations in the plot {plot_name}. "
                         f"Therefore nothing is analyzed."
                     )
+                    return
 
                 # iterate over all labels in this plot
                 annotations = plot_data.annotations["Activity"].data
@@ -184,7 +204,7 @@ you need to change something in `process_data` in case. For a first try, we reco
                                    "Move the mouse over a label to see the result in a pop-up.")
 
         @staticmethod
-        def calculate_features(sensor_data: pd.DataFrame, sampling_rate_hz: float) -> str:
+        def calculate_feature(sensor_data: pd.DataFrame, sampling_rate_hz: float) -> str:
             #######################################################################
             ###                        README                                   ###
             ###      Here you can calculate features for example like this:     ###
@@ -196,5 +216,5 @@ you need to change something in `process_data` in case. For a first try, we reco
 .. admonition:: Using your algorithm in the GUI
    :class: tip
 
-    As a last step, you need to pass the algorithm (and optionally other plugins) to the start_gui
-    function, see :ref:`Pass algorithm to the GUI <pass algorithm>`.
+   As a last step, you need to pass the algorithm (and optionally other plugins) to the start_gui
+   function, see `Readme: Developing Plugins <https://mad-gui.readthedocs.io/en/latest/README.html#developing-plugins>`_.

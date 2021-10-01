@@ -36,7 +36,7 @@ like this:
    :class: tip
 
     You need to pass the label class (and optionally other plugins) to the start_gui
-    function, see :ref:`Pass algorithm to the GUI <pass algorithm>`.
+    function, see `Readme: Developing Plugins<https://mad-gui.readthedocs.io/en/latest/README.html#developing-plugins>`_.
 
 
 The `description` defines the possible strings that can be assigned to a label. They will automatically show up after
@@ -44,8 +44,8 @@ adding a new label or by clicking on a label when in `Edit label` mode, such tha
 descriptions. In our `exemplary video <https://www.youtube.com/watch?v=VWQKYRRRGVA&t=18s>`_, this is
 `{"stand": None, "walk": ["fast", "slow"], "jump": None}`.
 
-You can also pass several labels to the GUI. See the image below the code snippet to find out, what this example code
-would result in:
+You can also pass several labels to the GUI. See the image below the code snippet to find out, what kind of annotations
+can be created with these label classes:
 
 .. code-block:: python
 
@@ -68,5 +68,5 @@ would result in:
 
 .. image:: _static/images/development/labels.png
   :width: 600
-  :alt: This is how a
+  :alt: This is annotations with these labels look
 
