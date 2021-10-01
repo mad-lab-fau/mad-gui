@@ -13,7 +13,7 @@ from pathlib import Path
 import platform
 import ctypes
 import pickle
-from typing import Dict, List, Tuple
+from typing import Dict, Tuple
 
 import pandas as pd
 import pyqtgraph as pg
@@ -87,9 +87,9 @@ class MainWindow(QMainWindow):
         data_dir=None,
         settings=BaseSettings,
         theme=BaseTheme,
-        plugins=[],
-        labels=[],
-        events=[],
+        plugins=None,
+        labels=None,
+        events=None,
     ):
         super().__init__()
 
@@ -100,8 +100,8 @@ class MainWindow(QMainWindow):
         self.global_data = GlobalData(parent=self)
         self.ui_state = UiState(parent=self)
         self.plot_state = PlotState(parent=self)
-        self.global_data.labels = labels
-        self.global_data.events = events
+        self.global_data.labels = labels or []
+        self.global_data.events = events or []
 
         self.parent = parent
 
@@ -182,19 +182,26 @@ class MainWindow(QMainWindow):
     @staticmethod
     def _get_element_base(plugin):
         if issubclass(plugin, BaseRegionLabel):
-            return 'labels'
+            return "labels"
         if issubclass(plugin, BaseEventLabel):
-            return 'events'
+            return "events"
         if issubclass(plugin, (BaseImporter, BaseAlgorithm, BaseExporter)):
-            return 'plugin'
-        return
+            return "plugin"
+        return "unknown"
 
     def _check_argument(self, element, base_classes: Tuple):
         if not issubclass(element, base_classes):
             base = self._get_element_base(element)
-            raise ValueError(f"You passed {element} with the keyword 'plugin' to the GUI. However, "
-                             f"your plugin does not inherit from BaseImporter, BaseAlgorithm, or BaseExporter.\n"
-                             f"You should have passed it with: start_gui({base}=[{element.__name__}])")
+            if base == "unknown":
+                raise ValueError(
+                    f"{element.__name__} must inherit from one of BaseImporter, BaseAlgorithm, "
+                    f"BaseExporter, BaseRegionLabel, or BaseEventLabel but it does not."
+                )
+            raise ValueError(
+                f"You passed {element} with the keyword 'plugin' to the GUI. However, "
+                f"your plugin does not inherit from BaseImporter, BaseAlgorithm, or BaseExporter.\n"
+                f"You should have passed it with: start_gui({base}=[{element.__name__}])"
+            )
 
     def _enable_buttons(self, enable: bool):
         """In the beginning we want the user to load data, so we just show the two buttons."""
