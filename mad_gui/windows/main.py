@@ -302,7 +302,9 @@ class MainWindow(QMainWindow):
 
         loadable_labels = []
         unknown_labels = []
-        known_label_types = {label.name: label for label in self.global_data.labels}
+        labels_and_events = (*self.global_data.labels, *self.global_data.events)
+        known_label_types = {label.name: label for label in labels_and_events}
+
         for label_class in label_classes_to_load:
             if label_class in known_label_types.keys():
                 loadable_labels.append(label_class)

@@ -78,6 +78,7 @@ class PlotData(BaseStateModel):
     additional_data: Dict = None
 
     def to_dict(self):
+        print("lalala")
         return {
             "sensor_data": self.data,
             "annotations": {k: v.to_df() for k, v in self.annotations.items() if k != "events"},
@@ -111,6 +112,7 @@ class PlotData(BaseStateModel):
                 self.additional_data[selection] = plot_data[selection]
         self.annotations["events"] = AnnotationData()
         self._add_events(getattr(plot_data, "events", None))
+        print("labler")
         return self
 
     def _add_annotations(self, plot_data: Dict):

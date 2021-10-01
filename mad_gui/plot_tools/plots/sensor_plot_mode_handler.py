@@ -111,7 +111,7 @@ class AddModeHandler(BaseModeHandler):
         else:
             position = self.plot.snap_to_sample(pos.x())
 
-        description = NestedLabelSelectDialog(parent=self.plot.parent.parent).get_label(event_class.descriptions)
+        description = NestedLabelSelectDialog(parent=self.plot.parent).get_label(event_class.descriptions)
 
         new_event = event_class(
             parent=self.plot,

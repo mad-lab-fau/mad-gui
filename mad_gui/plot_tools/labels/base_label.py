@@ -164,7 +164,7 @@ class BaseRegionLabel(pg.LinearRegionItem):
         self.hoverEvent = self._hover_event
         if self.description:
             if isinstance(description, tuple):
-                description = ', '.join(self.description)
+                description = ", ".join(self.description)
             else:
                 description = self.description
             self.setToolTip(f"{self.name}: {description}")
@@ -218,7 +218,7 @@ class BaseRegionLabel(pg.LinearRegionItem):
                 self.setMouseHover(False)
                 self.setHoverBrush(self.standard_brush)
         if isinstance(self.description, tuple):
-            description = ', '.join(self.description)
+            description = ", ".join(self.description)
         else:
             description = self.description
         self.setToolTip(f"{self.name}: {description}")

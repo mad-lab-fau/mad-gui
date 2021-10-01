@@ -7,26 +7,17 @@ from PySide2.QtWidgets import QApplication
 from mad_gui.config import BaseSettings, BaseTheme
 from mad_gui.plot_tools.labels import BaseEventLabel, BaseRegionLabel
 from mad_gui.plugins.base import BasePlugin
-from mad_gui.plugins.example import EnergyCalculator, ExampleImporter, StationaryMomentsDetector, ExampleExporter
+from mad_gui.plugins.example import EnergyCalculator, ExampleExporter, ExampleImporter, StationaryMomentsDetector
 from mad_gui.windows import MainWindow
 from typing import Optional, Sequence, Type
 
 
-class Activity(BaseRegionLabel):
+class ActivityLabel(BaseRegionLabel):
     # This label will always be shown at the upper 20% of the plot view
     min_height = 0
     max_height = 1
-    name = "Activity Label"
+    name = "Activity"
     descriptions = {"stand": None, "walk": ["fast", "slow"], "jump": None}
-
-
-class Jump(BaseRegionLabel):
-    # This label will always be shown at the upper 20% of the plot view
-    min_height = 0
-    max_height = 0.7
-    name = "Jump"
-    event_descriptions = {"first peak": None, "second peak": None}
-    # descriptions = {...}
 
 
 class MyEvent(BaseEventLabel):
@@ -39,12 +30,13 @@ class MyEvent(BaseEventLabel):
 
 def start_gui(
     data_dir=Path("."),
-    plugins: Optional[Sequence[BasePlugin]] = (ExampleImporter, StationaryMomentsDetector, EnergyCalculator,
-                                               ExampleExporter),
-    labels: Optional[Sequence[BaseRegionLabel]] = (
-        Activity,
-        # Jump,
+    plugins: Optional[Sequence[BasePlugin]] = (
+        ExampleImporter,
+        StationaryMomentsDetector,
+        EnergyCalculator,
+        ExampleExporter,
     ),
+    labels: Optional[Sequence[BaseRegionLabel]] = (ActivityLabel,),
     events: Optional[Sequence[BaseEventLabel]] = (MyEvent,),
     settings: Optional[Type[BaseSettings]] = BaseSettings,
     theme: Optional[Type[BaseTheme]] = BaseTheme,

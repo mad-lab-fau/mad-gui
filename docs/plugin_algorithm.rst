@@ -101,11 +101,11 @@ You just need to put a string into each annotation's `description`, as shown in 
 
    def process_data(self, data: Dict[str, PlotData]) -> Dict[str, PlotData]:
       for sensor_plot in data.values():
-          if len(sensor_plot.annotations["Exemplary Label"].data) == 0:
+          if len(sensor_plot.annotations["Activity"].data) == 0:
             UserInformation.inform("There are no annotations in the plot, therefore nothing is analyzed.")
-          for i_activity, activity in sensor_plot.annotations["Exemplary Label"].data.iterrows():
+          for i_activity, activity in sensor_plot.annotations["Activity"].data.iterrows():
               activity_sensor_data = sensor_plot.data.iloc[activity.start:activity.end]
-              sensor_plot.annotations["Exemplary Label"].data.at[
+              sensor_plot.annotations["Activity"].data.at[
                   i_activity, 'description'
               ] = self.calculate_features(activity_sensor_data,
                                           sensor_plot.sampling_rate_hz

@@ -87,7 +87,7 @@ class BasePlot(pg.PlotWidget):
         self.clear_labels(label_class)
         for _, event in df.iterrows():
             new_event = label_class(
-                pos=event.position,
+                pos=event.pos,
                 description=event.description,
                 parent=self,
             )
