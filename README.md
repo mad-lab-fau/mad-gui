@@ -99,11 +99,13 @@ Start the program, and then you can open the previously downloaded example data 
 
 #### Developers: Using the python package
 
-Info: We recommend to use `pip install mad_gui` in a [clean python virtual environment](https://docs.python.org/3/library/venv.html#creating-virtual-environments) / [conda environment](https://docs.python.org/3/library/venv.html#creating-virtual-environments). This way you do NOT need to clone this github repository.
+Info: We recommend to use `pip install mad_gui` in a [clean python virtual environment](https://docs.python.org/3/library/venv.html#creating-virtual-environments) / [conda environment](https://docs.python.org/3/library/venv.html#creating-virtual-environments). 
+This way you do NOT need to clone this github repository.
+Afterwards, you can simply start our GUI from your terminal:
 
 ```
 pip install mad_gui
-python -m mad_gui.start_gui
+mad-gui
 ```
 
 Alternatively, within a python script use our [start_gui](https://mad-gui.readthedocs.io/en/latest/modules/generated/mad_gui/mad_gui.start_gui.html#mad_gui.start_gui) function: 
