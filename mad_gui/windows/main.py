@@ -316,8 +316,9 @@ class MainWindow(QMainWindow):
             self.load_data_from_pickle(file)
 
     def _ask_for_file_name(self, file_type=None):
-        data_file = QFileDialog().getOpenFileName("Select file to open", str(self.global_data.base_dir),
-                                                  filter=file_type)[0]
+        data_file = QFileDialog().getOpenFileName(
+            "Select file to open", str(self.global_data.base_dir), filter=file_type
+        )[0]
         if data_file == "":
             # User clicked cancel
             return None

@@ -36,6 +36,7 @@ Develop your custom importer in that file
 
 Use this code snippet and
 
+- optional: set the file type that the importer can load, e.g. "*.csv"
 - set the importer's name as return value of the regarding method
 - make sure the variable `sensor_data` in `load_sensor_data` keeps a dataframe
 - fill the variabel `sampling_rate_hz` in `load_sensor_data`
@@ -49,6 +50,8 @@ Use this code snippet and
    from typing import Dict
    import pandas as pd
    from mad_gui import start_gui, BaseImporter
+
+   loadable_file_type = "*.*"
 
    class CustomImporter(BaseImporter):
      @classmethod
