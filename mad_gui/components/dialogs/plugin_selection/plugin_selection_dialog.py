@@ -106,8 +106,10 @@ class PluginSelectionDialog(QDialog):
             # created by someone else
             UserInformation().inform(
                 f"An error occured inside your plugin {plugin_class.name()}: {str(error)}\n"
-                f"Try to debug by setting a breakpoint in your plugin {plugin_class.name()}."
+                f"Try to debug by setting a breakpoint in your plugin {plugin_class.name()} or see the command line "
+                f"for more information."
             )
+            raise error
             return False
 
         return True

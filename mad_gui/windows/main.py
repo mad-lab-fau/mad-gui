@@ -312,11 +312,12 @@ class MainWindow(QMainWindow):
             answer = QMessageBox.Yes
 
         if answer == QMessageBox.Yes:
-            file = self._ask_for_file_name()
+            file = self._ask_for_file_name(file_type="*.mad_gui")
             self.load_data_from_pickle(file)
 
-    def _ask_for_file_name(self):
-        data_file = QFileDialog().getOpenFileName(None, "Select file to open", str(self.global_data.base_dir))[0]
+    def _ask_for_file_name(self, file_type=None):
+        data_file = QFileDialog().getOpenFileName("Select file to open", str(self.global_data.base_dir),
+                                                  filter=file_type)[0]
         if data_file == "":
             # User clicked cancel
             return None

@@ -1,3 +1,4 @@
+import traceback
 import warnings
 from pathlib import Path
 
@@ -106,7 +107,8 @@ class LoadDataDialog(QDialog):
         self.ui.combo_plugin.view().setStyleSheet(style_cb.replace("QComboBox", "QListView"))
 
     def _handle_file_select(self, property_name):
-        file_name = ask_for_file_name(self.base_dir, parent=self)
+        loader = self.loaders[self.ui.combo_plugin.currentIndex()]
+        file_name = ask_for_file_name(self.base_dir, parent=self, file_type=loader.file_type)
         if file_name is not None:
             self.state.set(property_name, file_name)
             self.base_dir = str(Path(file_name).parent)
@@ -147,13 +149,12 @@ class LoadDataDialog(QDialog):
         except Exception as e:  # noqa
             self.setCursor(Qt.ArrowCursor)
             UserInformation.inform(
-                "There was an error loading the data. Maybe you selected a wrong file or a wrong "
-                "recording system in the dropdown box?"
-                "\n\n"
-                "Complete error message:\n"
-                f"{str(e)}"
+                f"There was an error loading the data ({str(e)}). Maybe you selected a wrong file or a wrong "
+                f"recording system in the dropdown box?"
+                f"\n\n"
+                f"For the complete error message, see the terminal.\n"
             )
-            warnings.warn(str(e))
+            warnings.warn(traceback.format_exc())
             return None, None
 
         self.validate_data_format(data)

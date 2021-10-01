@@ -24,6 +24,8 @@ class BasePlugin:
 class BaseImporter(BasePlugin):
     """Classes based on this one enable the GUI to load data from different systems/formats."""
 
+    file_type = "*.*"
+
     @classmethod
     @abc.abstractmethod
     def name(cls) -> str:
