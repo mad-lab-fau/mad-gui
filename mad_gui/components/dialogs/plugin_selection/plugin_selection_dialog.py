@@ -113,3 +113,5 @@ class PluginSelectionDialog(QDialog):
     def process_data(self, data: GlobalData):
         self._data = data
         self.exec_()
+
+

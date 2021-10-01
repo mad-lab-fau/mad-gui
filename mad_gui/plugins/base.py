@@ -31,7 +31,7 @@ class BaseImporter(BasePlugin):
     def name(cls) -> str:
         raise NotImplementedError()
 
-    def load_sensor_data(self, file: str) -> Dict:  # noqa
+    def load_sensor_data(self, file: str):  # noqa
         """Loading sensor data as it is usually stored by your recording device
 
         Parameters

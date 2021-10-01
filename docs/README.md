@@ -19,7 +19,7 @@
 
 <div align="center">
   
-:warning: ![WARNING](https://img.shields.io/badge/-WARNING-yellow) :warning: <br />
+ ![WARNING](https://img.shields.io/badge/-WARNING-yellow)  <br />
 This is still an early version. Things might not work as expected. <br />
 Experiencing issues? [Report a bug here!](https://github.com/mad-lab-fau/mad-gui/issues/new?assignees=&labels=&template=bug_report.md&title=%5BBUG%5D)
 

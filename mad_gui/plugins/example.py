@@ -42,7 +42,7 @@ class StationaryMomentsDetector(BaseAlgorithm):
 
     def process_data(self, plot_data: Dict[str, PlotData]):
         for sensor_plot in plot_data.values():
-            sensor_plot.annotations["Activity Label"].data = self.get_annotations(sensor_plot.data)
+            sensor_plot.annotations["Activity"].data = self.get_annotations(sensor_plot.data)
 
     @staticmethod
     def _get_standing_windows(data: pd.DataFrame, window_length: int):
@@ -96,9 +96,9 @@ class EnergyCalculator(BaseAlgorithm):
 
     def process_data(self, plot_data: Dict[str, PlotData]):
         for sensor_plot in plot_data.values():
-            for i_activity, activity in sensor_plot.annotations["Activity Label"].data.iterrows():
-                description = sensor_plot.annotations["Activity Label"].data.at[i_activity, "description"]
-                sensor_plot.annotations["Activity Label"].data.at[i_activity, "description"] = (
+            for i_activity, activity in sensor_plot.annotations["Activity"].data.iterrows():
+                description = sensor_plot.annotations["Activity"].data.at[i_activity, "description"]
+                sensor_plot.annotations["Activity"].data.at[i_activity, "description"] = (
                     str(description)
                     + " ("
                     + self.calculate_features(sensor_plot.data.iloc[activity.start : activity.end])
