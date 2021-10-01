@@ -110,8 +110,6 @@ class PluginSelectionDialog(QDialog):
                 f"for more information."
             )
             raise error
-            return False
-
         return True
 
     def process_data(self, data: GlobalData):
