@@ -27,6 +27,7 @@ class DataSelector(QDialog):
         for label in self.labels:
             self.boxes[label] = QCheckBox(label)
             self.boxes[label].setCheckState(Qt.Checked)
+            self.boxes[label].setPalette(self.palette())
             self.vbox.addWidget(self.boxes[label])
 
     def add_ok_btn(self):

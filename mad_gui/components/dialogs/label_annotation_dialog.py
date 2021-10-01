@@ -34,6 +34,7 @@ class NestedLabelSelectDialog(QDialog):
         self.buttons.accepted.connect(self.accept)
         self.buttons.rejected.connect(self.reject)
         self.current_selection_ = NestedLabelSelectDialog.latest_selection_
+        self.setWindowTitle("Set description")
 
         self.setLayout(self.main_layout)
 
@@ -42,7 +43,8 @@ class NestedLabelSelectDialog(QDialog):
         label_layout = QHBoxLayout()
         self.main_layout.addLayout(label_layout)
         for i in range(self._max_depth + 1):
-            group_box = QGroupBox(parent=self, title=f"level {i}")
+            group_box = QGroupBox(parent=self, title=f"Level {i}")
+            group_box.setPalette(self.palette())
             inner_layout = QVBoxLayout()
             inner_layout.addStretch()
             group_box.setLayout(inner_layout)
