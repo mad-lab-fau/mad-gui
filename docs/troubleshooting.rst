@@ -47,9 +47,9 @@ Development
 The plugin I created does not show up in the GUI
 ************************************************
 Please make sure that your plugin inherits from one of `BaseImporter`, `BaseAlgorithm`, or `BaseExporter`, as we
-describe it in our section :ref:`other systems`.
+describe it in our section `Readme: Developing Plugins <https://mad-gui.readthedocs.io/en/latest/README.html#developing-plugins>`_.
 Additionally, you should make sure to pass your plugin to the `start_gui` function, which is also described in the part
-of :ref:`other systems`:
+of `Readme: Developing Plugins <https://mad-gui.readthedocs.io/en/latest/README.html#developing-plugins>`_:
 
 .. code-block:: python
 

@@ -45,7 +45,7 @@ You can see an example in `this GIF <_static/gifs/algorithm_label.gif>`_ or `thi
    :class: tip
 
    The code below is a working example. To adapt it to your use case, you only need to modify the methods
-   **create_annotations** of `CustomAlgorithm`. You can test with our
+   **create_annotation** of `CustomAlgorithm`. You can test with our
    `example data <https://github.com/mad-lab-fau/mad-gui/raw/main/example_data/sensor_data.zip>`_ like this:
 
    .. code-block:: python

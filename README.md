@@ -163,12 +163,12 @@ If - at any point - you want to send a message to the user of the GUI, you creat
 this:
 
 ```python
-
 from mad_gui.components.dialogs.user_information import UserInformation
 
 UserInformation.inform_user("Your message")
-yes_no = UserInformation().ask_user("Yes or No?") # will return from PySide2.QtWidgets.QMessageBox.Yes
-                                                  # or from PySide2.QtWidgets.QMessageBox.No
+
+# will return PySide2.QtWidgets.QMessageBox.Yes or PySide2.QtWidgets.QMessageBox.No
+yes_no = UserInformation().ask_user("Yes or No?") 
 ```
 
 ## Changing the theme
