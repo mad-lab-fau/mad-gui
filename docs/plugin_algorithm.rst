@@ -44,7 +44,7 @@ You can see an example in `this GIF <_static/gifs/algorithm_label.gif>`_ or `thi
 .. admonition:: Getting started quickly
    :class: tip
 
-   The code below is a working example. To adapt it to your use case, you only need to modify the methods
+   The code below is a working example. To adapt it to your use case, you only need to modify the method
    **create_annotation** of `CustomAlgorithm`. You can test with our
    `example data <https://github.com/mad-lab-fau/mad-gui/raw/main/example_data/sensor_data.zip>`_ like this:
 
@@ -56,9 +56,9 @@ You can see an example in `this GIF <_static/gifs/algorithm_label.gif>`_ or `thi
 
        start_gui(plugins=[ExampleImporter, CustomAlgorithm])
 
-If you want to know more about the data type `Plot Data`, which you will receive as an argument, please refer to
+If you want to know more about the data type `Plot Data`, which is used in `process_data`, please refer to
 `the regarding documentation <https://mad-gui.readthedocs.io/en/latest/modules/generated/mad_gui/mad_gui.models.local.PlotData.html#mad_gui.models.local.PlotData>`_.
-However, we assume you can get along with this code snippet and without reading something about `Plot Data`:
+However, you can get along without knowing anything about `Plot Data`:
 
 .. code-block:: python
 
@@ -127,11 +127,6 @@ After execution of the algorithm, the GUI will take care for showing the results
 annotation with the mouse, as you can see in `this GIF <_static/gifs/algorithm_feature.gif>`_ or `this video from 00:00 to 00:00
 <https://www.youtube.com/watch?v=VWQKYRRRGVA&t=9s>`_.
 
-You can copy and paste the code snippet into your file for an algorithm.
-If you want to know more about the data type `Plot Data`, which you will receive as an argument, please refer to
-`the regarding documentation <https://mad-gui.readthedocs.io/en/latest/modules/generated/mad_gui/mad_gui.models.local.PlotData.html#mad_gui.models.local.PlotData>`_.
-However, we assume you can get along with this code snippet and without reading something about `Plot Data`:
-
 .. admonition:: Getting started quickly
    :class: tip
 
@@ -148,8 +143,9 @@ However, we assume you can get along with this code snippet and without reading 
        start_gui(plugins=[ExampleImporter, CustomAlgorithm])
 
 
-Only in case you are passing labels to our GUI using like `start_gui(labels=[MyCustomLabel, MyOtherCustomLabel])`,
-you need to change something in `process_data` in case. For a first try, we recommend to NOT pass labels!
+If you want to know more about the data type `Plot Data`, which is used in `process_data`, please refer to
+`the regarding documentation <https://mad-gui.readthedocs.io/en/latest/modules/generated/mad_gui/mad_gui.models.local.PlotData.html#mad_gui.models.local.PlotData>`_.
+However, you can get along without knowing anything about `Plot Data`:
 
 .. code-block:: python
 
