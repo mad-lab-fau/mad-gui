@@ -147,10 +147,10 @@ start_gui(plugis=[MyImporter], labels=[MyFirstLabel, MySecondLabel])
 
 ```
 
-In these sections we describe how you can develop your own plugins and labels, which must inherit one of our 
+In the sections in the following list we describe how you can develop your own plugins and labels, which must inherit one of our 
 [base plugins](https://mad-gui.readthedocs.io/en/latest/modules/plugins.html#plugins) or 
-[BaseRegionLabel](https://mad-gui.readthedocs.io/en/latest/modules/generated/plot_tools/mad_gui.plot_tools.labels.BaseRegionLabel.html#mad_gui.plot_tools.labels.BaseRegionLabel),
-as you will see in the regarding examples:
+[BaseRegionLabel](https://mad-gui.readthedocs.io/en/latest/modules/generated/plot_tools/mad_gui.plot_tools.labels.BaseRegionLabel.html#mad_gui.plot_tools.labels.BaseRegionLabel).
+**Each of these sections keeps working example to get you started as quick as possible**:
 
    - Importer: [Load and display data of a specific system](https://mad-gui.readthedocs.io/en/latest/plugin_importer.html#importer)
    - Algorithm: [Create annotations for plotted data](https://mad-gui.readthedocs.io/en/latest/plugin_algorithm.html#algorithm)
