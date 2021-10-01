@@ -13,7 +13,7 @@ from pathlib import Path
 import platform
 import ctypes
 import pickle
-from typing import Dict
+from typing import Dict, List, Tuple
 
 import pandas as pd
 import pyqtgraph as pg
@@ -40,7 +40,7 @@ from mad_gui.models.global_data import GlobalData
 from mad_gui.models.local import PlotData
 from mad_gui.models.ui_state import UiState, PlotState, MODES
 from mad_gui.plot_tools.plots import SensorPlot, VideoPlot
-from mad_gui.plot_tools.labels import BaseRegionLabel
+from mad_gui.plot_tools.labels import BaseRegionLabel, BaseEventLabel
 from mad_gui.plugins.base import BaseExporter, BaseImporter, BaseAlgorithm
 from mad_gui.plugins.helper import filter_plugins
 from mad_gui.state_keeper import StateKeeper
@@ -93,8 +93,7 @@ class MainWindow(QMainWindow):
     ):
         super().__init__()
 
-        if plugins is None:
-            plugins = []
+        self.check_arguments(plugins, labels, events)
 
         Config.set_theme(theme)
         Config.set_settings(settings)
@@ -169,6 +168,33 @@ class MainWindow(QMainWindow):
         self.global_data.plugins = list(plugins)
 
         self.resize(1280, 720)
+
+    def check_arguments(self, plugins, labels, events):
+        for plugin in plugins:
+            self._check_argument(plugin, (BaseImporter, BaseAlgorithm, BaseExporter))
+
+        for label in labels:
+            self._check_argument(label, (BaseRegionLabel,))
+
+        for event in events:
+            self._check_argument(event, (BaseEventLabel,))
+
+    @staticmethod
+    def _get_element_base(plugin):
+        if issubclass(plugin, BaseRegionLabel):
+            return 'labels'
+        if issubclass(plugin, BaseEventLabel):
+            return 'events'
+        if issubclass(plugin, (BaseImporter, BaseAlgorithm, BaseExporter)):
+            return 'plugin'
+        return
+
+    def _check_argument(self, element, base_classes: Tuple):
+        if not issubclass(element, base_classes):
+            base = self._get_element_base(element)
+            raise ValueError(f"You passed {element} with the keyword 'plugin' to the GUI. However, "
+                             f"your plugin does not inherit from BaseImporter, BaseAlgorithm, or BaseExporter.\n"
+                             f"You should have passed it with: start_gui({base}=[{element.__name__}])")
 
     def _enable_buttons(self, enable: bool):
         """In the beginning we want the user to load data, so we just show the two buttons."""
