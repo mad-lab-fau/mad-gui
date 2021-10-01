@@ -1,7 +1,7 @@
 from __future__ import annotations
 
 from mad_gui.models.local import PlotData
-from mad_gui.plot_tools.labels import BaseRegionLabel
+from mad_gui.plot_tools.labels import BaseRegionLabel, BaseEventLabel
 from mad_gui.utils.model_base import BaseStateModel, Property
 from typing import TYPE_CHECKING, Dict, List, Type
 
@@ -53,4 +53,5 @@ class GlobalData(BaseStateModel):
     # we need to initialize this for sphinx
     plugins: List[Type[BasePlugin]] = []
     labels: List[Type[BaseRegionLabel]] = []
+    events: List[Type[BaseEventLabel]] = []
     active_loader: BaseImporter = None

@@ -23,6 +23,7 @@ class DataSelector(QDialog):
         self.boxes = {}
         self.boxes["sensor_data"] = QCheckBox("Sensor data")
         self.boxes["sensor_data"].setCheckState(Qt.Checked)
+        self.boxes["sensor_data"].setPalette(self.palette())
         self.vbox.addWidget(self.boxes["sensor_data"])
         for label in self.labels:
             self.boxes[label] = QCheckBox(label)

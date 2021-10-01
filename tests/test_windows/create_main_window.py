@@ -3,13 +3,13 @@ import sys
 from PySide2.QtWidgets import QApplication
 
 from mad_gui import BaseSettings, BaseTheme
-from mad_gui.plot_tools.labels import BaseRegionLabel
+from mad_gui.plot_tools.labels import BaseRegionLabel, BaseEventLabel
 from mad_gui.plugins.example import ExampleImporter
 from mad_gui.windows import MainWindow
 
 
-class Jump(BaseRegionLabel):
-    name = "Jump"
+class Peak(BaseEventLabel):
+    name = "Peak"
     min_height = 0.1
     max_height = 0.5
 
@@ -29,8 +29,8 @@ def get_main_window():
 
     settings = BaseSettings
     theme = BaseTheme
-    plugins = (ExampleImporter,)
-    labels = (BaseRegionLabel, Activity, Jump)
 
-    form = MainWindow(settings=settings, theme=theme, plugins=plugins, labels=labels)
+    form = MainWindow(
+        settings=settings, theme=theme, plugins=[ExampleImporter], labels=[BaseRegionLabel, Activity], events=[Peak]
+    )
     return form

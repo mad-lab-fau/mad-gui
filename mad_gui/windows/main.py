@@ -87,9 +87,9 @@ class MainWindow(QMainWindow):
         data_dir=None,
         settings=BaseSettings,
         theme=BaseTheme,
-        plugins=None,
-        labels=None,
-        events=None,
+        plugins=[],
+        labels=[],
+        events=[],
     ):
         super().__init__()
 
