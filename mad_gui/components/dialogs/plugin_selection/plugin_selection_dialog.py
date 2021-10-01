@@ -101,9 +101,7 @@ class PluginSelectionDialog(QDialog):
 
         try:
             plugin.process_data(self._data)
-        except Exception as error:  # pylint: disable=broad-except
-            # broad exception on purpose because we do not know which exceptions might be thrown by an plugin
-            # created by someone else
+        except Exception as error:
             UserInformation().inform(
                 f"An error occured inside your plugin {plugin_class.name()}: {str(error)}\n"
                 f"Try to debug by setting a breakpoint in your plugin {plugin_class.name()} or see the command line "
