@@ -27,5 +27,5 @@ Experiencing issues? [Report a bug here!](https://github.com/mad-lab-fau/mad-gui
 
 # Where is the documentation?
 
-For the documenation please see [our readthedocs page](https://mad-gui.readthedocs.io/en/latest/README.html).  
+For the documenation please see [our readthedocs page](https://mad-gui.readthedocs.io/en/latest/README.html#contents-of-this-readme).  
 
