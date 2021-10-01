@@ -27,20 +27,27 @@ Experiencing issues? [Report a bug here!](https://github.com/mad-lab-fau/mad-gui
 </div>
 
 ## Contents of this readme
+
+Here you can find some general information to find out whether the our packages suits your needs:
 - [What is it?](#what-is-it)
-- [How do I use it (videos)](#how-do-i-use-it)
+- [How does the user interface work?](#how-does-the-user-interface-work)
 - [How do I get the GUI to work on my machine?](#how-do-i-get-the-gui-to-work-on-my-machine)
 - [How can I test the GUI using your example data on my computer?](#how-can-i-test-the-gui-using-your-example-data-on-my-computer)
 - [Can the GUI load and display data of my specific system?](#can-the-gui-load-and-display-data-of-my-specific-system)
 - [Can the GUI use my own algorithm?](#can-the-gui-use-my-own-algorithm)
 - [Can I change something at the core of the GUI?](#can-i-change-something-at-the-core-of-the-gui)
 
+Here you can find information about development:
+- [Developing plugins](#developing-plugins)
+- [Communicating with the user](#communicating-with-the-user)
+- [Adjusting Constants](#adjusting-constants)
+- [Change the theme](#change-the-theme)
 
 ##  What is it?
 The MaD GUI is a framework for processing time series data.
 Its use-cases include visualization, annotation (manual or automated), and algorithmic processing of visualized data and annotations.
 
-## How do I use it?
+## How does the user interface work?
 
 ### Videos
 
@@ -75,7 +82,7 @@ First, you need to download the example data.
 Click on [this link](https://github.com/mad-lab-fau/mad-gui/raw/main/example_data/sensor_data.zip), and extract the file to your computer.
 If you also want to check out synchronization with a video file, click on [this link](https://github.com/mad-lab-fau/mad-gui/releases/download/v0.2.0-alpha.1/video.mp4) and save it on your machine. Next, use one of the following two options (for testing it on Windows, we recommend Option A).
 
-#### Option A: Standalone executable
+#### End-user: Standalone executable
 
 When downloading the files below, your browser may warn you that this is a potentially dangerous file.
 You will only be able to use our GUI by selecting "Keep anyway / download anyway / ...".
@@ -90,9 +97,9 @@ In the case of Microsoft Edge, this possiblity is hidden, but you can select it 
 
 
 
-Start the program and then you can open the previously downloaded example data as shown in [How do I use it (videos)?](#how-do-i-use-it-videos)
+Start the program, and then you can open the previously downloaded example data as shown in [How do I use it (videos)?](#how-do-i-use-it-videos)
 
-#### Option B: Using the python package
+#### Developers: Using the python package
 
 Info: We recommend to use `pip install mad_gui` in a [clean python virtual environment](https://docs.python.org/3/library/venv.html#creating-virtual-environments) / [conda environment](https://docs.python.org/3/library/venv.html#creating-virtual-environments). This way you do NOT need to clone this github repository.
 
@@ -111,18 +118,101 @@ start_gui()
 Now you can open the previously downloaded example data as shown in [How do I use it (videos)?](#how-do-i-use-it-videos)
 
 ## Can the GUI load and display data of my specific system?
-Yes, however it will need someone who is familiar with python.
-This person needs to perform the steps described in [Development](https://mad-gui.readthedocs.io/en/latest/development.html).
-Some supplementary basic information can be found in our section [Preparation](https://mad-gui.readthedocs.io/en/latest/developer_guidelines.html).
-
+Yes, however it will need someone who is familiar with Python. For more information, please refer to [Developing Plugins](#developing-plugins).
 You do not have experience with python but still want to load data from a specific system? [Contact us!](mailto:malte.ollenschlaeger@fau.de)
-
 
 ## Can the GUI use my own algorithm?
-Yes, however it will need someone who is familiar with python.
-This person needs to perform the steps described in [Development](https://mad-gui.readthedocs.io/en/latest/development.html).
-Some supplementary basic information can be found in our section [Preparation](https://mad-gui.readthedocs.io/en/latest/developer_guidelines.html).
-
+Yes, however it will need someone who is familiar with Python. For more information, please refer to [Developing Plugins](#developing-plugins).
 You do not have experience with python but still want to load data from a specific system? [Contact us!](mailto:malte.ollenschlaeger@fau.de)
+
 ## Can I change something at the core of the GUI?
 Yes, for more information, please [get in touch](mailto:malte.ollenschlaeger@fau.de).
+
+## Developing Plugins
+The MaD GUI package is a framework, which can be extended with different kinds of plugins and labels.
+The user can access your plugins within the GUI using dropdowns, after clicking "Load data" or "Use algorithm". 
+**However, this is only possible if your plugin was passed to the GUI at startup**:
+
+```python
+from mad_gui import start_gui
+from my_importer import MyImporter
+from my_algorithm import MyAlgorithm
+
+start_gui(plugins=[MyImporter, MyAlgorithm])
+
+```
+
+In these sections we describe how you can develop your own plugins and labels:
+
+   - Importer: [Load and display data of a specific system](https://mad-gui.readthedocs.io/en/latest/plugin_importer.html#importer)
+   - Algorithm: [Create annotations for plotted data](https://mad-gui.readthedocs.io/en/latest/plugin_algorithm.html#algorithm)
+   - Algorithm: [Calculate features for existing annotations](https://mad-gui.readthedocs.io/en/latest/plugin_algorithm.html#algorithm)
+   - Exporter: [Export displayed annotations](https://mad-gui.readthedocs.io/en/latest/plugin_exporter.html)
+   - LINK TO BE DONE [Labels: Create one or several custom label classes]()
+   - For supplementary basic information please refer to [Preparation](https://mad-gui.readthedocs.io/en/latest/developer_guidelines.html).
+
+## Communicating with the user
+
+If - at any point - you want to send a message to the user of the GUI, you create a message box with an OK button like
+this:
+
+```python
+
+from mad_gui.components.dialogs.user_information import UserInformation
+
+UserInformation.inform_user("Your message")
+yes_no = UserInformation().ask_user("Yes or No?") # will return from PySide2.QtWidgets.QMessageBox.Yes
+                                                  # or from PySide2.QtWidgets.QMessageBox.No
+```
+
+## Change the theme
+
+You can easily change the two dominating colors by passing your own theme to the GUI.
+
+```python
+   from mad_gui import start_gui
+   from mad_gui.config import BaseTheme
+   from PySide2.QtGui import QColor
+
+   class MyTheme(BaseTheme):
+      COLOR_DARK = QColor(0, 255, 100)
+      COLOR_LIGHT = QColor(255, 255, 255)
+
+   start_gui(
+    theme=MyTheme,
+   )
+```
+
+## Adjusting Constants
+
+You can create your own settings by creating a class, which inherits from our `BaseSettings <https://github.com/mad-lab-fau/mad-gui/blob/main/mad_gui/config/settings.py#L1>`_.
+The following example makes use of the BaseSettings and simply overrides some properties:
+
+```python
+from mad_gui.config import BaseSettings
+from mad_gui import start_gui
+   
+class MySettings(BaseSettings):
+    CHANNELS_TO_PLOT = ["acc_x", "acc_z"]
+    
+    # used if a label has `snap_to_min = True` or `snap_to_max = True`
+    SNAP_AXIS = "acc_x"
+    SNAP_RANGE_S = 0.2
+    
+    # in all your labels you can add an event by using `Ctrl` as modifier when in `Add label` mode
+    # when adding an event the user will be prompted to select one of these two strings as a
+    # `description` for the event
+    EVENTS = ["important event", "other type of important event"]
+    
+    # Set the width of IMU plot to this, when hitting the play button for the video.
+    PLOT_WIDTH_PLAYING_VIDEO = 20  # in seconds
+    
+    # If plotting large datasets, this speeds up plotting, however might result in inaccurate
+    # representation of the data
+    AUTO_DOWNSAMPLE = True
+
+start_gui(
+settings=MySettings,
+)
+
+```

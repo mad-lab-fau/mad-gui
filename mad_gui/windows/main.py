@@ -175,6 +175,12 @@ class MainWindow(QMainWindow):
 
         for label in labels:
             self._check_argument(label, (BaseRegionLabel,))
+            if label.min_height > label.max_height:
+                raise ValueError(f"For the class {label.__name__}, min_height is higher than max_height, please fix "
+                                 f"that.")
+            if label.max_height > 1:
+                raise ValueError(f"For the class {label.__name__}, max_height is > 1, although it should be between 0 "
+                                 f"and 1. Please fix that.")
 
         for event in events:
             self._check_argument(event, (BaseEventLabel,))

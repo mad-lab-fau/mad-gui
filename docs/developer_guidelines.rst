@@ -126,9 +126,6 @@ You just have to set up your IDE to use the conda env you created (see next sect
       `different than other envs <https://github.com/maksbotan/poetry/blob/b1058fc2304ea3e2377af357264abd0e1a791a6a/poetry/utils/env.py#L295>`_.
     - Everything else should work like you are not using conda
 
-.. raw:: html
-   </details>
-
 .. _Configuring PyCharm:
 
 Configuring PyCharm

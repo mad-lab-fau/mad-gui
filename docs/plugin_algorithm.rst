@@ -198,20 +198,3 @@ you need to change something in `process_data` in case. For a first try, we reco
 
     As a last step, you need to pass the algorithm (and optionally other plugins) to the start_gui
     function, see :ref:`Pass algorithm to the GUI <pass algorithm>`.
-
-
-
-.. _pass algorithm:
-
-Pass algorithm to the GUI
-#########################
-
-.. note:: You may pass several plugins like so: `start_gui(plugins=[MyImporter, MyAlgorithm])`
-
-.. code-block:: python
-
-   from custom_algorithm import CustomAlgorithm
-   from mad_gui import start_gui
-
-   ### You can pass several plugins, see the blue note above. ###
-   start_gui(plugins=[CustomAlgorithm])
