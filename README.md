@@ -41,7 +41,7 @@ Here you can find information about development:
 - [Developing plugins](#developing-plugins)
 - [Communicating with the user](#communicating-with-the-user)
 - [Adjusting Constants](#adjusting-constants)
-- [Change the theme](#change-the-theme)
+- [Changing the theme](#change-the-theme)
 
 ##  What is it?
 The MaD GUI is a framework for processing time series data.
@@ -95,8 +95,6 @@ In the case of Microsoft Edge, this possiblity is hidden, but you can select it 
 | Mac OS                 | [Mac OS (64 bit)](https://github.com/mad-lab-fau/mad-gui/releases/download/v0.2.0-alpha.5/mad_gui_mac.zip) | Download the file on the left and extract it. Then, in your [terminal](https://support.apple.com/en-lk/guide/terminal/apd5265185d-f365-44cb-8b09-71a064a42125/mac), navigate to the location where you extracted "mad_gui_mac.app" to. Then type `chmod +x ./mad_gui_mac.app` and then `./mad_gui_mac.app` <br /><br /> *Note: If your Mac does not allow you to open this file, perform the actions for "If you want to open an app that hasn’t been notarized or is from an unidentified developer" on the [Apple Support Page](https://support.apple.com/en-us/HT202491). Afterwards, try `./mad_gui_mac.exe` again in your terminal.*|
 | other                  | Supplied upon request |[Contact us](mailto:malte.ollenschlaeger@fau.de)  
 
-
-
 Start the program, and then you can open the previously downloaded example data as shown in [How do I use it (videos)?](#how-do-i-use-it-videos)
 
 #### Developers: Using the python package
@@ -148,7 +146,7 @@ In these sections we describe how you can develop your own plugins and labels:
    - Algorithm: [Create annotations for plotted data](https://mad-gui.readthedocs.io/en/latest/plugin_algorithm.html#algorithm)
    - Algorithm: [Calculate features for existing annotations](https://mad-gui.readthedocs.io/en/latest/plugin_algorithm.html#algorithm)
    - Exporter: [Export displayed annotations](https://mad-gui.readthedocs.io/en/latest/plugin_exporter.html)
-   - LINK TO BE DONE [Labels: Create one or several custom label classes]()
+   - Labels: [Create one or several custom label classes](file:///D:/mad-gui/docs/_build/html/labels.html#labels)
    - For supplementary basic information please refer to [Preparation](https://mad-gui.readthedocs.io/en/latest/developer_guidelines.html).
 
 ## Communicating with the user
@@ -165,7 +163,7 @@ yes_no = UserInformation().ask_user("Yes or No?") # will return from PySide2.QtW
                                                   # or from PySide2.QtWidgets.QMessageBox.No
 ```
 
-## Change the theme
+## Changing the theme
 
 You can easily change the two dominating colors by passing your own theme to the GUI.
 
@@ -185,7 +183,7 @@ You can easily change the two dominating colors by passing your own theme to the
 
 ## Adjusting Constants
 
-You can create your own settings by creating a class, which inherits from our `BaseSettings <https://github.com/mad-lab-fau/mad-gui/blob/main/mad_gui/config/settings.py#L1>`_.
+You can create your own settings by creating a class, which inherits from our [BaseSettings](https://github.com/mad-lab-fau/mad-gui/blob/main/mad_gui/config/settings.py#L1)>`_.
 The following example makes use of the BaseSettings and simply overrides some properties:
 
 ```python

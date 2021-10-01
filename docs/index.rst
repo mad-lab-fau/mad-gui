@@ -16,11 +16,11 @@ here:
    :maxdepth: 1
 
    Readme <README.md>
-   Preparation <developer_guidelines>
-   Development <development>
+   Preparation <preparation>
    Importer <plugin_importer>
    Algorithm <plugin_algorithm>
    Exporter <plugin_exporter>
+   Labels <labels>
    modules/index.rst
    Troubleshooting <troubleshooting>
 ..
