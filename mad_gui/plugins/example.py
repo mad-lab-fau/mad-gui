@@ -25,7 +25,7 @@ class ExampleImporter(BaseImporter):
 
         data = {
             "Pocket IMU": {
-                "sensor_data": pd.read_csv(file)[["acfc_x", "acc_y", "acc_z", "gyr_x", "gyr_y", "gyr_z"]],
+                "sensor_data": pd.read_csv(file)[["acc_x", "acc_y", "acc_z", "gyr_x", "gyr_y", "gyr_z"]],
                 "sampling_rate_hz": 1 / df["time"].diff().mean(),
             }
         }
