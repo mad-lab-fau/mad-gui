@@ -30,5 +30,18 @@ all the data form the GUI and you can process / export it in whatever way you wa
         def process_data(self, global_data: GlobalData):
             # Here you can do whatever you like with our global data.
             # See the API Reference for more information about our GlobalData object
+            # Here is an example on how to export all annotations and their descriptions:
+            file = QFileDialog().getSaveFileName(
+                None, "Save GUI data", str(Path(global_data.data_file).parent) + "/results.xlsx", "*.xlsx"
+            )[0]
+            writer = pd.ExcelWriter(file)
+            for plot_name, plot_data in global_data.plot_data.items():
+                for label_name, annotations in plot_data.annotations.items():
+                    if len(annotations.data) == 0:
+                        continue
+                    annotations.data.to_excel(writer, sheet_name=label_name)
+
+            writer.save()
+            UserInformation.inform(f"The results were saved to {file}.")
 
 After creating your exporter, make sure to also pass it to the `start_gui` function.

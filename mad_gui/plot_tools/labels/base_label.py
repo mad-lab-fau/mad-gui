@@ -163,7 +163,11 @@ class BaseRegionLabel(pg.LinearRegionItem):
         self._set_movable(False)
         self.hoverEvent = self._hover_event
         if self.description:
-            self.setToolTip(", ".join(self.description))
+            if isinstance(description, tuple):
+                description = ', '.join(self.description)
+            else:
+                description = self.description
+            self.setToolTip(f"{self.name}: {description}")
         self.setEnabled(False)
 
     def _set_events(self, events: pd.DataFrame):
@@ -213,8 +217,11 @@ class BaseRegionLabel(pg.LinearRegionItem):
             if ev.exit:
                 self.setMouseHover(False)
                 self.setHoverBrush(self.standard_brush)
-        # TODO: this is not properly handled when calling self.edit_label_description --> fix it
-        self.setToolTip(f"{self.description}")
+        if isinstance(self.description, tuple):
+            description = ', '.join(self.description)
+        else:
+            description = self.description
+        self.setToolTip(f"{self.name}: {description}")
 
     def edit_label_description(self):
         """Setting the type of the activity to one given in the consts file.

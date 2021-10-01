@@ -2,9 +2,12 @@ from pathlib import Path
 
 import numpy as np
 import pandas as pd
+from PySide2.QtWidgets import QFileDialog
 
+from mad_gui.components.dialogs import UserInformation
+from mad_gui.models import GlobalData
 from mad_gui.models.local import PlotData
-from mad_gui.plugins.base import BaseAlgorithm, BaseImporter
+from mad_gui.plugins.base import BaseAlgorithm, BaseImporter, BaseExporter
 from typing import Dict, Tuple, Union
 
 
@@ -105,3 +108,26 @@ class EnergyCalculator(BaseAlgorithm):
         signal = sensor_data[["acc_x", "acc_y", "acc_z"]]
         energy = np.sqrt((signal ** 2).sum(axis=1).mean())
         return f"mean acceleration = {energy:.2f}"
+
+
+class ExampleExporter(BaseExporter):
+    @classmethod
+    def name(cls):
+        return "Exemplary exporter."
+
+    def process_data(self, global_data: GlobalData):
+        file = QFileDialog().getSaveFileName(
+            None, "Save GUI data", str(Path(global_data.data_file).parent) + "/results.xlsx", "*.xlsx"
+        )[0]
+        writer = pd.ExcelWriter(file)
+        for plot_name, plot_data in global_data.plot_data.items():
+            for label_name, annotations in plot_data.annotations.items():
+                if len(annotations.data) == 0:
+                    continue
+                annotations.data.to_excel(writer, sheet_name=label_name)
+
+        writer.save()
+        UserInformation.inform(f"The results were saved to {file}.")
+
+
+

@@ -6,7 +6,11 @@
 Importer
 ********
 
-This enables our GUI to load and display your specific type of data, as shown in the video form 0:10 to 0:20:
+Overview
+########
+
+This enables our GUI to load and display your specific type of data, as shown in the video form 0:10 to 0:20.
+Please additionally take a look at `this GIF <_static/gifs/importer.gif>`_, which shows you how your plugin gets into the GUI.
 
 .. raw:: html
 
@@ -14,9 +18,6 @@ This enables our GUI to load and display your specific type of data, as shown in
    <iframe width="560" height="315" align="middle" src="https://www.youtube.com/embed/akxcuFOesC8?start=9" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
    </p>
 
-You will have to create a plugin, an importer, which inherits from our `BaseImporter <https://mad-gui.readthedocs.io/en/latest/modules/generated/plugins/mad_gui.plugins.BaseImporter.html>`_.
-If you perform the steps below, your importer will be included into the GUI as shown in `this GIF <_static/gifs/importer.gif>`_
-(no need to get everything from the GIF, details are in the list below).
 
 Create a file that will include your custom importer
 ####################################################

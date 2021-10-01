@@ -35,7 +35,10 @@ class GlobalData(BaseStateModel):
         All plugins, that the GUI is aware of. The GUI is aware of all plugins that were passed to it via
         :meth:`~mad_gui.start_gui`.
     labels
-        All the labels that the GUI is aware of (= the ones that were passed to :meth:`~mad_gui.start_gui`)
+        All the label classes that the GUI is aware of (= the ones that were passed to :meth:`~mad_gui.start_gui`).
+        The actually plotted annotations can not be found here, but in `plot_data[<name of the
+        plot>].annotations.data`,
+        see the documentation of :class:`~mad_gui.models.local.PlotData`.
 
     """
 
