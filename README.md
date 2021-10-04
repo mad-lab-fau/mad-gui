@@ -82,34 +82,7 @@ In this case please refer to [Load and display data of a certain data type](#loa
 
 ### Plugin Developers: Use our python package
 
-Info: We recommend to use `pip install mad_gui` in a 
-clean python 3.7 [virtual environment](https://docs.python.org/3/library/venv.html#creating-virtual-environments) / 
-[conda environment](https://docs.python.org/3/library/venv.html#creating-virtual-environments). 
-
-```
-pip install mad_gui
-```
-Then, from your command line simply call:
-
-```
-mad-gui
-```
-
-Alternatively, within a python script use our [start_gui](https://mad-gui.readthedocs.io/en/latest/modules/generated/mad_gui/mad_gui.start_gui.html#mad_gui.start_gui) function: 
-
-```
-from mad_gui import start_gui
-start_gui()
-```
-
-If you want to see an example, 
-[download our example data](https://github.com/mad-lab-fau/mad-gui/raw/main/example_data/sensor_data.zip) and 
-extract the .csv. Afterwards, you can open the previously downloaded example data as shown in 
-[User Interface](#user-interface).
-You want to load data of a specific format/system or want to use a specific algorithm? 
-In this case please refer to the sections
-[Load and display data of a certain data type](#load-and-display-data-of-a-certain-data-type)
-and [Use a custom algorithm](#use-a-custom-algorithm).
+Please see [Development installation](#development-installation)
 
 ## User Interface
 
@@ -154,8 +127,40 @@ You do not have experience with python but still want to load data from a specif
 |User| Someone who performs actions in the GUI.|
 |Developer| Someone who creates plugins for the GUI, for example to load a specific data format or to use a specific algorithm.|
 
-## Developing Plugins
-For hints on installation please refer to [Installation: Plugin Developers](#plugin-developers-use-our-python-package).
+## Development
+
+### Development installation
+
+Info: We recommend to use `pip install mad_gui` in a 
+clean python 3.7 [virtual environment](https://docs.python.org/3/library/venv.html#creating-virtual-environments) / 
+[conda environment](https://docs.python.org/3/library/venv.html#creating-virtual-environments). 
+
+```
+pip install mad_gui
+```
+Then, from your command line simply call:
+
+```
+mad-gui
+```
+
+Alternatively, within a python script use our [start_gui](https://mad-gui.readthedocs.io/en/latest/modules/generated/mad_gui/mad_gui.start_gui.html#mad_gui.start_gui) function: 
+
+```
+from mad_gui import start_gui
+start_gui()
+```
+
+If you want to see an example, 
+[download our example data](https://github.com/mad-lab-fau/mad-gui/raw/main/example_data/sensor_data.zip) and 
+extract the .csv. Afterwards, you can open the previously downloaded example data as shown in 
+[User Interface](#user-interface).
+You want to load data of a specific format/system or want to use a specific algorithm? 
+In this case please refer to the sections
+[Load and display data of a certain data type](#load-and-display-data-of-a-certain-data-type)
+and [Use a custom algorithm](#use-a-custom-algorithm).
+
+### Developing plugins
 
 The MaD GUI package is a framework, which can be extended with different kinds of plugins and labels.
 The user can access your plugins within the GUI using dropdowns, after clicking "Load data" or "Use algorithm". 

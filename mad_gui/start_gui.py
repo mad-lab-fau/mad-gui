@@ -13,10 +13,9 @@ from typing import Optional, Sequence, Type
 
 
 class ActivityLabel(BaseRegionLabel):
-    # This label will always be shown at the upper 20% of the plot view
     min_height = 0
     max_height = 1
-    name = "Activity"
+    name = "Segmented Stride"
     descriptions = {"stand": None, "walk": ["fast", "slow"], "jump": None}
 
 
