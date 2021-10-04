@@ -6,6 +6,11 @@
 Algorithm
 *********
 
+.. danger::
+
+   In case you do not know how our GUI handles plugins, please take a quick look at the part
+   `Developing Plugins <https://mad-gui.readthedocs.io/en/latest/README.html#developing-plugins>`_ in our Readme.
+
 .. _getting started:
 
 Overview
@@ -25,16 +30,16 @@ Overview
     - see what that means `in a video <https://www.youtube.com/watch?v=VWQKYRRRGVA&t=9s>`_ (00:50 to 01:00)
     - use the :ref:`code example <algorithm features>`
 
-.. admonition:: Getting started quickly
+.. admonition:: Using the working example
    :class: tip
 
    The two subsections below show working examples. To run one of them:
 
-      - create a file as shown in `this image <_static/images/development/algorithm_create_file.png>`_
-      - copy one of the code snippets containing the `MyAlgorithm` class
-      - download our `example CSV <https://github.com/mad-lab-fau/mad-gui/raw/main/example_data/sensor_data.zip>`_
-      - in a separate file execute the following code snippet and then apply the algorithm as shown in our
-        `exemplary video <https://www.youtube.com/watch?v=akxcuFOesC8&t=9s>`_:
+     - create a file as shown in `this image <_static/images/development/algorithm_create_file.png>`_
+     - copy one of the code snippets containing the `MyAlgorithm` class to the file
+     - download our `example CSV <https://github.com/mad-lab-fau/mad-gui/raw/main/example_data/sensor_data.zip>`_
+     - in a separate file execute the following code snippet and then apply the algorithm as shown in our
+       `exemplary video <https://www.youtube.com/watch?v=akxcuFOesC8&t=9s>`_:
 
    .. code-block:: python
 
@@ -55,7 +60,7 @@ The GUI will plot the annotations automatically after it returns from your algor
 You can see an example in `this GIF <_static/gifs/algorithm_label.gif>`_ or `this video from 00:00 to 00:00
 <https://www.youtube.com/watch?v=VWQKYRRRGVA&t=9s>`_.
 
-.. admonition:: Getting started quickly
+.. admonition:: Adapting the working example
    :class: tip
 
    The code below is a working example. See :ref:`getting started` for more information on
@@ -127,7 +132,7 @@ After execution of the algorithm, the GUI will take care for showing the results
 annotation with the mouse, as you can see in `this GIF <_static/gifs/algorithm_feature.gif>`_ or `this video from 00:00 to 00:00
 <https://www.youtube.com/watch?v=VWQKYRRRGVA&t=9s>`_.
 
-.. admonition:: Getting started quickly
+.. admonition:: Adapting the working example
    :class: tip
 
    The code below is a working example. See :ref:`getting started` for more information on

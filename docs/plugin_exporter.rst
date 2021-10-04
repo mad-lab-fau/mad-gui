@@ -6,6 +6,11 @@
 Exporter
 ********
 
+.. danger::
+
+   In case you do not know how our GUI handles plugins, please take a quick look at the part
+   `Developing Plugins <https://mad-gui.readthedocs.io/en/latest/README.html#developing-plugins>`_ in our Readme.
+
 Export displayed annotations
 ############################
 

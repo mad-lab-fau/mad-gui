@@ -39,7 +39,7 @@ test our built-in exemplary importer, exemplary algorithms and exemplary label.
 
 |General Information | Development | Additional Information |
 |---------------------|-----------|-------------------------|
-|- [Why and what?](#why-and-what)<br>- [Installation: GUI User](#gui-user-standalone-executable)<br>- [Installation: Plugin Developer](#plugin-developers-use-our-python-package)<br> - [User Interface](#user-interface)<br> - [Load and display data of a certain data type](#load-and-display-data-of-a-certain-data-type)<br>- [Use a custom algorithm](#use-a-custom-algorithm)| - [Developing plugins](#developing-plugins)<br>- [Communicating with the user](#communicating-with-the-user)<br>- [Adjusting Constants](#adjusting-constants)<br>- [Changing the theme](#changing-the-theme)<br><br><br>|- [Support & Contributing](#support-contributing)<br>- [Background](#background)<br><br><br><br><br>|
+|<li>[Why and what?](#why-and-what)</li><li>[Installation: GUI User](#gui-user-standalone-executable)</li><li>[Installation: Plugin Developer](#plugin-developers-use-our-python-package)</li><li>[User Interface](#user-interface)</li><li>[Load and display data of a certain data type](#load-and-display-data-of-a-certain-data-type)</li><li>[Use a custom algorithm](#use-a-custom-algorithm)</li><li>[Terminology](#terminology)</li>|<li>[Developing plugins](#developing-plugins)</li><li>[Communicating with the user](#communicating-with-the-user)</li><li>[Adjusting Constants](#adjusting-constants)</li><li>[Changing the theme](#changing-the-theme)</li><br><br><br>|<li>[Support & Contributing](#support-contributing)</li><li>[Background](#background)</li><br><br><br><br><br>|
 
 
 ## Why and what?
@@ -55,16 +55,6 @@ The MaD GUI can be used as a framework to incorporate algorithms for supporting 
 algorithms for analyzing time series data even without having programming experience.
 
 You can read about this in more detail in our [Background](#background) section
-
-## Terminology
-
-| Word | Meaning |
-|------|---------|
-|Annotation| An annotation has a start and a stop value, e.g. it goes from second 1 to second 2 of the time series data. Furthermore, it can have a description, such as "walking" or "running".|
-|Label| An annotation is always of a certain type, for example "Activity". These types are called labels. A Label keeps the possible descriptions of an annotation, e.g. "walk" or "run". Furthermore, it keeps information about where the label shoudl be plotted, e.g. lowest 20% of the plot. |
-|User| Someone who performs actions in the GUI.|
-|Developer| Someone who creates plugins for the GUI, for example to load a specific data format or to use a specific algorithm.|
-
 
 ## Installation
 
@@ -155,12 +145,22 @@ You do not have experience with python but still want to load data from a specif
 This will need someone who is familiar with Python. For more information, please refer to [Developing Plugins](#developing-plugins).
 You do not have experience with python but still want to load data from a specific system? [Contact us!](mailto:malte.ollenschlaeger@fau.de)
 
+## Terminology
+
+| Word | Meaning |
+|------|---------|
+|Annotation| An annotation has a start and a stop value, e.g. it goes from second 1 to second 2 of the time series data. Furthermore, it can have a description, such as "walking" or "running".|
+|Label| An annotation is always of a certain type, for example "Activity". These types are called labels. A Label keeps the possible descriptions of an annotation, e.g. "walk" or "run". Furthermore, it keeps information about where the label should be plotted, e.g. lowest 20% of the plot. |
+|User| Someone who performs actions in the GUI.|
+|Developer| Someone who creates plugins for the GUI, for example to load a specific data format or to use a specific algorithm.|
+
 ## Developing Plugins
 For hints on installation please refer to [Installation: Plugin Developers](#plugin-developers-use-our-python-package).
 
 The MaD GUI package is a framework, which can be extended with different kinds of plugins and labels.
 The user can access your plugins within the GUI using dropdowns, after clicking "Load data" or "Use algorithm". 
-**However, this is only possible if your plugin was passed to the GUI at startup**:
+**However, this is only possible if your plugin was passed to the GUI at startup**, as we show it for an importer 
+in [this GIF](https://mad-gui.readthedocs.io/en/latest/_static/gifs/importer.gif), or as shown in this code snippet:
 
 ```python
 from mad_gui import start_gui

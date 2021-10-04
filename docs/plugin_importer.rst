@@ -6,43 +6,55 @@
 Importer
 ********
 
+.. danger::
+
+   In case you do not know how our GUI handles plugins, please take a quick look at the part
+   `Developing Plugins <https://mad-gui.readthedocs.io/en/latest/README.html#developing-plugins>`_ in our Readme.
+
 Overview
 ########
 
-This enables our GUI to load and display your specific type of data, as shown in the video form 0:10 to 0:20.
+This enables our GUI to load and display your specific type of data, as shown in
+`this video <https://www.youtube.com/embed/akxcuFOesC8?start=9>`_ form 0:10 to 0:20.
 Please additionally take a look at `this GIF <_static/gifs/importer.gif>`_, which shows you how your plugin gets into the GUI.
+First of all you have to create a file, that will only keep your importer class, as shown in
+`this image <_static/images/development/importer_create_file.png>`_.
 
-.. raw:: html
+.. admonition:: Using the working example
+   :class: tip
 
-   <p style="text-align:center;">
-   <iframe width="560" height="315" align="middle" src="https://www.youtube.com/embed/akxcuFOesC8?start=9" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-   </p>
+   The subsection below shows a working example. To run it:
 
+     - create a file as shown in `this image <_static/images/development/importer_create_file.png>`_
+     - copy the code snippet containing `CustomAlgorithm` class to the file
+     - download our `example CSV <https://github.com/mad-lab-fau/mad-gui/raw/main/example_data/sensor_data.zip>`_
+     - in a separate file execute the following code snippet and then load data as shown in our
+       `exemplary video <https://www.youtube.com/watch?v=akxcuFOesC8&t=9s>`_:
 
-Create a file that will include your custom importer
-####################################################
+   .. code-block:: python
 
-.. image:: _static/images/development/importer_create_file.png
-    :alt: Creating a file for the plugin
-    :height: 250
+       from mad_gui import start_gui
+       from mad_gui.plugins import ExampleImporter
+       from my_algorithm import MyAlgorithm # you need to create this file and class, see below
 
-Develop your custom importer in that file
-#########################################
+       start_gui(plugins=[ExampleImporter, MyAlgorithm])
 
+Develop your custom importer
+############################
+
+After you created an empty file, as described above
 If the user selects your CustomImporter, selects a file and then presses `start_processing`, the GUI will pass the
 selected file to your `CustomImporter.load_sensor_data` (argument `file_path`), as shown in `this GIF <_static/gifs/importer.gif>`_.
 
 Use this code snippet and
 
-.. admonition:: Getting started quickly
+.. admonition:: Adapting the working example
    :class: tip
 
-   To adapt the example below to your use case, you only need to
+   To adapt this working example to load your data, just:
 
-   - make sure the variable `sensor_data` in `load_sensor_data` keeps a dataframe
-   - fill the variable `sampling_rate_hz` in `load_sensor_data`
-
-   `example data <https://github.com/mad-lab-fau/mad-gui/raw/main/example_data/sensor_data.zip>`_ like this:
+   - load data of your system into `sensor_data` and `sampling_rate_hz` in `load_sensor_data`
+   - make sure the variable `sensor_data` keeps a dataframe and `sampling_rate_hz` keeps a float
 
 Optionally, you can set the file type that the importer can load, e.g. `*.csv`.
 This will restrict which files the user can select.
@@ -51,70 +63,76 @@ The name will show up in the dropdown menu in the GUI's pop up when the user cli
 
 .. code-block:: python
 
-   """These are the contents of custom_importer.py, which holds my first importer."""
+    """These are the contents of custom_importer.py, which holds my first importer."""
 
-   from typing import Dict
-   import pandas as pd
-   from mad_gui import start_gui, BaseImporter
+    from typing import Dict
+    import pandas as pd
+    from mad_gui import start_gui, BaseImporter
 
-   loadable_file_type = "*.*"
+    class CustomImporter(BaseImporter):
+        loadable_file_type = "*.*"
 
-   class CustomImporter(BaseImporter):
-     @classmethod
-     def name(cls) -> str:
-         ################################################
-         ###                   README                 ###
-         ### Set your importer's name as return value ###
-         ### This name will show up in the dropdown.   ###
-         ################################################
-         return "My Importer"
+        @classmethod
+        def name(cls) -> str:
+            ################################################
+            ###                   README                 ###
+            ### Set your importer's name as return value ###
+            ### This name will show up in the dropdown.  ###
+            ################################################
+            warnings.warn("The importer has no meaningful name yet.
+                          " Simply change the return string and remove this warning.")
+            return "My Importer"
 
-     def load_sensor_data(self, file_path: str) -> Dict:
-         ##################################################################
-         ###                       README                               ###
-         ### a) Use the argument `file_path` to load data. Transform    ###
-         ###    it to a pandas dataframe (columns are sensor channels,  ###
-         ###    ass for example "acc_x". Assign it to sensor_data.      ###
-         ###                                                            ###
-         ### b) load the sampling rate (int or float)                   ###
-         ##################################################################
-         sensor_data =
-         sampling_rate_hz =
+        def load_sensor_data(self, file_path: str) -> Dict:
+            ##################################################################
+            ###                       README                               ###
+            ### a) Use the argument `file_path` to load data. Transform    ###
+            ###    it to a pandas dataframe (columns are sensor channels,  ###
+            ###    ass for example "acc_x". Assign it to sensor_data.      ###
+            ###                                                            ###
+            ### b) load the sampling rate (int or float)                   ###
+            ##################################################################
 
-         # CAUTION: if you only want to have one plot you do not need to
-         # change the following lines!
-         # If you want several plots, just add another sensor like "IMU foot"
-         # to the `data` dictionary.
-         data = {
-         "IMU Hip": {
-             "sensor_data": sensor_data,
-             "sampling_rate_hz": sampling_rate_hz,
-             }
-         }
 
-         return data
+            warnings.warn("Please load sensor data from your source."
+                          " Just make sure, that sensor_data is a pandas.DataFrame."
+                          " Afterwards, remove this warning.")
+            df = pd.read_csv(file)
+            sensor_data = pd.read_csv(file)[["acc_x", "acc_y", "acc_z", "gyr_x", "gyr_y", "gyr_z"]]
 
-Pass the developed importer class to `start_gui`
-################################################
+            warnings.warn("Please load the sampling frequency from your source in Hz"
+                          " Afterwards, remove this warning.")
+            sampling_rate_hz = 1 / df["time"].diff().mean()
 
-.. code-block:: python
+            # CAUTION: if you only want to have one plot you do not need to
+            # change the following lines!
+            # If you want several plots, just add another sensor like "IMU foot"
+            # to the `data` dictionary.
+            data = {
+               "IMU Hip": {
+               "sensor_data": sensor_data,
+               "sampling_rate_hz": sampling_rate_hz,
+               }
+            }
 
-   from mad_gui import start_gui
-   from custom_importer import CustomImporter
+            return data
 
-   start_gui(plugins=[CustomImporter])
+.. warning::
 
-.. image:: _static/images/development/importer_pass_to_gui.png
-    :alt: Making the plugin available in the GUI
+   You need to pass your importer to our GUI like this as it is also shown in
+   `this image <https://mad-gui.readthedocs.io/en/latest/_images/importer_pass_to_gui.png>`_:
+
+   .. code-block:: python
+
+      from mad_gui import start_gui
+      from custom_importer import CustomImporter
+
+      start_gui(plugins=[CustomImporter])
 
 After you have performed these steps, you can select the importer in the GUI by pressing `Load Data`
 and then selecting it in the dropdown on the upper left in the pop-up window.
 From user perspective it should work as we have described in our
 `exemplary video about loading data <https://youtu.be/akxcuFOesC8?t=10>`_.
-
-If the user presses `Start processing`, the path to the selected file will be passed to the selected loader's
-`load_sensor_data` method, as shown in `the GIF <_static/gifs/importer.gif>`_.
-After returning the dictionary from this method to the GUI, the GUI will plot the data.
 
 .. note::
     In case loading your file does not work, we recommend to set breakpoints into your loader and check, whether
