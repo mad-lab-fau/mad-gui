@@ -59,7 +59,6 @@ class PluginSelectionDialog(QDialog):
         ]:
             btn.setStyleSheet(self.parent.ui.btn_add_label.styleSheet())
 
-        light = Config.theme.COLOR_LIGHT
         style_cb = self.parent.ui.btn_add_label.styleSheet().replace("QPushButton", "QComboBox")
         self.ui.combo_plugin.setStyleSheet(style_cb)
         self.ui.combo_plugin.view().setStyleSheet(style_cb.replace("QComboBox", "QListView"))

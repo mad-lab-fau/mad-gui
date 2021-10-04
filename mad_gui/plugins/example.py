@@ -127,11 +127,7 @@ class ExampleExporter(BaseExporter):
                 if len(annotations.data) == 0:
                     continue
                 annotations.data.to_csv(
-                    directory + os.sep
-                    + plot_name.replace(" ", "_")
-                    + "_"
-                    + label_name.replace(" ", "_")
-                    + ".csv"
+                    directory + os.sep + plot_name.replace(" ", "_") + "_" + label_name.replace(" ", "_") + ".csv"
                 )
 
         UserInformation.inform(f"The results were saved to {directory}.")

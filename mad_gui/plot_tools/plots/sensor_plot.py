@@ -272,9 +272,9 @@ class SensorPlot(BasePlot):
                 data_zero_mean = data_to_plot - data_to_plot.mean()
                 data_to_plot = data_zero_mean / (data_zero_mean.max() - data_zero_mean.min())
             try:
-                #item = pg.PlotDataItem()
-                #self.plotItem.vb.addItem(item)
-                #item.setData(x=x_axis, y=data_to_plot, pen=pg.mkPen(width=2, color=color))
+                # item = pg.PlotDataItem()
+                # self.plotItem.vb.addItem(item)
+                # item.setData(x=x_axis, y=data_to_plot, pen=pg.mkPen(width=2, color=color))
                 self.plot(
                     x=x_axis,
                     y=data_to_plot,
