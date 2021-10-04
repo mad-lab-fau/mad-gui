@@ -16,8 +16,6 @@ ui_path = resource_path(str(UI_PATH / "plugin_selection.ui"))
 if ".ui" in ui_path:
     try:
         UiForm, _ = loadUiType(ui_path)
-    except SystemError as e:
-        print("Oh")
     except TypeError as e:
         raise FileNotFoundError(
             "Probably python did not find `pyside2-uic`. See "

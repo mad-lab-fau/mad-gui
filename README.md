@@ -39,7 +39,7 @@ test our built-in exemplary importer, exemplary algorithms and exemplary label.
 
 |General Information | Development | Additional Information |
 |---------------------|-----------|-------------------------|
-|- [Why and what?](#why-and-what)<br>- [Installation: GUI User](#gui-user-standalone-executable)<br>- [Installation: Plugin Developer](#plugin-developers-use-our-python-package)<br> - [User Interface](#user-interface)<br> - [Load and display data of a certain data type](#load-and-display-data-of-a-certain-data-type)<br>- [Use a custom algorithm](#use-a-custom-algorithm)| - [Developing plugins](#developing-plugins)<br>- [Communicating with the user](#communicating-with-the-user)<br>- [Adjusting Constants](#adjusting-constants)<br>- [Changing the theme](#change-the-theme)|- [Support & Contributing](#support-contributing)<br>- [Background](#background)|
+|- [Why and what?](#why-and-what)<br>- [Installation: GUI User](#gui-user-standalone-executable)<br>- [Installation: Plugin Developer](#plugin-developers-use-our-python-package)<br> - [User Interface](#user-interface)<br> - [Load and display data of a certain data type](#load-and-display-data-of-a-certain-data-type)<br>- [Use a custom algorithm](#use-a-custom-algorithm)| - [Developing plugins](#developing-plugins)<br>- [Communicating with the user](#communicating-with-the-user)<br>- [Adjusting Constants](#adjusting-constants)<br>- [Changing the theme](#changing-the-theme)|- [Support & Contributing](#support-contributing)<br>- [Background](#background)|
 
 
 ## Why and what?
@@ -156,6 +156,8 @@ This will need someone who is familiar with Python. For more information, please
 You do not have experience with python but still want to load data from a specific system? [Contact us!](mailto:malte.ollenschlaeger@fau.de)
 
 ## Developing Plugins
+For hints on installation please refer to [Installation: Plugin Developers](#plugin-developers-use-our-python-package).
+
 The MaD GUI package is a framework, which can be extended with different kinds of plugins and labels.
 The user can access your plugins within the GUI using dropdowns, after clicking "Load data" or "Use algorithm". 
 **However, this is only possible if your plugin was passed to the GUI at startup**:
