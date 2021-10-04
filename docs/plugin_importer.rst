@@ -34,10 +34,9 @@ First of all you have to create a file, that will only keep your importer class,
    .. code-block:: python
 
        from mad_gui import start_gui
-       from mad_gui.plugins import ExampleImporter
-       from my_algorithm import MyAlgorithm # you need to create this file and class, see below
+       from my_importer import CustomImporter # you need to create this file and class, see below
 
-       start_gui(plugins=[ExampleImporter, MyAlgorithm])
+       start_gui(plugins=[CustomImporter])
 
 Develop your custom importer
 ############################

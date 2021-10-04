@@ -14,7 +14,24 @@ Exporter
 Export displayed annotations
 ############################
 
-This basically works as described in the section of creating an importer.
+.. admonition:: Using the working example
+   :class: tip
+
+   The code below shows a working example. To run it:
+
+     - create a file, which keeps the code containing the `CustomExporter` class
+     - download our `example CSV <https://github.com/mad-lab-fau/mad-gui/raw/main/example_data/sensor_data.zip>`_
+     - in a separate file execute the following code snippet and then load data as shown in our
+       `exemplary video <https://www.youtube.com/watch?v=akxcuFOesC8&t=9s>`_:
+
+   .. code-block:: python
+
+       from mad_gui import start_gui
+       from mad_gui.plugins import ExampleImporter
+       from my_exporter import CustomExporter # you need to create this file and class, see below
+
+       start_gui(plugins=[ExampleImporter, CustomExporter])
+
 Upon pressing the `Export data` button in the GUI, the `ExportResultsDialog <https://github.com/mad-lab-fau/mad-gui/blob/main/mad_gui/components/dialogs/plugin_selection/export_results_dialog.py#L19>`_ will be
 opened, in which your exporter can be selected. Basically, you will receive a `GlobalData <https://mad-gui.readthedocs.io/en/latest/modules/generated/mad_gui/mad_gui.models.GlobalData.html#mad_gui.models.GlobalData>`_ object, which keeps
 all the data form the GUI and you can process / export it in whatever way you want:
@@ -55,4 +72,10 @@ all the data form the GUI and you can process / export it in whatever way you wa
 
             UserInformation.inform(f"The results were saved to {directory}.")
 
-After creating your exporter, make sure to also pass it to the `start_gui` function.
+
+.. admonition:: Adapting the working example
+   :class: tip
+
+   After creating your exporter, make sure to also pass it to the `start_gui` function as plugin, as we describe it in
+   the Readme, section `Developing plugins <https://mad-gui.readthedocs.io/en/latest/README.html#developing-plugins>`_.
+
