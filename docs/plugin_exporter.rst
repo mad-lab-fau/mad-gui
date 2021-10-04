@@ -22,7 +22,7 @@ Export displayed annotations
      - create a file, which keeps the code containing the `CustomExporter` class
      - download our `example CSV <https://github.com/mad-lab-fau/mad-gui/raw/main/example_data/sensor_data.zip>`_
      - in a separate file execute the following code snippet and then load data as shown in our
-       `exemplary video <https://www.youtube.com/watch?v=akxcuFOesC8&t=9s>`_:
+       `exemplary video <https://www.youtube.com/watch?v=Ro8bOSjIg5U&t=132s>`_:
 
    .. code-block:: python
 

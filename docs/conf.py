@@ -30,15 +30,6 @@ readme_html = readme_html.replace(
     ":warning:", ""
 )  # actually want to replace it with |:warning:| but sphinxemoji does not work
 
-#readme_html = readme_html.replace("```python", ".. code-block:: python\n\n")
-#readme_html = readme_html.replace("```", "\n")
-
-
-readme_html = readme_html.replace(
-    '[<img src="./docs/_static/images/video_thumbnails/loading_and_navigating.png" width="200px">](https://www.youtube.com/watch?v=akxcuFOesC8 "MaD GUI - Loading data and navigating in the plot")',
-    '####################################################',
-)
-
 
 with open("./README.md", "w") as file:
     file.write(readme_html)

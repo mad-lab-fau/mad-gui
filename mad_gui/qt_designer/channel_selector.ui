@@ -66,13 +66,6 @@
         </property>
        </widget>
       </item>
-      <item alignment="Qt::AlignRight">
-       <widget class="QLabel" name="label_help">
-        <property name="text">
-         <string>&lt;a href='https://github.com/mad-lab-fau/mad-gui#how-do-i-use-it'&gt;help&lt;/a&gt;</string>
-        </property>
-       </widget>
-      </item>
      </layout>
     </widget>
    </item>

@@ -44,7 +44,7 @@ like this:
 
 The `description` defines the possible strings that can be assigned to a label. They will automatically show up after
 adding a new label or by clicking on a label when in `Edit label` mode, such that the user can select one of the
-descriptions. In our `exemplary video <https://www.youtube.com/watch?v=VWQKYRRRGVA&t=18s>`_, this is
+descriptions. In our `exemplary video <https://www.youtube.com/watch?v=Ro8bOSjIg5U&t=12s>`_, this is
 `{"stand": None, "walk": ["fast", "slow"], "jump": None}`.
 
 

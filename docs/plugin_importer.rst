@@ -15,7 +15,7 @@ Overview
 ########
 
 This enables our GUI to load and display your specific type of data, as shown in
-`this video <https://www.youtube.com/embed/akxcuFOesC8?start=9>`_ form 0:10 to 0:20.
+`this video <https://www.youtube.com/watch?v=cSFFSTUM4e0?start=6>`_ form 0:06 to 0:16.
 Please additionally take a look at `this GIF <_static/gifs/importer.gif>`_, which shows you how your plugin gets into the GUI.
 First of all you have to create a file, that will only keep your importer class, as shown in
 `this image <_static/images/development/importer_create_file.png>`_.
@@ -29,7 +29,7 @@ First of all you have to create a file, that will only keep your importer class,
      - copy the code snippet containing `CustomAlgorithm` class to the file
      - download our `example CSV <https://github.com/mad-lab-fau/mad-gui/raw/main/example_data/sensor_data.zip>`_
      - in a separate file execute the following code snippet and then load data as shown in our
-       `exemplary video <https://www.youtube.com/watch?v=akxcuFOesC8&t=9s>`_:
+       `exemplary video <https://www.youtube.com/watch?v=cSFFSTUM4e0&t=6s>`_:
 
    .. code-block:: python
 
@@ -41,7 +41,7 @@ First of all you have to create a file, that will only keep your importer class,
 Develop your custom importer
 ############################
 
-After you created an empty file, as described above
+After you created an empty file, as described above, copy the code below to it to get started.
 If the user selects your CustomImporter, selects a file and then presses `start_processing`, the GUI will pass the
 selected file to your `CustomImporter.load_sensor_data` (argument `file_path`), as shown in `this GIF <_static/gifs/importer.gif>`_.
 
@@ -88,7 +88,7 @@ The name will show up in the dropdown menu in the GUI's pop up when the user cli
             ###                       README                               ###
             ### a) Use the argument `file_path` to load data. Transform    ###
             ###    it to a pandas dataframe (columns are sensor channels,  ###
-            ###    ass for example "acc_x". Assign it to sensor_data.      ###
+            ###    as for example "acc_x". Assign it to sensor_data.       ###
             ###                                                            ###
             ### b) load the sampling rate (int or float)                   ###
             ##################################################################
