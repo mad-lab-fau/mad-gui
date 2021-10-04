@@ -17,29 +17,41 @@ using the algorithms they have developed.
 
 <div align="center">
 
-<i>click to enlarge the image</i>
-
-[<img src="./docs/_static/images/MaD-GUI.png" width="500px">](https://mad-gui.readthedocs.io/en/latest/_static/images/MaD-GUI.png)
-
 :warning: ![WARNING](https://img.shields.io/badge/-WARNING-yellow) :warning: <br />
 This is still an early version. Things might not work as expected. <br />
 Experiencing issues? [Report a bug here!](https://github.com/mad-lab-fau/mad-gui/issues/new?assignees=&labels=&template=bug_report.md&title=%5BBUG%5D)
 
+
+
+<i>click to enlarge the image</i>
+
+[<img src="./docs/_static/images/MaD-GUI.png" width="600px">](https://mad-gui.readthedocs.io/en/latest/_static/images/MaD-GUI.png)
+
+<i>click to show videos on YouTube</i>
+
+[<img src="./docs/_static/images/video_thumbnails/loading_and_navigating.png" width="200px">](https://www.youtube.com/watch?v=akxcuFOesC8 "MaD GUI - Loading data and navigating in the plot")
+[<img src="./docs/_static/images/video_thumbnails/annotations.png" width="200px">](https://www.youtube.com/watch?v=VWQKYRRRGVA "MaD GUI - Labelling data manually or using an algorithm")
+[<img src="./docs/_static/images/video_thumbnails/sync.png" width="200px">](https://www.youtube.com/watch?v=-GI5agFOPRM "MaD GUI - Synchronize video and sensor data")
+
 </div>
   
-## Quickastart for developers
+## Quickstart for developers
+
+In a python 3.7 environment, execute the following commands:
 ```
 pip install mad_gui
 mad-gui
 ```
 You can [download our example data](https://github.com/mad-lab-fau/mad-gui/raw/main/example_data/sensor_data.zip), to
-test our built-in exemplary importer, exemplary algorithms and exemplary label.
+test our built-in exemplary importer, exemplary algorithms and exemplary label. 
+To see how to open our example data within the GUI, please refer to our section about the 
+[User Interface](#user-interface).
 
 ## Contents of this readme
 
 |General Information | Development | Additional Information |
 |---------------------|-----------|-------------------------|
-|<li>[Why and what?](#why-and-what)</li><li>[Installation: GUI User](#gui-user-standalone-executable)</li><li>[Installation: Plugin Developer](#plugin-developers-use-our-python-package)</li><li>[User Interface](#user-interface)</li><li>[Load and display data of a certain data type](#load-and-display-data-of-a-certain-data-type)</li><li>[Use a custom algorithm](#use-a-custom-algorithm)</li><li>[Terminology](#terminology)</li>|<li>[Developing plugins](#developing-plugins)</li><li>[Communicating with the user](#communicating-with-the-user)</li><li>[Adjusting Constants](#adjusting-constants)</li><li>[Changing the theme](#changing-the-theme)</li><br><br><br>|<li>[Support & Contributing](#support-contributing)</li><li>[Background](#background)</li><br><br><br><br><br>|
+|<li>[Why and what?](#why-and-what)</li><li>[Installation](#installation)</li><li>[User Interface (Videos & Shortcuts)](#user-interface)</li><li>[Load / display data of any format](#load-and-display-data-of-a-certain-data-type)</li><li>[Use a custom algorithm](#use-a-custom-algorithm)</li><li>[Terminology](#terminology)</li>|<li>[Development installation](#development-installation)</li><li>[Developing Plugins](#developing-plugins)</li><li>[Communicating with the user](#communicating-with-the-user)</li><li>[Adjusting Constants](#adjusting-constants)</li><li>[Changing the theme](#changing-the-theme)</li><br>|<li>[Support & Contributing](#support-contributing)</li><li>[Background](#background)</li><br><br><br><br>|
 
 
 ## Why and what?
@@ -47,16 +59,20 @@ Existing graphical user interfaces (GUIs), that deal with time series data, usua
 by algorithms, although such algorithms exist.
 If they do, the algorithm and the GUI are tightly coupled, such that reusing it becomes hard.
 
-Furthermore, algorithms that were developed to analyze time series data, can usually not be used by researchers without 
-programming experience, although the algorithms were developed for their research area. This is for example the case in
-the area of gait analysis, where algorithms are provided by computer scientists and need to be used by clinical reasearchers.
+Furthermore, algorithms that were developed to analyze time series data, can usually not be used by researchers, who do
+not have programming experience, although the algorithms were developed for their research area. This is for example the 
+case in the area of gait analysis, where algorithms are provided by computer scientists and need to be used by clinical 
+researchers.
 
 The MaD GUI can be used as a framework to incorporate algorithms for supporting time series annotation and for using
-algorithms for analyzing time series data even without having programming experience.
-
-You can read about this in more detail in our [Background](#background) section
+algorithms for analyzing time series data even without having programming experience. You can read about this in more 
+detail in our [Background](#background) section.
 
 ## Installation
+
+### Plugin Developers
+
+Please see the section [Development installation](#development-installation).
 
 ### GUI user: Standalone executable
 You do not need to install anything. Simply download the file from the table below for your regarding operating system. 
@@ -80,17 +96,14 @@ and extract the .csv file. After starting MaD GUI, you can open the previously d
 You want to load data of a specific format/system or want to use a specific algorithm? 
 In this case please refer to [Load and display data of a certain data type](#load-and-display-data-of-a-certain-data-type)
 
-### Plugin Developers: Use our python package
-
-Please see [Development installation](#development-installation)
 
 ## User Interface
 
 ### Videos
 
 By clicking on the images below, you will be redirected to YouTube. In case you want to follow along on your own 
-machine, check out the section [Installation (End-user)](#end-user-standalone-executable) or 
-[Installation (Developers)](#developers-use-our-python-package) first.
+machine, check out the section [Installation](#installation). 
+There you will find information on how to download our GUI and our exemplary data.
 
 [<img src="./docs/_static/images/video_thumbnails/loading_and_navigating.png" width="200px">](https://www.youtube.com/watch?v=akxcuFOesC8 "MaD GUI - Loading data and navigating in the plot")
 [<img src="./docs/_static/images/video_thumbnails/annotations.png" width="200px">](https://www.youtube.com/watch?v=VWQKYRRRGVA "MaD GUI - Labelling data manually or using an algorithm")
@@ -133,7 +146,7 @@ You do not have experience with python but still want to load data from a specif
 
 Info: We recommend to use `pip install mad_gui` in a 
 clean python 3.7 [virtual environment](https://docs.python.org/3/library/venv.html#creating-virtual-environments) / 
-[conda environment](https://docs.python.org/3/library/venv.html#creating-virtual-environments). 
+[conda environment](https://mad-gui.readthedocs.io/en/latest/preparation.html#installing-necessary-software). 
 
 ```
 pip install mad_gui
@@ -207,24 +220,6 @@ UserInformation.inform_user("Your message")
 yes_no = UserInformation().ask_user("Yes or No?") 
 ```
 
-## Changing the theme
-
-You can easily change the two dominating colors by passing your own theme to the GUI.
-
-```python
-   from mad_gui import start_gui
-   from mad_gui.config import BaseTheme
-   from PySide2.QtGui import QColor
-
-   class MyTheme(BaseTheme):
-      COLOR_DARK = QColor(0, 255, 100)
-      COLOR_LIGHT = QColor(255, 255, 255)
-
-   start_gui(
-    theme=MyTheme,
-   )
-```
-
 ## Adjusting Constants
 
 You can create your own settings by creating a class, which inherits from our [BaseSettings](https://github.com/mad-lab-fau/mad-gui/blob/main/mad_gui/config/settings.py#L1)>`_.
@@ -257,6 +252,24 @@ start_gui(
 settings=MySettings,
 )
 
+```
+
+## Changing the theme
+
+You can easily change the two dominating colors by passing your own theme to the GUI.
+
+```python
+   from mad_gui import start_gui
+   from mad_gui.config import BaseTheme
+   from PySide2.QtGui import QColor
+
+   class MyTheme(BaseTheme):
+      COLOR_DARK = QColor(0, 255, 100)
+      COLOR_LIGHT = QColor(255, 255, 255)
+
+   start_gui(
+    theme=MyTheme,
+   )
 ```
 
 ## Support & Contributing
