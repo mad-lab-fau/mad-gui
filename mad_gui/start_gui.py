@@ -28,7 +28,7 @@ class MyEvent(BaseEventLabel):
 
 
 def start_gui(
-    data_dir=Path("."),
+    data_dir=Path("D:/"),
     plugins: Optional[Sequence[BasePlugin]] = (
         ExampleImporter,
         StationaryMomentsDetector,

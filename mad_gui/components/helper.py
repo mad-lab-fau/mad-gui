@@ -8,7 +8,7 @@ from typing import Optional
 
 def ask_for_file_name(base_dir: Path, parent=None, file_type="*.*") -> Optional[str]:
     data_file = QFileDialog(parent=parent).getOpenFileName(
-        parent=None, caption="Select file to open", directory=str(base_dir), filter=file_type
+        parent=None, caption="Select file to open", dir=str(base_dir), filter=file_type
     )[0]
     if data_file == "":
         # User clicked cancel
