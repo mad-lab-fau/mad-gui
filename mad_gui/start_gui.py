@@ -15,7 +15,7 @@ from typing import Optional, Sequence, Type
 class ActivityLabel(BaseRegionLabel):
     min_height = 0
     max_height = 1
-    name = "Segmented Stride"
+    name = "Activity"
     descriptions = {"stand": None, "walk": ["fast", "slow"], "jump": None}
 
 

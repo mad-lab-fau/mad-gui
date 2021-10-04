@@ -1,3 +1,4 @@
+import os
 from pathlib import Path
 
 import numpy as np
@@ -38,7 +39,7 @@ class ExampleImporter(BaseImporter):
 class StationaryMomentsDetector(BaseAlgorithm):
     @classmethod
     def name(cls):
-        return "Find Resting Phases (example MaD GUI)"
+        return "Find Resting Phases (MaD GUI example)"
 
     def process_data(self, plot_data: Dict[str, PlotData]):
         for sensor_plot in plot_data.values():
@@ -92,7 +93,7 @@ class StationaryMomentsDetector(BaseAlgorithm):
 class EnergyCalculator(BaseAlgorithm):
     @classmethod
     def name(cls):
-        return "Mean energy of acceleration (example MaD GUI)"
+        return "Mean energy of acceleration (MaD GUI example)"
 
     def process_data(self, plot_data: Dict[str, PlotData]):
         for sensor_plot in plot_data.values():
@@ -115,18 +116,22 @@ class EnergyCalculator(BaseAlgorithm):
 class ExampleExporter(BaseExporter):
     @classmethod
     def name(cls):
-        return "Exemplary exporter."
+        return "Export annotations to csv (MaD GUI example)"
 
     def process_data(self, global_data: GlobalData):
-        file = QFileDialog().getSaveFileName(
-            None, "Save GUI data", str(Path(global_data.data_file).parent) + "/results.xlsx", "*.xlsx"
-        )[0]
-        writer = pd.ExcelWriter(file)  # pylint: disable=abstract-class-instantiated
+        directory = QFileDialog().getExistingDirectory(
+            None, "Save .csv results to this folder", str(Path(global_data.data_file).parent)
+        )
         for plot_name, plot_data in global_data.plot_data.items():
             for label_name, annotations in plot_data.annotations.items():
                 if len(annotations.data) == 0:
                     continue
-                annotations.data.to_excel(writer, sheet_name=f"{plot_name}: {label_name}")
+                annotations.data.to_csv(
+                    directory + os.sep
+                    + plot_name.replace(" ", "_")
+                    + "_"
+                    + label_name.replace(" ", "_")
+                    + ".csv"
+                )
 
-        writer.save()
-        UserInformation.inform(f"The results were saved to {file}.")
+        UserInformation.inform(f"The results were saved to {directory}.")

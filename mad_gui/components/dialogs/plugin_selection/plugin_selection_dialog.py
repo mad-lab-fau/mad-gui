@@ -23,7 +23,7 @@ if ".ui" in ui_path:
         ) from e
 
 elif ".py" in ui_path:
-    from mad_gui.qt_designer.build.plugin_selection import Ui_Form  # noqa
+    from mad_gui.qt_designer.build.plugin_selection import Ui_Form as UiForm  # noqa
 
 
 class PluginSelectionDialog(QDialog):

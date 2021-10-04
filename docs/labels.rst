@@ -6,6 +6,9 @@
 Labels
 ******
 
+Creating a single label
+#######################
+
 Labels can be used to create annotations in the GUI.
 You can create your own label, which must inherit `BaseRegionLabel <file:///D:/mad-gui/docs/_build/html/modules/
 generated/plot_tools/mad_gui.plot_tools.labels.BaseRegionLabel.html#mad_gui.plot_tools.labels.BaseRegionLabel>`_,
@@ -43,6 +46,10 @@ The `description` defines the possible strings that can be assigned to a label. 
 adding a new label or by clicking on a label when in `Edit label` mode, such that the user can select one of the
 descriptions. In our `exemplary video <https://www.youtube.com/watch?v=VWQKYRRRGVA&t=18s>`_, this is
 `{"stand": None, "walk": ["fast", "slow"], "jump": None}`.
+
+
+Using more than one category of labels
+######################################
 
 You can also pass several labels to the GUI. See the image below the code snippet to find out, what kind of annotations
 can be created with these label classes:
