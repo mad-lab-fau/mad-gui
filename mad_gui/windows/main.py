@@ -326,7 +326,7 @@ class MainWindow(QMainWindow):
 
     def _ask_for_file_name(self, file_type=None):
         data_file = QFileDialog().getOpenFileName(
-            "Select file to open", str(self.global_data.base_dir), filter=file_type
+            parent=None, caption="Select file to open", dir=str(self.global_data.base_dir), filter=file_type
         )[0]
         if data_file == "":
             # User clicked cancel
