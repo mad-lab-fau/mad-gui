@@ -21,6 +21,7 @@ all the data form the GUI and you can process / export it in whatever way you wa
 
 .. code-block:: python
 
+    import warnings
     from mad_gui import start_gui, BaseExporter, BaseSettings
     from mad-gui.models import GlobalData
 
@@ -30,6 +31,7 @@ all the data form the GUI and you can process / export it in whatever way you wa
             # This will be shown as string in the dropdown menu of
             # mad_gui.components.dialogs.ExportResultsDialog upon pressing
             # the button "Export data" in the GUI
+            warnings.warn("Please give your exporter a meaningful name.")
             return "Custom exporter"
 
         def process_data(self, global_data: GlobalData):

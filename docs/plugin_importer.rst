@@ -66,6 +66,7 @@ The name will show up in the dropdown menu in the GUI's pop up when the user cli
     """These are the contents of custom_importer.py, which holds my first importer."""
 
     from typing import Dict
+    import warnings
     import pandas as pd
     from mad_gui import start_gui, BaseImporter
 
