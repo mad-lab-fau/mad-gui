@@ -39,7 +39,7 @@ test our built-in exemplary importer, exemplary algorithms and exemplary label.
 
 |General Information | Development | Additional Information |
 |---------------------|-----------|-------------------------|
-|- [Why and what?](#why-and-what)<br>- [Installation: GUI User](#gui-user-standalone-executable)<br>- [Installation: Plugin Developer](#plugin-developers-use-our-python-package)<br> - [User Interface](#user-interface)<br> - [Load and display data of a certain data type](#load-and-display-data-of-a-certain-data-type)<br>- [Use a custom algorithm](#use-a-custom-algorithm)| - [Developing plugins](#developing-plugins)<br>- [Communicating with the user](#communicating-with-the-user)<br>- [Adjusting Constants](#adjusting-constants)<br>- [Changing the theme](#changing-the-theme)|- [Support & Contributing](#support-contributing)<br>- [Background](#background)|
+|- [Why and what?](#why-and-what)<br>- [Installation: GUI User](#gui-user-standalone-executable)<br>- [Installation: Plugin Developer](#plugin-developers-use-our-python-package)<br> - [User Interface](#user-interface)<br> - [Load and display data of a certain data type](#load-and-display-data-of-a-certain-data-type)<br>- [Use a custom algorithm](#use-a-custom-algorithm)| - [Developing plugins](#developing-plugins)<br>- [Communicating with the user](#communicating-with-the-user)<br>- [Adjusting Constants](#adjusting-constants)<br>- [Changing the theme](#changing-the-theme)<br><br><br>|- [Support & Contributing](#support-contributing)<br>- [Background](#background)<br><br><br><br><br>|
 
 
 ## Why and what?
