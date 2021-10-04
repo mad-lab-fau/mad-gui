@@ -29,19 +29,25 @@ Create a file that will include your custom importer
 Develop your custom importer in that file
 #########################################
 
-.. note::
-
-   If the user selects your CustomImporter, selects a file and then presses `start_processing`, the GUI will pass the
-   selected file to your `CustomImporter.load_sensor_data` (argument `file_path`), as shown in `this GIF <_static/gifs/importer.gif>`_.
+If the user selects your CustomImporter, selects a file and then presses `start_processing`, the GUI will pass the
+selected file to your `CustomImporter.load_sensor_data` (argument `file_path`), as shown in `this GIF <_static/gifs/importer.gif>`_.
 
 Use this code snippet and
 
-- optional: set the file type that the importer can load, e.g. `*.csv`
-- set the importer's name as return value of the regarding method
-- make sure the variable `sensor_data` in `load_sensor_data` keeps a dataframe
-- fill the variabel `sampling_rate_hz` in `load_sensor_data`
+.. admonition:: Getting started quickly
+   :class: tip
 
+   To adapt the example below to your use case, you only need to
 
+   - make sure the variable `sensor_data` in `load_sensor_data` keeps a dataframe
+   - fill the variable `sampling_rate_hz` in `load_sensor_data`
+
+   `example data <https://github.com/mad-lab-fau/mad-gui/raw/main/example_data/sensor_data.zip>`_ like this:
+
+Optionally, you can set the file type that the importer can load, e.g. `*.csv`.
+This will restrict which files the user can select.
+Also, you can change the importer's name by changing the returned string of the regarding method.
+The name will show up in the dropdown menu in the GUI's pop up when the user clicks `Load data`.
 
 .. code-block:: python
 

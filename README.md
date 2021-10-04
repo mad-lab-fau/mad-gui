@@ -9,49 +9,124 @@
 [![Test and Lint](https://github.com/mad-lab-fau/mad-gui/workflows/Test%20and%20Lint/badge.svg)](https://github.com/mad-lab-fau/mad-gui/actions/workflows/test_and_lint.yml)
 [![CodeFactor](https://www.codefactor.io/repository/github/mad-lab-fau/mad-gui/badge/main)](https://www.codefactor.io/repository/github/mad-lab-fau/mad-gui/overview/main)
 [![Documentation Status](https://readthedocs.org/projects/mad-gui/badge/?version=latest)](https://mad-gui.readthedocs.io/en/latest/?badge=latest)
-
-
 [![PyPI version shields.io](https://img.shields.io/pypi/v/mad-gui)](https://pypi.org/project/mad-gui/)
-![PyPI - Downloads](https://img.shields.io/pypi/dm/mad-gui)
 
-![GitHub all releases](https://img.shields.io/github/downloads/mad-lab-fau/mad-gui/total?style=social)
-[![YouTube Channel Views](https://img.shields.io/youtube/channel/views/UCaLchy07OciePfHL9j-8u8A?style=social)](https://m.youtube.com/channel/UCaLchy07OciePfHL9j-8u8A/videos)
+The MaD GUI can be used as a basis for graphical annotation and computational analysis of time series data.
+It uses a plugin system, such that developers can easily extend the GUI to enable loading their specific data format or 
+using the algorithms they have developed.
 
 <div align="center">
-  
+
+<i>click to enlarge the image</i>
+
+[<img src="./docs/_static/images/MaD-GUI.png" width="500px">](https://mad-gui.readthedocs.io/en/latest/_static/images/MaD-GUI.png)
+
 :warning: ![WARNING](https://img.shields.io/badge/-WARNING-yellow) :warning: <br />
 This is still an early version. Things might not work as expected. <br />
 Experiencing issues? [Report a bug here!](https://github.com/mad-lab-fau/mad-gui/issues/new?assignees=&labels=&template=bug_report.md&title=%5BBUG%5D)
 
-  
 </div>
+  
+## Quickastart for developers
+```
+pip install mad_gui
+mad-gui
+```
+You can [download our example data](https://github.com/mad-lab-fau/mad-gui/raw/main/example_data/sensor_data.zip), to
+test our built-in exemplary importer, exemplary algorithms and exemplary label.
 
 ## Contents of this readme
 
-Here you can find some general information to find out whether the our packages suits your needs:
-- [What is it?](#what-is-it)
-- [How does the user interface work?](#how-does-the-user-interface-work)
-- [How do I get the GUI to work on my machine?](#how-do-i-get-the-gui-to-work-on-my-machine)
-- [How can I test the GUI using your example data on my computer?](#how-can-i-test-the-gui-using-your-example-data-on-my-computer)
-- [Can the GUI load and display data of my specific system?](#can-the-gui-load-and-display-data-of-my-specific-system)
-- [Can the GUI use my own algorithm?](#can-the-gui-use-my-own-algorithm)
-- [Can I change something at the core of the GUI?](#can-i-change-something-at-the-core-of-the-gui)
+|General Information | Development | Additional Information |
+|---------------------|-----------|-------------------------|
+|- [Why and what?](#why-and-what)<br>- [Installation: GUI User](#gui-user-standalone-executable)<br>- [Installation: Plugin Developer](#plugin-developers-use-our-python-package)<br> - [User Interface](#user-interface)<br> - [Load and display data of a certain data type](#load-and-display-data-of-a-certain-data-type)<br>- [Use a custom algorithm](#use-a-custom-algorithm)| - [Developing plugins](#developing-plugins)<br>- [Communicating with the user](#communicating-with-the-user)<br>- [Adjusting Constants](#adjusting-constants)<br>- [Changing the theme](#change-the-theme)|- [Support & Contributing](#support-contributing)<br>- [Background](#background)|
 
-Here you can find information about development:
-- [Developing plugins](#developing-plugins)
-- [Communicating with the user](#communicating-with-the-user)
-- [Adjusting Constants](#adjusting-constants)
-- [Changing the theme](#change-the-theme)
 
-##  What is it?
-The MaD GUI is a framework for processing time series data.
-Its use-cases include visualization, annotation (manual or automated), and algorithmic processing of visualized data and annotations.
+## Why and what?
+Existing graphical user interfaces (GUIs), that deal with time series data, usually do not allow support of annotation 
+by algorithms, although such algorithms exist.
+If they do, the algorithm and the GUI are tightly coupled, such that reusing it becomes hard.
 
-## How does the user interface work?
+Furthermore, algorithms that were developed to analyze time series data, can usually not be used by researchers without 
+programming experience, although the algorithms were developed for their research area. This is for example the case in
+the area of gait analysis, where algorithms are provided by computer scientists and need to be used by clinical reasearchers.
+
+The MaD GUI can be used as a framework to incorporate algorithms for supporting time series annotation and for using
+algorithms for analyzing time series data even without having programming experience.
+
+You can read about this in more detail in our [Background](#background) section
+
+## Terminology
+
+| Word | Meaning |
+|------|---------|
+|Annotation| An annotation has a start and a stop value, e.g. it goes from second 1 to second 2 of the time series data. Furthermore, it can have a description, such as "walking" or "running".|
+|Label| An annotation is always of a certain type, for example "Activity". These types are called labels. A Label keeps the possible descriptions of an annotation, e.g. "walk" or "run". Furthermore, it keeps information about where the label shoudl be plotted, e.g. lowest 20% of the plot. |
+|User| Someone who performs actions in the GUI.|
+|Developer| Someone who creates plugins for the GUI, for example to load a specific data format or to use a specific algorithm.|
+
+
+## Installation
+
+### GUI user: Standalone executable
+You do not need to install anything. Simply download the file from the table below for your regarding operating system. 
+Afterwards you can start the GUI as described in the rightmost column of the table.
+
+When downloading the files below, your browser may warn you that this is a potentially dangerous file.
+You will only be able to use our GUI by selecting "Keep anyway / download anyway / ...".
+In the case of Microsoft Edge, this possibility is hidden, but you can select it after downloading as explained [here](https://docs.microsoft.com/en-us/deployedge/microsoft-edge-security-downloads-interruptions#user-experience-for-downloads-lacking-gestures).
+
+| Operating system <img width=200/>      | File to download <img width=200/>| What to do                                        |
+|------------------------|------------------|---------------------------------------------------|
+| Windows                | [Windows (64 bit)](https://github.com/mad-lab-fau/mad-gui/releases/download/v0.2.0-alpha.1/mad_gui)       | Download the file on the left. Then open the downloaded file and read the info directly below this table. <br /> <br />*Note: If prompted with a dialog `Windows protected your PC`, click `More info` and then select `Run anyway`* |
+| Ubuntu                 | [Ubuntu (64 bit)](https://github.com/mad-lab-fau/mad-gui/releases/download/v0.2.0-alpha.5/mad_gui_ubuntu) | Download the file on the left. Then, in your terminal, navigate to the file loaction and then: `chmod +x ./mad_gui_ubuntu` and then `./mad_gui_ubuntu`. Please also read the info directly below this table. <br /> <br />*Note: you might need to install some additional packages. You can use [this script](https://raw.githubusercontent.com/mad-lab-fau/mad-gui/main/unix_dependencies.sh) to do so. Just right click the link, save it on your machine and execute it.*|
+| Mac OS                 | [Mac OS (64 bit)](https://github.com/mad-lab-fau/mad-gui/releases/download/v0.2.0-alpha.5/mad_gui_mac.zip) | Download the file on the left and extract it. Then, in your [terminal](https://support.apple.com/en-lk/guide/terminal/apd5265185d-f365-44cb-8b09-71a064a42125/mac), navigate to the location where you extracted "mad_gui_mac.app" to. Then type `chmod +x ./mad_gui_mac.app` and then `./mad_gui_mac.app`. Please also read the info directly below this table. <br /><br /> *Note: If your Mac does not allow you to open this file, perform the actions for "If you want to open an app that hasn’t been notarized or is from an unidentified developer" on the [Apple Support Page](https://support.apple.com/en-us/HT202491). Afterwards, try `./mad_gui_mac.exe` again in your terminal.*|
+| other                  | Supplied upon request |[Contact us](mailto:malte.ollenschlaeger@fau.de)  
+
+Now, please [download our example data](https://github.com/mad-lab-fau/mad-gui/raw/main/example_data/sensor_data.zip) 
+and extract the .csv file. After starting MaD GUI, you can open the previously downloaded example data as shown in 
+[User Interface](#user-interface). 
+
+You want to load data of a specific format/system or want to use a specific algorithm? 
+In this case please refer to [Load and display data of a certain data type](#load-and-display-data-of-a-certain-data-type)
+
+### Plugin Developers: Use our python package
+
+Info: We recommend to use `pip install mad_gui` in a 
+clean python 3.7 [virtual environment](https://docs.python.org/3/library/venv.html#creating-virtual-environments) / 
+[conda environment](https://docs.python.org/3/library/venv.html#creating-virtual-environments). 
+
+```
+pip install mad_gui
+```
+Then, from your command line simply call:
+```
+mad-gui
+```
+
+Alternatively, within a python script use our [start_gui](https://mad-gui.readthedocs.io/en/latest/modules/generated/mad_gui/mad_gui.start_gui.html#mad_gui.start_gui) function: 
+
+```
+from mad_gui import start_gui
+start_gui()
+```
+
+If you want to see an example, 
+[download our example data](https://github.com/mad-lab-fau/mad-gui/raw/main/example_data/sensor_data.zip) and 
+extract the .csv. Afterwards, you can open the previously downloaded example data as shown in 
+[User Interface](#user-interface).
+You want to load data of a specific format/system or want to use a specific algorithm? 
+In this case please refer to the sections
+[Load and display data of a certain data type](#load-and-display-data-of-a-certain-data-type)
+and [Use a custom algorithm](#use-a-custom-algorithm).
+
+## User Interface
 
 ### Videos
 
-By clicking on the images below, you will be redirected to YouTube. In case you want to follow along on your own machine, check out the section [How do I get the GUI to work on my machine?](#how-do-i-get-the-gui-to-work-on-my-machine) first.
+By clicking on the images below, you will be redirected to YouTube. In case you want to follow along on your own 
+machine, check out the section [Installation (End-user)](#end-user-standalone-executable) or 
+[Installation (Developers)](#developers-use-our-python-package) first.
 
 [<img src="./docs/_static/images/video_thumbnails/loading_and_navigating.png" width="200px">](https://www.youtube.com/watch?v=akxcuFOesC8 "MaD GUI - Loading data and navigating in the plot")
 [<img src="./docs/_static/images/video_thumbnails/annotations.png" width="200px">](https://www.youtube.com/watch?v=VWQKYRRRGVA "MaD GUI - Labelling data manually or using an algorithm")
@@ -70,61 +145,14 @@ Please watch the videos linked above, if you want to learn more about the differ
 | `Shift` + `Left Mouse Click` | Add label     | Start a new label directly when setting the end of a label |
 | `Ctrl` + `Left Mouse Click`  | Add label     | Add a single event |
 
-## How do I get the GUI to work on my machine?
-In the next section, we present two options how to obtain and run the GUI.
-However, this will only enable you to look at our example data.
-You want to load data of a specific format/system or want to use a specific algorithm? 
-In this case please refer to [Can I use it with data of my specific system or a specific algorithm?](#can-i-use-it-with-data-of-my-specific-system-or-a-specific-algorithm)
 
-### How can I test the GUI using your example data on my computer?
-
-First, you need to download the example data.
-Click on [this link](https://github.com/mad-lab-fau/mad-gui/raw/main/example_data/sensor_data.zip), and extract the file to your computer.
-If you also want to check out synchronization with a video file, click on [this link](https://github.com/mad-lab-fau/mad-gui/releases/download/v0.2.0-alpha.1/video.mp4) and save it on your machine. Next, use one of the following two options (for testing it on Windows, we recommend Option A).
-
-#### End-user: Standalone executable
-
-When downloading the files below, your browser may warn you that this is a potentially dangerous file.
-You will only be able to use our GUI by selecting "Keep anyway / download anyway / ...".
-In the case of Microsoft Edge, this possiblity is hidden, but you can select it after downloading as explained [here](https://docs.microsoft.com/en-us/deployedge/microsoft-edge-security-downloads-interruptions#user-experience-for-downloads-lacking-gestures).
-
-| Operating system <img width=200/>      | File to download <img width=200/>| What to do                                        |
-|------------------------|------------------|---------------------------------------------------|
-| Windows                | [Windows (64 bit)](https://github.com/mad-lab-fau/mad-gui/releases/download/v0.2.0-alpha.1/mad_gui)       | Download the file on the left. Then open the ownloaded file. <br /> <br />*Note: If prompted with a dialog `Windows protected your PC`, click `More info` and then select `Run anyway`* |
-| Ubuntu                 | [Ubuntu (64 bit)](https://github.com/mad-lab-fau/mad-gui/releases/download/v0.2.0-alpha.5/mad_gui_ubuntu) | Download the file on the left. Then, in your terminal, navigate to the file loaction and then: `chmod +x ./mad_gui_ubuntu` and then `./mad_gui_ubuntu` <br /> <br />*Note: you might need to install some additional packages. You can use [this script](https://raw.githubusercontent.com/mad-lab-fau/mad-gui/main/unix_dependencies.sh) to do so. Just right click the link, save it on your machine and execute it.*|
-| Mac OS                 | [Mac OS (64 bit)](https://github.com/mad-lab-fau/mad-gui/releases/download/v0.2.0-alpha.5/mad_gui_mac.zip) | Download the file on the left and extract it. Then, in your [terminal](https://support.apple.com/en-lk/guide/terminal/apd5265185d-f365-44cb-8b09-71a064a42125/mac), navigate to the location where you extracted "mad_gui_mac.app" to. Then type `chmod +x ./mad_gui_mac.app` and then `./mad_gui_mac.app` <br /><br /> *Note: If your Mac does not allow you to open this file, perform the actions for "If you want to open an app that hasn’t been notarized or is from an unidentified developer" on the [Apple Support Page](https://support.apple.com/en-us/HT202491). Afterwards, try `./mad_gui_mac.exe` again in your terminal.*|
-| other                  | Supplied upon request |[Contact us](mailto:malte.ollenschlaeger@fau.de)  
-
-Start the program, and then you can open the previously downloaded example data as shown in [How do I use it (videos)?](#how-do-i-use-it-videos)
-
-#### Developers: Using the python package
-
-Info: We recommend to use `pip install mad_gui` in a [clean python virtual environment](https://docs.python.org/3/library/venv.html#creating-virtual-environments) / [conda environment](https://docs.python.org/3/library/venv.html#creating-virtual-environments). This way you do NOT need to clone this github repository.
-
-```
-pip install mad_gui
-python -m mad_gui.start_gui
-```
-
-Alternatively, within a python script use our [start_gui](https://mad-gui.readthedocs.io/en/latest/modules/generated/mad_gui/mad_gui.start_gui.html#mad_gui.start_gui) function: 
-
-```
-from mad_gui import start_gui
-start_gui()
-```
-
-Now you can open the previously downloaded example data as shown in [How do I use it (videos)?](#how-do-i-use-it-videos)
-
-## Can the GUI load and display data of my specific system?
-Yes, however it will need someone who is familiar with Python. For more information, please refer to [Developing Plugins](#developing-plugins).
+## Load and display data of a certain data type
+This will need someone who is familiar with Python. For more information, please refer to [Developing Plugins](#developing-plugins).
 You do not have experience with python but still want to load data from a specific system? [Contact us!](mailto:malte.ollenschlaeger@fau.de)
 
-## Can the GUI use my own algorithm?
-Yes, however it will need someone who is familiar with Python. For more information, please refer to [Developing Plugins](#developing-plugins).
+## Use a custom algorithm
+This will need someone who is familiar with Python. For more information, please refer to [Developing Plugins](#developing-plugins).
 You do not have experience with python but still want to load data from a specific system? [Contact us!](mailto:malte.ollenschlaeger@fau.de)
-
-## Can I change something at the core of the GUI?
-Yes, for more information, please [get in touch](mailto:malte.ollenschlaeger@fau.de).
 
 ## Developing Plugins
 The MaD GUI package is a framework, which can be extended with different kinds of plugins and labels.
@@ -155,7 +183,7 @@ as you will see in the regarding examples:
    - Algorithm: [Calculate features for existing annotations](https://mad-gui.readthedocs.io/en/latest/plugin_algorithm.html#algorithm)
    - Exporter: [Export displayed annotations](https://mad-gui.readthedocs.io/en/latest/plugin_exporter.html)
    - Labels: [Create one or several custom label classes](file:///D:/mad-gui/docs/_build/html/labels.html#labels)
-   - For supplementary basic information please refer to [Preparation](https://mad-gui.readthedocs.io/en/latest/developer_guidelines.html).
+   - For supplementary basic information please refer to [Preparation](file:///D:/mad-gui/docs/_build/html/preparation.html).
 
 ## Communicating with the user
 
@@ -222,3 +250,70 @@ settings=MySettings,
 )
 
 ```
+
+## Support & Contributing
+You can find some help in our section about 
+[troubleshooting](https://mad-gui.readthedocs.io/en/latest/troubleshooting.html).
+In case you can not solve an issue using that section, please [get in touch](mailto:malte.ollenschlaeger@fau.de).
+
+## Background
+
+### User perspective
+
+#### The challenge
+New algorithms for analyzing time series data are published frequently.
+However, the developed algorithms can hardly be used if the area of application is outside of computer science.
+For example in clinical research, the user likely will lack necessary programming expertise.
+
+#### Best available solutions
+Many graphical user interfaces exist, that allow interaction with time series data without programming expertise.
+Usually they can be used to annotate sequences of a signal, resulting in information like 
+`"from timestamp x to timestamp y, z happend"` or `"at timestamp x, z happened"`.
+In case they need a more detailed analysis using a specific kind of algorithm, usually the data has to be sent to
+the developer of the specific algorithm, who has to process it and send back the results.
+
+#### Limitations of available solutions
+If available graphical user interfaces contain algorithms, these tools are often not open-source and/or require the user
+to install software on their machine. The latter is not always easily possible due to restrictions of an institution's 
+security policy.
+In case an algorithm is not incorporated into a graphical user interface, the user interested in using this 
+algorithm would have to send data to developers of the specific algorithm.
+This may be undesirable for several reasons.
+Among others, data protection laws and the created overhead are important aspects.
+
+As a result, many algorithms are developed to support research fields outside of computer science, as for example 
+clinical research, but can hardly be used.
+
+#### Our solution
+The MaD GUI offers an easy way of accessing algorithms for the analysis of time series data.
+This enables researchers to make use of state-of-the-art-algorithms for time series analysis in their respective 
+research area even if they do not have programming expertise.
+
+### Developer perspective
+
+#### The challenge
+Researching algorithms for time series data in many cases requires annotation of data.
+To accomplish the task of annotation, developers usually need some kind of graphical user interface.
+
+#### Best available solutions
+While many graphical user interface exist for annotating time series data, they usually do not incorporate algorithms, 
+which could support the developer with labelling the data - and they do not offer an interface to add algorithms.
+However, many algorithms exist for such kind of support.
+
+#### Limitations of avaialable solutions
+In case a graphical user interface incorporates algorithms to support labelling, these are often very specific to the 
+use-case.
+This results in each developer building their own graphical user interface, which usually is not developed
+with the aim of being modular or to be used in other projects.
+Therefore, there is a lot of work done over and over again.
+
+#### Our solution
+The MaD GUI offers a basis for such scenarios.
+It can be extended by developers to load their specific data format.
+Furthermore, developers can easily inject their algorithms to support labelling or analyze time series data as a plugin.
+In addition, developers can specify the labels to be used - it could be one layer (= one label from top to bottom) or 
+an arbitrary amount of layers, (e.g. use one kind of label in the upper part of the plot and another kind of label in 
+the lower part of the plot).
+During annotation, each label can easily be assigned an additional description to add details to the specific 
+annotation.
+

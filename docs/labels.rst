@@ -35,8 +35,8 @@ like this:
 .. admonition:: Using your algorithm in the GUI
    :class: tip
 
-    You need to pass the label class (and optionally other plugins) to the start_gui
-    function, see `Readme: Developing Plugins<https://mad-gui.readthedocs.io/en/latest/README.html#developing-plugins>`_.
+   You need to pass the label class (and optionally other plugins) to the start_gui
+   function, see `Readme: Developing Plugins <https://mad-gui.readthedocs.io/en/latest/README.html#developing-plugins>`_.
 
 
 The `description` defines the possible strings that can be assigned to a label. They will automatically show up after

@@ -6,12 +6,10 @@
 Algorithm
 *********
 
+.. _getting started:
+
 Overview
 ########
-
-First of all you need to create a file, which will keep
-your algorithm, as shown in `this image <_static/images/development/algorithm_create_file.png>`_.
-Then you can implement your algorithm based on one of the two examples we give below.
 
 .. warning::
 
@@ -27,8 +25,24 @@ Then you can implement your algorithm based on one of the two examples we give b
     - see what that means `in a video <https://www.youtube.com/watch?v=VWQKYRRRGVA&t=9s>`_ (00:50 to 01:00)
     - use the :ref:`code example <algorithm features>`
 
-The user will be able to select your plugin after pressing the button `Use algorithm`, as shown in our
-`exemplary video <https://www.youtube.com/watch?v=VWQKYRRRGVA>`_.
+.. admonition:: Getting started quickly
+   :class: tip
+
+   The two subsections below show working examples. To run one of them:
+
+      - create a file as shown in `this image <_static/images/development/algorithm_create_file.png>`_
+      - copy one of the code snippets containing the `MyAlgorithm` class
+      - download our `example CSV <https://github.com/mad-lab-fau/mad-gui/raw/main/example_data/sensor_data.zip>`_
+      - in a separate file execute the following code snippet and then apply the algorithm as shown in our
+        `exemplary video <https://www.youtube.com/watch?v=akxcuFOesC8&t=9s>`_:
+
+   .. code-block:: python
+
+       from mad_gui import start_gui
+       from mad_gui.plugins import ExampleImporter
+       from my_algorithm import MyAlgorithm # you need to create this file and class, see below
+
+       start_gui(plugins=[ExampleImporter, MyAlgorithm])
 
 .. _algorithm annotations:
 
@@ -44,25 +58,13 @@ You can see an example in `this GIF <_static/gifs/algorithm_label.gif>`_ or `thi
 .. admonition:: Getting started quickly
    :class: tip
 
-   The code below is a working example. To adapt it to your use case, you only need to modify the method
-   **create_annotation** of `CustomAlgorithm`. You can test with our
-   `example data <https://github.com/mad-lab-fau/mad-gui/raw/main/example_data/sensor_data.zip>`_ like this:
-
-   .. code-block:: python
-
-       from mad_gui import start_gui
-       from mad_gui.plugins import ExampleImporter
-       from my_algorithm import CustomAlgorithm # you need to create this file and class, see below
-
-       start_gui(plugins=[ExampleImporter, CustomAlgorithm])
-
-If you want to know more about the data type `Plot Data`, which is used in `process_data`, please refer to
-`the regarding documentation <https://mad-gui.readthedocs.io/en/latest/modules/generated/mad_gui/mad_gui.models.local.PlotData.html#mad_gui.models.local.PlotData>`_.
-However, you can get along without knowing anything about `Plot Data`:
+   The code below is a working example. See :ref:`getting started` for more information on
+   how to execute this example. To adapt this example to your use case, you only need to modify the methods
+   **name** and **create_annotations** of `MyAlgorithm`.
 
 .. code-block:: python
 
-    """This is the content of custom_algorithm.py, which holds my first algorithm plugin."""
+    """This is the content of my_algorithm.py, which holds my first algorithm plugin."""
 
     import warnings
     from typing import Dict
@@ -71,7 +73,7 @@ However, you can get along without knowing anything about `Plot Data`:
     from mad_gui.models.local import PlotData
     from mad_gui.components.dialogs.user_information import UserInformation
 
-    class CustomAlgorithm(BaseAlgorithm):
+    class MyAlgorithm(BaseAlgorithm):
         @classmethod
         def name(cls) -> str:
             name = "Algorithm to do ..."
@@ -107,11 +109,9 @@ However, you can get along without knowing anything about `Plot Data`:
             annotations = pd.DataFrame(data=[starts, ends], columns = ['start', 'end'])
             return annotations
 
-.. admonition:: Using your algorithm in the GUI
-   :class: tip
-
-   As a last step, you need to pass the algorithm (and optionally other plugins) to the start_gui
-   function, see `Readme: Developing Plugins <https://mad-gui.readthedocs.io/en/latest/README.html#developing-plugins>`_.
+If you want to know more about the data type `Plot Data`, which is used in `process_data`, please refer to
+`the regarding documentation <https://mad-gui.readthedocs.io/en/latest/modules/generated/mad_gui/mad_gui.models.local.PlotData.html#mad_gui.models.local.PlotData>`_.
+However, you can get along without knowing anything about `Plot Data`:
 
 .. _algorithm features:
 
@@ -130,26 +130,13 @@ annotation with the mouse, as you can see in `this GIF <_static/gifs/algorithm_f
 .. admonition:: Getting started quickly
    :class: tip
 
-   The code below is a working example. To adapt it to your use case, you only need to modify the methods
-   **name** and **calculate_features** of `CustomAlgorithm`. You can test with our
-   `example data <https://github.com/mad-lab-fau/mad-gui/raw/main/example_data/sensor_data.zip>`_ like this:
-
-   .. code-block:: python
-
-       from mad_gui import start_gui
-       from mad_gui.plugins import ExampleImporter
-       from my_algorithm import CustomAlgorithm # you need to create this file and class, see below
-
-       start_gui(plugins=[ExampleImporter, CustomAlgorithm])
-
-
-If you want to know more about the data type `Plot Data`, which is used in `process_data`, please refer to
-`the regarding documentation <https://mad-gui.readthedocs.io/en/latest/modules/generated/mad_gui/mad_gui.models.local.PlotData.html#mad_gui.models.local.PlotData>`_.
-However, you can get along without knowing anything about `Plot Data`:
+   The code below is a working example. See :ref:`getting started` for more information on
+   how to execute this example. To adapt this example to your use case, you only need to modify the methods
+   **name** and **calculate_features** of `MyAlgorithm`.
 
 .. code-block:: python
 
-    """This is the content of custom_algorithm.py, which holds my first algorithm plugin."""
+    """This is the content of my_algorithm.py, which holds my first algorithm plugin."""
 
     import warnings
     from typing import Dict
@@ -158,7 +145,7 @@ However, you can get along without knowing anything about `Plot Data`:
     from mad_gui.models.local import PlotData
     from mad_gui.components.dialogs.user_information import UserInformation
 
-    class CustomAlgorithm(BaseAlgorithm):
+    class MyAlgorithm(BaseAlgorithm):
         @classmethod
         def name(cls) -> str:
             name = "Algorithm to do ..."
@@ -209,8 +196,6 @@ However, you can get along without knowing anything about `Plot Data`:
             feature = 42
             return f"The calculated feature for this label is: {feature}."
 
-.. admonition:: Using your algorithm in the GUI
-   :class: tip
-
-   As a last step, you need to pass the algorithm (and optionally other plugins) to the start_gui
-   function, see `Readme: Developing Plugins <https://mad-gui.readthedocs.io/en/latest/README.html#developing-plugins>`_.
+If you want to know more about the data type `Plot Data`, which is used in `process_data`, please refer to
+`the regarding documentation <https://mad-gui.readthedocs.io/en/latest/modules/generated/mad_gui/mad_gui.models.local.PlotData.html#mad_gui.models.local.PlotData>`_.
+However, you can get along without knowing anything about `Plot Data`:

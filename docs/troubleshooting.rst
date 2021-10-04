@@ -44,6 +44,53 @@ You can read something about how to fix it in the Development section below.
 Development
 ###########
 
+The GUI does not start because of SystemError
+*********************************************
+In case you get the error `SystemError: <built-in function loadUiType> returned a result with an error set`, please
+go to your Run/Debug Configurations -> Edit Configurations as shown in
+`this image <_static/images/troubleshooting/edit_configurations.png>`_.
+
+Then make sure the Box `Run with Python Console` is deactivated, as shown in
+`this image <_static/images/troubleshooting/edit_configurations_02.png>`_
+
+The GUI does not start because of TypeError
+*******************************************
+
+If you get an error like this, see the next section.
+
+.. code-block:: console
+
+    ... loadUiType(...)
+    TypeError: cannot unpack non-iterable NoneType object
+
+
+PySide2-uic not found
+*********************
+
+.. note::
+    So far, this problem is only known for Windows.
+
+.. code-block:: console
+
+    "...mad_gui/components/dialogs/....py", line .., in <module>
+    FileNotFoundError: Probably python did not find pyside2-uic
+
+Probably python can't find pyside2-uic. Look for a folder called `Scripts` in your python env.
+To find the location of your python env, go to the command line, activate the environment and then type:
+
+.. list-table:: Finding python
+    :widths: 25 25
+    :header-rows: 1
+
+    * - Operating system
+      - Command
+    * - Windows
+      - where python
+
+Then copy pyside2-uic from the folder `Scripts` to the location where also your python executable is (should be the
+parent directory).
+
+
 The plugin I created does not show up in the GUI
 ************************************************
 Please make sure that your plugin inherits from one of `BaseImporter`, `BaseAlgorithm`, or `BaseExporter`, as we
@@ -85,42 +132,6 @@ In our gitlab-CI there is a dependency issue with prospector that boils down to 
 Therefore we manually install astroid 2.5.1 in the CI.
 If you experience problems on your local machine you might consider doing this as well.
 
-Fail to load UI
-***************
-
-If you get an error like this, see the next section.
-
-.. code-block:: console
-
-    ... loadUiType(...)
-    TypeError: cannot unpack non-iterable NoneType object
-
-
-PySide2-uic not found
-*********************
-
-.. note::
-    So far, this problem is only known for Windows.
-
-.. code-block:: console
-
-    "...mad_gui/components/dialogs/....py", line .., in <module>
-    FileNotFoundError: Probably python did not find pyside2-uic
-
-Probably python can't find pyside2-uic. Look for a folder called `Scripts` in your python env.
-To find the location of your python env, go to the command line, activate the environment and then type:
-
-.. list-table:: Finding python
-    :widths: 25 25
-    :header-rows: 1
-
-    * - Operating system
-      - Command
-    * - Windows
-      - where python
-
-Then copy pyside2-uic from the folder `Scripts` to the location where also your python executable is (should be the
-parent directory).
 
 Loader provided annotations for sensors that have no plot
 *********************************************************
