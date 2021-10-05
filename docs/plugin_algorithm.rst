@@ -67,6 +67,9 @@ You can see an example in `this GIF <_static/gifs/algorithm_label.gif>`_ or `thi
    how to execute this example. To adapt this example to your use case, you only need to modify the methods
    **name** and **create_annotations** of `MyAlgorithm`.
 
+   If you want to use other labels than the built-in "Activity", make sure to pass it to `start_gui`
+   and then you can use it in `process_data` below.
+
 .. code-block:: python
 
     """This is the content of my_algorithm.py, which holds my first algorithm plugin."""
@@ -139,6 +142,9 @@ annotation with the mouse, as you can see in `this GIF <_static/gifs/algorithm_f
    how to execute this example. To adapt this example to your use case, you only need to modify the methods
    **name** and **calculate_features** of `MyAlgorithm`.
 
+   If you want to use other labels than the built-in "Activity", make sure to pass it to `start_gui`
+   and then you can use it in `process_data` below.
+
 .. code-block:: python
 
     """This is the content of my_algorithm.py, which holds my first algorithm plugin."""
@@ -175,6 +181,11 @@ annotation with the mouse, as you can see in `this GIF <_static/gifs/algorithm_f
                 # iterate over all labels in this plot
                 annotations = plot_data.annotations["Activity"].data
                 for i_activity, activity in annotations.iterrows():
+
+                    # If you want, you can skip annotations that have a certain description
+                    # However, in this example we do not care for that
+                    # if activity.description == ...:
+                    #     continue
 
                     # get the sensor data between start and end of the current annotation
                     activity_data = plot_data.data.iloc[activity.start : activity.end]
