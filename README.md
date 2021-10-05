@@ -230,6 +230,8 @@ from mad_gui.config import BaseSettings
 from mad_gui import start_gui
    
 class MySettings(BaseSettings):
+    # decide which axes/channels should be plotted by default
+    # Note that this will result in an error if the passed data does not have those axes
     CHANNELS_TO_PLOT = ["acc_x", "acc_z"]
     
     # used if a label has `snap_to_min = True` or `snap_to_max = True`
