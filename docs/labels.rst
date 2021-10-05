@@ -6,7 +6,7 @@
 Labels
 ******
 
-Creating a single label
+Creating a Region Label
 #######################
 
 Labels can be used to create annotations in the GUI.
@@ -47,6 +47,23 @@ adding a new label or by clicking on a label when in `Edit label` mode, such tha
 descriptions. In our `exemplary video <https://www.youtube.com/watch?v=Ro8bOSjIg5U&t=12s>`_, this is
 `{"stand": None, "walk": ["fast", "slow"], "jump": None}`.
 
+
+Creating an Event Label
+#######################
+
+This kind of events can be plotted in the GUI, when the user uses `Ctrl` + `LeftMouseClick`/`Space`.
+See the above section for more infos on class attributes, and our
+`exemplary video <https://www.youtube.com/watch?v=Ro8bOSjIg5U&t=12s>` for more information on labelling.
+
+.. code-block:: python
+
+    class MyEvent(BaseEventLabel):
+        min_height = 0
+        max_height = 1
+        name = "Peak"
+        descriptions = {"Positive peak": None, "Negative peak": None}
+        snap_to_min = False
+        snap_to_max = False
 
 Using more than one category of labels
 ######################################
