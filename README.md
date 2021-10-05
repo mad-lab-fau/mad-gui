@@ -206,10 +206,6 @@ In the sections in the following list we describe how you can develop your own p
    - Labels: [Create one or several custom label classes](file:///D:/mad-gui/docs/_build/html/labels.html#labels)
    - For supplementary basic information please refer to [Preparation](file:///D:/mad-gui/docs/_build/html/preparation.html).
 
-## Labelling more than one category
-
-You can 
-
 ## Communicating with the user
 
 If - at any point - you want to send a message to the user of the GUI, you create a message box with an OK button like
