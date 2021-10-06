@@ -51,7 +51,7 @@ To see how to open our example data within the GUI, please refer to our section 
 
 |General Information | Development | Additional Information |
 |---------------------|-----------|-------------------------|
-|<li>[Why and what?](#why-and-what)</li><li>[Download / Installation](#download--installation)</li><li>[User Interface (Videos & Shortcuts)](#user-interface)</li><li>[Load / display data of any format](#load-and-display-data-of-a-certain-data-type)</li><li>[Use a custom algorithm](#use-a-custom-algorithm)</li><li>[Terminology](#terminology)</li>|<li>[Development installation](#development-installation)</li><li>[Developing Plugins](#developing-plugins)</li><li>[Communicating with the user](#communicating-with-the-user)</li><li>[Adjusting Constants](#adjusting-constants)</li><li>[Changing the theme](#changing-the-theme)</li><br>|<li>[Support & Contributing](#support-contributing)</li><li>[Background](#background)</li><br><br><br><br>|
+|<li>[Why and what?](#why-and-what)</li><li>[Download / Installation](#download--installation)</li><li>[Example data](#example-data)</li><li>[User Interface (Videos & Shortcuts)](#user-interface)</li><li>[Load / display data of any format](#load-and-display-data-of-a-certain-data-type)</li><li>[Use a custom algorithm](#use-a-custom-algorithm)</li><li>[Terminology](#terminology)</li>|<li>[Development installation](#development-installation)</li><li>[Developing Plugins](#developing-plugins)</li><li>[Communicating with the user](#communicating-with-the-user)</li><li>[Adjusting Constants](#adjusting-constants)</li><li>[Changing the theme](#changing-the-theme)</li><br>|<li>[Support & Contributing](#support-contributing)</li><li>[Background](#background)</li><br><br><br><br>|
 
 
 ## Why and what?
@@ -89,11 +89,14 @@ In the case of Microsoft Edge, this possibility is hidden, but you can select it
 | Mac OS                 | [Mac OS (64 bit)](https://github.com/mad-lab-fau/mad-gui/releases/download/v0.2.1-beta.1/mad_gui_mac.zip) | Download the file on the left and extract it. Then, in your [terminal](https://support.apple.com/en-lk/guide/terminal/apd5265185d-f365-44cb-8b09-71a064a42125/mac), navigate to the location where you extracted "mad_gui_mac.app" to. Then type `chmod +x ./mad_gui_mac.app` and then `./mad_gui_mac.app`. Please also read the info directly below this table. <br /><br /> *Note: If your Mac does not allow you to open this file, perform the actions for "If you want to open an app that hasn’t been notarized or is from an unidentified developer" on the [Apple Support Page](https://support.apple.com/en-us/HT202491). Afterwards, try `./mad_gui_mac.exe` again in your terminal.*|
 | other                  | Supplied upon request |[Contact us](mailto:malte.ollenschlaeger@fau.de)  
 
-Now, please [download our example data](https://github.com/mad-lab-fau/mad-gui/raw/main/example_data/sensor_data.zip) 
+
+## Example Data
+
+You can [download our example data](https://github.com/mad-lab-fau/mad-gui/raw/main/example_data/sensor_data.zip) 
 and extract the .csv file. After starting MaD GUI, you can open the previously downloaded example data as shown in 
 [User Interface](#user-interface). 
 
-You want to load data of a specific format/system or want to use a specific algorithm? 
+You want to load / display data of a specific format/system or want to use a specific algorithm? 
 In this case please refer to [Load and display data of a certain data type](#load-and-display-data-of-a-certain-data-type)
 
 
