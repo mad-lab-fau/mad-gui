@@ -226,7 +226,7 @@ yes_no = UserInformation().ask_user("Yes or No?")
 
 ### Tooltip of labels
 
-You can display results of your algorithms for example by putting the results into the label's description as shown in our section about [custom algorithms](https://mad-gui.readthedocs.io/en/latest/plugin_algorithm.html).
+You can display results of your algorithms for example by putting the results into the label's description as shown in our section about [custom algorithms](https://mad-gui.readthedocs.io/en/latest/plugin_algorithm.html#algorithm-which-creates-features-for-existing-annotations).
 
 ## Adjusting Constants
 
