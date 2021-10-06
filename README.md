@@ -51,7 +51,7 @@ To see how to open our example data within the GUI, please refer to our section 
 
 |General Information | Development | Additional Information |
 |---------------------|-----------|-------------------------|
-|<li>[Why and what?](#why-and-what)</li><li>[Download / Installation](#download--installation)</li><li>[Example data](#example-data)</li><li>[User Interface (Videos & Shortcuts)](#user-interface)</li><li>[Load / display data of any format](#load-and-display-data-of-a-certain-data-type)</li><li>[Use a custom algorithm](#use-a-custom-algorithm)</li><li>[Terminology](#terminology)</li>|<li>[Development installation](#development-installation)</li><li>[Developing Plugins](#developing-plugins)</li><li>[Communicating with the user](#communicating-with-the-user)</li><li>[Adjusting Constants](#adjusting-constants)</li><li>[Changing the theme](#changing-the-theme)</li><br><br>|<li>[Support & Contributing](#support-contributing)</li><li>[Background](#background)</li><br><br><br><br><br>|
+|<li>[Why and what?](#why-and-what)</li><li>[Download / Installation](#download--installation)</li><li>[Example data](#example-data)</li><li>[User Interface (Videos & Shortcuts)](#user-interface)</li><li>[Load / display data of any format](#load-and-display-data-of-any-format)</li><li>[Use a custom algorithm](#use-a-custom-algorithm)</li><li>[Terminology](#terminology)</li>|<li>[Development installation](#development-installation)</li><li>[Developing Plugins](#developing-plugins)</li><li>[Communicating with the user](#communicating-with-the-user)</li><li>[Adjusting Constants](#adjusting-constants)</li><li>[Changing the theme](#changing-the-theme)</li><br><br>|<li>[Support & Contributing](#support-contributing)</li><li>[Background](#background)</li><br><br><br><br><br>|
 
 
 ## Why and what?
@@ -126,7 +126,7 @@ Please watch the videos linked above, if you want to learn more about the differ
 | `Ctrl` + `Left Mouse Click`  | Add label     | Add a single event |
 
 
-## Load and display data of a certain data type
+## Load and display data of any format
 This will need someone who is familiar with Python. For more information, please refer to [Developing Plugins](#developing-plugins).
 You do not have experience with python but still want to load data from a specific system? [Contact us!](mailto:malte.ollenschlaeger@fau.de)
 
@@ -202,7 +202,7 @@ In the sections in the following list we describe how you can develop your own p
 [BaseRegionLabel](https://mad-gui.readthedocs.io/en/latest/modules/generated/plot_tools/mad_gui.plot_tools.labels.BaseRegionLabel.html#mad_gui.plot_tools.labels.BaseRegionLabel).
 **Each of these sections keeps working example to get you started as quick as possible**:
 
-   - Importer: [Load and display data of a specific system](https://mad-gui.readthedocs.io/en/latest/plugin_importer.html#importer)
+   - Importer: [Load and display data of any format](https://mad-gui.readthedocs.io/en/latest/plugin_importer.html#importer)
    - Algorithm: [Create annotations for plotted data](https://mad-gui.readthedocs.io/en/latest/plugin_algorithm.html#algorithm)
    - Algorithm: [Calculate features for existing annotations](https://mad-gui.readthedocs.io/en/latest/plugin_algorithm.html#algorithm)
    - Exporter: [Export displayed annotations](https://mad-gui.readthedocs.io/en/latest/plugin_exporter.html)

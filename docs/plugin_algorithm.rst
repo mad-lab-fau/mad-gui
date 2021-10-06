@@ -33,7 +33,7 @@ Overview
 .. admonition:: Using the working example
    :class: tip
 
-   The two subsections below show working examples. To run one of them:
+   The two subsections below show working examples, which you can adapt for your specific algorithm. To run one of them:
 
    - create a file as shown in `this image <_static/images/development/algorithm_create_file.png>`_
    - copy one of the code snippets containing the `MyAlgorithm` class to the file

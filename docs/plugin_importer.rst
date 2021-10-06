@@ -23,10 +23,10 @@ First of all you have to create a file, that will only keep your importer class,
 .. admonition:: Using the working example
    :class: tip
 
-   The subsection below shows a working example. To run it:
+   The subsection below shows a working example, which you can adapt to your case. To run it:
 
    - create a file as shown in `this image <_static/images/development/importer_create_file.png>`_
-   - copy the code snippet containing `CustomAlgorithm` class to the file
+   - copy the code snippet containing `CustomImporter` class to the file (see long code snippet in section :ref:`develop your custom importer`)
    - download our `example CSV <https://github.com/mad-lab-fau/mad-gui/raw/main/example_data/sensor_data.zip>`_
    - in a separate file execute the following code snippet and then load data as shown in our
      `exemplary video <https://www.youtube.com/watch?v=cSFFSTUM4e0&t=6s>`_:
@@ -34,7 +34,7 @@ First of all you have to create a file, that will only keep your importer class,
    .. code-block:: python
 
        from mad_gui import start_gui
-       from my_importer import CustomImporter # you need to create this file and class, see below
+       from cutom_importer import CustomImporter # you need to create this file and class, see below
 
        start_gui(plugins=[CustomImporter])
 
