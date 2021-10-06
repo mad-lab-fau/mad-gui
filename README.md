@@ -51,7 +51,7 @@ To see how to open our example data within the GUI, please refer to our section 
 
 |General Information | Development | Additional Information |
 |---------------------|-----------|-------------------------|
-|<li>[Why and what?](#why-and-what)</li><li>[Installation](#installation)</li><li>[User Interface (Videos & Shortcuts)](#user-interface)</li><li>[Load / display data of any format](#load-and-display-data-of-a-certain-data-type)</li><li>[Use a custom algorithm](#use-a-custom-algorithm)</li><li>[Terminology](#terminology)</li>|<li>[Development installation](#development-installation)</li><li>[Developing Plugins](#developing-plugins)</li><li>[Communicating with the user](#communicating-with-the-user)</li><li>[Adjusting Constants](#adjusting-constants)</li><li>[Changing the theme](#changing-the-theme)</li><br>|<li>[Support & Contributing](#support-contributing)</li><li>[Background](#background)</li><br><br><br><br>|
+|<li>[Why and what?](#why-and-what)</li><li>[Download / Installation](#download-installation)</li><li>[User Interface (Videos & Shortcuts)](#user-interface)</li><li>[Load / display data of any format](#load-and-display-data-of-a-certain-data-type)</li><li>[Use a custom algorithm](#use-a-custom-algorithm)</li><li>[Terminology](#terminology)</li>|<li>[Development installation](#development-installation)</li><li>[Developing Plugins](#developing-plugins)</li><li>[Communicating with the user](#communicating-with-the-user)</li><li>[Adjusting Constants](#adjusting-constants)</li><li>[Changing the theme](#changing-the-theme)</li><br>|<li>[Support & Contributing](#support-contributing)</li><li>[Background](#background)</li><br><br><br><br>|
 
 
 ## Why and what?
@@ -68,7 +68,7 @@ The MaD GUI can be used as a framework to incorporate algorithms for supporting 
 algorithms for analyzing time series data even without having programming experience. You can read about this in more 
 detail in our [Background](#background) section.
 
-## Installation
+## Download / Installation
 
 ### Plugin Developers
 
