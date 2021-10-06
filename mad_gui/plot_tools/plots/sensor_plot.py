@@ -170,6 +170,7 @@ class SensorPlot(BasePlot):
         self.state.plot_channels = [
             cb.objectName() for cb in menu.channel_names.findChildren(QCheckBox) if cb.isChecked()
         ]
+        Config.settings.CHANNELS_TO_PLOT = self.state.plot_channels
 
     def _add_channel_selection_menu(self):
         # adapted from pg.graphicsItems.ViewBox.channelCtrlTemplate
