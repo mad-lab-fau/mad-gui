@@ -1,5 +1,6 @@
 """See our Readme -> Adjusting constants for more information"""
 
+
 class BaseSettings:
     BIND_Y_AXIS = True
     SENSORS_SYNCHRONIZED = True
