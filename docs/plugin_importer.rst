@@ -23,7 +23,7 @@ First of all you have to create a file, that will only keep your importer class,
 .. admonition:: Using the working example
    :class: tip
 
-   The subsection below shows a working example. To run it:
+   The subsection below shows a working example, which you can adapt to your case. To run it:
 
    - create a file as shown in `this image <_static/images/development/importer_create_file.png>`_
    - copy the code snippet containing `CustomImporter` class to the file (see long code snippet in section :ref:`develop your custom importer`)
