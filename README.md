@@ -51,7 +51,7 @@ To see how to open our example data within the GUI, please refer to our section 
 
 |General Information | Development | Additional Information |
 |---------------------|-----------|-------------------------|
-|<li>[Why and what?](#why-and-what)</li><li>[Installation](#installation)</li><li>[User Interface (Videos & Shortcuts)](#user-interface)</li><li>[Load / display data of any format](#load-and-display-data-of-a-certain-data-type)</li><li>[Use a custom algorithm](#use-a-custom-algorithm)</li><li>[Terminology](#terminology)</li>|<li>[Development installation](#development-installation)</li><li>[Developing Plugins](#developing-plugins)</li><li>[Communicating with the user](#communicating-with-the-user)</li><li>[Adjusting Constants](#adjusting-constants)</li><li>[Changing the theme](#changing-the-theme)</li><br>|<li>[Support & Contributing](#support-contributing)</li><li>[Background](#background)</li><br><br><br><br>|
+|<li>[Why and what?](#why-and-what)</li><li>[Download / Installation](#download--installation)</li><li>[Example data](#example-data)</li><li>[User Interface (Videos & Shortcuts)](#user-interface)</li><li>[Load / display data of any format](#load-and-display-data-of-a-certain-data-type)</li><li>[Use a custom algorithm](#use-a-custom-algorithm)</li><li>[Terminology](#terminology)</li>|<li>[Development installation](#development-installation)</li><li>[Developing Plugins](#developing-plugins)</li><li>[Communicating with the user](#communicating-with-the-user)</li><li>[Adjusting Constants](#adjusting-constants)</li><li>[Changing the theme](#changing-the-theme)</li><br><br>|<li>[Support & Contributing](#support-contributing)</li><li>[Background](#background)</li><br><br><br><br><br>|
 
 
 ## Why and what?
@@ -68,7 +68,7 @@ The MaD GUI can be used as a framework to incorporate algorithms for supporting 
 algorithms for analyzing time series data even without having programming experience. You can read about this in more 
 detail in our [Background](#background) section.
 
-## Installation
+## Download / Installation
 
 ### Plugin Developers
 
@@ -78,22 +78,25 @@ Please see the section [Development installation](#development-installation).
 You do not need to install anything. Simply download the file from the table below for your regarding operating system. 
 Afterwards you can start the GUI as described in the rightmost column of the table.
 
-When downloading the files below, your browser may warn you that this is a potentially dangerous file.
+When downloading a file from the table, your browser may warn you that this is a potentially dangerous file.
 You will only be able to use our GUI by selecting "Keep anyway / download anyway / ...".
 In the case of Microsoft Edge, this possibility is hidden, but you can select it after downloading as explained [here](https://docs.microsoft.com/en-us/deployedge/microsoft-edge-security-downloads-interruptions#user-experience-for-downloads-lacking-gestures).
 
 | Operating system <img width=200/>      | File to download <img width=200/>| What to do                                        |
 |------------------------|------------------|---------------------------------------------------|
-| Windows                | [Windows (64 bit)](https://github.com/mad-lab-fau/mad-gui/releases/download/v0.2.0-alpha.1/mad_gui)       | Download the file on the left. Then open the downloaded file and read the info directly below this table. <br /> <br />*Note: If prompted with a dialog `Windows protected your PC`, click `More info` and then select `Run anyway`* |
-| Ubuntu                 | [Ubuntu (64 bit)](https://github.com/mad-lab-fau/mad-gui/releases/download/v0.2.0-alpha.5/mad_gui_ubuntu) | Download the file on the left. Then, in your terminal, navigate to the file loaction and then: `chmod +x ./mad_gui_ubuntu` and then `./mad_gui_ubuntu`. Please also read the info directly below this table. <br /> <br />*Note: you might need to install some additional packages. You can use [this script](https://raw.githubusercontent.com/mad-lab-fau/mad-gui/main/unix_dependencies.sh) to do so. Just right click the link, save it on your machine and execute it.*|
-| Mac OS                 | [Mac OS (64 bit)](https://github.com/mad-lab-fau/mad-gui/releases/download/v0.2.0-alpha.5/mad_gui_mac.zip) | Download the file on the left and extract it. Then, in your [terminal](https://support.apple.com/en-lk/guide/terminal/apd5265185d-f365-44cb-8b09-71a064a42125/mac), navigate to the location where you extracted "mad_gui_mac.app" to. Then type `chmod +x ./mad_gui_mac.app` and then `./mad_gui_mac.app`. Please also read the info directly below this table. <br /><br /> *Note: If your Mac does not allow you to open this file, perform the actions for "If you want to open an app that hasn’t been notarized or is from an unidentified developer" on the [Apple Support Page](https://support.apple.com/en-us/HT202491). Afterwards, try `./mad_gui_mac.exe` again in your terminal.*|
+| Windows                | [Windows (64 bit)](https://github.com/mad-lab-fau/mad-gui/releases/download/v0.2.1-beta.1/mad_gui.exe)       | Download the file on the left. Then open the downloaded file and read the info directly below this table. <br /> <br />*Note: If prompted with a dialog `Windows protected your PC`, click `More info` and then select `Run anyway`* |
+| Ubuntu                 | [Ubuntu (64 bit)](https://github.com/mad-lab-fau/mad-gui/releases/download/v0.2.1-beta.1/mad_gui_ubuntu) | Download the file on the left. Then, in your terminal, navigate to the file loaction and then: `chmod +x ./mad_gui_ubuntu` and then `./mad_gui_ubuntu`. Please also read the info directly below this table. <br /> <br />*Note: you might need to install some additional packages. You can use [this script](https://raw.githubusercontent.com/mad-lab-fau/mad-gui/main/unix_dependencies.sh) to do so. Just right click the link, save it on your machine and execute it.*|
+| Mac OS                 | [Mac OS (64 bit)](https://github.com/mad-lab-fau/mad-gui/releases/download/v0.2.1-beta.1/mad_gui_mac.zip) | Download the file on the left and extract it. Then, in your [terminal](https://support.apple.com/en-lk/guide/terminal/apd5265185d-f365-44cb-8b09-71a064a42125/mac), navigate to the location where you extracted "mad_gui_mac.app" to. Then type `chmod +x ./mad_gui_mac.app` and then `./mad_gui_mac.app`. Please also read the info directly below this table. <br /><br /> *Note: If your Mac does not allow you to open this file, perform the actions for "If you want to open an app that hasn’t been notarized or is from an unidentified developer" on the [Apple Support Page](https://support.apple.com/en-us/HT202491). Afterwards, try `./mad_gui_mac.exe` again in your terminal.*|
 | other                  | Supplied upon request |[Contact us](mailto:malte.ollenschlaeger@fau.de)  
 
-Now, please [download our example data](https://github.com/mad-lab-fau/mad-gui/raw/main/example_data/sensor_data.zip) 
+
+## Example Data
+
+You can [download our example data](https://github.com/mad-lab-fau/mad-gui/raw/main/example_data/sensor_data.zip) 
 and extract the .csv file. After starting MaD GUI, you can open the previously downloaded example data as shown in 
 [User Interface](#user-interface). 
 
-You want to load data of a specific format/system or want to use a specific algorithm? 
+You want to load / display data of a specific format/system or want to use a specific algorithm? 
 In this case please refer to [Load and display data of a certain data type](#load-and-display-data-of-a-certain-data-type)
 
 
@@ -208,6 +211,7 @@ In the sections in the following list we describe how you can develop your own p
 
 ## Communicating with the user
 
+### Pop-up
 If - at any point - you want to send a message to the user of the GUI, you create a message box with an OK button like
 this:
 
@@ -219,6 +223,10 @@ UserInformation.inform_user("Your message")
 # will return PySide2.QtWidgets.QMessageBox.Yes or PySide2.QtWidgets.QMessageBox.No
 yes_no = UserInformation().ask_user("Yes or No?") 
 ```
+
+### Tooltip of labels
+
+You can display results of your algorithms for example by putting the results into the label's description as shown in our section about [custom algorithms](https://mad-gui.readthedocs.io/en/latest/plugin_algorithm.html#algorithm-which-creates-features-for-existing-annotations).
 
 ## Adjusting Constants
 
