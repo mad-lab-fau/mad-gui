@@ -78,7 +78,7 @@ Please see the section [Development installation](#development-installation).
 You do not need to install anything. Simply download the file from the table below for your regarding operating system. 
 Afterwards you can start the GUI as described in the rightmost column of the table.
 
-When downloading the files below, your browser may warn you that this is a potentially dangerous file.
+When downloading a file from the table, your browser may warn you that this is a potentially dangerous file.
 You will only be able to use our GUI by selecting "Keep anyway / download anyway / ...".
 In the case of Microsoft Edge, this possibility is hidden, but you can select it after downloading as explained [here](https://docs.microsoft.com/en-us/deployedge/microsoft-edge-security-downloads-interruptions#user-experience-for-downloads-lacking-gestures).
 
