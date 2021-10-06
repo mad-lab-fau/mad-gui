@@ -167,8 +167,6 @@ class MainWindow(QMainWindow):
         self.global_data.base_dir = data_dir
         self.global_data.plugins = list(plugins)
 
-        self.resize(1280, 720)
-
     def check_arguments(self, plugins, labels, events):
         for plugin in plugins:
             self._check_argument(plugin, (BaseImporter, BaseAlgorithm, BaseExporter))
