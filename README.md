@@ -211,6 +211,7 @@ In the sections in the following list we describe how you can develop your own p
 
 ## Communicating with the user
 
+### Pop-up
 If - at any point - you want to send a message to the user of the GUI, you create a message box with an OK button like
 this:
 
@@ -222,6 +223,10 @@ UserInformation.inform_user("Your message")
 # will return PySide2.QtWidgets.QMessageBox.Yes or PySide2.QtWidgets.QMessageBox.No
 yes_no = UserInformation().ask_user("Yes or No?") 
 ```
+
+### Tooltip of labels
+
+You can display results of your algorithms for example by putting the results into the label's description as shown in our section about [custom algorithms](https://mad-gui.readthedocs.io/en/latest/plugin_algorithm.html).
 
 ## Adjusting Constants
 
