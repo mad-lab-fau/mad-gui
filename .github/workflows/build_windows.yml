@@ -37,5 +37,5 @@ jobs:
     - uses: actions/upload-artifact@v2
       with:
         name: windows_executable
-        path: /Users/runner/work/mad-gui/mad-gui/dist/mad_gui
+        path: D:\a\mad-gui\mad-gui\dist\
         
