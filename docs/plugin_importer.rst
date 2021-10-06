@@ -26,7 +26,7 @@ First of all you have to create a file, that will only keep your importer class,
    The subsection below shows a working example. To run it:
 
    - create a file as shown in `this image <_static/images/development/importer_create_file.png>`_
-   - copy the code snippet containing `CustomImporter` class to the file (see long code snippet below)
+   - copy the code snippet containing `CustomImporter` class to the file (see long code snippet in section :ref:`develop your custom importer`)
    - download our `example CSV <https://github.com/mad-lab-fau/mad-gui/raw/main/example_data/sensor_data.zip>`_
    - in a separate file execute the following code snippet and then load data as shown in our
      `exemplary video <https://www.youtube.com/watch?v=cSFFSTUM4e0&t=6s>`_:
