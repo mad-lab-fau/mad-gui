@@ -97,8 +97,7 @@ The name will show up in the dropdown menu in the GUI's pop up when the user cli
             warnings.warn("Please load sensor data from your source."
                           " Just make sure, that sensor_data is a pandas.DataFrame."
                           " Afterwards, remove this warning.")
-            df = pd.read_csv(file)
-            sensor_data = pd.read_csv(file)[["acc_x", "acc_y", "acc_z", "gyr_x", "gyr_y", "gyr_z"]]
+            sensor_data = pd.read_csv(file_path)[["acc_x", "acc_y", "acc_z", "gyr_x", "gyr_y", "gyr_z"]]
 
             warnings.warn("Please load the sampling frequency from your source in Hz"
                           " Afterwards, remove this warning.")
