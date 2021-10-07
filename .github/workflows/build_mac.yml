@@ -33,6 +33,8 @@ jobs:
         doit prepare_build
         pyinstaller pyinstaller.spec --onefile
         ls dist
+        chmod +x ./dist/mad_gui
+        sudo -cvzf dist/mad_gui.tar.gz ./dist
         
     - uses: actions/upload-artifact@v2
       with:
