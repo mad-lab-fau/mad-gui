@@ -365,4 +365,3 @@ class BaseRegionLabel(pg.LinearRegionItem):
             elif event.exit and not self.mouseHovering:
                 self.parent.setCursor(Qt.ArrowCursor)
                 self.setEnabled(True)
-
