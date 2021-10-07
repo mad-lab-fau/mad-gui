@@ -356,10 +356,13 @@ class BaseRegionLabel(pg.LinearRegionItem):
         mode = self.parent.state.mode
         if mode in ["edit", "sync"]:
             if event.enter:
+                self.setMouseHover(False)
                 self.parent.setCursor(Qt.SizeHorCursor)
-                self.setEnabled(True)
+                self.setEnabled(False)
             if event.exit and self.mouseHovering:
                 self.parent.setCursor(Qt.PointingHandCursor)
+                self.setMouseHover(True)
             elif event.exit and not self.mouseHovering:
                 self.parent.setCursor(Qt.ArrowCursor)
-                self.setEnabled(False)
+                self.setEnabled(True)
+
