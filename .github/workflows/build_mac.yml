@@ -34,11 +34,11 @@ jobs:
         pyinstaller pyinstaller.spec --onefile
         ls dist
         chmod +x ./dist/mad_gui
-        sudo -cvzf dist/mad_gui.tar.gz ./dist
+        sudo -cvzf mad_gui.tar.gz dist
         
     - uses: actions/upload-artifact@v2
       with:
         name: mac_11_executable
-        path: /Users/runner/work/mad-gui/mad-gui/dist/mad_gui
+        path: /Users/runner/work/mad-gui/mad-gui/dist/mad_gui.tar.gz
         
 
