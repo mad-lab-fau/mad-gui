@@ -114,7 +114,7 @@ You can see an example in `this GIF <_static/gifs/algorithm_label.gif>`_ or `thi
 
             warnings.warn("Using exemplary labels, please find starts and ends on your own.")
 
-            annotations = pd.DataFrame(data=[starts, ends], columns = ['start', 'end'])
+            annotations = pd.DataFrame(data=[starts, ends], index = ['start', 'end']).T
             return annotations
 
 If you want to know more about the data type `Plot Data`, which is used in `process_data`, please refer to
