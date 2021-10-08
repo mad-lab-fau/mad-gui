@@ -15,11 +15,21 @@ ui_path = resource_path(str(UI_PATH / "plugin_selection.ui"))
 if ".ui" in ui_path:
     try:
         UiForm, _ = loadUiType(ui_path)
-    except TypeError as e:
-        raise FileNotFoundError(
-            "Probably python did not find `pyside2-uic`. See "
-            '"https://mad-gui.readthedocs.io/en/latest/troubleshooting.html#pyside2-uic-not-found" for more information'
-        ) from e
+    except TypeError:
+        try:
+            import sys
+            import os
+            from pathlib import Path
+
+            uic_path = Path(os.sep.join(sys.executable.split(os.sep)[:-1])) / "Scripts"
+            sys.path.append(str(uic_path))
+            UiForm, _ = loadUiType(ui_path)
+        except TypeError as e:
+            raise FileNotFoundError(
+                "Probably python did not find `pyside2-uic`. See "
+                '"https://mad-gui.readthedocs.io/en/latest/troubleshooting.html#pyside2-uic-not-found" for more '
+                "information"
+            ) from e
 
 elif ".py" in ui_path:
     from mad_gui.qt_designer.build.plugin_selection import Ui_Form as UiForm  # noqa

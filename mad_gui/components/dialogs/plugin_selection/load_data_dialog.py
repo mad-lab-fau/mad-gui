@@ -21,11 +21,20 @@ ui_path = resource_path(str(UI_PATH / "load.ui"))
 if ".ui" in ui_path:
     try:
         LoadWindow, _ = loadUiType(ui_path)
-    except TypeError as e:
-        raise FileNotFoundError(
-            "Probably python did not find `pyside2-uic`. See "
-            '"https://mad-gui.readthedocs.io/en/latest/troubleshooting.html#pyside2-uic-not-found" for more information'
-        ) from e
+    except TypeError:
+        try:
+            import sys
+            import os
+
+            uic_path = Path(os.sep.join(sys.executable.split(os.sep)[:-1])) / "Scripts"
+            sys.path.append(str(uic_path))
+            LoadWindow, _ = loadUiType(ui_path)
+        except TypeError as e:
+            raise FileNotFoundError(
+                "Probably python did not find `pyside2-uic`. See "
+                '"https://mad-gui.readthedocs.io/en/latest/troubleshooting.html#pyside2-uic-not-found" for more '
+                "information"
+            ) from e
 
 
 elif ".py" in ui_path:

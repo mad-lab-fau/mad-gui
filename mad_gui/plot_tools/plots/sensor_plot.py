@@ -41,7 +41,25 @@ from typing import Callable, Dict, List, Optional, Type, Union
 channel_selector_path = str(UI_PATH / "channel_selector.ui")
 ui_path = resource_path(channel_selector_path)
 if ".ui" in ui_path:
-    ChannelSelector, _ = loadUiType(ui_path)
+    try:
+        ChannelSelector, _ = loadUiType(ui_path)
+    except TypeError:
+        try:
+            import sys
+            import os
+            from pathlib import Path
+
+            uic_path = Path(os.sep.join(sys.executable.split(os.sep)[:-1])) / "Scripts"
+            sys.path.append(str(uic_path))
+            ChannelSelector, _ = loadUiType(ui_path)
+        except TypeError as e:
+            raise FileNotFoundError(
+                "Probably python did not find `pyside2-uic`. See "
+                '"https://mad-gui.readthedocs.io/en/latest/troubleshooting.html#pyside2-uic-not-found" for more '
+                "information"
+            ) from e
+
+
 elif ".py" in ui_path:
     from mad_gui.qt_designer.build.channel_selector import Ui_Form as ChannelSelector  # noqa
 

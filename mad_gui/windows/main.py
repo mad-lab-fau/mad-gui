@@ -71,7 +71,19 @@ if platform.system() == "Windows" and int(platform.release()) >= 8:
 
 ui_path = resource_path(str(UI_PATH / "main.ui"))
 if ".ui" in ui_path:
-    Window, _ = loadUiType(ui_path)
+    try:
+        Window, _ = loadUiType(ui_path)
+    except TypeError:
+        try:
+            uic_path = Path(os.sep.join(sys.executable.split(os.sep)[:-1])) / "Scripts"
+            sys.path.append(str(uic_path))
+            Window, _ = loadUiType(ui_path)
+        except TypeError as e:
+            raise FileNotFoundError(
+                "Probably python did not find `pyside2-uic`. See "
+                '"https://mad-gui.readthedocs.io/en/latest/troubleshooting.html#pyside2-uic-not-found" for more '
+                "information"
+            ) from e
 elif ".py" in ui_path:
     from mad_gui.qt_designer.build.main import Ui_MainWindow as Window  # noqa
 
