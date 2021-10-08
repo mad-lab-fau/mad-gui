@@ -33,6 +33,7 @@ like this:
 
        # User will be asked to set the label's description when creating a label.
        # This can have an arbitrary amount of levels with nested dictionaries.
+       # This es an example for a two-level description:
        descriptions = {"normal": None, "anomaly": ["too fast", "too slow"]}
 
 .. admonition:: Using your algorithm in the GUI
@@ -81,12 +82,14 @@ can be created with these label classes:
        min_height = 0.8
        max_height = 1
        name = "Activity"
+       # description = see first code snippet on this page
 
     class LayerTwo(BaseRegionLabel):
        # This label will always be shown at the lowest 20% to 80% of the plot view
        min_height = 0.2
        max_height = 0.8
        name = "Sub-Activity"
+       # description = see first code snippet on this pag
 
    start_gui(labels=[LayerOne, LayerTwo])
 

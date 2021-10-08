@@ -75,17 +75,12 @@ PySide2-uic not found
     "...mad_gui/components/dialogs/....py", line .., in <module>
     FileNotFoundError: Probably python did not find pyside2-uic
 
-Probably python can't find pyside2-uic. Look for a folder called `Scripts` in your python env.
-To find the location of your python env, go to the command line, activate the environment and then type:
+Apparently python can't find pyside2-uic, this can be solved like this.
 
-.. list-table:: Finding python
-    :widths: 25 25
-    :header-rows: 1
-
-    * - Operating system
-      - Command
-    * - Windows
-      - where python
+- In your terminal / command line interface activate the environment you want to use (e.g. `conda activate mad_gui`)
+- Find out, where the python installation is by using `where python` (Windows) or `which python` (Unix)
+- That folder should also keep a folder `Scripts`, go there and copy `pyside2-uic` from there to the parent folder, where also python is
+- Try again
 
 Then copy pyside2-uic from the folder `Scripts` to the location where also your python executable is (should be the
 parent directory).
