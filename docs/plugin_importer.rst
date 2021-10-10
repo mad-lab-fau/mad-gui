@@ -15,7 +15,7 @@ Overview
 ########
 
 This enables our GUI to load and display your specific type of data, as shown in
-`this video <https://www.youtube.com/watch?v=cSFFSTUM4e0?start=6>`_ form 0:06 to 0:16.
+`this video <https://www.youtube.com/watch?v=cSFFSTUM4e0&t=6>`_ form 0:06 to 0:16.
 Please additionally take a look at `this GIF <_static/gifs/importer.gif>`_, which shows you how your plugin gets into the GUI.
 First of all you have to create a file, that will only keep your importer class, as shown in
 `this image <_static/images/development/importer_create_file.png>`_.
@@ -123,7 +123,7 @@ The name will show up in the dropdown menu in the GUI's pop up when the user cli
 .. warning::
 
    You need to pass your importer to our GUI like this as it is also shown in
-   `this image <https://mad-gui.readthedocs.io/en/latest/_images/importer_pass_to_gui.png>`_:
+   `this image <https://mad-gui.readthedocs.io/en/latest/_images/development/importer_pass_to_gui.png>`_:
 
    .. code-block:: python
 
@@ -135,7 +135,7 @@ The name will show up in the dropdown menu in the GUI's pop up when the user cli
 After you have performed these steps, you can select the importer in the GUI by pressing `Load Data`
 and then selecting it in the dropdown on the upper left in the pop-up window.
 From user perspective it should work as we have described in our
-`exemplary video about loading data <https://youtu.be/akxcuFOesC8?t=10>`_.
+`exemplary video about loading data <https://www.youtube.com/watch?v=cSFFSTUM4e0&t=6s>`_.
 
 .. note::
     In case loading your file does not work, we recommend to set breakpoints into your loader and check, whether
