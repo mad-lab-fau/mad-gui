@@ -123,7 +123,7 @@ The name will show up in the dropdown menu in the GUI's pop up when the user cli
 .. warning::
 
    You need to pass your importer to our GUI like this as it is also shown in
-   `this image <https://mad-gui.readthedocs.io/en/latest/_images/development/importer_pass_to_gui.png>`_:
+   `this image <https://mad-gui.readthedocs.io/en/latest/_static/images/development/importer_pass_to_gui.png>`_:
 
    .. code-block:: python
 
