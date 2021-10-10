@@ -11,9 +11,9 @@
 [![Documentation Status](https://readthedocs.org/projects/mad-gui/badge/?version=latest)](https://mad-gui.readthedocs.io/en/latest/?badge=latest)
 [![PyPI version shields.io](https://img.shields.io/pypi/v/mad-gui)](https://pypi.org/project/mad-gui/)
 
-The MaD GUI can be used as a basis for graphical annotation and computational analysis of time series data.
-It uses a plugin system, such that developers can easily extend the GUI to enable loading their specific data format or 
-using the algorithms they have developed.
+MaD GUI is a basis for graphical annotation and computational analysis of time series data.
+It gives easy access to plotted data / annotations and handles interaction with annotations for you in the background.
+Developers must create plugins and inject them into the GUI to read data of their format or use their algorithm.
 
 <div align="center">
 
@@ -127,11 +127,13 @@ Please watch the videos linked above, if you want to learn more about the differ
 
 
 ## Load and display data of any format
-This will need someone who is familiar with Python. For more information, please refer to [Developing Plugins](#developing-plugins).
+This will need someone who is familiar with Python, who has to develop a plugin of the type `Importer`.
+For more information on how to create plugins, please refer to [Developing Plugins](#developing-plugins).
 You do not have experience with python but still want to load data from a specific system? [Contact us!](mailto:malte.ollenschlaeger@fau.de)
 
 ## Use a custom algorithm
-This will need someone who is familiar with Python. For more information, please refer to [Developing Plugins](#developing-plugins).
+This will need someone who is familiar with Python, who has to develop a plugin of the type `Algorithm`.
+For more information on how to create plugins, please refer to [Developing Plugins](#developing-plugins).
 You do not have experience with python but still want to load data from a specific system? [Contact us!](mailto:malte.ollenschlaeger@fau.de)
 
 ## Terminology
@@ -230,7 +232,7 @@ You can display results of your algorithms for example by putting the results in
 
 ## Adjusting Constants
 
-You can create your own settings by creating a class, which inherits from our [BaseSettings](https://github.com/mad-lab-fau/mad-gui/blob/main/mad_gui/config/settings.py#L1)>`_.
+You can create your own settings by creating a class, which inherits from our [BaseSettings](https://github.com/mad-lab-fau/mad-gui/blob/main/mad_gui/config/settings.py#L1).
 The following example makes use of the BaseSettings and simply overrides some properties:
 
 ```python

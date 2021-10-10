@@ -26,7 +26,7 @@ First of all you have to create a file, that will only keep your importer class,
    The subsection below shows a working example, which you can adapt to your case. To run it:
 
    - create a file as shown in `this image <_static/images/development/importer_create_file.png>`_
-   - copy the code snippet containing `CustomImporter` class to the file (see long code snippet in section :ref:`develop your custom importer`)
+   - copy the code snippet containing `CustomImporter` class to the file (see long code snippet in section :ref:`develop custom importer`)
    - download our `example CSV <https://github.com/mad-lab-fau/mad-gui/raw/main/example_data/sensor_data.zip>`_
    - in a separate file execute the following code snippet and then load data as shown in our
      `exemplary video <https://www.youtube.com/watch?v=cSFFSTUM4e0&t=6s>`_:
@@ -38,14 +38,14 @@ First of all you have to create a file, that will only keep your importer class,
 
        start_gui(plugins=[CustomImporter])
 
+.. _develop custom importer:
+
 Develop your custom importer
 ############################
 
 After you created an empty file, as described above, copy the code below to it to get started.
 If the user selects your CustomImporter, selects a file and then presses `start_processing`, the GUI will pass the
 selected file to your `CustomImporter.load_sensor_data` (argument `file_path`), as shown in `this GIF <_static/gifs/importer.gif>`_.
-
-Use this code snippet and
 
 .. admonition:: Adapting the working example
    :class: tip
@@ -79,7 +79,7 @@ The name will show up in the dropdown menu in the GUI's pop up when the user cli
             ### Set your importer's name as return value ###
             ### This name will show up in the dropdown.  ###
             ################################################
-            warnings.warn("The importer has no meaningful name yet.
+            warnings.warn("The importer has no meaningful name yet."
                           " Simply change the return string and remove this warning.")
             return "My Importer"
 
@@ -103,10 +103,14 @@ The name will show up in the dropdown menu in the GUI's pop up when the user cli
                           " Afterwards, remove this warning.")
             sampling_rate_hz = 1 / df["time"].diff().mean()
 
-            # CAUTION: if you only want to have one plot you do not need to
-            # change the following lines!
-            # If you want several plots, just add another sensor like "IMU foot"
-            # to the `data` dictionary.
+            ##############################################################
+            ###                      CAUTION                           ###
+            ### If you only want to have one plot you do not need to   ###
+            ### change the following lines! If you want several plots, ###
+            ### just add another sensor like "IMU foot" to the `data`  ###
+            ### dictionary, which again keeps the files sensor_data    ###
+            ### and sampling_rate_hz for that plot.                    ###
+            ##############################################################
             data = {
                "IMU Hip": {
                "sensor_data": sensor_data,

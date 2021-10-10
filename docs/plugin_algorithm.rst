@@ -20,12 +20,12 @@ Overview
 
    Depending on what your algorithm should do, you will need only one of the two subsections below.
 
-- 1.2 Algorithm, which creates features for existing annotations:
+- 1.2 Algorithm, which creates annotations to be plotted:
 
     - see what that means `in a video <https://www.youtube.com/watch?v=Ro8bOSjIg5U&t=107>`_ (01:47 to 02:03)
     - use the :ref:`code example <algorithm annotations>`
 
-- 1.3 Algorithm, which creates features for existing annotations:
+- 1.3 Algorithm, which calculates features for existing annotations:
 
     - see what that means `in a video <https://www.youtube.com/watch?v=Ro8bOSjIg5U&t=123s>`_ (02:03 to 01:32)
     - use the :ref:`code example <algorithm features>`
@@ -36,7 +36,7 @@ Overview
    The two subsections below show working examples, which you can adapt for your specific algorithm. To run one of them:
 
    - create a file as shown in `this image <_static/images/development/algorithm_create_file.png>`_
-   - copy one of the code snippets containing the `MyAlgorithm` class to the file
+   - copy one of the code snippets containing the `MyAlgorithm` class to the file (section 1.2 or 1.3)
    - download our `example CSV <https://github.com/mad-lab-fau/mad-gui/raw/main/example_data/sensor_data.zip>`_
    - in a separate file execute the following code snippet and then apply the algorithm as shown in our
      `exemplary video <https://www.youtube.com/watch?v=Ro8bOSjIg5U&t=107s>`_:
@@ -200,7 +200,7 @@ annotation with the mouse, as you can see in `this GIF <_static/gifs/algorithm_f
                     plot_data.annotations["Activity"].data.at[i_activity, "description"] = feature_string
 
             UserInformation.inform("Algorithm executed. "
-                                   "Move the mouse over a label to see the result in a pop-up.")
+                                   "Move the mouse over a label and wait for a pop-up to see the result in a pop-up.")
 
         @staticmethod
         def calculate_feature(sensor_data: pd.DataFrame, sampling_rate_hz: float) -> str:
