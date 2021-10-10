@@ -22,12 +22,12 @@ Overview
 
 - 1.2 Algorithm, which creates annotations to be plotted:
 
-    - see what that means `in a video <https://www.youtube.com/watch?v=Ro8bOSjIg5U&t=107>`_ (01:47 to 02:03)
+    - see what that means `in a video <https://www.youtube.com/watch?v=n96eO7TAItg&t=124s>`_ (02:04 to 02:20)
     - use the :ref:`code example <algorithm annotations>`
 
 - 1.3 Algorithm, which calculates features for existing annotations:
 
-    - see what that means `in a video <https://www.youtube.com/watch?v=Ro8bOSjIg5U&t=123s>`_ (02:03 to 01:32)
+    - see what that means `in a video <https://www.youtube.com/watch?v=n96eO7TAItg&t=141s>`_ (02:21 to 02:39)
     - use the :ref:`code example <algorithm features>`
 
 .. admonition:: Using the working example
@@ -39,7 +39,7 @@ Overview
    - copy one of the code snippets containing the `MyAlgorithm` class to the file (section 1.2 or 1.3)
    - download our `example CSV <https://github.com/mad-lab-fau/mad-gui/raw/main/example_data/sensor_data.zip>`_
    - in a separate file execute the following code snippet and then apply the algorithm as shown in our
-     `exemplary video <https://www.youtube.com/watch?v=Ro8bOSjIg5U&t=107s>`_:
+     `exemplary video <https://www.youtube.com/watch?v=n96eO7TAItg&t=124s>`_:
 
    .. code-block:: python
 
@@ -57,8 +57,8 @@ Algorithm, which creates annotations to be plotted
 A plugin like this can be used to create annotations which span a region between to samples.
 Your algorithm may for example be able to find regions where the sensor was not moving.
 The GUI will plot the annotations automatically after it returns from your algorithm's `process_data` method.
-You can see an example in `this GIF <_static/gifs/algorithm_label.gif>`_ or `this video from 01:47 to 02:03
-<https://www.youtube.com/watch?v=Ro8bOSjIg5U&t=107s>`_.
+You can see an example in `this GIF <_static/gifs/algorithm_label.gif>`_ or `this video from 02:04 to 02:20
+<https://www.youtube.com/watch?v=n96eO7TAItg&t=124s>`_.
 
 .. admonition:: Adapting the working example
    :class: tip
@@ -132,8 +132,8 @@ For example the user might have created annotations manually or by using an algo
 Now, you might want to know the mean value of the sensor signal in each of the annotated regions.
 For this task you can create an algorithm as we describe it in this section.
 After execution of the algorithm, the GUI will take care for showing the results as soon as the user hovers of the
-annotation with the mouse, as you can see in `this GIF <_static/gifs/algorithm_feature.gif>`_ or `this video from 02:04 to 02:20
-<https://www.youtube.com/watch?v=Ro8bOSjIg5U&t=124s>`_.
+annotation with the mouse, as you can see in `this GIF <_static/gifs/algorithm_feature.gif>`_ or `this video from 02:21 to 02:39
+<https://www.youtube.com/watch?v=n96eO7TAItg&t=141s>`_.
 
 .. admonition:: Adapting the working example
    :class: tip
