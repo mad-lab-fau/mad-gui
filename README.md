@@ -29,8 +29,8 @@ Experiencing issues? [Report a bug here!](https://github.com/mad-lab-fau/mad-gui
 
 <i>click to show videos on YouTube</i>
 
-[<img src="./docs/_static/images/video_thumbnails/loading_and_navigating.png" width="200px">](https://www.youtube.com/watch?v=akxcuFOesC8 "MaD GUI - Loading data and navigating in the plot")
-[<img src="./docs/_static/images/video_thumbnails/annotations.png" width="200px">](https://www.youtube.com/watch?v=VWQKYRRRGVA "MaD GUI - Labelling data manually or using an algorithm")
+[<img src="./docs/_static/images/video_thumbnails/loading_and_navigating.png" width="200px">](https://www.youtube.com/watch?v=cSFFSTUM4e0 "MaD GUI - Loading data and navigating in the plot")
+[<img src="./docs/_static/images/video_thumbnails/annotations.png" width="200px">](https://www.youtube.com/watch?v=n96eO7TAItg "MaD GUI - Labelling data manually or using an algorithm")
 [<img src="./docs/_static/images/video_thumbnails/sync.png" width="200px">](https://www.youtube.com/watch?v=-GI5agFOPRM "MaD GUI - Synchronize video and sensor data")
 
 </div>
@@ -108,8 +108,8 @@ By clicking on the images below, you will be redirected to YouTube. In case you 
 machine, check out the section [Installation](#installation). 
 There you will find information on how to download our GUI and our exemplary data.
 
-[<img src="./docs/_static/images/video_thumbnails/loading_and_navigating.png" width="200px">](https://www.youtube.com/watch?v=akxcuFOesC8 "MaD GUI - Loading data and navigating in the plot")
-[<img src="./docs/_static/images/video_thumbnails/annotations.png" width="200px">](https://www.youtube.com/watch?v=VWQKYRRRGVA "MaD GUI - Labelling data manually or using an algorithm")
+[<img src="./docs/_static/images/video_thumbnails/loading_and_navigating.png" width="200px">](https://www.youtube.com/watch?v=cSFFSTUM4e0 "MaD GUI - Loading data and navigating in the plot")
+[<img src="./docs/_static/images/video_thumbnails/annotations.png" width="200px">](https://www.youtube.com/watch?v=n96eO7TAItg "MaD GUI - Labelling data manually or using an algorithm")
 [<img src="./docs/_static/images/video_thumbnails/sync.png" width="200px">](https://www.youtube.com/watch?v=-GI5agFOPRM "MaD GUI - Synchronize video and sensor data")
 
 
