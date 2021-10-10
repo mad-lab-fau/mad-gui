@@ -16,7 +16,7 @@ Overview
 
 This enables our GUI to load and display your specific type of data, as shown in
 `this video <https://www.youtube.com/watch?v=cSFFSTUM4e0&t=6>`_ form 0:06 to 0:16.
-Please additionally take a look at `this GIF <_static/gifs/importer.gif>`_, which shows you how your plugin gets into the GUI.
+Please additionally take a look at `this GIF <https://mad-gui.readthedocs.io/en/latest/_static/gifs/importer.gif>`_, which shows you how your plugin gets into the GUI.
 
 .. admonition:: Using the working example
    :class: tip
