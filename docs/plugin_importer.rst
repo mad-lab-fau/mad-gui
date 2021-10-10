@@ -15,7 +15,7 @@ Overview
 ########
 
 This enables our GUI to load and display your specific type of data, as shown in
-`this video <https://www.youtube.com/watch?v=cSFFSTUM4e0?start=6>`_ form 0:06 to 0:16.
+`this video <https://www.youtube.com/watch?v=cSFFSTUM4e0&t=6>`_ form 0:06 to 0:16.
 Please additionally take a look at `this GIF <_static/gifs/importer.gif>`_, which shows you how your plugin gets into the GUI.
 First of all you have to create a file, that will only keep your importer class, as shown in
 `this image <_static/images/development/importer_create_file.png>`_.
