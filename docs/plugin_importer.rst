@@ -131,7 +131,7 @@ The name will show up in the dropdown menu in the GUI's pop up when the user cli
 After you have performed these steps, you can select the importer in the GUI by pressing `Load Data`
 and then selecting it in the dropdown on the upper left in the pop-up window.
 From user perspective it should work as we have described in our
-`exemplary video about loading data <https://youtu.be/akxcuFOesC8?t=10>`_.
+`exemplary video about loading data <https://www.youtube.com/watch?v=cSFFSTUM4e0&t=6s>`_.
 
 .. note::
     In case loading your file does not work, we recommend to set breakpoints into your loader and check, whether
