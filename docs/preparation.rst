@@ -44,7 +44,7 @@ Installing MaD GUI
 
 You have two possibilities for installing the dependencies:
 
-Recommended: Assuming you want to build on top of the MaD GUI and do things that are described in :ref:`customization`, installation
+Recommended: Assuming you want to build on top of the MaD GUI and do things that are described in `Developing plugins https://mad-gui.readthedocs.io/en/latest/README.html#developing-plugins`_, installation
 can be done as described in :ref:`Installation for Customization (recommended) <install via pip>`.
 
 In case you want to change parts at the core of the GUI, which go beyond the parts described in :ref:`customization`,
