@@ -209,8 +209,8 @@ In the sections in the following list we describe how you can develop your own p
    - Algorithm: [Create annotations for plotted data](https://mad-gui.readthedocs.io/en/latest/plugin_algorithm.html#algorithm)
    - Algorithm: [Calculate features for existing annotations](https://mad-gui.readthedocs.io/en/latest/plugin_algorithm.html#algorithm)
    - Exporter: [Export displayed annotations](https://mad-gui.readthedocs.io/en/latest/plugin_exporter.html)
-   - Labels: [Create one or several custom label classes](file:///D:/mad-gui/docs/_build/html/labels.html#labels)
-   - For supplementary basic information please refer to [Preparation](file:///D:/mad-gui/docs/_build/html/preparation.html).
+   - Labels: [Create one or several custom label classes](https://mad-gui.readthedocs.io/en/latest/labels.html)
+   - For supplementary basic information please refer to [Preparation](https://mad-gui.readthedocs.io/en/latest/preparation.html).
 
 ## Communicating with the user
 
