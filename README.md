@@ -98,7 +98,7 @@ and extract the .csv file. After starting MaD GUI, you can open the previously d
 [User Interface](#user-interface). 
 
 You want to load / display data of a specific format/system or want to use a specific algorithm? 
-In this case please refer to [Load and display data of a certain data type](#load-and-display-data-of-a-certain-data-type)
+In this case please refer to [Load and display data of a certain data type](#load-and-display-data-of-any-format)
 
 
 ## User Interface
