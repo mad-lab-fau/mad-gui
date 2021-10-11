@@ -106,7 +106,7 @@ The name will show up in the dropdown menu in the GUI's pop up when the user cli
             ### If you only want to have one plot you do not need to   ###
             ### change the following lines! If you want several plots, ###
             ### just add another sensor like "IMU foot" to the `data`  ###
-            ### dictionary, which again keeps the files sensor_data    ###
+            ### dictionary, which again hase keys sensor_data and      ###
             ### and sampling_rate_hz for that plot.                    ###
             ##############################################################
             data = {
