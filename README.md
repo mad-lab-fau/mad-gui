@@ -37,7 +37,7 @@ Experiencing issues? [Report a bug here!](https://github.com/mad-lab-fau/mad-gui
   
 ## Quickstart for developers
 
-In a python 3.7 environment, execute the following commands:
+In a python 3.7 environment, execute the following commands or using the section [Development installation](#development-installation):
 ```
 pip install mad_gui
 mad-gui
