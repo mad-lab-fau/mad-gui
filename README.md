@@ -106,7 +106,7 @@ In this case please refer to [Load and display data of a certain data type](#loa
 ### Videos
 
 By clicking on the images below, you will be redirected to YouTube. In case you want to follow along on your own 
-machine, check out the section [Installation](#installation). 
+machine, check out the section [Download / Installation](#download-installation). 
 There you will find information on how to download our GUI and our exemplary data.
 
 [<img src="./docs/_static/images/video_thumbnails/loading_and_navigating.png" width="200px">](https://www.youtube.com/watch?v=cSFFSTUM4e0 "MaD GUI - Loading data and navigating in the plot")
