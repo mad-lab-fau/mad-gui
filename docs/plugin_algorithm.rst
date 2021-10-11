@@ -93,6 +93,9 @@ You can see an example in `this GIF <_static/gifs/algorithm_label.gif>`_ or `thi
                 # Use the currently plotted data to create annotations
                 annotations = self.create_annotations(sensor_plot.data, sensor_plot.sampling_rate_hz)
                 UserInformation.inform(f"Found {len(annotations)} annotations for {plot_name}.")
+                if not all(col in annotations.columns for col in ["start", "end"]):
+                    raise KeyError("Please make sure the dataframe returned from create_annotations has the columns "
+                               "'start' and 'end'.")
                 sensor_plot.annotations["Activity"].data = annotations
 
         @staticmethod
