@@ -176,7 +176,7 @@ extract the .csv. Afterwards, you can open the previously downloaded example dat
 [User Interface](#user-interface).
 You want to load data of a specific format/system or want to use a specific algorithm? 
 In this case please refer to the sections
-[Load and display data of a certain data type](#load-and-display-data-of-a-certain-data-type)
+[Load and display data of a certain data type](#load-and-display-data-of-any-format)
 and [Use a custom algorithm](#use-a-custom-algorithm).
 
 ### Developing plugins
