@@ -99,7 +99,7 @@ The name will show up in the dropdown menu in the GUI's pop up when the user cli
 
             warnings.warn("Please load the sampling frequency from your source in Hz"
                           " Afterwards, remove this warning.")
-            sampling_rate_hz = 1 / df["time"].diff().mean()
+            sampling_rate_hz = 1 / sensor_data["time"].diff().mean()
 
             ##############################################################
             ###                      CAUTION                           ###
