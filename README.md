@@ -147,6 +147,7 @@ You do not have experience with python but still want to load data from a specif
 |Developer| Someone who creates plugins for the GUI, for example to load a specific data format or to use a specific algorithm.|
 
 ## Development
+In case you experience issues, please try to find a solution in our documentation regarding [Troubleshooting](https://mad-gui.readthedocs.io/en/latest/troubleshooting.html#development).
 
 ### Development installation
 
