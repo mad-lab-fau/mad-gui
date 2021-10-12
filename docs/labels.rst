@@ -54,7 +54,7 @@ Creating an Event Label
 
 This kind of events can be plotted in the GUI, when the user uses `Ctrl` + `LeftMouseClick`/`Space`.
 See the above section for more infos on class attributes, and our
-`exemplary video <https://www.youtube.com/watch?v=Ro8bOSjIg5U&t=12s>` for more information on labelling.
+`exemplary video <https://www.youtube.com/watch?v=Ro8bOSjIg5U&t=12s>`_ for more information on labelling.
 
 .. code-block:: python
 
