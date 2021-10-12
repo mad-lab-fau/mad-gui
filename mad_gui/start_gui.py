@@ -16,7 +16,7 @@ class ActivityLabel(BaseRegionLabel):
     min_height = 0
     max_height = 1
     name = "Activity"
-    descriptions = {"stand": None, "walk": ["fast", "slow"], "jump": None}
+    descriptions = {"stand": None, "walk": ["slow", "normal", "fast"], "jump": None}
 
 
 class MyEvent(BaseEventLabel):

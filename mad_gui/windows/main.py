@@ -623,7 +623,7 @@ class MainWindow(QMainWindow):
                 "There were no algorithms passed to the GUI. Read more about the fact why the plugin you created does "
                 "not show up in the GUI by clicking the link below.",
                 help_link="https://mad-gui.readthedocs.io/en/latest/troubleshooting.html#the-plugin-i-created-does-not-"
-                "show-up-in-the-GUI",
+                          "show-up-in-the-gui",
             )
             return
 
