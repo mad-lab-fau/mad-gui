@@ -13,7 +13,7 @@
 
 MaD GUI is a basis for graphical annotation and computational analysis of time series data.
 It gives easy access to plotted data / annotations and handles interaction with annotations for you in the background.
-Developers must create plugins and inject them into the GUI to read data of their format or use their algorithm.
+**Developers must create plugins and inject them into the GUI to read data of their format or use their algorithm.**
 
 <div align="center">
 
