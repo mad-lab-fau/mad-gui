@@ -13,7 +13,7 @@
 
 MaD GUI is a basis for graphical annotation and computational analysis of time series data.
 It gives easy access to plotted data / annotations and handles interaction with annotations for you in the background.
-Developers must create plugins and inject them into the GUI to read data of their format or use their algorithm.
+**Developers must create plugins and inject them into the GUI to read data of their format or use their algorithm.**
 
 <div align="center">
 
@@ -27,7 +27,8 @@ Experiencing issues? [Report a bug here!](https://github.com/mad-lab-fau/mad-gui
 
 [<img src="./docs/_static/images/MaD-GUI.png" width="600px">](https://mad-gui.readthedocs.io/en/latest/_static/images/MaD-GUI.png)
 
-<i>click to show videos on YouTube</i>
+<i>click to show videos on YouTube</i><br />
+<i>(open video descriptions on YouTube for chapters)<i>
 
 [<img src="./docs/_static/images/video_thumbnails/loading_and_navigating.png" width="200px">](https://www.youtube.com/watch?v=cSFFSTUM4e0 "MaD GUI - Loading data and navigating in the plot")
 [<img src="./docs/_static/images/video_thumbnails/annotations.png" width="200px">](https://www.youtube.com/watch?v=n96eO7TAItg "MaD GUI - Labelling data manually or using an algorithm")
@@ -37,7 +38,7 @@ Experiencing issues? [Report a bug here!](https://github.com/mad-lab-fau/mad-gui
   
 ## Quickstart for developers
 
-In a python 3.7 environment, execute the following commands:
+In a python 3.7 environment, execute the following commands or use the section [Development installation](#development-installation):
 ```
 pip install mad_gui
 mad-gui
@@ -51,7 +52,7 @@ To see how to open our example data within the GUI, please refer to our section 
 
 |General Information | Development | Additional Information |
 |---------------------|-----------|-------------------------|
-|<li>[Why and what?](#why-and-what)</li><li>[Download / Installation](#download--installation)</li><li>[Example data](#example-data)</li><li>[User Interface (Videos & Shortcuts)](#user-interface)</li><li>[Load / display data of any format](#load-and-display-data-of-any-format)</li><li>[Use a custom algorithm](#use-a-custom-algorithm)</li><li>[Terminology](#terminology)</li>|<li>[Development installation](#development-installation)</li><li>[Developing Plugins](#developing-plugins)</li><li>[Communicating with the user](#communicating-with-the-user)</li><li>[Adjusting Constants](#adjusting-constants)</li><li>[Changing the theme](#changing-the-theme)</li><br><br>|<li>[Support & Contributing](#support-contributing)</li><li>[Background](#background)</li><br><br><br><br><br>|
+|<li>[Why and what?](#why-and-what)</li><li>[Download / Installation](#download-installation)</li><li>[Example data](#example-data)</li><li>[User Interface (Videos & Shortcuts)](#user-interface)</li><li>[Load / display data of any format](#load-and-display-data-of-any-format)</li><li>[Use a custom algorithm](#use-a-custom-algorithm)</li><li>[Terminology](#terminology)</li>|<li>[Development installation](#development-installation)</li><li>[Developing Plugins](#developing-plugins)</li><li>[Communicating with the user](#communicating-with-the-user)</li><li>[Adjusting Constants](#adjusting-constants)</li><li>[Changing the theme](#changing-the-theme)</li><br><br>|<li>[Support & Contributing](#support-contributing)</li><li>[Background](#background)</li><br><br><br><br><br>|
 
 
 ## Why and what?
@@ -97,7 +98,7 @@ and extract the .csv file. After starting MaD GUI, you can open the previously d
 [User Interface](#user-interface). 
 
 You want to load / display data of a specific format/system or want to use a specific algorithm? 
-In this case please refer to [Load and display data of a certain data type](#load-and-display-data-of-a-certain-data-type)
+In this case please refer to [Load and display data of a certain data type](#load-and-display-data-of-any-format)
 
 
 ## User Interface
@@ -105,7 +106,7 @@ In this case please refer to [Load and display data of a certain data type](#loa
 ### Videos
 
 By clicking on the images below, you will be redirected to YouTube. In case you want to follow along on your own 
-machine, check out the section [Installation](#installation). 
+machine, check out the section [Download / Installation](#download-installation). 
 There you will find information on how to download our GUI and our exemplary data.
 
 [<img src="./docs/_static/images/video_thumbnails/loading_and_navigating.png" width="200px">](https://www.youtube.com/watch?v=cSFFSTUM4e0 "MaD GUI - Loading data and navigating in the plot")
@@ -150,8 +151,8 @@ You do not have experience with python but still want to load data from a specif
 ### Development installation
 
 Info: We recommend to use `pip install mad_gui` in a 
-clean python 3.7 [virtual environment](https://docs.python.org/3/library/venv.html#creating-virtual-environments) / 
-[conda environment](https://mad-gui.readthedocs.io/en/latest/preparation.html#installing-necessary-software). 
+clean python 3.7 [conda environment](https://mad-gui.readthedocs.io/en/latest/preparation.html#installing-necessary-software), or if you know what you are doing in a [python venv](https://docs.python.org/3/library/venv.html#creating-virtual-environments) / 
+. 
 
 ```
 pip install mad_gui
@@ -175,7 +176,7 @@ extract the .csv. Afterwards, you can open the previously downloaded example dat
 [User Interface](#user-interface).
 You want to load data of a specific format/system or want to use a specific algorithm? 
 In this case please refer to the sections
-[Load and display data of a certain data type](#load-and-display-data-of-a-certain-data-type)
+[Load and display data of a certain data type](#load-and-display-data-of-any-format)
 and [Use a custom algorithm](#use-a-custom-algorithm).
 
 ### Developing plugins
@@ -208,8 +209,8 @@ In the sections in the following list we describe how you can develop your own p
    - Algorithm: [Create annotations for plotted data](https://mad-gui.readthedocs.io/en/latest/plugin_algorithm.html#algorithm)
    - Algorithm: [Calculate features for existing annotations](https://mad-gui.readthedocs.io/en/latest/plugin_algorithm.html#algorithm)
    - Exporter: [Export displayed annotations](https://mad-gui.readthedocs.io/en/latest/plugin_exporter.html)
-   - Labels: [Create one or several custom label classes](file:///D:/mad-gui/docs/_build/html/labels.html#labels)
-   - For supplementary basic information please refer to [Preparation](file:///D:/mad-gui/docs/_build/html/preparation.html).
+   - Labels: [Create one or several custom label classes](https://mad-gui.readthedocs.io/en/latest/labels.html)
+   - For supplementary basic information please refer to [Preparation](https://mad-gui.readthedocs.io/en/latest/preparation.html).
 
 ## Communicating with the user
 

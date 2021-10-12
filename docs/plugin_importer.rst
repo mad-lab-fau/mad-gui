@@ -16,16 +16,14 @@ Overview
 
 This enables our GUI to load and display your specific type of data, as shown in
 `this video <https://www.youtube.com/watch?v=cSFFSTUM4e0&t=6>`_ form 0:06 to 0:16.
-Please additionally take a look at `this GIF <_static/gifs/importer.gif>`_, which shows you how your plugin gets into the GUI.
-First of all you have to create a file, that will only keep your importer class, as shown in
-`this image <_static/images/development/importer_create_file.png>`_.
+Please additionally take a look at `this GIF <https://mad-gui.readthedocs.io/en/latest/_static/gifs/importer.gif>`_, which shows you how your plugin gets into the GUI.
 
 .. admonition:: Using the working example
    :class: tip
 
    The subsection below shows a working example, which you can adapt to your case. To run it:
 
-   - create a file as shown in `this image <_static/images/development/importer_create_file.png>`_
+   - create a file as shown in `this image <https://mad-gui.readthedocs.io/en/latest/_static/images/development/importer_create_file.png>`_
    - copy the code snippet containing `CustomImporter` class to the file (see long code snippet in section :ref:`develop custom importer`)
    - download our `example CSV <https://github.com/mad-lab-fau/mad-gui/raw/main/example_data/sensor_data.zip>`_
    - in a separate file execute the following code snippet and then load data as shown in our
@@ -101,14 +99,14 @@ The name will show up in the dropdown menu in the GUI's pop up when the user cli
 
             warnings.warn("Please load the sampling frequency from your source in Hz"
                           " Afterwards, remove this warning.")
-            sampling_rate_hz = 1 / df["time"].diff().mean()
+            sampling_rate_hz = 1 / sensor_data["time"].diff().mean()
 
             ##############################################################
             ###                      CAUTION                           ###
             ### If you only want to have one plot you do not need to   ###
             ### change the following lines! If you want several plots, ###
             ### just add another sensor like "IMU foot" to the `data`  ###
-            ### dictionary, which again keeps the files sensor_data    ###
+            ### dictionary, which again hase keys sensor_data and      ###
             ### and sampling_rate_hz for that plot.                    ###
             ##############################################################
             data = {
@@ -123,7 +121,7 @@ The name will show up in the dropdown menu in the GUI's pop up when the user cli
 .. warning::
 
    You need to pass your importer to our GUI like this as it is also shown in
-   `this image <https://mad-gui.readthedocs.io/en/latest/_images/development/importer_pass_to_gui.png>`_:
+   `this image <https://mad-gui.readthedocs.io/en/latest/_static/images/development/importer_pass_to_gui.png>`_:
 
    .. code-block:: python
 
