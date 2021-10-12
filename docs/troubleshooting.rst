@@ -139,5 +139,5 @@ Loader provided annotations that were not understood
 ****************************************************
 
 You need to pass labels with the attribute `name` equal to the ones stated in the error message to our `start_gui`
-function. Read more about creating labels in our section about :ref:`customization`.
+function. Read more about creating labels in our section about :ref:`custom labels`.
 
