@@ -15,7 +15,7 @@ from typing import Dict, Tuple, Union
 class ExampleImporter(BaseImporter):
     """Classes based on this one enable the GUI to handle data from different systems."""
 
-    file_type = "*.csv"
+    file_type = {"data_file": "*.csv", "video_file": "*.mp4", "annoatation_file": "*.csv"}
 
     @classmethod
     def name(cls) -> str:
@@ -23,10 +23,9 @@ class ExampleImporter(BaseImporter):
 
     def load_sensor_data(self, file: str) -> Tuple[Dict, float]:
         df = pd.read_csv(file)
-
         data = {
             "Pocket IMU": {
-                "sensor_data": pd.read_csv(file)[["acc_x", "acc_y", "acc_z", "gyr_x", "gyr_y", "gyr_z"]],
+                "sensor_data": df[["acc_x", "acc_y", "acc_z", "gyr_x", "gyr_y", "gyr_z"]],
                 "sampling_rate_hz": 1 / df["time"].diff().mean(),
             }
         }

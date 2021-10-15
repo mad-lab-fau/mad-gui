@@ -117,7 +117,7 @@ class LoadDataDialog(QDialog):
 
     def _handle_file_select(self, property_name):
         loader = self.loaders[self.ui.combo_plugin.currentIndex()]
-        file_name = ask_for_file_name(self.base_dir, parent=self, file_type=loader.file_type)
+        file_name = ask_for_file_name(self.base_dir, parent=self, file_type=loader.file_type[property_name])
         if file_name is not None:
             self.state.set(property_name, file_name)
             self.base_dir = str(Path(file_name).parent)

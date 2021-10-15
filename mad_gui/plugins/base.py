@@ -24,7 +24,7 @@ class BasePlugin:
 class BaseImporter(BasePlugin):
     """Classes based on this one enable the GUI to load data from different systems/formats."""
 
-    file_type = "*.*"
+    file_type = {"data_file": "*.*", "video_file": "*.*", "annoatation_file": "*.*"}
 
     @classmethod
     @abc.abstractmethod
@@ -126,7 +126,7 @@ class BaseImporter(BasePlugin):
         return None
 
     @staticmethod
-    def _get_sync_file(video_file: str) -> str:
+    def get_sync_file(video_file: str) -> str:
         files = list(Path(video_file).parent.glob("*sync*.xlsx"))
         if len(files) == 0:
             UserInformation.inform(
