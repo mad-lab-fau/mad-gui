@@ -114,6 +114,7 @@ class TestGui:
         assert not gui.ui.btn_remove_label.isChecked()
         assert gui.ui.btn_sync_data.isChecked()
         assert gui.sensor_plots["Pocket IMU"].sync_item
+        qtbot.wait(2500)
         assert not gui.video_plot.isHidden()
 
         qtbot.keyClick(gui, Qt.Key_Escape)
