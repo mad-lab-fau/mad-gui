@@ -11,6 +11,7 @@ from mad_gui.plugins.example import EnergyCalculator, ExampleExporter, ExampleIm
 from mad_gui.windows import MainWindow
 from typing import Optional, Sequence, Type
 
+
 class ActivityLabel(BaseRegionLabel):
     min_height = 0
     max_height = 1
@@ -83,4 +84,3 @@ if __name__ == "__main__":
     parser.add_argument("--data_dir")
     args = parser.parse_args()
     start_gui(args.data_dir)
-
