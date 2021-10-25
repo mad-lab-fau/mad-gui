@@ -140,10 +140,11 @@ class BasePlot(pg.PlotWidget):
         self.plotItem.titleLabel.setText(text=title, color=Config.theme.FAU_COLORS["dark_blue"])
 
     def configure_style(self):
-        bg_color = Config.theme.COLOR_LIGHT
-        self.setBackground(bg_color)
-        for i_channel in ["bottom", "left"]:
-            self._adapt_channel_color(i_channel, self.parent.palette().color(QPalette.Active, QPalette.Window))
+        bg_color = Config.theme.PLOT_BACKGROUND
+        if bg_color:
+            self.setBackground(bg_color)
+            for i_channel in ["bottom", "left"]:
+                self._adapt_channel_color(i_channel, self.parent.palette().color(QPalette.Active, QPalette.Window))
 
     def _adapt_channel_color(self, channel: str, color: QColor):
         """Make channel color in FAU style"""

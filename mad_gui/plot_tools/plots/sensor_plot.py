@@ -284,7 +284,7 @@ class SensorPlot(BasePlot):
         for channel_name in channels_to_plot:
             # make sure we use the same color for one channel even if only few channels are plotted
             color_index = np.argmax([channel_name == item for item in data.columns])
-            color = colors_fau[color_index]
+            #color = colors_fau[color_index]
 
             data_to_plot = data[channel_name]
             if getattr(Config.settings, "NORMALIZE_DISPLAYED_DATA", False) is True:
@@ -297,7 +297,7 @@ class SensorPlot(BasePlot):
                 self.plot(
                     x=x_axis,
                     y=data_to_plot,
-                    pen=pg.mkPen(width=2, color=color),
+                    pen=pg.mkPen(width=2, color=pg.intColor(index=color_index, hues=len(data.columns), sat=180)),
                 )
             except TypeError:
                 warnings.warn(f"Cannot plot channel {channel_name} because of a type error.")

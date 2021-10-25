@@ -117,7 +117,7 @@ class BaseRegionLabel(pg.LinearRegionItem):
 
     min_height = 0
     max_height = 1
-    color = [100, 100, 100, 50]
+    color = [150, 150, 150, 55]
     name = "Base Label"
     descriptions = None
     snap_to_min = False
@@ -231,7 +231,6 @@ class BaseRegionLabel(pg.LinearRegionItem):
         """
         # the activities should be set by passing a `Settings` object which inherits from mad_gui.config.BaseSettings
         # and has an attribute `ACTIVITIES`, see our developer guidelines for more information
-
         new_description = NestedLabelSelectDialog(parent=self.parent.parent).get_label(self.descriptions)
         if not new_description:
             raise NoLabelSelected("Invalid description selected for label")
@@ -300,8 +299,10 @@ class BaseRegionLabel(pg.LinearRegionItem):
         end
             End time in samples
         """
-        self.start_color = QColor("orange")
-        self.end_color = QColor("orange")
+        color = QColor(*self.color).toHsl()
+        darker_color = color.darker(150).toRgb()
+        self.start_color = darker_color
+        self.end_color = darker_color
         if np.isnan(start):
             self.start_color = QColor("red")
         if np.isnan(end):

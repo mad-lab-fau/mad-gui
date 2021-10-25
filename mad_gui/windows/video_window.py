@@ -66,6 +66,7 @@ class VideoWindow(Ui_VideoWindow, QObject):
         if "VideoFrameRate" not in self.player.availableMetaData():
             return
         self.fps = self.player.metaData("VideoFrameRate")
+        self.player.duration()
 
         StateKeeper.video_duration_available.emit(self.player.metaData("Duration") / 1000, self.fps)
         # Not sure yet why this is, but we need the following commands to make sure switching to sync mode directly

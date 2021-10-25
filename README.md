@@ -43,7 +43,7 @@ In a python 3.7 environment, execute the following commands or use the section [
 pip install mad_gui
 mad-gui
 ```
-You can [download our example data](https://github.com/mad-lab-fau/mad-gui/raw/main/example_data/sensor_data.zip) to
+You can [download our example data](#example-data) to
 test our built-in exemplary importer, exemplary algorithms and exemplary label. 
 To see how to open our example data within the GUI, please refer to our section about the 
 [User Interface](#user-interface).
@@ -85,34 +85,61 @@ In the case of Microsoft Edge, this possibility is hidden, but you can select it
 
 | Operating system <img width=200/>      | File to download <img width=200/>| What to do                                        |
 |------------------------|------------------|---------------------------------------------------|
-| Windows                | [Windows (64 bit)](https://github.com/mad-lab-fau/mad-gui/releases/download/v0.2.1-beta.1/mad_gui.exe)       | Download the file on the left. Then open the downloaded file and read about example data in the section below this table. <br /> <br />*Note: If prompted with a dialog `Windows protected your PC`, click `More info` and then select `Run anyway`.* |
+| Windows                | [Windows (64 bit)](https://github.com/mad-lab-fau/mad-gui/releases/download/v0.2.1-beta.1/mad_gui.exe)       | Download the file on the left. Then open the downloaded file and **read about [example data](#example-data) in the section below this table.** <br /> <br />*Note: If prompted with a dialog `Windows protected your PC`, click `More info` and then select `Run anyway`.* |
 | Ubuntu                 | [Ubuntu (64 bit)](https://github.com/mad-lab-fau/mad-gui/releases/download/v0.2.1-beta.1/mad_gui_ubuntu) | Download the file on the left. Then, in your terminal, navigate to the file loaction and then: `chmod +x ./mad_gui_ubuntu` and then `./mad_gui_ubuntu`. <br /> <br />*Note: you might need to install some additional packages. You can use [this script](https://raw.githubusercontent.com/mad-lab-fau/mad-gui/main/unix_dependencies.sh) to do so. Just right click the link, save it on your machine and execute it.*|
-| Mac OS                 | [Mac OS (64 bit)](https://github.com/mad-lab-fau/mad-gui/releases/download/v0.2.1-beta.1/mad_gui_mac.zip) | <li>Download the file on the left and extract it, for example to a folder called `mad_gui`.</li><li>Right click on the folder `mad_gui` and choose "New Terminal at Folder"</li><li>In the terminal, type `sudo -xvf mad_gui.tgz` and press return.</li><li>Close the terminal.</li><li>Right click on the file mad_gui_mac, select "Open", and confirm that you want to open the file.</li><li>Wait about half a minute until the GUI opens</li><li> You can read about example data to load in the GUI in the section below this table.</li> <br /><br /> *Note: If your Mac does not allow you to open this file, perform the actions for "If you want to open an app that hasn’t been notarized or is from an unidentified developer" on the [Apple Support Page](https://support.apple.com/en-us/HT202491). Afterwards, try to open it again as described above.*|
+| Mac OS                 | [Mac OS (64 bit)](https://github.com/mad-lab-fau/mad-gui/releases/download/v0.2.1-beta.1/mad_gui_mac.zip) | <li>Download the file on the left and extract it, for example to a folder called `mad_gui`.</li><li>Right click on the folder `mad_gui` and choose "New Terminal at Folder"</li><li>In the terminal, type `sudo -xvf mad_gui.tgz` and press return.</li><li>Close the terminal.</li><li>Right click on the file mad_gui_mac, select "Open", and confirm that you want to open the file.</li><li>Wait about half a minute until the GUI opens</li><li> You can **read about [example data](#example-data) to load in the GUI in the section below this table.**</li> <br /><br /> *Note: If your Mac does not allow you to open this file, perform the actions for "If you want to open an app that hasn’t been notarized or is from an unidentified developer" on the [Apple Support Page](https://support.apple.com/en-us/HT202491). Afterwards, try to open it again as described above.*|
 | other                  | Supplied upon request |[Contact us](mailto:malte.ollenschlaeger@fau.de)  
 
 
 ## Example Data
 
-You can [download our example data](https://github.com/mad-lab-fau/mad-gui/raw/main/example_data/sensor_data.zip) 
-and extract the .csv file. After starting MaD GUI, you can open the previously downloaded example data as shown in 
-[User Interface](#user-interface). 
+After clicking [this link](https://raw.githubusercontent.com/mad-lab-fau/mad-gui/main/example_data/sensor_data.csv), you can download our example data by either using `Ctrl+S` on your keyboard or click the right mouse button and then select `Save as...` to save it on your machine.
+Make sure to remember, where you save this file.
+After starting MaD GUI, you can open the previously downloaded example data as shown in [User Interface](#user-interface). 
 
 You want to load / display data of a specific format/system or want to use a specific algorithm? 
 In this case please refer to [Load and display data of a certain data type](#load-and-display-data-of-any-format)
 
+You want to load / display data of a specific format/system or want to use a specific algorithm? 
+In this case please refer to [Load and display data of a certain data type](#load-and-display-data-of-any-format)
+
+## Terminology
+
+| Word | Meaning |
+|------|---------|
+|Annotation| An annotation has a start and a stop value, e.g. it goes from second 1 to second 2 of the time series data.|
+|Label| An annotation is always of a certain type, for example "Activity". These types are called labels. A Label keeps the possible descriptions of an annotation. For example, the label "Activity" can have the descriptions "walk" or "run". Furthermore, it keeps information about where the annotation should be plotted, e.g. lowest 20% of the plot. |
+|User| Someone who performs actions in the GUI using the mouse and keyboard.|
+|Developer| Someone who creates plugins for the GUI, for example to load a specific data format or to use a specific algorithm.
+
 
 ## User Interface
 
-### Videos
+You can get information on how to use the GUI from the keywords below.
+In case you prefer see to it in a video, head to the section [Videos](#videos).
 
-By clicking on the images below, you will be redirected to YouTube. In case you want to follow along on your own 
-machine, check out the section [Download / Installation](#download-installation). 
-There you will find information on how to download our GUI and our exemplary data.
+### Load data
 
-[<img src="./docs/_static/images/video_thumbnails/loading_and_navigating.png" width="200px">](https://www.youtube.com/watch?v=cSFFSTUM4e0 "MaD GUI - Loading data and navigating in the plot")
-[<img src="./docs/_static/images/video_thumbnails/annotations.png" width="200px">](https://www.youtube.com/watch?v=n96eO7TAItg "MaD GUI - Labelling data manually or using an algorithm")
-[<img src="./docs/_static/images/video_thumbnails/sync.png" width="200px">](https://www.youtube.com/watch?v=-GI5agFOPRM "MaD GUI - Synchronize video and sensor data")
+* Click `Load data` button on the left
+* Select recording system in dropdown
+* `Select data file` to specify the sensor data to be loaded
+* Optionally: select video to be displayed
+* Optionally: select annotations previously calculated using another program (do not confuse with `Use Algorithm`, see below.)
+* Click `Start`
 
+### Use algorithm
+
+Passes the currently displayed data to an algorithm, which then calculates new annotations or features for existing annotations.
+
+* Click `Use algorithm` button on the left
+* Select algorithm
+* Click `Start processing`
+
+### Export data
+
+Exports displayed annotations into an excel file. 
+If you want to export displayed sensor data, either use the `Save displayed data` button.
+If you want to customize exports, please create an Exporter.
 
 ### Shortcuts
 Please watch the videos linked above, if you want to learn more about the different actions.
@@ -126,6 +153,15 @@ Please watch the videos linked above, if you want to learn more about the differ
 | `Shift` + `Left Mouse Click` | Add label     | Start a new label directly when setting the end of a label |
 | `Ctrl` + `Left Mouse Click`  | Add label     | Add a single event |
 
+### Videos
+
+By clicking on the images below, you will be redirected to YouTube. In case you want to follow along on your own 
+machine, check out the section [Download / Installation](#download-installation). 
+There you will find information on how to download our GUI and our exemplary data.
+
+[<img src="./docs/_static/images/video_thumbnails/loading_and_navigating.png" width="200px">](https://www.youtube.com/watch?v=cSFFSTUM4e0 "MaD GUI - Loading data and navigating in the plot")
+[<img src="./docs/_static/images/video_thumbnails/annotations.png" width="200px">](https://www.youtube.com/watch?v=n96eO7TAItg "MaD GUI - Labelling data manually or using an algorithm")
+[<img src="./docs/_static/images/video_thumbnails/sync.png" width="200px">](https://www.youtube.com/watch?v=-GI5agFOPRM "MaD GUI - Synchronize video and sensor data")
 
 ## Load and display data of any format
 This will need someone who is familiar with Python, who has to develop a plugin of the type `Importer`.
@@ -137,14 +173,7 @@ This will need someone who is familiar with Python, who has to develop a plugin 
 For more information on how to create plugins, please refer to [Developing Plugins](#developing-plugins).
 You do not have experience with python but still want to load data from a specific system? [Contact us!](mailto:malte.ollenschlaeger@fau.de)
 
-## Terminology
 
-| Word | Meaning |
-|------|---------|
-|Annotation| An annotation has a start and a stop value, e.g. it goes from second 1 to second 2 of the time series data. Furthermore, it can have a description, such as "walking" or "running".|
-|Label| An annotation is always of a certain type, for example "Activity". These types are called labels. A Label keeps the possible descriptions of an annotation, e.g. "walk" or "run". Furthermore, it keeps information about where the label should be plotted, e.g. lowest 20% of the plot. |
-|User| Someone who performs actions in the GUI.|
-|Developer| Someone who creates plugins for the GUI, for example to load a specific data format or to use a specific algorithm.|
 
 ## Development
 In case you experience issues, please try to find a solution in our documentation regarding [Troubleshooting](https://mad-gui.readthedocs.io/en/latest/troubleshooting.html#development).
@@ -172,7 +201,7 @@ start_gui()
 ```
 
 If you want to see an example, 
-[download our example data](https://github.com/mad-lab-fau/mad-gui/raw/main/example_data/sensor_data.zip) and 
+[download our example data](#example-data) and 
 extract the .csv. Afterwards, you can open the previously downloaded example data as shown in 
 [User Interface](#user-interface).
 You want to load data of a specific format/system or want to use a specific algorithm? 

@@ -115,7 +115,7 @@
             <string>Select sensor data to be loaded</string>
            </property>
            <property name="text">
-            <string> Select data...</string>
+            <string> Select data file...</string>
            </property>
           </widget>
          </item>
@@ -162,7 +162,7 @@
             <string>Select a video file to be loaded</string>
            </property>
            <property name="text">
-            <string>  Select video...       </string>
+            <string>  Select video file... (optional)       </string>
            </property>
            <property name="icon">
             <iconset resource="window_buttons.qrc">
@@ -219,7 +219,7 @@
             <string>Select an annotation file to be loaded</string>
            </property>
            <property name="text">
-            <string>  Select annotation...</string>
+            <string>  Select annotation file... (optional)</string>
            </property>
            <property name="icon">
             <iconset resource="window_buttons.qrc">
@@ -290,14 +290,14 @@
         <property name="minimumSize">
          <size>
           <width>0</width>
-          <height>20</height>
+          <height>40</height>
          </size>
         </property>
         <property name="toolTip">
          <string>Return to main window and load specified data</string>
         </property>
         <property name="text">
-         <string>Start processing</string>
+         <string>Start</string>
         </property>
        </widget>
       </item>
@@ -306,7 +306,7 @@
         <property name="minimumSize">
          <size>
           <width>0</width>
-          <height>20</height>
+          <height>40</height>
          </size>
         </property>
         <property name="toolTip">
