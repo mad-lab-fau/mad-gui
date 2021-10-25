@@ -157,13 +157,6 @@ Please watch the videos linked above, if you want to learn more about the differ
 | `Shift` + `Left Mouse Click` | Add label     | Start a new label directly when setting the end of a label |
 | `Ctrl` + `Left Mouse Click`  | Add label     | Add a single event |
 
-### Videos
-
-By clicking on the images below, you will be redirected to YouTube. In case you want to follow along on your own 
-machine, check out the section [Download / Installation](#download-installation). 
-There you will find information on how to download our GUI and our exemplary data.
-
-
 ## Load and display data of any format
 This will need someone who is familiar with Python, who has to develop a plugin of the type `Importer`.
 For more information on how to create plugins, please refer to [Developing Plugins](#developing-plugins).
