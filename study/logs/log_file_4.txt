@@ -1,0 +1,24 @@
+  start          stop  pos_x  pos_y  width  height event_description
+0  None  1.634806e+09    473    167    971     644              move
+  start          stop  pos_x  pos_y  width  height event_description
+0  None  1.634806e+09    473    167    971     644              move
+0  None  1.634806e+09    473    167    971     644              move
+  start          stop  pos_x  pos_y  width  height event_description
+0  None  1.634806e+09    473    167    971     644              move
+0  None  1.634806e+09    473    167    971     644              move
+0  None  1.634806e+09    473    167    971     644            resize
+[<PySide2.QtWidgets.QLayout(0x22d8e64b540, name = "_layout") at 0x0000022D8EC21108>, <mad_gui.models.global_data.GlobalData(0x22d90421410) at 0x0000022D8FADEF88>, <mad_gui.models.ui_state.UiState(0x22d90421430) at 0x0000022D912C1FC8>, <mad_gui.models.ui_state.PlotState(0x22d904215b0) at 0x0000022D911797C8>, <PySide2.QtWidgets.QWidget(0x22d905329c0, name="centralwidget") at 0x0000022D91179D08>, <mad_gui.components.key_event_handler.KeyEventHandler(0x22d905202e0) at 0x0000022D91179748>, <mad_gui.state_keeper._StateKeeper(0x22d8fcb6780) at 0x0000022D90EAF788>]
+[<PySide2.QtWidgets.QLayout(0x22d8e64b540, name = "_layout") at 0x0000022D8E99B108>, <mad_gui.models.global_data.GlobalData(0x22d90421410) at 0x0000022D8FADEF88>, <mad_gui.models.ui_state.UiState(0x22d90421430) at 0x0000022D912C1FC8>, <mad_gui.models.ui_state.PlotState(0x22d904215b0) at 0x0000022D911797C8>, <PySide2.QtWidgets.QWidget(0x22d905329c0, name="centralwidget") at 0x0000022D91179D08>, <mad_gui.components.key_event_handler.KeyEventHandler(0x22d905202e0) at 0x0000022D91179748>, <mad_gui.state_keeper._StateKeeper(0x22d8fcb6780) at 0x0000022D90EAF788>]
+          start          stop  pos_x  pos_y  width  height event_description
+0           NaN  1.634806e+09    473    167    971     644              move
+0           NaN  1.634806e+09    473    167    971     644              move
+0           NaN  1.634806e+09    473    167    971     644            resize
+0  1.634806e+09  1.634806e+09    473    167    971     644            active
+[<PySide2.QtWidgets.QLayout(0x22d8e64b540, name = "_layout") at 0x0000022D8F596EC8>, <mad_gui.models.global_data.GlobalData(0x22d90421410) at 0x0000022D8FADEF88>, <mad_gui.models.ui_state.UiState(0x22d90421430) at 0x0000022D912C1FC8>, <mad_gui.models.ui_state.PlotState(0x22d904215b0) at 0x0000022D911797C8>, <PySide2.QtWidgets.QWidget(0x22d905329c0, name="centralwidget") at 0x0000022D91179D08>, <mad_gui.components.key_event_handler.KeyEventHandler(0x22d905202e0) at 0x0000022D91179748>, <mad_gui.state_keeper._StateKeeper(0x22d8fcb6780) at 0x0000022D90EAF788>]
+          start          stop  pos_x  pos_y  width  height event_description
+0           NaN  1.634806e+09    473    167    971     644              move
+0           NaN  1.634806e+09    473    167    971     644              move
+0           NaN  1.634806e+09    473    167    971     644            resize
+0  1.634806e+09  1.634806e+09    473    167    971     644            active
+0  1.634806e+09  1.634806e+09    473    167    971     644            active
+D:\mad-gui\study
