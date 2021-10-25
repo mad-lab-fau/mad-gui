@@ -116,14 +116,13 @@ In this case please refer to [Load and display data of a certain data type](#loa
 
 ## User Interface
 
-You can get information on how to use the GUI from the keywords below.
-In case you prefer see to it in a video, head to the section [Videos](#videos).
+You can get information on how to use the GUI from the keywords below or from the video referenced in each of the sections.
 
 ### Load data
 
 | Text | Exemplary Video |
 |------|-----------------|
-<li>Click `Load data` button on the left</li><li>Select recording system in dropdown</li><li>`Select data file` to specify the sensor data to be loaded</li><li>Optionally: select video to be displayed</li><li>Optionally: select annotations previously calculated using another program (do not confuse with `Use Algorithm`, see below.)</li><li>Click `Start`</li>|[<img src="./docs/_static/images/video_thumbnails/loading_and_navigating.png" width="200px">](https://www.youtube.com/watch?v=cSFFSTUM4e0 "MaD GUI - Loading data and navigating in the plot")|
+|<li>Click `Load data` button on the left</li><li>Select recording system in dropdown</li><li>`Select data file` to specify the sensor data to be loaded</li><li>Optionally: select video to be displayed</li><li>Optionally: select annotations previously calculated using another program <br> (do not confuse with [Use Algorithm](#use-algorithm), see below.)</li><li>Click `Start`</li>|[<img src="./docs/_static/images/video_thumbnails/loading_and_navigating.png" width="200px">](https://www.youtube.com/watch?v=cSFFSTUM4e0 "MaD GUI - Loading data and navigating in the plot")|
 
 ### Use algorithm
 
@@ -131,13 +130,13 @@ Passes the currently displayed data to an algorithm, which then calculates new a
 
 | Text | Exemplary Video |
 |------|-----------------|
-<li>Click `Use algorithm` button on the left</li><li>Select algorithm</li><li> Click `Start processing`</li>|[<img src="./docs/_static/images/video_thumbnails/annotations.png" width="200px">](https://www.youtube.com/watch?v=n96eO7TAItg "MaD GUI - Labelling data manually or using an algorithm")|
+|<li>Click `Use algorithm` button on the left</li><li>Select algorithm</li><li> Click `Start processing`</li>|[<img src="./docs/_static/images/video_thumbnails/annotations.png" width="200px">](https://www.youtube.com/watch?v=n96eO7TAItg "MaD GUI - Labelling data manually or using an algorithm")|
 
 ### Synchronize sensor data and video
 
 Please watch the video:
 
-[<img src="./docs/_static/images/video_thumbnails/sync.png" width="200px">](https://www.youtube.com/watch?v=-GI5agFOPRM "MaD GUI - Synchronize video and sensor data")|
+[<img src="./docs/_static/images/video_thumbnails/sync.png" width="200px">](https://www.youtube.com/watch?v=-GI5agFOPRM "MaD GUI - Synchronize video and sensor data")
 
 
 ### Export data
