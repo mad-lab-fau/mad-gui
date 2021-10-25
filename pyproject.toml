@@ -67,6 +67,7 @@ exclude = '''
     | _build
     | docs
     | build
+    | study
     | dist
     | \.virtual_documents
     | \libs
