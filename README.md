@@ -43,7 +43,7 @@ In a python 3.7 environment, execute the following commands or use the section [
 pip install mad_gui
 mad-gui
 ```
-You can [download our example data](https://faubox.rrze.uni-erlangen.de/getlink/fiFR86cFsedWQJq5LVofABni/sensor_data.csv) to
+You can [download our example data](https://raw.githubusercontent.com/mad-lab-fau/mad-gui/main/example_data/sensor_data.csv) to
 test our built-in exemplary importer, exemplary algorithms and exemplary label. 
 To see how to open our example data within the GUI, please refer to our section about the 
 [User Interface](#user-interface).
