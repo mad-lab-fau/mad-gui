@@ -93,9 +93,15 @@ In the case of Microsoft Edge, this possibility is hidden, but you can select it
 
 ## Example Data
 
+<<<<<<< HEAD
 After clicking [this link](https://raw.githubusercontent.com/mad-lab-fau/mad-gui/main/example_data/sensor_data.csv), you can download our example data by either using `Ctrl+S` on your keyboard or click the right mouse button and then select `Save as...` to save it on your machine.
 Make sure to remember, where you save this file.
 After starting MaD GUI, you can open the previously downloaded example data as shown in [User Interface](#user-interface). 
+=======
+You can [download our example data](https://faubox.rrze.uni-erlangen.de/getlink/fiFR86cFsedWQJq5LVofABni/sensor_data.csv) 
+and extract the .csv file. After starting MaD GUI, you can open the previously downloaded example data as shown in 
+[User Interface](#user-interface). 
+>>>>>>> 3b9184714f27d9830705ae57879e5c709a388757
 
 You want to load / display data of a specific format/system or want to use a specific algorithm? 
 In this case please refer to [Load and display data of a certain data type](#load-and-display-data-of-any-format)
@@ -201,7 +207,11 @@ start_gui()
 ```
 
 If you want to see an example, 
+<<<<<<< HEAD
 [download our example data](#example-data) and 
+=======
+[download our example data](https://faubox.rrze.uni-erlangen.de/getlink/fiFR86cFsedWQJq5LVofABni/sensor_data.csv) and 
+>>>>>>> 3b9184714f27d9830705ae57879e5c709a388757
 extract the .csv. Afterwards, you can open the previously downloaded example data as shown in 
 [User Interface](#user-interface).
 You want to load data of a specific format/system or want to use a specific algorithm? 

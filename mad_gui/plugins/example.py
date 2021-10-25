@@ -15,7 +15,7 @@ from typing import Dict, Tuple, Union
 class ExampleImporter(BaseImporter):
     """Classes based on this one enable the GUI to handle data from different systems."""
 
-    file_type = {"data_file": "*.csv", "video_file": "*.mp4", "annoatation_file": "*.csv"}
+    file_type = {"data_file": "*.csv", "video_file": "*.mp4", "annotation_file": "*.csv"}
 
     @classmethod
     def name(cls) -> str:
