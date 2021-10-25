@@ -121,20 +121,27 @@ In case you prefer see to it in a video, head to the section [Videos](#videos).
 
 ### Load data
 
-* Click `Load data` button on the left
-* Select recording system in dropdown
-* `Select data file` to specify the sensor data to be loaded
-* Optionally: select video to be displayed
-* Optionally: select annotations previously calculated using another program (do not confuse with `Use Algorithm`, see below.)
-* Click `Start`
+| Text | Exemplary Video |
+|------|-----------------|
+<li>Click `Load data` button on the left</li><li>Select recording system in dropdown</li><li>`Select data file` to specify the sensor data to be loaded</li><li>Optionally: select video to be displayed</li><li>Optionally: select annotations previously calculated using another program (do not confuse with `Use Algorithm`, see below.)</li><li>Click `Start`</li>|[<img src="./docs/_static/images/video_thumbnails/loading_and_navigating.png" width="200px">](https://www.youtube.com/watch?v=cSFFSTUM4e0 "MaD GUI - Loading data and navigating in the plot")
+|
 
 ### Use algorithm
 
 Passes the currently displayed data to an algorithm, which then calculates new annotations or features for existing annotations.
 
-* Click `Use algorithm` button on the left
-* Select algorithm
-* Click `Start processing`
+| Text | Exemplary Video |
+|------|-----------------|
+<li>Click `Use algorithm` button on the left</li><li>Select algorithm</li><li> Click `Start processing`</li>|[<img src="./docs/_static/images/video_thumbnails/annotations.png" width="200px">](https://www.youtube.com/watch?v=n96eO7TAItg "MaD GUI - Labelling data manually or using an algorithm")
+|
+
+### Synchronize sensor data and video
+
+Please watch the video:
+
+[<img src="./docs/_static/images/video_thumbnails/sync.png" width="200px">](https://www.youtube.com/watch?v=-GI5agFOPRM "MaD GUI - Synchronize video and sensor data")
+|
+
 
 ### Export data
 
@@ -160,9 +167,6 @@ By clicking on the images below, you will be redirected to YouTube. In case you 
 machine, check out the section [Download / Installation](#download-installation). 
 There you will find information on how to download our GUI and our exemplary data.
 
-[<img src="./docs/_static/images/video_thumbnails/loading_and_navigating.png" width="200px">](https://www.youtube.com/watch?v=cSFFSTUM4e0 "MaD GUI - Loading data and navigating in the plot")
-[<img src="./docs/_static/images/video_thumbnails/annotations.png" width="200px">](https://www.youtube.com/watch?v=n96eO7TAItg "MaD GUI - Labelling data manually or using an algorithm")
-[<img src="./docs/_static/images/video_thumbnails/sync.png" width="200px">](https://www.youtube.com/watch?v=-GI5agFOPRM "MaD GUI - Synchronize video and sensor data")
 
 ## Load and display data of any format
 This will need someone who is familiar with Python, who has to develop a plugin of the type `Importer`.
