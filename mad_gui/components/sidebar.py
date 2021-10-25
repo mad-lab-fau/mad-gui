@@ -47,7 +47,7 @@ class Sidebar(QObject):
             self.ui.btn_use_algorithm.setText("Use algorithm")
             self.ui.btn_load_data_gui_format.setText("Reload displayed data")
             self.ui.btn_save_data_gui_format.setText("Save displayed data")
-            #self.ui.btn_toggle_menu.setText("Collapse menu")
+            # self.ui.btn_toggle_menu.setText("Collapse menu")
             self.collapsed = False
         else:
             self.ui.btn_load_data_gui_format.setText("")
@@ -55,7 +55,7 @@ class Sidebar(QObject):
             self.ui.btn_load_data.setText("")
             self.ui.btn_save_data_gui_format.setText("")
             self.ui.btn_export.setText("")
-            #self.ui.btn_toggle_menu.setText("")
+            # self.ui.btn_toggle_menu.setText("")
             self.collapsed = True
         self.collapsed_changed.emit(self.collapsed)
         self._animation.stateChanged.disconnect(self._toggle)

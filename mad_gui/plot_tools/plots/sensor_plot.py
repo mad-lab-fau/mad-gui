@@ -284,7 +284,7 @@ class SensorPlot(BasePlot):
         for channel_name in channels_to_plot:
             # make sure we use the same color for one channel even if only few channels are plotted
             color_index = np.argmax([channel_name == item for item in data.columns])
-            #color = colors_fau[color_index]
+            # color = colors_fau[color_index]
 
             data_to_plot = data[channel_name]
             if getattr(Config.settings, "NORMALIZE_DISPLAYED_DATA", False) is True:

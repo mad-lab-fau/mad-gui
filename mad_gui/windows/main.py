@@ -25,7 +25,7 @@ from PySide2.QtWidgets import (
     QMainWindow,
     QApplication,
 )
-from PySide2.QtGui import QPalette, QColor
+from PySide2.QtGui import QPalette
 
 from mad_gui.components.dialogs.data_selector import DataSelector
 from mad_gui.components.dialogs.plugin_selection.load_data_dialog import LoadDataDialog
@@ -46,7 +46,6 @@ from mad_gui.state_keeper import StateKeeper
 from mad_gui.utils.helper import resource_path
 from mad_gui.windows import VideoWindow
 from mad_gui.qt_designer import UI_PATH
-from study.mouse_logger import MouseLogger
 
 try:
     import pyi_splash  # noqa
@@ -105,10 +104,11 @@ class MainWindow(QMainWindow):
     ):
 
         # study
-        #self.mouse_logger = MouseLogger(window=self)
-        #self.moveEvent = self.mouse_logger.move_event
-        #self.changeEvent = self.mouse_logger.change_event
-        #self.resizeEvent = self.mouse_logger.resize_event
+        # from study.mouse_logger import MouseLogger
+        # self.mouse_logger = MouseLogger(window=self)
+        # self.moveEvent = self.mouse_logger.move_event
+        # self.changeEvent = self.mouse_logger.change_event
+        # self.resizeEvent = self.mouse_logger.resize_event
 
         super().__init__()
 
@@ -431,7 +431,7 @@ class MainWindow(QMainWindow):
 
         self.setCursor(Qt.ArrowCursor)
         self._enable_buttons(True)
-        #self.menu.set_collapsed(True)
+        # self.menu.set_collapsed(True)
 
         return loaded_data, loadable_labels
 
@@ -503,7 +503,7 @@ class MainWindow(QMainWindow):
         self.load_video(data.get("video_file", None))
         self._set_sync(data.get("sync_file", None))
         self._enable_buttons(True)
-        #self.menu.set_collapsed(True)
+        # self.menu.set_collapsed(True)
 
     def _set_sync(self, sync_file: str):
         """Set the synchronization for each plot"""
@@ -709,8 +709,8 @@ class MainWindow(QMainWindow):
         if self.VideoWindow:
             self.VideoWindow.close()
         # study
-        #self.mouse_logger.stop_logging()
-        #self.close()
+        # self.mouse_logger.stop_logging()
+        # self.close()
 
     def _set_window_properties(self):
         self.setAttribute(Qt.WA_DeleteOnClose)
