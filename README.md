@@ -43,7 +43,7 @@ In a python 3.7 environment, execute the following commands or use the section [
 pip install mad_gui
 mad-gui
 ```
-You can [download our example data](https://github.com/mad-lab-fau/mad-gui/raw/main/example_data/sensor_data.zip) to
+You can [download our example data](https://faubox.rrze.uni-erlangen.de/getlink/fiFR86cFsedWQJq5LVofABni/sensor_data.csv) to
 test our built-in exemplary importer, exemplary algorithms and exemplary label. 
 To see how to open our example data within the GUI, please refer to our section about the 
 [User Interface](#user-interface).
@@ -93,7 +93,7 @@ In the case of Microsoft Edge, this possibility is hidden, but you can select it
 
 ## Example Data
 
-You can [download our example data](https://github.com/mad-lab-fau/mad-gui/raw/main/example_data/sensor_data.zip) 
+You can [download our example data](https://faubox.rrze.uni-erlangen.de/getlink/fiFR86cFsedWQJq5LVofABni/sensor_data.csv) 
 and extract the .csv file. After starting MaD GUI, you can open the previously downloaded example data as shown in 
 [User Interface](#user-interface). 
 
@@ -172,7 +172,7 @@ start_gui()
 ```
 
 If you want to see an example, 
-[download our example data](https://github.com/mad-lab-fau/mad-gui/raw/main/example_data/sensor_data.zip) and 
+[download our example data](https://faubox.rrze.uni-erlangen.de/getlink/fiFR86cFsedWQJq5LVofABni/sensor_data.csv) and 
 extract the .csv. Afterwards, you can open the previously downloaded example data as shown in 
 [User Interface](#user-interface).
 You want to load data of a specific format/system or want to use a specific algorithm? 
