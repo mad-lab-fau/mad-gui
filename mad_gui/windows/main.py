@@ -103,13 +103,6 @@ class MainWindow(QMainWindow):
         events=None,
     ):
 
-        # study
-        # from study.mouse_logger import MouseLogger
-        # self.mouse_logger = MouseLogger(window=self)
-        # self.moveEvent = self.mouse_logger.move_event
-        # self.changeEvent = self.mouse_logger.change_event
-        # self.resizeEvent = self.mouse_logger.resize_event
-
         super().__init__()
 
         self.check_arguments(plugins, labels, events)
@@ -708,9 +701,7 @@ class MainWindow(QMainWindow):
                 return
         if self.VideoWindow:
             self.VideoWindow.close()
-        # study
-        # self.mouse_logger.stop_logging()
-        # self.close()
+        self.close()
 
     def _set_window_properties(self):
         self.setAttribute(Qt.WA_DeleteOnClose)
