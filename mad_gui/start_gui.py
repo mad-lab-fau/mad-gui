@@ -8,6 +8,7 @@ from mad_gui.config import BaseSettings, BaseTheme
 from mad_gui.plot_tools.labels import BaseEventLabel, BaseRegionLabel
 from mad_gui.plugins.base import BasePlugin
 from mad_gui.plugins.example import EnergyCalculator, ExampleExporter, ExampleImporter, StationaryMomentsDetector
+from mad_gui.plugins import GaitDetector
 from mad_gui.windows import MainWindow
 from typing import Optional, Sequence, Type
 
@@ -34,6 +35,7 @@ def start_gui(
         StationaryMomentsDetector,
         EnergyCalculator,
         ExampleExporter,
+        GaitDetector
     ),
     labels: Optional[Sequence[BaseRegionLabel]] = (ActivityLabel,),
     events: Optional[Sequence[BaseEventLabel]] = (MyEvent,),

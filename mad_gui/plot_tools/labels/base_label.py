@@ -117,7 +117,7 @@ class BaseRegionLabel(pg.LinearRegionItem):
 
     min_height = 0
     max_height = 1
-    color = [150, 150, 150, 55]
+    color = [150, 150, 150, 100]
     name = "Base Label"
     descriptions = None
     snap_to_min = False
