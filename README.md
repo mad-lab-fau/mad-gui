@@ -27,7 +27,7 @@ Experiencing issues? [Report a bug here!](https://github.com/mad-lab-fau/mad-gui
 
 [<img src="./docs/_static/images/MaD-GUI.png" width="600px">](https://mad-gui.readthedocs.io/en/latest/_static/images/MaD-GUI.png)
 
-<i>click to show videos on YouTube</i><br />
+<i>click images below to show videos on YouTube</i><br />
 <i>(open video descriptions on YouTube for chapters)</i>
 
 [<img src="./docs/_static/images/video_thumbnails/loading_and_navigating.png" width="200px">](https://www.youtube.com/watch?v=cSFFSTUM4e0 "MaD GUI - Loading data and navigating in the plot")
