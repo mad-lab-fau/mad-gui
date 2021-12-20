@@ -25,7 +25,7 @@ def task_format_check():
 
 def task_lint():
     """Lint all files with Prospector."""
-    return {"actions": [["prospector"]], "verbosity": 1}
+    return {"actions": [["prospector", "-X"]], "verbosity": 1}
 
 
 def task_test():
