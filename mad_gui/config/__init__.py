@@ -8,7 +8,7 @@ from mad_gui.config.theme import BaseTheme
 
 
 class _Config:
-    """See our docs about `Customization <https://mad-gui.readthedocs.io/en/latest/customization.html#setting-constants>`."""
+    """See docs `Adjusting constants <https://mad-gui.readthedocs.io/en/latest/README.html#adjusting-constants>`."""
 
     settings: Type[BaseSettings]
     theme: Type[BaseTheme]

@@ -175,7 +175,7 @@ In case you experience issues, please try to find a solution in our documentatio
 ### Development installation
 
 Info: We recommend to use `pip install mad_gui` in a 
-clean python 3.7 [conda environment](https://mad-gui.readthedocs.io/en/latest/preparation.html#installing-necessary-software), or if you know what you are doing in a [python venv](https://docs.python.org/3/library/venv.html#creating-virtual-environments) / 
+clean python 3.7 [conda environment](https://mad-gui.readthedocs.io/en/latest/preparation.html#installing-necessary-software), or if you know what you are doing in a [python venv](https://docs.python.org/3/library/venv.html#creating-virtual-environments).
 . 
 
 ```
