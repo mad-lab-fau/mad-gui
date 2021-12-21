@@ -78,7 +78,7 @@ jobs:
         sudo apt-get -y install git
         sudo apt-get -y install libpulse-mainloop-glib0
         python -m pip install --no-cache-dir --upgrade pip
-        sudo pip install git+https://github.com/PyCQA/astroid.git@astroid-2.5.1
+        # sudo pip install git+https://github.com/PyCQA/astroid.git@astroid-2.5.1
         poetry run doit test
     - name: Linting
       run: |
