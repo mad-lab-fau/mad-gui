@@ -93,7 +93,7 @@ class BaseEventLabel(pg.InfiniteLine):
 
 
 class BaseRegionLabel(pg.LinearRegionItem):
-    """A label with a start and end plotted in the upper part of the graph.
+    """A label region label plotted in the graph.
 
     Parameters
     ----------
@@ -105,6 +105,11 @@ class BaseRegionLabel(pg.LinearRegionItem):
         Start time of the label in samples.
     end
         End time of the label in samples.
+    events
+         A pd.DataFrame, with columns that are names for events and rows that have the positions of the events in samples
+         since start of the data stream.
+    plot_events
+         self.events are only plotted if the name of the regarding event is in this list.
     parent
         A :class:`mad_gui.plot_tools.BasePlot` object.
 
@@ -139,8 +144,9 @@ class BaseRegionLabel(pg.LinearRegionItem):
         self._set_border_colors(start, end)
         self._set_border_positions(start, end)
         self.event_labels = {}
+        plot_labels = getattr(self, "plot_labels", None)
         if events is not None:
-            self._set_events(events)
+            self._set_events(events[plot_labels])
         self.configure_children()
         self.standard_brush = pg.mkBrush(QColor(*self.color))
         self.sigRegionChangeFinished.connect(self._region_changed)
