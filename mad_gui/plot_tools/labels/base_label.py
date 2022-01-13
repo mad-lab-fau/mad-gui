@@ -106,8 +106,8 @@ class BaseRegionLabel(pg.LinearRegionItem):
     end
         End time of the label in samples.
     events
-         A pd.DataFrame, with columns that are names for events and rows that have the positions of the events in samples
-         since start of the data stream.
+         A pd.DataFrame, with columns that are names for events and rows that have the positions of the events in
+         samples since start of the data stream.
     plot_events
          self.events are only plotted if the name of the regarding event is in this list.
     parent

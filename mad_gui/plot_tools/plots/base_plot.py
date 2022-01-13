@@ -113,6 +113,7 @@ class BasePlot(pg.PlotWidget):
                     activity = activity.append(pd.Series(data=[None], index=[parameter]))
             if hasattr(label_class, "events"):
                 events = activity[label_class.events]
+                plot_events = getattr(label_class, "plot_events", events.keys())
             else:
                 events = None
             new_activity = label_class(
@@ -124,8 +125,9 @@ class BasePlot(pg.PlotWidget):
                 parent=self,
             )
             self.addItem(new_activity)
-            for event in new_activity.event_labels.values():
-                self.addItem(event)
+            for event_name, event in new_activity.event_labels.items():
+                if event_name in plot_events:
+                    self.addItem(event)
 
     def set_title(self, title: str):
         """Set the title, which will be shown centered on the top of the plot.
