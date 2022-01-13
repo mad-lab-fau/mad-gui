@@ -144,9 +144,8 @@ class BaseRegionLabel(pg.LinearRegionItem):
         self._set_border_colors(start, end)
         self._set_border_positions(start, end)
         self.event_labels = {}
-        plot_labels = getattr(self, "plot_labels", None)
         if events is not None:
-            self._set_events(events[plot_labels])
+            self._set_events(events)
         self.configure_children()
         self.standard_brush = pg.mkBrush(QColor(*self.color))
         self.sigRegionChangeFinished.connect(self._region_changed)
