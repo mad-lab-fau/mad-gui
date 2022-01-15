@@ -32,7 +32,7 @@ Please additionally take a look at `this GIF <https://mad-gui.readthedocs.io/en/
    .. code-block:: python
 
        from mad_gui import start_gui
-       from cutom_importer import CustomImporter # you need to create this file and class, see below
+       from custom_importer import CustomImporter # you need to create this file and class, see below
 
        start_gui(plugins=[CustomImporter])
 
