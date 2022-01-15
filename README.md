@@ -205,7 +205,7 @@ and [Use a custom algorithm](#use-a-custom-algorithm).
 
 ### Developing plugins
 
-The MaD GUI package is a framework, which can be extended with different kinds of plugins and labels.
+The MaD GUI package can be extended with different kinds of plugins and labels.
 The user can access your plugins within the GUI using dropdowns, after clicking "Load data" or "Use algorithm". 
 **However, this is only possible if your plugin was passed to the GUI at startup**, as we show it for an importer 
 in [this GIF](https://mad-gui.readthedocs.io/en/latest/_static/gifs/importer.gif), or as shown in this code snippet:
