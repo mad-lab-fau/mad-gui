@@ -90,6 +90,10 @@ numpydoc_class_members_toctree = False
 
 # -- Options for HTML output -------------------------------------------------
 
+# if we include code snippets with double dashes into standard text, they
+# are not represented properly - disable.
+smart_quotes = False
+
 # The theme to use for HTML and HTML Help pages.  See the documentation for
 # a list of builtin themes.
 #

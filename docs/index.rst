@@ -23,6 +23,7 @@ here:
    Labels <labels>
    modules/index.rst
    Troubleshooting <troubleshooting>
+   Executable <executable>
 ..
    Contributing <contribution_guidelines>
 

@@ -1,0 +1,70 @@
+.. sectnum::
+
+.. _executable:
+
+**********
+Executable
+**********
+
+.. _retrieve files:
+
+Retrieve necessary files
+########################
+
+You can create a standalone executable of your version of the MaD GUI.
+Therefore you need to get some files to the location where your script is, which starts the MaD GUI.
+Therefore, go to the `MaD GUI github repository <https://github.com/mad-lab-fau/mad-gui>`_ and get the following files:
+
+* dodo.py (copy the raw file contents and create this file on your machine locally)
+* mad-runnier.ico
+* splash.jpg
+* pyinstaller.spec
+
+Configure requirements / dependencies
+#####################################
+
+List all requirements in a file, e.g. requirements.txt (inlcuding mad_gui).
+Those requirements must include everything that is needed by your plugins.
+
+Create a virtual environment
+############################
+
+Install a clean python 3.7 version.
+We recommend that you do not use anaconda since this might lead to issues with packaging.
+Also we recommend not to have python in your PATH variable to avoid confusions.
+Next, we are going to set up an environment just for packaging.
+Therefore, open a terminal and navigate to your script which starts mad_gui in terminal, then:
+
+Windows
+*******
+1. <path to your fresh py3.7 installation>\\python -m venv .venv
+2. .venv\\Scripts\\activate
+3. .venv\\Scripts\\python.exe -m pip install --upgrade pip
+4. .venv\\Scripts\\pip install -r requirements.txt pillow doit pyinstaller
+
+Unix
+****
+1. <path to your fresh py3.7 installation>\python -m venv .venv
+2. source .venv/bin/activate
+3. .venv/bin/python -m pip install --upgrade pip
+4. .venv/bin/pip install -r requirements.txt pillow doit pyinstaller
+
+Transform UI files
+##################
+
+Now we can prepare the build - we need to transform some files using the `dodo.py` from :ref:`the first step in this manual <retrieve files>` in the directory where the .venv as well as your script to start the GUI are.
+It will transform some .ui files to .py files and copies them into `.venv/Lib/site-packages/mad_gui/qt_designer/build` (Unix: `.venv/lib/python3.7/site-packages/...`)
+
+* doit prepare_build
+
+Configure and use pyinstaller
+#############################
+
+Next open the file `pyinstaller.spec`. 
+In the line `a = Analysis(['start.py'])` change `start.py` to the python script that starts your version of the GUI.
+In case your algorithms need some files, for example .csv files make sure to add them to the argument `datas` a few lines below.
+Also, you might need to add some `hiddenimports` further below in case pyinstaller does not find all the dependencies - you will find that out when you can not start the executable later.
+
+* pyinstaller pyinstaller.spec --onefile  # please note there are two dashes (-) in front of `onefile`
+
+Finally, you can find the standalone executable in the dist folder.
