@@ -6,13 +6,22 @@
 Executable
 **********
 
+You may wish to create a standalone executable of your version of MaD GUI.
+This might for example be useful, if someone wants to use it who does not want to or cannot install anything on their machine.
+Please note, that the executable will only work on the operating system it is built on.
+If you need it to work on Windows and MacOS for exameple, then you also need to built it once on windows and once on MacOS.
+
+We use pyinstaller to create the executable.
+The steps that need to be performed are described below.
+If you need more information about pyinstaller, please refer to the `official documentation <https://pyinstaller.readthedocs.io/en/stable/index.html>`_.
+
+
 .. _retrieve files:
 
 Retrieve necessary files
 ########################
 
-You can create a standalone executable of your version of the MaD GUI.
-Therefore you need to get some files to the location where your script is, which starts the MaD GUI.
+First, you need to get some files to the location where your script is, which starts the MaD GUI.
 Therefore, you need the following files. 
 Right click and save as... for the following files to the location, where your script is, which starts the GUI:
 
