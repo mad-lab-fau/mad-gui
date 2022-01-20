@@ -92,7 +92,7 @@ numpydoc_class_members_toctree = False
 
 # if we include code snippets with double dashes into standard text, they
 # are not represented properly - disable.
-smart_quotes = False
+smartquotes = False
 
 # The theme to use for HTML and HTML Help pages.  See the documentation for
 # a list of builtin themes.
