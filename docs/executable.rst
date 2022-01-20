@@ -13,12 +13,13 @@ Retrieve necessary files
 
 You can create a standalone executable of your version of the MaD GUI.
 Therefore you need to get some files to the location where your script is, which starts the MaD GUI.
-Therefore, go to the `MaD GUI github repository <https://github.com/mad-lab-fau/mad-gui>`_ and get the following files:
+Therefore, you need the following files. 
+Either use right click and save as... or go to the `MaD GUI github repository <https://github.com/mad-lab-fau/mad-gui>`_ and get the following files there:
 
-* dodo.py (copy the raw file contents and create this file on your machine locally)
-* mad-runnier.ico
-* splash.jpg
-* pyinstaller.spec
+* `dodo.py <https://github.com/mad-lab-fau/mad-gui/raw/main/dodo.py?raw=true>`_
+* `mad-runnier.ico <https://github.com/mad-lab-fau/mad-gui/blob/main/mad-runner.ico?raw=true>`_
+* `splash.jpg <https://github.com/mad-lab-fau/mad-gui/blob/main/docs/_static/images/splash.jpg?raw=true>`_
+* `pyinstaller.spec <https://github.com/mad-lab-fau/mad-gui/raw/main/pyinstaller.spec>`_
 
 Configure requirements / dependencies
 #####################################

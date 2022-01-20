@@ -48,7 +48,7 @@ pyz = PYZ(a.pure, a.zipped_data,
              cipher=block_cipher)
 
 if platform.system() != "Darwin":
-    splash = Splash('docs/_static/images/splash.jpg',
+    splash = Splash('splash.jpg',
                     binaries=a.binaries,
                     datas=a.datas,
                     text_pos=(60, 290),
