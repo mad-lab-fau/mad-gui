@@ -1,3 +1,5 @@
+"""A unique object per opened MaD GUI, keeping all relevant data."""
+
 from __future__ import annotations
 
 from mad_gui.models.local import PlotData
@@ -18,6 +20,9 @@ class GlobalData(BaseStateModel):
         One of the loaders passed to start_gui, which have inherited from :class:`~mad_gui.plugins.BaseImporter`. It
         can be selected by the user via the dropdown menu in the
         :class:`~mad_gui.components.dialogs.plugin_selection.LoadDataDialog`.
+    annotation_file
+        In case the user selected annotations when loading data in the
+        :class:`~mad_gui.components.dialogs.plugin_selection.LoadDataDialog`, this keeps the file the user selected.
     data_file
         File of the data that is selected by the user in the
         :class:`~mad_gui.components.dialogs.plugin_selection.LoadDataDialog`.

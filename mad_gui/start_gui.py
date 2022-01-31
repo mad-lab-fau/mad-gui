@@ -45,10 +45,6 @@ def start_gui(
     Please look at the `See Also` section below, to learn more about how to create objects of the classes you can
     pass to this function.
 
-    See Also
-    --------
-    :ref:`customization`
-
     Parameters
     ----------
     events

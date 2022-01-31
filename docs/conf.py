@@ -16,6 +16,8 @@ import markdown
 from pathlib import Path
 from shutil import copy
 
+from mad_gui.utils.model_base import Property, PropertyImpl
+
 sys.path.insert(0, os.path.abspath(".."))
 import mad_gui
 
@@ -186,7 +188,8 @@ def skip_properties(app, what, name, obj, skip, options):
     """This removes all properties from the documentation as they are expected to be documented in the docstring."""
     if isinstance(obj, property):
         return True
-
+    if isinstance(obj, PropertyImpl):
+        return True
 
 def setup(app):
     app.connect("autodoc-skip-member", skip_properties)
