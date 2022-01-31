@@ -52,7 +52,7 @@ class AnnotationData(BaseStateModel):
 class PlotData(BaseStateModel):
     """An object, which keeps the plotted data and annotations of a single plot.
 
-    Attributes
+    Parameters
     ----------
     data
         A pandas.DataFrame, where each column is one channel of plotted data.
@@ -60,7 +60,7 @@ class PlotData(BaseStateModel):
     sampling_rate_hz
         The sampling rate with which the data was recorded.
 
-    annotations
+    annotation
         A dictionary, where the keys are the label names (as named in the label's
         :meth:`~mad_gui.plot_tools.labels.BaseRegionLabel.name` attribute). The values are instances of
         :class:`~mad_gui.models.local.AnnotationData`.
@@ -71,11 +71,11 @@ class PlotData(BaseStateModel):
         :class:`mad_gui.plugins.BaseImporter`.
     """
 
-    # we need to initialize this with `None` for sphinx
-    data: pd.DataFrame = None
-    sampling_rate_hz: float = None
-    annotations: Dict = None
-    additional_data: Dict = None
+    def __init__(self, data: pd.DataFrame, sampling_rate_hz: float, annotation: Dict = None, additional_data = None):
+        self.data = data
+        self.sampling_rate_hz = sampling_rate_hz
+        self.annotations = annotation
+        self.additional_data = additional_data
 
     def to_dict(self):
         return {
@@ -85,33 +85,52 @@ class PlotData(BaseStateModel):
             "sampling_rate_hz": self.sampling_rate_hz,
         }
 
-    def from_dict(self, plot_data: Dict, selections: Optional[List] = None) -> PlotData:
+    @classmethod
+    def from_dict(cls, plot_data: Dict, selections: Optional[List] = None) -> PlotData:
+        """Create an instance of this class from a dictionary.
+
+        Parameters
+        ----------
+        plot_data
+            A dictionary with a key `sensor_data`, which is a :class:`pandas.DataFrame`; a key `sampling_rate_hz`,
+            which is a float`; optionally a key `annotations` containing a dictionary, where keys are label names (
+            :attr:`mad_gui.plot_tools.labels.BaseRegionLabel.name`) and each value is a :class:`pandas.DataFrame` at
+            least with the columns `start` and `end` and optional columns `description` and `identifier`.
+        selections
+            This is used to indicate which of the items in the passed dictionary plot_data should be plotted. We use it
+            only when using the "reload displayed data" button.
+
+        Returns
+        -------
+        PlotData
+
+        """
         selections = selections or plot_data.keys() - {"sampling_rate_hz"}
-        self.annotations = {}
-        for selection in selections:
-            if selection == "sensor_data":
-                try:
-                    self.data = plot_data["sensor_data"]
-                    self.sampling_rate_hz = plot_data["sampling_rate_hz"]
-                except KeyError as k:
-                    raise KeyError(
-                        "Please provide sensor data and a sampling rate for each sensor in your loader's "
-                        "`load_sensor_data` method. For docstring on that method see https://mad-gui.readthe"
-                        "docs.io/en/latest/modules/generated/plugins/mad_gui.plugins.BaseImporter.html#mad_g"
-                        "ui.plugins.BaseImporter.load_sensor_data"
-                    ) from k
-                continue
+
+        try:
+            sensor_data = plot_data["sensor_data"]
+            sampling_rate_hz = plot_data["sampling_rate_hz"]
+        except KeyError as k:
+            raise KeyError(
+                "Please provide sensor data and a sampling rate for each sensor in your loader's "
+                "`load_sensor_data` method. For docstring on that method see https://mad-gui.readthe"
+                "docs.io/en/latest/modules/generated/plugins/mad_gui.plugins.BaseImporter.html#mad_g"
+                "ui.plugins.BaseImporter.load_sensor_data"
+            ) from k
+
+        obj = cls(sensor_data, sampling_rate_hz)
+        for selection in set(selections) - {"sensor_data", "sampling_rate_hz"}:
             if selection == "annotations":
-                self._add_annotations(plot_data)
+                obj._add_annotations(plot_data)
                 continue
             # when loading data from pickle, we do not get `annotations` but directly the label names as selections
-            if not self._add_label(plot_data, selection):
-                if not self.additional_data:
-                    self.additional_data = {}
-                self.additional_data[selection] = plot_data[selection]
-        self.annotations["events"] = AnnotationData()
-        self._add_events(getattr(plot_data, "events", None))
-        return self
+            if not obj._add_label(plot_data, selection):
+                if not obj.additional_data:
+                    obj.additional_data = {}
+                obj.additional_data[selection] = plot_data[selection]
+        obj.annotations["events"] = AnnotationData()
+        obj._add_events(getattr(plot_data, "events", None))
+        return obj
 
     def _add_annotations(self, plot_data: Dict):
         if not plot_data.get("annotations", None):
