@@ -20,7 +20,7 @@ def task_format():
 
 def task_format_check():
     """Check, but not change, formatting using black."""
-    return {"actions": [["black", HERE, "--check"]], ["isort", HERE, "--check-only"]] "verbosity": 1}
+    return {"actions": [["black", HERE, "--check"], ["isort", HERE, "--check-only"]], "verbosity": 1}
 
 
 def task_lint():
@@ -62,7 +62,7 @@ def task_prepare_build():
     def set_up_paths():
         if not os.path.exists(get_dst_path().parent):
             raise FileNotFoundError(
-                "Apparently mad_gui is not installed in this environemnt. Use `pip install . ` to do so."
+                "Apparently mad_gui is not installed in this environment. Use `pip install mad_gui` to do so."
             )
         dst_path = get_dst_path()
         os.makedirs(dst_path, exist_ok=True)
@@ -77,7 +77,7 @@ def task_prepare_build():
             os.popen(f"pyside2-uic -o {dst_path}{os.sep}{file.split('.')[0]}.py {dst_path.parent}{os.sep}{file}")
 
         print(
-            "Info: These conversion should take place in the virutal environment you are going to use with "
+            "Info: These conversions should have taken place in the virtual environment you are going to use with "
             "pyinstaller."
         )
 
