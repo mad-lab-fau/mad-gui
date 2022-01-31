@@ -39,6 +39,7 @@ class TestGui:
         def handle_dialog():
             for box_name, indicator in [
                 ("sensor_data", load_sensor),
+                ("Peak", False),
                 ("Activity", load_activities),
             ]:
                 gui.data_selector.boxes[box_name].setChecked(indicator)
@@ -77,11 +78,10 @@ class TestGui:
 
         assert len(gui.sensor_plots) == 0
         plot_data_dict = ExampleImporter().load_sensor_data(imu_file)
-        plot_data = PlotData().from_dict(
+        plot_data = PlotData.from_dict(
             {
                 "sensor_data": plot_data_dict["Pocket IMU"]["sensor_data"],
                 "sampling_rate_hz": plot_data_dict["Pocket IMU"]["sampling_rate_hz"],
-                "annotations": None,
             }
         )
         gui.global_data.plot_data = {"Pocket IMU": plot_data}

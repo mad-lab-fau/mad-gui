@@ -5,7 +5,7 @@ API
 ===
 
 To keep the API reference simple, we have only included the parts that you will likely have to understand when you want
-to make use of the :ref:`customization`.
+to create your own plugins :ref:`customization`.
 
 .. toctree::
     :maxdepth: 1

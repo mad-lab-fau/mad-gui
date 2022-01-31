@@ -29,7 +29,12 @@ class BasePlot(pg.PlotWidget):
         self.plot_data = plot_data
         self.label_classes = label_classes
         self.event_classes = event_classes
-        self.initial_plot_channels = initial_plot_channels or list(plot_data.data.columns)
+        plotted_data = getattr(plot_data, "data", None)
+        if plotted_data is not None:
+            columns = plotted_data.columns
+        else:
+            columns = None
+        self.initial_plot_channels = initial_plot_channels or columns
         self.configure_style()
         self.video_cursor_line = None
         self.cursor_line_pen = pg.mkPen(color="y", width=1)
@@ -52,9 +57,11 @@ class BasePlot(pg.PlotWidget):
             return
         event_ranges = pd.DataFrame()
         for event_class in event_classes:
-            if event_class.name not in self.plot_data.annotations.keys():
-                self.plot_data.annotations[event_class.name] = AnnotationData()
-            self.set_events(event_class, self.plot_data.annotations[event_class.name].data)
+            if hasattr(self.plot_data, "annotations"):
+                if event_class.name not in self.plot_data.annotations.keys():
+                    self.plot_data.annotations[event_class.name] = AnnotationData()
+                self.set_events(event_class, self.plot_data.annotations[event_class.name].data)
+
             event_range = pd.DataFrame(
                 index=[event_class.name],
                 data=[[event_class.min_height, event_class.max_height]],
@@ -67,10 +74,10 @@ class BasePlot(pg.PlotWidget):
         label_ranges = pd.DataFrame()
 
         for label_class in labels:
-            if label_class.name not in self.plot_data.annotations.keys():
-                self.plot_data.annotations[label_class.name] = AnnotationData()
-
-            self.set_labels(label_class, self.plot_data.annotations[label_class.name].data)
+            if hasattr(self.plot_data, "annotations"):
+                if label_class.name not in self.plot_data.annotations.keys():
+                    self.plot_data.annotations[label_class.name] = AnnotationData()
+                self.set_labels(label_class, self.plot_data.annotations[label_class.name].data)
 
             label_range = pd.DataFrame(
                 index=[label_class.name],

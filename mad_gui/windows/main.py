@@ -417,7 +417,7 @@ class MainWindow(QMainWindow):
 
         plot_data = {}
         for plot_name, data in loaded_data.items():
-            plot_data[plot_name] = PlotData(parent=self).from_dict(data, selections=selected_data)
+            plot_data[plot_name] = PlotData.from_dict(data, selections=selected_data)
 
         self.global_data.plot_data = plot_data
         self.global_data.base_dir = Path(file).parent
@@ -486,7 +486,7 @@ class MainWindow(QMainWindow):
         self._parse_labels_to_load(data["plot_data_dicts"])
 
         try:
-            plot_data = {k: PlotData().from_dict(v) for k, v in data["plot_data_dicts"].items()}
+            plot_data = {k: PlotData.from_dict(v) for k, v in data["plot_data_dicts"].items()}
         except Exception as e:  # noqa
             raise NotImplementedError(
                 f"Possibly there is an error in the data that was loaded using {loader}. Please "

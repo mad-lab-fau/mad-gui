@@ -20,11 +20,6 @@ class AnnotationData(BaseStateModel):
 
     Methods
     -------
-    data_changed
-        A signal that is emitted as soon as data is changed. We use it internally to synchronize this object's
-        data, which is stored in :class:`mad_gui.windows.MainWindow.global_data.plot_data`, with the regarding sensor
-        plot, which can be found in :class:`mad_gui.windows.MainWindow.sensor_plots`.
-
     to_df
         Utility method to return self.data as a pandas.DataFrame.
 
@@ -46,6 +41,7 @@ class AnnotationData(BaseStateModel):
     data = Property(pd.DataFrame(), dtype=pd.DataFrame)
 
     def to_df(self):
+        """Return the annotations stored in this object as :class:`pandas.DataFrame`"""
         return self.data
 
 
@@ -74,7 +70,7 @@ class PlotData(BaseStateModel):
     def __init__(self, data: pd.DataFrame, sampling_rate_hz: float, annotation: Dict = None, additional_data = None):
         self.data = data
         self.sampling_rate_hz = sampling_rate_hz
-        self.annotations = annotation
+        self.annotations = annotation or {}
         self.additional_data = additional_data
 
     def to_dict(self):

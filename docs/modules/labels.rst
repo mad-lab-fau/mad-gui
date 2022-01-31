@@ -13,5 +13,4 @@ Classes
    :template: class_no_inheritances.rst
 
    BaseRegionLabel
-   SegmentedStrideLabel
-   SynchronizationLabel
+   BaseEventLabel

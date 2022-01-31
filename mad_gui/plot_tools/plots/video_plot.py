@@ -27,12 +27,10 @@ class VideoPlot(BasePlot):
     }
 
     def __init__(self, parent=None, video_window=None):
-        plot_data = PlotData()
-        # following two parts are necessary when initializing a plot
-        plot_data.data = pd.DataFrame(data=[], columns=["time"])
-        plot_data.annotations = {}
+        #plot_data = PlotData(data=pd.DataFrame(data=[], columns=["time"]), sampling_rate_hz=1)
+        #plot_data.annotations = {}
 
-        super().__init__(plot_data=plot_data, label_classes=[BaseRegionLabel], parent=parent)
+        super().__init__(label_classes=[BaseRegionLabel], parent=parent)
         StateKeeper.video_duration_available.connect(self.update_video_duration)
         self.state = SensorPlotState()
         self.mode_handler = InvestigateModeHandler(self)
@@ -74,9 +72,7 @@ class VideoPlot(BasePlot):
 
     def set_data(self, x: List, y: List, fps: Optional[float] = 1):
         self.plot(x=x / 1000, y=y)
-        self.plot_data = PlotData()
-        self.plot_data.sampling_rate_hz = fps
-        self.plot_data.data = y
+        self.plot_data = PlotData(data=y, sampling_rate_hz=fps)
         ax_bottom = self.getAxis("bottom")
         if fps != 1:
             ax_bottom.setLabel(text="time [seconds]")
