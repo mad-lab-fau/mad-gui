@@ -27,8 +27,8 @@ class VideoPlot(BasePlot):
     }
 
     def __init__(self, parent=None, video_window=None):
-        #plot_data = PlotData(data=pd.DataFrame(data=[], columns=["time"]), sampling_rate_hz=1)
-        #plot_data.annotations = {}
+        # plot_data = PlotData(data=pd.DataFrame(data=[], columns=["time"]), sampling_rate_hz=1)
+        # plot_data.annotations = {}
 
         super().__init__(label_classes=[BaseRegionLabel], parent=parent)
         StateKeeper.video_duration_available.connect(self.update_video_duration)

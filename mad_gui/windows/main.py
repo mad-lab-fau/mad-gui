@@ -319,8 +319,8 @@ class MainWindow(QMainWindow):
         self._link_plots()
 
         for plot_name, plot in self.sensor_plots.items():
-            sync = pd.concat([sync, pd.DataFrame(data=plot.sync_info, columns=[plot_name])], axis=1)
-        sync = pd.concat([sync, pd.DataFrame(data=self.video_plot.sync_info, columns=["Video"])], axis=1)
+            sync = pd.concat([sync, pd.DataFrame(data=plot.sync_info, columns=[plot_name + "_sample"])], axis=1)
+        sync = pd.concat([sync, pd.DataFrame(data=self.video_plot.sync_info, columns=["video_ms"])], axis=1)
         self.VideoWindow.set_sync(self.video_plot.sync_info["start"], self.video_plot.sync_info["end"])
         file_name, _ = QFileDialog.getSaveFileName(self, "Save Synchronization File", filter="*.xlsx")
         if file_name is None:
@@ -517,10 +517,10 @@ class MainWindow(QMainWindow):
                 f"the sensor(s) {unsynced_sensors}, therefore it is not synchronized."
             )
         if self.video_plot:
-            self.video_plot.sync_info = sync["Video"]
+            self.video_plot.sync_info = sync["video_ms"]
 
         if self.VideoWindow:
-            self.VideoWindow.set_sync(start_frame=sync["Video"]["start"], end_frame=sync["Video"]["end"])
+            self.VideoWindow.set_sync(start_frame=sync["video_ms"]["start"], end_frame=sync["video_ms"]["end"])
 
     def _plot_data(self, data_dict: Dict[str, PlotData]):
         # if len(StateKeeper.loaded_data) == 3:

@@ -67,7 +67,7 @@ class PlotData(BaseStateModel):
         :class:`mad_gui.plugins.BaseImporter`.
     """
 
-    def __init__(self, data: pd.DataFrame, sampling_rate_hz: float, annotation: Dict = None, additional_data = None):
+    def __init__(self, data: pd.DataFrame, sampling_rate_hz: float, annotation: Dict = None, additional_data=None):
         self.data = data
         self.sampling_rate_hz = sampling_rate_hz
         self.annotations = annotation or {}

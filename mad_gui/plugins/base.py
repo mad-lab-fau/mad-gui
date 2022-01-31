@@ -144,7 +144,8 @@ class BaseImporter(BasePlugin):
         )
         return None
 
-    def _get_video_signal_synchronization(self, video_file: str) -> pd.DataFrame:  # noqa
+    @classmethod
+    def get_video_signal_synchronization(cls, video_file: str) -> pd.DataFrame:  # noqa
         """Searches for an excel file that has `sync` in its name and returns the sync indices from there.
 
         The Excel file should have as first column (index) "start_sample" and "end_sample" and the columns should be
@@ -161,7 +162,7 @@ class BaseImporter(BasePlugin):
             A dataframe which tells the gui which frames of the video correspond to which samples in the signal.
             Currently only implemented to accept two synchronized events. Between those, the GUI interpolates linearly.
         """
-        sync_file = self.get_sync_file(video_file)
+        sync_file = cls.get_sync_file(video_file)
         try:
             sync = pd.read_excel(sync_file, index_col=0, engine="openpyxl")
             return sync
