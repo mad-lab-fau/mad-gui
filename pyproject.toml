@@ -51,6 +51,9 @@ exclude = "plot_tools/*.py"
 [tool.isort]
 profile = "black"
 skip_glob = ["tests/test_windows/"]
+multi_line_output = 3
+line_length = 120
+skip_gitignore = true
 
 [tool.black]
 line-length = 120

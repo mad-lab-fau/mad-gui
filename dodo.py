@@ -15,12 +15,12 @@ HERE = Path(__file__).parent
 def task_format():
     """Reformat all files using black."""
     print(HERE)
-    return {"actions": ["isort -y ", ["black", HERE]], "verbosity": 1}
+    return {"actions": [["black", HERE], ["isort", HERE]], "verbosity": 1}
 
 
 def task_format_check():
     """Check, but not change, formatting using black."""
-    return {"actions": [["black", HERE, "--check"]], "verbosity": 1}
+    return {"actions": [["black", HERE, "--check"]], ["isort", HERE, "--check-only"]] "verbosity": 1}
 
 
 def task_lint():
