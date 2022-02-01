@@ -15,6 +15,7 @@ class UserInformation(QDialog):
     confirm
         Pose a yes/no question and obtain the answer.
     """
+
     @classmethod
     def _create_message(
         cls, text: str, buttons: [QMessageBox.StandardButton], help_link: Optional[str] = None

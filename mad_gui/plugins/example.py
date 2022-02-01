@@ -47,6 +47,7 @@ class StationaryMomentsDetector(BaseAlgorithm):
     Note: a label inherited from :class:`~mad_gui.plot_tools.BaseRegionLabel with the name `Activity` must have been
     passed to :meth:`~mad_gui.start_gui` in order for this algorithm to create annotations.
     """
+
     @classmethod
     def name(cls):
         return "Find Resting Phases (MaD GUI example)"
@@ -108,6 +109,7 @@ class EnergyCalculator(BaseAlgorithm):
     created by :class:`mad_gui.plugins.example.StationaryMomentsDetector` in order for this algorithm to calculate
     features for each existing annotation.
     """
+
     @classmethod
     def name(cls):
         return "Mean energy of acceleration (MaD GUI example)"
@@ -132,6 +134,7 @@ class EnergyCalculator(BaseAlgorithm):
 
 class ExampleExporter(BaseExporter):
     """An exemplary exporter, which writes all existing annotations into a csv file."""
+
     @classmethod
     def name(cls):
         return "Export annotations to csv (MaD GUI example)"
