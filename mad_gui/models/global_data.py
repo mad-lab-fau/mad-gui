@@ -3,12 +3,8 @@
 from __future__ import annotations
 
 from mad_gui.models.local import PlotData
-from mad_gui.plot_tools.labels import BaseEventLabel, BaseRegionLabel
 from mad_gui.utils.model_base import BaseStateModel, Property
-from typing import TYPE_CHECKING, Dict, List, Type
-
-if TYPE_CHECKING:
-    from mad_gui.plugins.base import BaseImporter, BasePlugin
+from typing import Dict
 
 
 class GlobalData(BaseStateModel):
