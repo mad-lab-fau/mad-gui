@@ -331,7 +331,7 @@ class MainWindow(QMainWindow):
 
     def _handle_load_data_gui_format(self):
         if self.is_data_plotted():
-            answer = UserInformation().confirm("Plotted data might be overwritten. Do you want to continue?")
+            answer = UserInformation.confirm("Plotted data might be overwritten. Do you want to continue?")
         else:
             answer = QMessageBox.Yes
 
@@ -696,7 +696,7 @@ class MainWindow(QMainWindow):
 
     def _close_event(self, ev):
         if StateKeeper.gui_has_unsaved_changes:
-            answer = UserInformation().confirm("Recent changes have not been saved. Are you sure you want to exit?")
+            answer = UserInformation.confirm("Recent changes have not been saved. Are you sure you want to exit?")
             if answer == QMessageBox.No:
                 ev.ignore()
                 return

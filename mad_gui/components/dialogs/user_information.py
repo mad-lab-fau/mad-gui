@@ -7,7 +7,7 @@ from typing import Optional
 
 class UserInformation(QDialog):
     @classmethod
-    def create_message(
+    def _create_message(
         cls, text: str, buttons: [QMessageBox.StandardButton], help_link: Optional[str] = None
     ) -> QMessageBox:
         """Used in different contexts to create a message
@@ -40,12 +40,76 @@ class UserInformation(QDialog):
 
     @classmethod
     def inform(cls, text: str, help_link: Optional[str] = None) -> bool:
-        if help_link:
-            msg = cls.create_message(text, [QMessageBox.StandardButton.Ok], help_link)
-        else:
-            msg = cls.create_message(text, [QMessageBox.StandardButton.Ok])
-        return msg.exec_()
+        """Send a message to the user in a pop-up window with an OK-Button.
 
-    def confirm(self, text: str, help_link: Optional[str] = None) -> bool:
-        msg = self.create_message(text, [QMessageBox.Yes, QMessageBox.No], help_link)
+        For example this might be useful if something crashed during loading data or executing an algoritihm and you
+        would like to provide more context to the user.
+
+        Parameters
+        ----------
+        text
+            The information you want to give to the user.
+
+        help_link
+            If you pass this, it will hide behind the `Learn More` button in the lower part of the message.
+
+
+
+        Examples
+        --------
+        Note: If you want to execute the following example without having a MaD GUI instance running (i.e. you did
+        not use :meth:`mad_gui.start_gui`, you need to:
+
+        >>> from PySide2.QtWidgets import QApplication
+        >>> app = QApplication()
+
+        You do not need the above code snippet, if you want to implement the lines below into your plugin.
+
+        >>> from mad_gui.components.dialogs import UserInformation
+        >>> UserInformation.inform("Please make sure to X")
+        """
+        if help_link:
+            msg = cls._create_message(text, [QMessageBox.StandardButton.Ok], help_link)
+        else:
+            msg = cls._create_message(text, [QMessageBox.StandardButton.Ok])
+        msg.exec_()
+        return
+
+    @classmethod
+    def confirm(cls, text: str, help_link: Optional[str] = None) -> bool:
+        """Ask the user something and obtain yes or no as answer.
+
+        Parameters
+        ----------
+        text
+            The question you want to pose to the user.
+
+        help_link
+            If you pass this, it will hide behind the `Learn More` button in the lower part of the message.
+
+        Returns
+        -------
+        answer
+            Either `Yes` or `No` of the class :py:class:`PySide2.QtWidgets.QMessageBox`.
+            :py:
+
+        Examples
+        --------
+        Note: If you want to execute the following example without having a MaD GUI instance running (i.e. you did
+        not use :meth:`mad_gui.start_gui`, you need to:
+
+        >>> from PySide2.QtWidgets import QApplication
+        >>> app = QApplication()
+
+        You do not need the above code snippet, if you want to implement the lines below into your plugin.
+
+        >>> from PySide2.QtWidgets import QMessageBox
+        >>> from mad_gui.components.dialogs import UserInformation
+        >>> answer = UserInformation.confirm("Do you want to perform X?")
+        >>> if answer == QMessageBox.Yes:
+        ...    print("Yes!")
+        ...
+        Yes!
+        """
+        msg = cls()._create_message(text, [QMessageBox.Yes, QMessageBox.No], help_link)
         return msg.exec_()

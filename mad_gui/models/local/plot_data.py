@@ -74,6 +74,14 @@ class PlotData(BaseStateModel):
         self.additional_data = additional_data
 
     def to_dict(self):
+        """Represent this object as a dictionary, such that it can be pickled.
+
+        Returns
+        -------
+        dict
+            A dictionary with the keys `sensor_data`, `annotations`, `events`, and `sampling_rate_hz`,
+            where the first three are :class:`pandas.DataFrame` and the last is a float.
+        """
         return {
             "sensor_data": self.data,
             "annotations": {k: v.to_df() for k, v in self.annotations.items() if k != "events"},
@@ -99,8 +107,8 @@ class PlotData(BaseStateModel):
         Returns
         -------
         PlotData
-
         """
+
         selections = selections or plot_data.keys() - {"sampling_rate_hz"}
 
         try:

@@ -59,6 +59,7 @@ extensions = [
     "sphinx.ext.intersphinx",
     "recommonmark",
     "sphinx_markdown_tables",
+    "sphinx_qt_documentation"
 ]
 autodoc_mock_imports = ["PySide2"]
 autodoc_default_options = {
@@ -143,8 +144,11 @@ intersphinx_module_mapping = {
 
 intersphinx_mapping = {
     "python": ("https://docs.python.org/{.major}".format(sys.version_info), None),
+    "PySide2": ("https://doc.qt.io/qtforpython/PySide2/QtWidgets/QWidget.html", None),
+    "PyQt5": ("https://www.riverbankcomputing.com/static/Docs/PyQt5/", None),
     **intersphinx_module_mapping,
 }
+
 # -- Extension configuration -------------------------------------------------
 
 # -- Options for todo extension ----------------------------------------------
@@ -189,6 +193,8 @@ def skip_properties(app, what, name, obj, skip, options):
     if isinstance(obj, property):
         return True
     if isinstance(obj, PropertyImpl):
+        return True
+    if name=="staticMetaObject":
         return True
 
 def setup(app):
