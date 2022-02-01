@@ -20,8 +20,6 @@ class UserInformation(QDialog):
             A URL-link to supplementary information
         buttons
             The buttons are the options the user has to answer your text
-        parent
-            The parent widget, whose palette and icon will be used
         """
         msg = QMessageBox()
         for i_button in buttons:
@@ -73,7 +71,6 @@ class UserInformation(QDialog):
         else:
             msg = cls._create_message(text, [QMessageBox.StandardButton.Ok])
         msg.exec_()
-        return
 
     @classmethod
     def confirm(cls, text: str, help_link: Optional[str] = None) -> bool:
