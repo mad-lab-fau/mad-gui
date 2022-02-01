@@ -54,9 +54,3 @@ class GlobalData(BaseStateModel):
     base_dir = Property("", dtype=str)
 
     plot_data: Dict[str, PlotData] = Property({}, dtype=dict)
-
-    # we need to initialize this for sphinx
-    plugins: List[Type[BasePlugin]] = []
-    labels: List[Type[BaseRegionLabel]] = []
-    events: List[Type[BaseEventLabel]] = []
-    active_loader: BaseImporter = None
