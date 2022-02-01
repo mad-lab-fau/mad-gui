@@ -13,7 +13,13 @@ from typing import Dict, Tuple, Union
 
 
 class ExampleImporter(BaseImporter):
-    """Classes based on this one enable the GUI to handle data from different systems."""
+    """An exemplary importer.
+
+    Attributes
+    ----------
+    file_type
+        Can restrict the format of the data/video/annotation file that can be loaded with this importer.
+    """
 
     file_type = {"data_file": "*.csv", "video_file": "*.mp4", "annotation_file": "*.csv"}
 
@@ -36,6 +42,11 @@ class ExampleImporter(BaseImporter):
 
 
 class StationaryMomentsDetector(BaseAlgorithm):
+    """An exemplary algorithm, which uses the data to create annotations.
+
+    Note: a label inherited from :class:`~mad_gui.plot_tools.BaseRegionLabel with the name `Activity` must have been
+    passed to :meth:`~mad_gui.start_gui` in order for this algorithm to create annotations.
+    """
     @classmethod
     def name(cls):
         return "Find Resting Phases (MaD GUI example)"
@@ -90,6 +101,13 @@ class StationaryMomentsDetector(BaseAlgorithm):
 
 
 class EnergyCalculator(BaseAlgorithm):
+    """An exemplary algorithm, which evaluates data within each annotation to calculate a feature.
+
+    Note: a label inherited from :class:`~mad_gui.plot_tools.BaseRegionLabel with the name `Activity` must have been
+    passed to :meth:`~mad_gui.start_gui`. Furthermore, annotations of this kind must exist in the GUI, for example
+    created by :class:`mad_gui.plugins.example.StationaryMomentsDetector` in order for this algorithm to calculate
+    features for each existing annotation.
+    """
     @classmethod
     def name(cls):
         return "Mean energy of acceleration (MaD GUI example)"
@@ -113,6 +131,7 @@ class EnergyCalculator(BaseAlgorithm):
 
 
 class ExampleExporter(BaseExporter):
+    """An exemplary exporter, which writes all existing annotations into a csv file."""
     @classmethod
     def name(cls):
         return "Export annotations to csv (MaD GUI example)"

@@ -6,6 +6,15 @@ from typing import Optional
 
 
 class UserInformation(QDialog):
+    """A dialog to transport information to/from user.
+
+    Methods
+    -------
+    inform
+        Send a message to the use to be accepted with the `OK` button.
+    confirm
+        Pose a yes/no question and obtain the answer.
+    """
     @classmethod
     def _create_message(
         cls, text: str, buttons: [QMessageBox.StandardButton], help_link: Optional[str] = None

@@ -14,4 +14,6 @@ to create your own plugins :ref:`customization`.
     Global Data <models.rst>
     Local Data <models_local.rst>
     Labels <labels.rst>
-    Plugins <plugins.rst>
+    Base Plugins <plugins.rst>
+    Exemplary Plugins <example_plugins.rst>
+    Helper <helper.rst>

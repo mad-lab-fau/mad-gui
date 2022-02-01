@@ -14,21 +14,38 @@ class BasePlugin:
     """All plugins inherit from this."""
 
     def __init__(self, parent=None):
+        """Set a parent, in case this would be necessary at any later stage.
+
+        Parameters
+        ----------
+        parent
+            This could for example be the main window of the GUI, in case the plugin wants to access something there.
+            However, this is unlikely to be necessary since plugins receive either the single
+            :class:`mad_gui.models.GlobalData` or its attribute `PlotData`, which should be sufficient to do everything.
+        """
         self.parent = parent
 
     @classmethod
     def name(cls) -> str:
+        """Return a name, which is used to represent this plugin in a dropdown in the GUI."""
         raise NotImplementedError()
 
 
 class BaseImporter(BasePlugin):
-    """Classes based on this one enable the GUI to load data from different systems/formats."""
+    """Classes based on this one enable the GUI to load data from different systems/formats.
+
+    Attributes
+    ----------
+    file_type
+        Can restrict the format of the data/video/annotation file that can be loaded with this importer.
+    """
 
     file_type = {"data_file": "*.*", "video_file": "*.*", "annoatation_file": "*.*"}
 
     @classmethod
     @abc.abstractmethod
     def name(cls) -> str:
+        """Return a name, which is used to represent this Importer in a dropdown in the GUI."""
         raise NotImplementedError()
 
     def load_sensor_data(self, file: str):  # noqa
@@ -69,7 +86,7 @@ class BaseImporter(BasePlugin):
         raise NotImplementedError()
 
     def load_annotations(self, file_path: Union[Path, str]) -> Dict[str, pd.DataFrame]:  # noqa
-        """This loads the list of stride and activity annotations from file_path.
+        """This loads annotations from file_path and converts them into the format for the GUI.
 
         This method is called by the :class:`~mad_gui.components.dialogs.plugin_selection.LoadDataDialog` in case the
         user selects a file using the "Select annotation" button. In that case, this method should open the file
@@ -85,11 +102,9 @@ class BaseImporter(BasePlugin):
 
         Returns
         -------
-        activity_dict
+        dict
             Dictionary with keys being the titles of the plots in the main window.
-            Each of them keeps a pd.DataFrame as it would be produced by
-            :func:`mad_gui.plot_tools.plots.SensorPlot.get_labels_from_plot`.
-            This means the dataframe should at least have at least the columns `start` and `end`.
+            Each of them keeps a pd.DataFrame, which at least has the columns `start` and `end`.
 
         Examples
         --------
@@ -97,10 +112,10 @@ class BaseImporter(BasePlugin):
         >>> annotations.keys()
         dict_keys(['left_sensor', 'right_sensor'])
         >>>annotations['left_sensor']
-            label_id    start    end    description    details
-        0          0      100    105           gait       fast
-        1          1      105    108           gait       slow
-        2          2      120    130       standing        NaN
+            identifier    start    end    description
+        0            0      100    105   (gait, slow)
+        1            1      105    108   (gait, fast)
+        2            2      120    130     (standing)
         """
         UserInformation.inform(
             f"The functionality of loading annotations is not implemented for the chosen importer / recording system "
@@ -176,6 +191,7 @@ class BaseAlgorithm(BasePlugin):
     @classmethod
     @abc.abstractmethod
     def name(cls) -> str:
+        """Return a name, which is used to represent this Algorithm in a dropdown in the GUI."""
         return "Basic Algorithm"
 
     @abc.abstractmethod
@@ -192,16 +208,14 @@ class BaseAlgorithm(BasePlugin):
 
         Parameters
         ----------
-        data
+        plot_data
             A dictionary, where keys are the names of the plots in the GUI and the values are instances of
             :class:`mad_gui.models.local.PlotData`. These in turn keep the plotted sensor data, its sampling frequency,
             and the plotted annotations.
 
         Returns
-        -------
-        data
-            The passed `data`, which you have adapted, e.g. by adding annotations or changing annotations.
-
+        plot_data
+            The adapted dictionary, where you have for example changed the data or annotations.
         """
         # df = some method that uses sensor data to get all the starts and ends for single activities / strides
         # return df
@@ -209,22 +223,28 @@ class BaseAlgorithm(BasePlugin):
 
 
 class BaseExporter(BasePlugin):
-    """Export gait data"""
+    """Export the plotted data and/or annotations."""
 
     @classmethod
     @abc.abstractmethod
     def name(cls) -> str:
+        """Return a name, which is used to represent this Exporter in a dropdown in the GUI."""
         raise NotImplementedError()
 
     @abc.abstractmethod
     def process_data(self, global_data):
-        """Export data using a Plugin-Exporter.
+        """This method must be implemented by your plugin.
 
         Parameters
         ----------
         global_data
             The GUI's :class:`mad_gui.models.global_data.GlobalData` object, which is kept in
             :class:`mad_gui.windows.main.MainWindow`
+
+        Returns
+        -------
+        Nothing
+            Everything you want to to/save must be done inside your plugin.
         """
         # we ignore `unused-argument` because maybe some exporter needs this
         UserInformation(parent=self.parent).inform(

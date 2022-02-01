@@ -1,3 +1,5 @@
+"""A dialog which is used internally by the GUI to select data/video/annotation files and an importer."""
+
 import traceback
 import warnings
 from pathlib import Path
@@ -48,6 +50,34 @@ class LoadDataDialogState(BaseStateModel):
 
 
 class LoadDataDialog(QDialog):
+    """A dialog, opened upon pressing `Load data` button in the GUI - interface to use importers.
+
+    When the user wants to load data, they use this dialog. In the dialog, the user can use a dropdown menu to select an
+    importer they want to use. This importer must previously have been passed to the GUI via the
+    :meth:`mad_gui.start_gui`. The importer can be created as described in :ref:`implement importer`.
+
+    Parameters
+    ----------
+    base_dir
+        A base directory, which should be shown when the use wants to select a file - you can configure this by
+        passing a `data_dir` to :meth:`mad_gui.start_gui`.
+    loaders
+        All the importers that were passed to :meth:`mad_gui.start_gui`, which will be shown in the dropdown.
+    parent
+        It is used to set the window and button style
+    initial_state
+        Will be assigned to `self.state`, which keeps the data of this view.
+
+    Methods
+    -------
+    get_data
+        After instantiating this class, use this method to open the dialog. Then, the user selects importer and data
+        and this returns the loaded data in the MaD GUI format,
+        see :meth:`mad_gui.plugins.BaseImporter.load_sensor_data`.
+    validate_data_format
+        Check whether the importer returned data in the expected formats and throw messages on what went wrong, if so.
+    """
+
     final_data_: Dict[str, Dict[str, Any]]
     loader_: BaseImporter
 
@@ -97,7 +127,7 @@ class LoadDataDialog(QDialog):
             self.ui.qedit_annotation_path.setText, self.ui.qedit_video_path.textEdited, "annotation_file"
         )
 
-        self.ui.btn_ok.clicked.connect(self.process_data)
+        self.ui.btn_ok.clicked.connect(self._handle_ok_click)
         self.ui.btn_cancel.clicked.connect(self.close)
 
         light = Config.theme.COLOR_LIGHT
@@ -127,7 +157,7 @@ class LoadDataDialog(QDialog):
             self.state.set(property_name, file_name)
             self.base_dir = str(Path(file_name).parent)
 
-    def process_data(self):
+    def _handle_ok_click(self):
         """Use the selected loader for the selcted data.
 
         Additionally, this changes to cursor to `busy` for user feedback while loading the data.
@@ -268,7 +298,7 @@ class LoadDataDialog(QDialog):
         return return_dict
 
     def get_data(self) -> Optional[Tuple[Dict[str, Dict[str, Any]], BaseImporter]]:
-        """Close this dialog and return the data, that was selected by the user."""
+        """Run this dialog and return the data, that was selected by the user."""
         if self.exec_():
             return self.final_data_, self.loader_
         return None, None
