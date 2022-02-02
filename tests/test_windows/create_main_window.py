@@ -27,6 +27,8 @@ def get_main_window():
     else:
         app = QApplication.instance()
 
+    print(str(app))
+
     settings = BaseSettings
     theme = BaseTheme
 
