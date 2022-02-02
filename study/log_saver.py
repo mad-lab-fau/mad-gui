@@ -14,7 +14,6 @@ def rename_files(base_path):
                 log_file_numbers.append(last_item)
         new_number = len(log_file_numbers) + 1
         os.rename(log_path / "log_file.txt", f"{str(log_path)}/log_file_{new_number}.txt")
-    return
 
 
 if __name__ == "__main__":

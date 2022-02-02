@@ -7,6 +7,8 @@ from mad_gui.models.global_data import PlotData
 from mad_gui.plugins.example import ExampleImporter
 from tests.test_windows.create_main_window import get_main_window
 
+SENSOR_NAME = "Pocket IMU"
+
 
 class TestGui:
     def test_open_gui(self, qtbot):
@@ -52,13 +54,13 @@ class TestGui:
 
         # currently gui.plotted_data is empty, it is just in gui.global_data.plotted_data
         activities = {
-            "Pocket IMU": gui.global_data.plot_data["Pocket IMU"].annotations["Activity"],
+            SENSOR_NAME: gui.global_data.plot_data[SENSOR_NAME].annotations["Activity"],
         }
 
         if load_activities:
-            assert len(activities["Pocket IMU"].data) == 1
+            assert len(activities[SENSOR_NAME].data) == 1
         else:
-            assert len(activities["Pocket IMU"].data) == 0
+            assert len(activities[SENSOR_NAME].data) == 0
         gui.close()
 
     def test_toggle_label_state(self, qtbot):
@@ -80,11 +82,11 @@ class TestGui:
         plot_data_dict = ExampleImporter().load_sensor_data(imu_file)
         plot_data = PlotData.from_dict(
             {
-                "sensor_data": plot_data_dict["Pocket IMU"]["sensor_data"],
-                "sampling_rate_hz": plot_data_dict["Pocket IMU"]["sampling_rate_hz"],
+                "sensor_data": plot_data_dict[SENSOR_NAME]["sensor_data"],
+                "sampling_rate_hz": plot_data_dict[SENSOR_NAME]["sampling_rate_hz"],
             }
         )
-        gui.global_data.plot_data = {"Pocket IMU": plot_data}
+        gui.global_data.plot_data = {SENSOR_NAME: plot_data}
         gui._enable_buttons(True)
         qtbot.keyClick(gui, Qt.Key_A)
         qtbot.wait(1000)
@@ -113,7 +115,7 @@ class TestGui:
         assert not gui.ui.btn_edit_label.isChecked()
         assert not gui.ui.btn_remove_label.isChecked()
         assert gui.ui.btn_sync_data.isChecked()
-        assert gui.sensor_plots["Pocket IMU"].sync_item
+        assert gui.sensor_plots[SENSOR_NAME].sync_item
         qtbot.wait(2500)
         if gui.video_plot:
             # for some reason this does not yet work on the remote, but only locally
@@ -125,7 +127,7 @@ class TestGui:
         assert not gui.ui.btn_add_label.isChecked()
         assert not gui.ui.btn_edit_label.isChecked()
         assert not gui.ui.btn_remove_label.isChecked()
-        assert not gui.sensor_plots["Pocket IMU"].sync_item
+        assert not gui.sensor_plots[SENSOR_NAME].sync_item
         gui.close()
 
     @staticmethod

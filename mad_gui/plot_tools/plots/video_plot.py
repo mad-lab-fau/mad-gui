@@ -17,7 +17,7 @@ from typing import Dict, List, Optional, Type
 class VideoPlot(BasePlot):
     """A graph of this class will be shown in the main window in order to synchronize video data with sensor data."""
 
-    MODE_HANDLER: Dict[MODES, Type[BaseModeHandler]] = {
+    MODE_HANDLERS: Dict[MODES, Type[BaseModeHandler]] = {
         "investigate": InvestigateModeHandler,
         "edit": InvestigateModeHandler,
         "remove": InvestigateModeHandler,
@@ -46,7 +46,7 @@ class VideoPlot(BasePlot):
         """
         # Deactivate old mode_handler:
         self.mode_handler.deactivate()
-        self.mode_handler = self.MODE_HANDLER[new_mode](self)
+        self.mode_handler = self.MODE_HANDLERS[new_mode](self)
         self._set_tooltip(new_mode)
 
     def distribute_video_sync(self):

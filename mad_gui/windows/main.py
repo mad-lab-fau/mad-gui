@@ -189,7 +189,7 @@ class MainWindow(QMainWindow):
             self._check_argument(label, (BaseRegionLabel,))
             if label.min_height > label.max_height:
                 raise ValueError(
-                    f"For the class {label.__name__}, min_height is higher than max_height, please fix " f"that."
+                    f"For the class {label.__name__}, min_height is higher than max_height, please fix that."
                 )
             if label.max_height > 1:
                 raise ValueError(

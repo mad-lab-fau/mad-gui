@@ -22,7 +22,7 @@ class VideoWindow(Ui_VideoWindow, QObject):
         self.slider.sliderPressed.connect(self.slider_pressed)
         self.slider.sliderReleased.connect(self.slider_released)
         self.slider.sliderMoved.connect(self.slider_moved)
-        self.slider.valueChanged.connect(self.slider_changed)
+        self.slider.valueChanged.connect(self.slider_moved)
         self.player.positionChanged.connect(self.frame_changed)
         self.player.durationChanged.connect(self.set_slider_range)
         self.btn_play_pause.clicked.connect(self.toggle_play)
@@ -90,11 +90,6 @@ class VideoWindow(Ui_VideoWindow, QObject):
     def slider_released(self):
         self.set_video_position()
         self.slider_is_pressed = False
-
-    def slider_changed(self):
-        if self.player.state() == QMediaPlayer.PausedState:
-            self.set_video_position()
-            self.frame_changed()
 
     def slider_moved(self):
         if self.player.state() == QMediaPlayer.PausedState:

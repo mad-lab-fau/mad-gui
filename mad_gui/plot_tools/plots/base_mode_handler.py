@@ -19,7 +19,7 @@ class BaseModeHandler:
         self._active = True
 
     def handle_key_press(self, ev):
-        pass
+        """What exactly should be done if a key is pressed needs to be defined by children."""
 
     def handle_mouse_click(self, ev):
         pg.PlotWidget.mousePressEvent(self.plot, ev)

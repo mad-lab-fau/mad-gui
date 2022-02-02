@@ -109,15 +109,9 @@ class BasePlot(pg.PlotWidget):
             # make sure there are no np.nans in any string field
             mask = activity.index.isin(["start", "end"])
             activity[~mask] = activity[~mask].fillna("")
-            necessary_columns = ["identifier", "description", "events"]
-            # events = getattr(label_class, "events", None)
-            # if events:
-            #    necessary_columns.extend(events)
 
-            # make sure all required fields are available
-            for parameter in necessary_columns:
-                if parameter not in activity.index:
-                    activity = activity.append(pd.Series(data=[None], index=[parameter]))
+            activity = self._enforce_columns(activity, necessary_columns=["identifier", "description", "events"])
+
             if hasattr(label_class, "events"):
                 events = activity[label_class.events]
                 plot_events = getattr(label_class, "plot_events", events.keys())
@@ -132,9 +126,18 @@ class BasePlot(pg.PlotWidget):
                 parent=self,
             )
             self.addItem(new_activity)
+
             for event_name, event in new_activity.event_labels.items():
                 if event_name in plot_events:
                     self.addItem(event)
+
+    @staticmethod
+    def _enforce_columns(activity: pd.Series, necessary_columns: List) -> pd.Series:
+        # make sure all required fields are available
+        for parameter in necessary_columns:
+            if parameter not in activity.index:
+                activity = activity.append(pd.Series(data=[None], index=[parameter]))
+        return activity
 
     def set_title(self, title: str):
         """Set the title, which will be shown centered on the top of the plot.

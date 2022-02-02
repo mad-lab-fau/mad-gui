@@ -23,7 +23,7 @@ class BaseEventLabel(pg.InfiniteLine):
     name = "Event Label"
     min_height = 0
     max_height = 1
-    descriptions: dict = None
+    descriptions: dict = {}
 
     def __init__(
         self,
@@ -211,22 +211,28 @@ class BaseRegionLabel(pg.LinearRegionItem):
         # and not the one of the neighbour
         self.setEnabled(True)
 
-        if self.removable:
-            hover_color = QColor(255, 0, 0, 50)
-        else:
-            hover_color = QColor(0, 255, 0, 50)
+        hover_color = self._get_hover_color()
         self.setHoverBrush(hover_color)
+
         if self.removable or self.editable:
             if ev.enter:
                 self.setMouseHover(True)
             if ev.exit:
                 self.setMouseHover(False)
                 self.setHoverBrush(self.standard_brush)
-        if isinstance(self.description, tuple):
-            description = ", ".join(self.description)
-        else:
-            description = self.description
+
+        description = self._description_to_str()
         self.setToolTip(f"{self.name}: {description}")
+
+    def _get_hover_color(self) -> QColor:
+        if self.removable:
+            return QColor(255, 0, 0, 50)
+        return QColor(0, 255, 0, 50)
+
+    def _description_to_str(self):
+        if isinstance(self.description, tuple):
+            return ", ".join(self.description)
+        return self.description
 
     def edit_label_description(self):
         """Setting the type of the activity to one given in the consts file.
@@ -314,31 +320,34 @@ class BaseRegionLabel(pg.LinearRegionItem):
             self.end_color = QColor("red")
 
     def configure_children(self):
-        child_counter = 0
-        for i_child in self.childItems():
+        for n_child, child in enumerate(self.childItems()):
             # make cursor horizontal when hovering
             # Pylint is right, that there are other ways, but in the hover-border-event, we want to refer to `self`
             # as this regionlabel and not as the border of the regionlabel
-            i_child.hoverEvent = lambda event: self._hover_border_event(event)  # pylint: disable=unnecessary-lambda
-            i_child.span = (self.min_height, self.max_height)
-            # color of gait event lines
-            if child_counter == 0:
-                if self.start_color == QColor("red"):
-                    width = 2
-                else:
-                    width = 1
-                i_child.setPen(self.start_color, width=width)
-            if child_counter == 1:
-                if self.end_color in [QColor("red"), QColor("green")]:
-                    width = 2
-                else:
-                    width = 1
-                i_child.setPen(self.end_color, width=width)
+            child.hoverEvent = lambda event: self._hover_border_event(event)  # pylint: disable=unnecessary-lambda
+            child.span = (self.min_height, self.max_height)
 
-            child_counter = child_counter + 1
-            # make gait events (InfiniteLines) movable
-            i_child.sigPositionChanged.connect(self._reposition_lines)
-            i_child.setMovable(False)
+            # color of event lines
+            self._set_child_color(child, n_child)
+
+            # make events (InfiniteLines) movable
+            child.sigPositionChanged.connect(self._reposition_lines)
+            child.setMovable(False)
+
+    def _set_child_color(self, child, n_th_child: int):
+        if n_th_child == 0:
+            if self.start_color == QColor("red"):
+                width = 2
+            else:
+                width = 1
+            child.setPen(self.start_color, width=width)
+            return
+        if n_th_child == 1:
+            if self.end_color in [QColor("red"), QColor("green")]:
+                width = 2
+            else:
+                width = 1
+            child.setPen(self.end_color, width=width)
 
     def _reposition_lines(self):
         fs = self.parent.plot_data.sampling_rate_hz

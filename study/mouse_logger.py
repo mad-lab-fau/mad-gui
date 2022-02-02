@@ -29,9 +29,6 @@ class MouseLogger:
         # self.text_box.grid(row=0)
         self.text_box.pack()
 
-        e = Entry(self.master)
-        #        e.grid(row=0, column=1)
-
         btn_ok = Button(self.master, text="OK", command=self.handle_mode)
         btn_ok.pack()
 
@@ -64,7 +61,6 @@ class MouseLogger:
         self._add_change("active")
 
         mouse.unhook(self.mouse_events.append)
-        keyboard_events = keyboard.stop_recording()
 
         from pathlib import Path
 

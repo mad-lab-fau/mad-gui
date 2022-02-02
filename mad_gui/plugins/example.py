@@ -9,7 +9,7 @@ from mad_gui.components.dialogs import UserInformation
 from mad_gui.models import GlobalData
 from mad_gui.models.local import PlotData
 from mad_gui.plugins.base import BaseAlgorithm, BaseExporter, BaseImporter
-from typing import Dict, Tuple, Union
+from typing import Dict, Union
 
 
 class ExampleImporter(BaseImporter):
@@ -27,7 +27,7 @@ class ExampleImporter(BaseImporter):
     def name(cls) -> str:
         return "Example Importer"
 
-    def load_sensor_data(self, file: str) -> Tuple[Dict, float]:
+    def load_sensor_data(self, file: str) -> Dict:
         df = pd.read_csv(file)
         data = {
             "Pocket IMU": {
@@ -38,7 +38,7 @@ class ExampleImporter(BaseImporter):
         return data
 
     def load_annotations(self, file_path: Union[Path, str]) -> Dict[str, pd.DataFrame]:
-        return
+        pass
 
 
 class StationaryMomentsDetector(BaseAlgorithm):

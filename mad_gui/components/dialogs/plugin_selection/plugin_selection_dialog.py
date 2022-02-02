@@ -98,7 +98,7 @@ class PluginSelectionDialog(QDialog):
         except Exception as error:  # pylint: disable=broad-except
             # broad exception on purpose because we do not know which exceptions might be thrown by an plugin
             # created by someone else
-            UserInformation().inform(f"Error loading Plugin {plugin_class.name()}" f"\n Error:\n" f"{str(error)}")
+            UserInformation().inform(f"Error loading Plugin {plugin_class.name()} \n Error:\n {str(error)}")
             return False
 
         try:

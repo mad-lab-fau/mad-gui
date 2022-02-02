@@ -1,5 +1,4 @@
 import datetime
-import warnings
 
 import numpy as np
 import pandas as pd
@@ -105,7 +104,7 @@ class SensorPlot(BasePlot):
         Parent widget or frame
     """
 
-    MODE_HANDLER: Dict[MODES, Type[BaseModeHandler]] = {
+    MODE_HANDLERS: Dict[MODES, Type[BaseModeHandler]] = {
         "add": AddModeHandler,
         "investigate": InvestigateModeHandler,
         "edit": EditModeHandler,
@@ -165,15 +164,6 @@ class SensorPlot(BasePlot):
 
         self._add_channel_selection_menu()
         StateKeeper.video_window_closed.connect(self.remove_video_cursor_line)
-
-    #    for label in label_classes:
-    #        self.plot_data.annotations[label.name].bind(lambda x: self._plot_annotations(x, label), "data")
-
-    # def _plot_annotations(self, data, label_class):
-    #    self.clear_labels(label_class)
-    #    for _, label in data.iterrows():
-    #        label = label_class(start=label.start, end=label.end, description=label.description, parent=self)
-    #        self.addItem(label)
 
     def adapt_to_opening_video_window(self):
         if self.sync_info is not None:
@@ -262,16 +252,13 @@ class SensorPlot(BasePlot):
                 f"in this case it contained {type(data.index[0])}. You may change that by using "
                 f"`df.reset_index(drop=True)` in your loaders `load_sensor_data`."
             )
-        x_axis = data.index / sampling_rate_hz
+
         if start_time:
             start_time_qt = QTime(start_time.hour, start_time.minute, start_time.second)
             channel_items = {"bottom": TimeAxisItem(start_time_qt, orientation="bottom", parent=self)}
             self.setchannelItems(channel_items)
             ax_bottom = self.getchannel("bottom")
             ax_bottom.setLabel(text="time [hh:mm:ss]")
-        colors_fau = list(Config.theme.FAU_PHILFAK_COLORS.values())
-        colors_fau.extend(Config.theme.FAU_NATFAK_COLORS.values())
-        colors_fau.extend(Config.theme.FAU_COLORS.values())
 
         if fix_channels:
             self.disableAutoRange()
@@ -284,25 +271,24 @@ class SensorPlot(BasePlot):
         for channel_name in channels_to_plot:
             # make sure we use the same color for one channel even if only few channels are plotted
             color_index = np.argmax([channel_name == item for item in data.columns])
-            # color = colors_fau[color_index]
 
             data_to_plot = data[channel_name]
-            if getattr(Config.settings, "NORMALIZE_DISPLAYED_DATA", False) is True:
-                data_zero_mean = data_to_plot - data_to_plot.mean()
-                data_to_plot = data_zero_mean / (data_zero_mean.max() - data_zero_mean.min())
-            try:
-                # item = pg.PlotDataItem()
-                # self.plotItem.vb.addItem(item)
-                # item.setData(x=x_axis, y=data_to_plot, pen=pg.mkPen(width=2, color=color))
-                self.plot(
-                    x=x_axis,
-                    y=data_to_plot,
-                    pen=pg.mkPen(width=2, color=pg.intColor(index=color_index, hues=len(data.columns), sat=180)),
-                )
-            except TypeError:
-                warnings.warn(f"Cannot plot channel {channel_name} because of a type error.")
+            self._plot_channel(data_to_plot, sampling_rate_hz, hues=len(data.columns), color_index=color_index)
 
         self.autoRange()
+
+    def _plot_channel(self, data_to_plot: pd.Series, sampling_rate_hz: float, hues: int, color_index: int):
+        x_axis = data_to_plot.index / sampling_rate_hz
+
+        if getattr(Config.settings, "NORMALIZE_DISPLAYED_DATA", False) is True:
+            data_zero_mean = data_to_plot - data_to_plot.mean()
+            data_to_plot = data_zero_mean / (data_zero_mean.max() - data_zero_mean.min())
+
+        self.plot(
+            x=x_axis,
+            y=data_to_plot,
+            pen=pg.mkPen(width=2, color=pg.intColor(index=color_index, hues=hues, sat=180)),
+        )
 
     def _change_mode(self, new_mode: MODES):
         """Adapt tool tip text depending on mode and remove potentially plotted green line indicating a new event.
@@ -314,7 +300,7 @@ class SensorPlot(BasePlot):
         """
         # Deactivate old mode_handler:
         self.mode_handler.deactivate()
-        self.mode_handler = self.MODE_HANDLER[new_mode](sensor_plot=self)
+        self.mode_handler = self.MODE_HANDLERS[new_mode](sensor_plot=self)
         self.set_tooltip(new_mode)
 
         # On mode change, we sync the annotation state:

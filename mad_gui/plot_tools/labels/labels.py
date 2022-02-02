@@ -217,10 +217,7 @@ class SynchronizationLabel(BaseRegionLabel):
         return
 
     def _left_mouse_click_event(self, ev):
-        pass
+        """Synchronization labels are not clickable."""
 
     def _hover_event(self, ev):
-        pass
-
-
-# stride_label_config = {"segmented_stride": SegmentedStrideLabel, "stride": StrideLabel}
+        """We do not need to show anything since it is clear that it is a sync label."""

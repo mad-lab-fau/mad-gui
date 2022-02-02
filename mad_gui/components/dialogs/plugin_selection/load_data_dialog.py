@@ -19,6 +19,8 @@ from mad_gui.utils.helper import resource_path
 from mad_gui.utils.model_base import BaseStateModel, Property
 from typing import Any, Dict, List, Optional, Tuple, Type
 
+LINK_IMPLEMENT_IMPORTER = "https://mad-gui.readthedocs.io/en/latest/customization.html#implement-an-importer"
+
 ui_path = resource_path(str(UI_PATH / "load.ui"))
 if ".ui" in ui_path:
     try:
@@ -222,11 +224,10 @@ class LoadDataDialog(QDialog):
                 "The loader's `load_sensor_data` method must return a dict, where the keys are the names you would "
                 "like to give the plots. "
                 "Click `Learn More` for more information.",
-                help_link="https://mad-gui.readthedocs.io/en/latest/customization.html#implement-an-importer",
+                help_link=LINK_IMPLEMENT_IMPORTER,
             )
             raise KeyError(
-                f"{self.loader_.name()}'s  `load_sensor_data` method must return a dict. See "
-                f"https://mad-gui.readthedocs.io/en/latest/customization.html#implement-an-importer"
+                f"{self.loader_.name()}'s  `load_sensor_data` method must return a dict. See {LINK_IMPLEMENT_IMPORTER}"
             )
 
         for plot, data in plot_data.items():
@@ -234,25 +235,25 @@ class LoadDataDialog(QDialog):
                 UserInformation.inform(
                     "Missing key `sensor_data` in the nested dict returned by the loader. See console output for "
                     "more information or click the link below to see what the importer should return",
-                    help_link="https://mad-gui.readthedocs.io/en/latest/customization.html#implement-an-importer",
+                    help_link=LINK_IMPLEMENT_IMPORTER,
                 )
                 raise KeyError(
                     f"{self.loader_.name()} returned data to be plotted with the name {plot}. {plot} does not contain a"
                     f" key `sensor_data`, but is expected to. `sensor_data` in turn should keep a pd.DataFrame, "
                     f"where the columns are the channels to plot and each row is one sample to plot. "
-                    f"See https://mad-gui.readthedocs.io/en/latest/customization.html#implement-an-importer"
+                    f"See {LINK_IMPLEMENT_IMPORTER}"
                 )
 
             if "sampling_rate_hz" not in data.keys():
                 UserInformation.inform(
                     "Missing key `sampling_rate_hz` in the nested dict returned by the loader. See console output for "
                     "more information or click the link below to see what the importer should return",
-                    help_link="https://mad-gui.readthedocs.io/en/latest/customization.html#implement-an-importer",
+                    help_link=LINK_IMPLEMENT_IMPORTER,
                 )
                 raise KeyError(
                     f"{self.loader_.name()} returned data to be plotted with the name {plot}. {plot} does not contain a"
                     f" key `sampling_rate_hz`, but is expected to. `sampling_rate_hz` in turn should keep a float. "
-                    f"See https://mad-gui.readthedocs.io/en/latest/customization.html#implement-an-importer"
+                    f"See {LINK_IMPLEMENT_IMPORTER}"
                 )
             sensor_data = data.get("sensor_data", None)
 
@@ -260,13 +261,12 @@ class LoadDataDialog(QDialog):
                 UserInformation.inform(
                     text="Data format was not valid. If you are a developer, see the command line for more detailed "
                     "information or click `Learn More` to get to our documentation about importers.",
-                    help_link="https://mad-gui.readthedocs.io/en/latest/customization.html#implement-an-importer",
+                    help_link=LINK_IMPLEMENT_IMPORTER,
                 )
                 raise KeyError(
                     f"You tried to load data named {plot} using {self.loader_.name()}'s `load_sensor_data`. However, "
                     f"the key `sensor_data` keeps data of the type {type(sensor_data)}, although it should be a "
-                    f"pandas DataFrame. See "
-                    "https://mad-gui.readthedocs.io/en/latest/customization.html#implement-an-importer for more info."
+                    f"pandas DataFrame. See {LINK_IMPLEMENT_IMPORTER} for more info."
                 )
 
     @staticmethod
