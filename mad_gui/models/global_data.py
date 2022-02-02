@@ -49,4 +49,6 @@ class GlobalData(BaseStateModel):
     annotation_file = Property("", dtype=str)
     base_dir = Property("", dtype=str)
 
+    # TODO: make plot_data a working property, so we do not need to call _plot_data manually after using
+    #  MainWindow.use_algorithm.
     plot_data: Dict[str, PlotData] = Property({}, dtype=dict)

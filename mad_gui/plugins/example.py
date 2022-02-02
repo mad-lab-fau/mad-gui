@@ -9,7 +9,7 @@ from mad_gui.components.dialogs import UserInformation
 from mad_gui.models import GlobalData
 from mad_gui.models.local import PlotData
 from mad_gui.plugins.base import BaseAlgorithm, BaseExporter, BaseImporter
-from typing import Dict, Union
+from typing import Dict
 
 
 class ExampleImporter(BaseImporter):
@@ -36,9 +36,6 @@ class ExampleImporter(BaseImporter):
             }
         }
         return data
-
-    def load_annotations(self, file_path: Union[Path, str]) -> Dict[str, pd.DataFrame]:
-        pass
 
 
 class StationaryMomentsDetector(BaseAlgorithm):

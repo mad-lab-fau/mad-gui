@@ -18,7 +18,7 @@ class NestedLabelSelectDialog(QDialog):
     _max_depth: int
     _label_options: Union[List[str], Dict[str, Any]]
 
-    latest_selection_: Tuple[str, ...] = None
+    latest_selection_: Tuple[str, ...] = ()
 
     def __init__(self, parent=None):
         super().__init__()
@@ -129,7 +129,7 @@ class NestedLabelSelectDialog(QDialog):
             if (
                 NestedLabelSelectDialog.latest_selection_
                 and len(NestedLabelSelectDialog.latest_selection_) > level
-                and NestedLabelSelectDialog.latest_selection_[level] in choice  # pylint: disable=unsubscriptable-object
+                and NestedLabelSelectDialog.latest_selection_[level] in choice
             ):
 
                 button.setChecked(True)

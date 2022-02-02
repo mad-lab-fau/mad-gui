@@ -149,7 +149,7 @@ class BaseImporter(BasePlugin):
                 help_link="https://mad-gui.readthedocs.io/en/latest/troubleshooting.html#video-and"
                 "-data-not-synchronized",
             )
-            return None
+            return ""
         if len(files) == 1:
             return files[0]
         UserInformation.inform(
@@ -157,7 +157,7 @@ class BaseImporter(BasePlugin):
             "ends with "
             "`.xlsx`."
         )
-        return None
+        return ""
 
     @classmethod
     def get_video_signal_synchronization(cls, video_file: str) -> pd.DataFrame:  # noqa

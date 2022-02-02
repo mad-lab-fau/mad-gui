@@ -437,8 +437,6 @@ class SensorPlot(BasePlot):
                 "max_height": event.span[1],
                 "description": event.description,
             }
-            # if issubclass(label_type, StrideLabel):
-            #    data_dict.update({"tc": [int(label.lines[2].pos()[0] * self.sampling_rate_hz)]})
             event_dicts.append(data_dict)
         df = pd.DataFrame.from_records(event_dicts)
         if df.empty:

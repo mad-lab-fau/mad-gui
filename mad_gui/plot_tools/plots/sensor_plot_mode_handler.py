@@ -229,7 +229,7 @@ class InvestigateModeHandler(BaseModeHandler):
         super().__init__(plot=sensor_plot)
 
     def deactivate(self):
-        pass
+        """We do not need to do anything here, since everything happens through activating the other mode."""
 
 
 class EditModeHandler(BaseModeHandler):
