@@ -4,17 +4,17 @@ from PySide2.QtMultimediaWidgets import QVideoWidget
 from PySide2.QtWidgets import QHBoxLayout, QPushButton, QSizePolicy, QSlider, QVBoxLayout, QWidget
 
 
-class Ui_VideoWindow(QWidget):
+class UiVideoWindow(QWidget):
     def __init__(self):
         super().__init__()
         self.setWindowTitle("Video")
         self.verticalLayout = QVBoxLayout()
         self.view_video = QVideoWidget()
-        sizePolicy = QSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)
-        sizePolicy.setHorizontalStretch(0)
-        sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.view_video.sizePolicy().hasHeightForWidth())
-        self.view_video.setSizePolicy(sizePolicy)
+        size_policy = QSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)
+        size_policy.setHorizontalStretch(0)
+        size_policy.setVerticalStretch(0)
+        size_policy.setHeightForWidth(self.view_video.sizePolicy().hasHeightForWidth())
+        self.view_video.setSizePolicy(size_policy)
         self.view_video.setMinimumSize(QSize(0, 200))
         self.view_video.setMaximumSize(QSize(1666666, 500))
         self.view_video.setSizeIncrement(QSize(0, 0))

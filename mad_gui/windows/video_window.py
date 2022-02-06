@@ -2,11 +2,11 @@ import pandas as pd
 from PySide2.QtCore import QObject, Qt, QUrl
 from PySide2.QtMultimedia import QMediaContent, QMediaPlayer, QMediaPlaylist
 
-from mad_gui.qt_designer.ui_video import Ui_VideoWindow
+from mad_gui.qt_designer.ui_video import UiVideoWindow
 from mad_gui.state_keeper import StateKeeper
 
 
-class VideoWindow(Ui_VideoWindow, QObject):
+class VideoWindow(UiVideoWindow, QObject):
     """Display a video that can be synchronised with sensor data.
 
     Interacts with :class:`mad_gui.plot_tools.SensorPlot`"""

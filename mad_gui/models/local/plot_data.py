@@ -127,7 +127,6 @@ class PlotData(BaseStateModel):
                 obj._add_annotations(plot_data)
                 continue
 
-            # when loading data from pickle, we do not get `annotations` but directly the label names as selections
             if not obj._add_label(plot_data, selection):
                 obj._add_additional_data(obj, plot_data, selection)
 
