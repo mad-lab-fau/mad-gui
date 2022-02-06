@@ -46,9 +46,6 @@ sphinxemoji = "^0.1.9"
 [tool.poetry.scripts]
 mad-gui = "mad_gui:start_gui"
 
-[tool.radon]
-exclude = "plot_tools/*.py"
-
 [tool.isort]
 profile = "black"
 skip_glob = ["tests/test_windows/"]

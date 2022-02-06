@@ -13,10 +13,10 @@ from typing import Optional, Sequence, Type
 
 
 class ActivityLabel(BaseRegionLabel):
-    min_height = 0
+    min_height = 0.8
     max_height = 1
     name = "Activity"
-    descriptions = {"walk (slow)": None, "walk (normal)": None, "walk (fast)": None}
+    descriptions = {"Jump": None, "Walk": ["Slow", "Normal", "Fast"]}
 
 
 class MyEvent(BaseEventLabel):
@@ -27,6 +27,11 @@ class MyEvent(BaseEventLabel):
     snap_to_min = False
 
 
+class Stride(BaseRegionLabel):
+    min_height = 0
+    max_height = 0.75
+
+
 def start_gui(
     data_dir=Path("."),
     plugins: Optional[Sequence[BasePlugin]] = (
@@ -35,7 +40,7 @@ def start_gui(
         EnergyCalculator,
         ExampleExporter,
     ),
-    labels: Optional[Sequence[BaseRegionLabel]] = (ActivityLabel,),
+    labels: Optional[Sequence[BaseRegionLabel]] = (ActivityLabel, Stride),
     events: Optional[Sequence[BaseEventLabel]] = (MyEvent,),
     settings: Optional[Type[BaseSettings]] = BaseSettings,
     theme: Optional[Type[BaseTheme]] = BaseTheme,

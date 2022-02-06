@@ -111,30 +111,35 @@ class PlotData(BaseStateModel):
 
         selections = selections or plot_data.keys() - {"sampling_rate_hz"}
 
-        try:
-            sensor_data = plot_data["sensor_data"]
-            sampling_rate_hz = plot_data["sampling_rate_hz"]
-        except KeyError as k:
+        if not all(required_key in plot_data.keys() for required_key in ["sensor_data", "sampling_rate_hz"]):
             raise KeyError(
-                "Please provide sensor data and a sampling rate for each sensor in your loader's "
-                "`load_sensor_data` method. For docstring on that method see https://mad-gui.readthe"
-                "docs.io/en/latest/modules/generated/plugins/mad_gui.plugins.BaseImporter.html#mad_g"
-                "ui.plugins.BaseImporter.load_sensor_data"
-            ) from k
+                "Your importer's `load_sensor_data` method must return a dict at least with the keys `sensor_data` "
+                f"and `sampling_rate_hz`, but it has {plot_data.keys()}. For docstring on that method see https://mad-"
+                "gui.readthedocs.io/en/latest/modules/generated/plugins/mad_gui.plugins.BaseImporter.html#mad_gui."
+                "plugins.BaseImporter.load_sensor_data"
+            )
+        sensor_data = plot_data["sensor_data"]
+        sampling_rate_hz = plot_data["sampling_rate_hz"]
 
         obj = cls(sensor_data, sampling_rate_hz)
         for selection in set(selections) - {"sensor_data", "sampling_rate_hz"}:
             if selection == "annotations":
                 obj._add_annotations(plot_data)
                 continue
+
             # when loading data from pickle, we do not get `annotations` but directly the label names as selections
             if not obj._add_label(plot_data, selection):
-                if not obj.additional_data:
-                    obj.additional_data = {}
-                obj.additional_data[selection] = plot_data[selection]
+                obj._add_additional_data(obj, plot_data, selection)
+
         obj.annotations["events"] = AnnotationData()
         obj._add_events(getattr(plot_data, "events", None))
         return obj
+
+    @staticmethod
+    def _add_additional_data(obj, plot_data, selection):
+        if not obj.additional_data:
+            obj.additional_data = {}
+        obj.additional_data[selection] = plot_data[selection]
 
     def _add_annotations(self, plot_data: Dict):
         if not plot_data.get("annotations", None):

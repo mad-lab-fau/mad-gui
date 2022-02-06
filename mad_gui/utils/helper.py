@@ -52,22 +52,29 @@ def resource_path(relative_path):
     """ Get absolute path to resource, works for dev and for PyInstaller """
 
     try:
-        paths = sorted(Path(tempfile.gettempdir()).iterdir(), key=os.path.getctime)[::-1]
-        mei_paths = [p for p in paths if "_MEI" in p.name]
-        time_now = datetime.today()
-        newest_mei = mei_paths[0]
-        date_newest_mei = datetime.fromtimestamp(os.stat(newest_mei).st_ctime)
-        if (time_now - date_newest_mei) > timedelta(seconds=60):
-            raise FileNotFoundError("Did not find a current _MEI folder in tmp.")
-        base_path = newest_mei
-        relative_path = str.replace(relative_path, ".ui", ".py")
-        relative_path = str.replace(relative_path, "qt_designer", f"qt_designer{os.sep}build")
-        warnings.warn(
-            f"Found a _MEI folder in {tempfile.gettempdir()}, which has bee created <1 minute ago."
-            f" Therefore, I assume this is called from a standalone executable."
-            f" For this reason, I'm changing the resource path, from mad_gui/qt_designer/*.ui to"
-            f" mad_gui/qt_designer/build/*.py"
-        )
+        base_path, relative_path = _get_resource_path(relative_path)
     except (IndexError, FileNotFoundError):
         base_path = os.path.abspath(".")
     return os.path.join(base_path, relative_path)
+
+
+def _get_resource_path(relative_path):
+
+    paths = sorted(Path(tempfile.gettempdir()).iterdir(), key=os.path.getctime)[::-1]
+    mei_paths = [p for p in paths if "_MEI" in p.name]
+    time_now = datetime.today()
+    newest_mei = mei_paths[0]
+    date_newest_mei = datetime.fromtimestamp(os.stat(newest_mei).st_ctime)
+    if (time_now - date_newest_mei) > timedelta(seconds=60):
+        raise FileNotFoundError("Did not find a current _MEI folder in tmp.")
+    base_path = newest_mei
+    relative_path = str.replace(relative_path, ".ui", ".py")
+    relative_path = str.replace(relative_path, "qt_designer", f"qt_designer{os.sep}build")
+    warnings.warn(
+        f"Found a _MEI folder in {tempfile.gettempdir()}, which has bee created <1 minute ago."
+        f" Therefore, I assume this is called from a standalone executable."
+        f" For this reason, I'm changing the resource path, from mad_gui/qt_designer/*.ui to"
+        f" mad_gui/qt_designer/build/*.py"
+    )
+
+    return base_path, relative_path

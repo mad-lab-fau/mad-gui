@@ -12,7 +12,7 @@ from pathlib import Path
 import platform
 import ctypes
 import pickle
-from typing import Dict, Tuple
+from typing import Dict, Tuple, List
 
 import pandas as pd
 import pyqtgraph as pg
@@ -504,23 +504,36 @@ class MainWindow(QMainWindow):
         if not sync_file:
             return
         sync = self.global_data.active_loader.get_video_signal_synchronization(sync_file)
+
+        try:
+            plots = [*self.sensor_plots.items(), ("video", self.video_plot)]
+        except AttributeError:
+            plots = self.sensor_plots.items()
+
+        suffixes = {"video": "_ms"}
         unsynced_sensors = []
-        for plot_name, plot in self.sensor_plots.items():
-            try:
-                plot.sync_info = sync[plot_name]
-                plot.adapt_to_opening_video_window()
-            except KeyError:
-                unsynced_sensors.append(plot_name)
+        for plot_name, plot in plots:
+            suffix = suffixes.get(plot_name, "_sample")
+            self._set_plot_sync(plot_name, plot, sync[plot_name + suffix], unsynced_sensors)
+
         if len(unsynced_sensors) > 1:
             UserInformation.inform(
                 f"Found a synchronization file ({sync_file}), however there is no info about "
                 f"the sensor(s) {unsynced_sensors}, therefore it is not synchronized."
             )
-        if self.video_plot:
-            self.video_plot.sync_info = sync["video_ms"]
 
         if self.VideoWindow:
             self.VideoWindow.set_sync(start_frame=sync["video_ms"]["start"], end_frame=sync["video_ms"]["end"])
+
+    @staticmethod
+    def _set_plot_sync(plot_name: str, plot, sync: pd.Series, unsynced_sensors: List):
+        if plot is None:
+            return
+        try:
+            plot.sync_info = sync
+            plot.adapt_to_opening_video_window()
+        except KeyError:
+            unsynced_sensors.append(plot_name)
 
     def _plot_data(self, data_dict: Dict[str, PlotData]):
         # if len(StateKeeper.loaded_data) == 3:

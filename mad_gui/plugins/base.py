@@ -150,6 +150,7 @@ class BaseImporter(BasePlugin):
                 "-data-not-synchronized",
             )
             return ""
+        files = [file for file in files if not file.name.startswith("~")]
         if len(files) == 1:
             return files[0]
         UserInformation.inform(

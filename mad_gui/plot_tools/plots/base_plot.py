@@ -9,7 +9,7 @@ from mad_gui.config import Config
 from mad_gui.models.local import AnnotationData, PlotData
 from mad_gui.plot_tools.labels import SynchronizationLabel
 from mad_gui.plot_tools.labels.base_label import BaseEventLabel, BaseRegionLabel
-from typing import List, Optional, Type
+from typing import List, Optional, Type, Union
 
 
 class BasePlot(pg.PlotWidget):
@@ -57,10 +57,9 @@ class BasePlot(pg.PlotWidget):
             return
         event_ranges = pd.DataFrame()
         for event_class in event_classes:
-            if hasattr(self.plot_data, "annotations"):
-                if event_class.name not in self.plot_data.annotations.keys():
-                    self.plot_data.annotations[event_class.name] = AnnotationData()
-                self.set_events(event_class, self.plot_data.annotations[event_class.name].data)
+            if event_class.name not in self.plot_data.annotations.keys():
+                self.plot_data.annotations[event_class.name] = AnnotationData()
+            self.set_events(event_class, self.plot_data.annotations[event_class.name].data)
 
             event_range = pd.DataFrame(
                 index=[event_class.name],
@@ -75,8 +74,7 @@ class BasePlot(pg.PlotWidget):
 
         for label_class in labels:
             if hasattr(self.plot_data, "annotations"):
-                if label_class.name not in self.plot_data.annotations.keys():
-                    self.plot_data.annotations[label_class.name] = AnnotationData()
+                self._ensure_annotations_available(label_class)
                 self.set_labels(label_class, self.plot_data.annotations[label_class.name].data)
 
             label_range = pd.DataFrame(
@@ -86,6 +84,10 @@ class BasePlot(pg.PlotWidget):
             )
             label_ranges = label_ranges.append(label_range)
         self.label_ranges = label_ranges
+
+    def _ensure_annotations_available(self, label_class: Union[BaseRegionLabel, BaseEventLabel]):
+        if label_class.name not in self.plot_data.annotations.keys():
+            self.plot_data.annotations[label_class.name] = AnnotationData()
 
     @Slot(BaseEventLabel, pd.DataFrame)
     def set_events(self, label_class: Type[BaseEventLabel], df: pd.DataFrame):
