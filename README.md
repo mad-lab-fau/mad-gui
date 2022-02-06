@@ -118,6 +118,7 @@ In this case please refer to [Load and display data of a certain data type](#loa
 ## User Interface
 
 You can get information on how to use the GUI from the keywords below or from the video referenced in each of the sections.
+You may also want to take a look at [ACQ4 documentation](http://acq4.org/documentation/userGuide/userInterface/graphics.html#mouse-interaction) to learn about mouse interaction with the plots (e.g. zooming).
 
 ### Load data
 
