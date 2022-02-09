@@ -212,7 +212,7 @@ class LoadDataDialog(QDialog):
         return_dict = {
             "plot_data_dicts": data,
             "data_file_name": self.state.data_file,
-            "start_time": loader.get_start_time(),
+            "start_time": loader.get_start_time(self.state.data_file),
         }
 
         if self.state.video_file:
