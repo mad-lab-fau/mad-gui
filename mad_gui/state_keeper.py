@@ -26,6 +26,7 @@ class _StateKeeper(QObject):
     """
 
     announce_data_types = Signal(dict)  # MainWindow / DataSelector
+    executed_algorithms = []
 
     save_sync = Signal()
 

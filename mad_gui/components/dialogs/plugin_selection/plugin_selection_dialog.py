@@ -103,6 +103,7 @@ class PluginSelectionDialog(QDialog):
 
         try:
             plugin.process_data(self._data)
+            self.executed_plugin = plugin_class
         except Exception as error:
             UserInformation().inform(
                 f"An error occured inside your plugin {plugin_class.name()}: {str(error)}\n"

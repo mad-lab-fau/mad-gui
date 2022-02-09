@@ -11,6 +11,8 @@ from mad_gui.models.local import PlotData
 from mad_gui.plugins.base import BaseAlgorithm, BaseExporter, BaseImporter
 from typing import Dict
 
+from mad_gui.state_keeper import StateKeeper
+
 
 class ExampleImporter(BaseImporter):
     """An exemplary importer.
@@ -144,8 +146,10 @@ class ExampleExporter(BaseExporter):
             for label_name, annotations in plot_data.annotations.items():
                 if len(annotations.data) == 0:
                     continue
-                annotations.data.to_csv(
-                    directory + os.sep + plot_name.replace(" ", "_") + "_" + label_name.replace(" ", "_") + ".csv"
-                )
+                save_file_name = directory + os.sep + plot_name.replace(" ", "_") + "_" + label_name.replace(" ", "_") + ".csv"
+                annotations.data.to_csv(save_file_name)
+                algorithms_str = 'Algorithms:' + ','.join([algo.__name__ for algo in StateKeeper.executed_algorithms])
+                df_algorithms = pd.DataFrame(data=[algorithms_str])
+                df_algorithms.to_csv(save_file_name, mode="a", header=False, index=False)
 
         UserInformation.inform(f"The results were saved to {directory}.")

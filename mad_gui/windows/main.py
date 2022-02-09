@@ -649,6 +649,7 @@ class MainWindow(QMainWindow):
         dialog = PluginSelectionDialog(plugins=algorithms, parent=self)
         try:
             dialog.process_data(self.global_data.plot_data)
+            StateKeeper.executed_algorithms.append(dialog.executed_plugin)
         except Exception as error:  # noqa
             print(sys.exc_info()[0])
             raise NotImplementedError(
