@@ -146,9 +146,11 @@ class ExampleExporter(BaseExporter):
             for label_name, annotations in plot_data.annotations.items():
                 if len(annotations.data) == 0:
                     continue
-                save_file_name = directory + os.sep + plot_name.replace(" ", "_") + "_" + label_name.replace(" ", "_") + ".csv"
+                save_file_name = (
+                    directory + os.sep + plot_name.replace(" ", "_") + "_" + label_name.replace(" ", "_") + ".csv"
+                )
                 annotations.data.to_csv(save_file_name)
-                algorithms_str = 'Algorithms:' + ','.join([algo.__name__ for algo in StateKeeper.executed_algorithms])
+                algorithms_str = "Algorithms:" + ",".join([algo.__name__ for algo in StateKeeper.executed_algorithms])
                 df_algorithms = pd.DataFrame(data=[algorithms_str])
                 df_algorithms.to_csv(save_file_name, mode="a", header=False, index=False)
 
