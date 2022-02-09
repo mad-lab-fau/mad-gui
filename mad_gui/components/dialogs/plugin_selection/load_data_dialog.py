@@ -209,7 +209,11 @@ class LoadDataDialog(QDialog):
             annotations = loader.load_annotations(self.state.annotation_file)
             data = self._incorporate_annotations_to_data(data, annotations)
 
-        return_dict = {"plot_data_dicts": data, "data_file_name": self.state.data_file}
+        return_dict = {
+            "plot_data_dicts": data,
+            "data_file_name": self.state.data_file,
+            "start_time": loader.get_start_time(),
+        }
 
         if self.state.video_file:
             # Note: this must be done after loading data, since loading video might trigger plotting yellow lines in

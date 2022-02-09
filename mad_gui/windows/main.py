@@ -474,6 +474,7 @@ class MainWindow(QMainWindow):
         view = LoadDataDialog(self.global_data.base_dir, loaders=loaders, parent=self)
 
         data, loader = view.get_data()
+        self.global_data.start_time = data["start_time"]
 
         if data is None:
             return
@@ -536,11 +537,8 @@ class MainWindow(QMainWindow):
             unsynced_sensors.append(plot_name)
 
     def _plot_data(self, data_dict: Dict[str, PlotData]):
-        # if len(StateKeeper.loaded_data) == 3:
-        #     start_time = StateKeeper.loaded_data[2]
-        # else:
-        # TODO: Implement start time
-        start_time = None
+
+        start_time = self.global_data.start_time
         set_cursor(self, Qt.BusyCursor)
 
         # Delete all existing plots
