@@ -11,6 +11,8 @@
 [![Documentation Status](https://readthedocs.org/projects/mad-gui/badge/?version=latest)](https://mad-gui.readthedocs.io/en/latest/?badge=latest)
 [![PyPI version shields.io](https://img.shields.io/pypi/v/mad-gui)](https://pypi.org/project/mad-gui/)
 [![PyPI stats](https://img.shields.io/pypi/dm/mad_gui)](https://pypi.org/project/mad-gui/)
+[![PyPI stats](https://img.shields.io/youtube/channel/views/UCaLchy07OciePfHL9j-8u8A?style=social)](https://www.youtube.com/channel/UCaLchy07OciePfHL9j-8u8A)
+
 
 
 
