@@ -87,6 +87,7 @@ class TimeAxisItem(pg.AxisItem):
         # note, that the received values are seconds
         ms = np.array(values) * 1000
         self.parent.configure_style()
+        self.setLabel(text="Time", units="hh:mm:ss")
         return [self.start_time.addMSecs(value).toString("hh:mm:ss") for value in ms]
 
 
@@ -256,9 +257,7 @@ class SensorPlot(BasePlot):
         if start_time:
             start_time_qt = QTime(start_time.hour, start_time.minute, start_time.second)
             channel_items = {"bottom": TimeAxisItem(start_time_qt, orientation="bottom", parent=self)}
-            self.setchannelItems(channel_items)
-            ax_bottom = self.getchannel("bottom")
-            ax_bottom.setLabel(text="time [hh:mm:ss]")
+            self.setAxisItems(channel_items)
 
         if fix_channels:
             self.disableAutoRange()
