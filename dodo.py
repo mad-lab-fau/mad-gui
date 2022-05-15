@@ -20,6 +20,9 @@ def task_format():
 
 def task_format_check():
     """Check, but not change, formatting using black."""
+    print("#################### black ###################")
+    print(HERE)
+    print(os.listdir(HERE))
     return {"actions": [["black", HERE, "--check"], ["isort", HERE, "--check-only"]], "verbosity": 1}
 
 
