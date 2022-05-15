@@ -71,8 +71,7 @@ exclude = '''
     | study
     | dist
     | \.virtual_documents
-    | \libs
-  )/
+  )\
 )
 '''
 
