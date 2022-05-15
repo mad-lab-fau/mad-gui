@@ -65,6 +65,7 @@ exclude = '''
     | \.mypy_cache
     | \.tox
     | \.venv
+    | .venv
     | _build
     | docs
     | build
