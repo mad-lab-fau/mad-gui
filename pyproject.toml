@@ -48,7 +48,7 @@ mad-gui = "mad_gui:start_gui"
 
 [tool.isort]
 profile = "black"
-skip_glob = ["tests/test_windows/"]
+skip_glob = ["tests/test_windows/", ".venv"]
 multi_line_output = 3
 line_length = 120
 skip_gitignore = true
