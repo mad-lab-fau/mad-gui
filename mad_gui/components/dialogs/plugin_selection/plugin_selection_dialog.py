@@ -55,6 +55,7 @@ class PluginSelectionDialog(QDialog):
         self.ui.setupUi(self)
         self.setStyleSheet(parent.styleSheet())
         self._setup_ui()
+        self.executed_plugin = None
 
     def _setup_ui(self):
         self.setWindowTitle("Select Plugin")
