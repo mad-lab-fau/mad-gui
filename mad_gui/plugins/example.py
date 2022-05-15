@@ -127,7 +127,7 @@ class EnergyCalculator(BaseAlgorithm):
     @staticmethod
     def calculate_features(sensor_data: pd.DataFrame) -> str:
         signal = sensor_data[["acc_x", "acc_y", "acc_z"]]
-        energy = np.sqrt((signal ** 2).sum(axis=1).mean())
+        energy = np.sqrt((signal**2).sum(axis=1).mean())
         return f"mean acceleration = {energy:.2f}"
 
 

@@ -59,7 +59,7 @@ extensions = [
     "sphinx.ext.intersphinx",
     "recommonmark",
     "sphinx_markdown_tables",
-    "sphinx_qt_documentation"
+    "sphinx_qt_documentation",
 ]
 autodoc_mock_imports = ["PySide2"]
 autodoc_default_options = {
@@ -194,8 +194,9 @@ def skip_properties(app, what, name, obj, skip, options):
         return True
     if isinstance(obj, PropertyImpl):
         return True
-    if name=="staticMetaObject":
+    if name == "staticMetaObject":
         return True
+
 
 def setup(app):
     app.connect("autodoc-skip-member", skip_properties)

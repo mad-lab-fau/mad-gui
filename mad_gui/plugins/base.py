@@ -187,7 +187,7 @@ class BaseImporter(BasePlugin):
 
 
 class BaseAlgorithm(BasePlugin):
-    """A base class for implementing an algorithm. """
+    """A base class for implementing an algorithm."""
 
     @classmethod
     @abc.abstractmethod
