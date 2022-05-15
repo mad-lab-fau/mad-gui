@@ -65,8 +65,7 @@ exclude = '''
     | \.mypy_cache
     | \.tox
     | \.venv
-    | \mad_gui\.venv
-    | .venv
+    | mad_gui/\.venv
     | _build
     | docs
     | build
