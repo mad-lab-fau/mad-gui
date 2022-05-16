@@ -508,7 +508,8 @@ class MainWindow(QMainWindow):
 
         try:
             plots = [*self.sensor_plots.items(), ("video", self.video_plot)]
-        except AttributeError:
+        except AttributeError as e:
+            print(e)
             plots = self.sensor_plots.items()
 
         suffixes = {"video": "_ms"}

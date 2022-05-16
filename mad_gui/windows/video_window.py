@@ -1,4 +1,7 @@
+import warnings
+
 import pandas as pd
+import vlc
 from PySide2.QtCore import QObject, Qt, QUrl
 from PySide2.QtMultimedia import QMediaContent, QMediaPlayer, QMediaPlaylist
 
@@ -19,6 +22,8 @@ class VideoWindow(UiVideoWindow, QObject):
             self.setPalette(self.parent.palette())
         self.fps = None
         self.sync_info = None
+        self.duration = None
+        self.video_file = None
         self.slider.sliderPressed.connect(self.slider_pressed)
         self.slider.sliderReleased.connect(self.slider_released)
         self.slider.sliderMoved.connect(self.slider_moved)
@@ -43,6 +48,7 @@ class VideoWindow(UiVideoWindow, QObject):
             self.player.play()
 
     def start_video(self, video_file: str):
+        self.video_file = video_file
         self.playlist.clear()
         self.playlist.addMedia(QMediaContent(QUrl.fromLocalFile(video_file)))
         self.playlist.setCurrentIndex(0)
@@ -59,20 +65,23 @@ class VideoWindow(UiVideoWindow, QObject):
         self._init_position()
 
     def set_rate(self):
-        if self.fps:
-            # the signal that calls this will occasionally be called during playing the video but we simply assume
-            # that fps is constant
-            return
         if "VideoFrameRate" not in self.player.availableMetaData():
-            return
-        self.fps = self.player.metaData("VideoFrameRate")
-        self.player.duration()
+            player_vlc = vlc.MediaPlayer()
+            player_vlc.set_mrl(self.video_file)
+            vlc.libvlc_media_parse(player_vlc.get_media())
+            self.fps = player_vlc.get_fps()
+        else:
+            self.fps = self.player.metaData("VideoFrameRate")
+        # get video duration in ms
+        self.duration = self.player.duration()
+        StateKeeper.video_duration_available.emit(self.duration / 1000, self.fps)
 
-        StateKeeper.video_duration_available.emit(self.player.metaData("Duration") / 1000, self.fps)
         # Not sure yet why this is, but we need the following commands to make sure switching to sync mode directly
         # after loading the video works
         self.player.play()
         self.player.pause()
+        if player_vlc:
+            del player_vlc
 
     def set_sync(self, start_frame: float, end_frame: float):
         self.sync_info = pd.Series(data=[start_frame, end_frame], index=[["start", "end"]])
@@ -110,8 +119,9 @@ class VideoWindow(UiVideoWindow, QObject):
     def frame_changed(self):
         if (
             self.player.mediaStatus() == QMediaPlayer.MediaStatus.LoadedMedia
-            or self.player.metaData("Duration") is None
+            or self.duration is None
         ):
+            warnings.warn("Video is not playing or duration unknown.")
             return
         if not self.player.state() == QMediaPlayer.PausedState:
             self.set_slider_position()
@@ -121,7 +131,7 @@ class VideoWindow(UiVideoWindow, QObject):
         # else:
         if self.sync_info is None:
             start = 0
-            end = self.player.metaData("Duration")
+            end = self.duration
         else:
             start = self.sync_info["start"] / self.fps * 1000
             end = self.sync_info["end"] / self.fps * 1000
