@@ -539,7 +539,7 @@ class MainWindow(QMainWindow):
 
     def _plot_data(self, data_dict: Dict[str, PlotData]):
 
-        start_time = self.global_data.start_time
+        start_time = getattr(self.global_data, "start_time", 0)
         set_cursor(self, Qt.BusyCursor)
 
         # Delete all existing plots
