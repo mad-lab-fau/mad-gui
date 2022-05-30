@@ -117,10 +117,7 @@ class VideoWindow(UiVideoWindow, QObject):
             self.player.setPosition(self.slider.value())
 
     def frame_changed(self):
-        if (
-            self.player.mediaStatus() == QMediaPlayer.MediaStatus.LoadedMedia
-            or self.duration is None
-        ):
+        if self.player.mediaStatus() == QMediaPlayer.MediaStatus.LoadedMedia or self.duration is None:
             warnings.warn("Video is not playing or duration unknown.")
             return
         if not self.player.state() == QMediaPlayer.PausedState:
