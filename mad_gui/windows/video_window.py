@@ -67,6 +67,10 @@ class VideoWindow(UiVideoWindow, QObject):
         self._init_position()
 
     def set_rate(self):
+        if self.fps:
+            # the signal that calls this will occasionally be called during playing the video, but we simply assume
+            # that fps is constant
+            return
         if "VideoFrameRate" not in self.player.availableMetaData():
             # it is only available after some time usually, let's wait a few frames
             self._times_set_rate_called += 1
@@ -77,6 +81,7 @@ class VideoWindow(UiVideoWindow, QObject):
             self.duration = self.player.metaData("Duration")
 
         if self.fps is None or self.duration is None:
+            warnings.warn("Video duration or fps unknown.")
             return
 
         # get video duration in ms
