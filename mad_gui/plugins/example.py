@@ -8,10 +8,31 @@ from PySide2.QtWidgets import QFileDialog
 from mad_gui.components.dialogs import UserInformation
 from mad_gui.models import GlobalData
 from mad_gui.models.local import PlotData
+from mad_gui.plot_tools.labels import BaseRegionLabel, BaseEventLabel
 from mad_gui.plugins.base import BaseAlgorithm, BaseExporter, BaseImporter
 from typing import Dict
 
 from mad_gui.state_keeper import StateKeeper
+
+
+class ActivityLabel(BaseRegionLabel):
+    min_height = 0.8
+    max_height = 1
+    name = "Activity"
+    descriptions = {"Jump": None, "Walk": ["Slow", "Normal", "Fast"]}
+
+
+class MyEvent(BaseEventLabel):
+    min_height = 0
+    max_height = 1
+    name = "Peak"
+    descriptions = {"Positive peak": None, "Negative peak": None}
+    snap_to_min = False
+
+
+class Stride(BaseRegionLabel):
+    min_height = 0
+    max_height = 0.75
 
 
 class ExampleImporter(BaseImporter):
