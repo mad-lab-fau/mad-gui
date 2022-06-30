@@ -85,10 +85,12 @@ class VideoWindow(UiVideoWindow, QObject):
             import vlc  # pylint: disable=import-outside-toplevel
         except ModuleNotFoundError:
             self.user_informed_about_error = True
-            UserInformation.inform("Cannot obtain the framerate of the video, which is necessary for synchronizing. "
-                                   "Possibly this can be fixed by installing VLC Media Player.\n"
-                                   "Click the Learn More link below to get to the website.",
-                                   help_link="https://www.videolan.org/vlc/index.de.html")
+            UserInformation.inform(
+                "Cannot obtain the framerate of the video, which is necessary for synchronizing. "
+                "Possibly this can be fixed by installing VLC Media Player.\n"
+                "Click the Learn More link below to get to the website.",
+                help_link="https://www.videolan.org/vlc/index.de.html",
+            )
             return
         player_vlc = vlc.MediaPlayer()
         player_vlc.set_mrl(self.video_file)
