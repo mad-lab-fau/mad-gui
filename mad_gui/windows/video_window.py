@@ -34,6 +34,7 @@ class VideoWindow(UiVideoWindow, QObject):
         self.setStyleSheet(parent.styleSheet())
         self.setWindowFlag(Qt.WindowStaysOnTopHint)
         self.user_informed_about_error = False
+        self._times_set_rate_called = 0
 
     def _init_position(self):
         """Move the window to the center of the parent window."""
@@ -67,7 +68,10 @@ class VideoWindow(UiVideoWindow, QObject):
 
     def set_rate(self):
         if "VideoFrameRate" not in self.player.availableMetaData():
-            self._obtain_framerate_using_vlc()
+            # it is only available after some time usually, let's wait a few frames
+            self._times_set_rate_called += 1
+            if self._times_set_rate_called > 20:
+                self._obtain_frame_rate_using_vlc()
         else:
             self.fps = self.player.metaData("VideoFrameRate")
             self.duration = self.player.metaData("Duration")
