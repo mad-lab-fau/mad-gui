@@ -1,10 +1,10 @@
 import warnings
 
 import pandas as pd
-import vlc
 from PySide2.QtCore import QObject, Qt, QUrl
 from PySide2.QtMultimedia import QMediaContent, QMediaPlayer, QMediaPlaylist
 
+from mad_gui.components.dialogs import UserInformation
 from mad_gui.qt_designer.ui_video import UiVideoWindow
 from mad_gui.state_keeper import StateKeeper
 
@@ -33,6 +33,7 @@ class VideoWindow(UiVideoWindow, QObject):
         self.btn_play_pause.clicked.connect(self.toggle_play)
         self.setStyleSheet(parent.styleSheet())
         self.setWindowFlag(Qt.WindowStaysOnTopHint)
+        self.user_informed_about_error = False
 
     def _init_position(self):
         """Move the window to the center of the parent window."""
@@ -66,22 +67,35 @@ class VideoWindow(UiVideoWindow, QObject):
 
     def set_rate(self):
         if "VideoFrameRate" not in self.player.availableMetaData():
-            player_vlc = vlc.MediaPlayer()
-            player_vlc.set_mrl(self.video_file)
-            vlc.libvlc_media_parse(player_vlc.get_media())
-            self.fps = player_vlc.get_fps()
+            self._obtain_framerate_using_vlc()
         else:
             self.fps = self.player.metaData("VideoFrameRate")
+            self.duration = self.player.metaData("Duration")
+
         # get video duration in ms
-        self.duration = self.player.duration()
         StateKeeper.video_duration_available.emit(self.duration / 1000, self.fps)
 
         # Not sure yet why this is, but we need the following commands to make sure switching to sync mode directly
         # after loading the video works
         self.player.play()
         self.player.pause()
-        if player_vlc:
-            del player_vlc
+
+    def _obtain_frame_rate_using_vlc(self):
+        try:
+            import vlc  # pylint: disable=import-outside-toplevel
+        except ModuleNotFoundError:
+            self.user_informed_about_error = True
+            UserInformation.inform("Cannot obtain the framerate of the video, which is necessary for synchronizing. "
+                                   "Possibly this can be fixed by installing VLC Media Player.\n"
+                                   "Click the Learn More link below to get to the website.",
+                                   help_link="https://www.videolan.org/vlc/index.de.html")
+            return
+        player_vlc = vlc.MediaPlayer()
+        player_vlc.set_mrl(self.video_file)
+        vlc.libvlc_media_parse(player_vlc.get_media())
+        self.fps = player_vlc.get_fps()
+        self.duration = self.player.duration()
+        del player_vlc
 
     def set_sync(self, start_frame: float, end_frame: float):
         self.sync_info = pd.Series(data=[start_frame, end_frame], index=[["start", "end"]])
