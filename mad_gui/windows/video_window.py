@@ -76,6 +76,9 @@ class VideoWindow(UiVideoWindow, QObject):
             self.fps = self.player.metaData("VideoFrameRate")
             self.duration = self.player.metaData("Duration")
 
+        if self.fps is None or self.duration is None:
+            return
+
         # get video duration in ms
         StateKeeper.video_duration_available.emit(self.duration / 1000, self.fps)
 
