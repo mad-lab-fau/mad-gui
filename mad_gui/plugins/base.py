@@ -174,7 +174,7 @@ class BaseImporter(BasePlugin):
 
     @classmethod
     def get_video_signal_synchronization(cls, sync_file: str) -> pd.DataFrame:  # noqa
-        """Loads the excel list containing sync indices for the video and returns information regarding synchronization of sensor data and video.
+        """Get information regarding sync for video and signal."
 
         The Excel file should have as first column (index) "start" and "end" and the columns should be
         "PLOTNAME_sample" video_ms."
