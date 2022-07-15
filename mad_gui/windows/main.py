@@ -68,9 +68,9 @@ os.environ["QT_AUTO_SCREEN_SCALE_FACTOR"] = "1"
 if platform.system() == "Windows" and int(float(platform.release())) >= 8:
     # we need int(float(...)) because if issues with windows 8
     ctypes.windll.shcore.SetProcessDpiAwareness(True)
-    
+
 if platform.system() == "Darwin":
-    os.environ['QT_MAC_WANTS_LAYER'] = '1'
+    os.environ["QT_MAC_WANTS_LAYER"] = "1"
 
 ui_path = resource_path(str(UI_PATH / "main.ui"))
 if ".ui" in ui_path:
