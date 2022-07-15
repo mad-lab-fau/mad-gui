@@ -72,10 +72,7 @@ class VideoWindow(UiVideoWindow, QObject):
             # that fps is constant
             return
         if "VideoFrameRate" not in self.player.availableMetaData():
-            # it is only available after some time usually, let's wait a few frames
-            self._times_set_rate_called += 1
-            if self._times_set_rate_called > 20:
-                self._obtain_frame_rate_using_vlc()
+            self._obtain_frame_rate_using_vlc()
         else:
             self.fps = self.player.metaData("VideoFrameRate")
             self.duration = self.player.metaData("Duration")
