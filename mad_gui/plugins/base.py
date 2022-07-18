@@ -142,6 +142,18 @@ class BaseImporter(BasePlugin):
 
     @staticmethod
     def get_sync_file(video_file: str) -> str:
+        """Searches for an excel file that has `sync` in its name and returns the file name.
+
+        Attributes
+        ----------
+        video_file
+            The path of the video file that is being shown.
+
+        Returns
+        -------
+        sync_file
+            The path of the excel file that has `sync` in its name and returns the sync indices from there.
+        """
         files = list(Path(video_file).parent.glob("*sync*.xlsx"))
         if len(files) == 0:
             UserInformation.inform(
@@ -161,16 +173,16 @@ class BaseImporter(BasePlugin):
         return ""
 
     @classmethod
-    def get_video_signal_synchronization(cls, video_file: str) -> pd.DataFrame:  # noqa
-        """Searches for an excel file that has `sync` in its name and returns the sync indices from there.
+    def get_video_signal_synchronization(cls, sync_file: str) -> pd.DataFrame:  # noqa
+        """Get information regarding sync for video and signal."
 
-        The Excel file should have as first column (index) "start_sample" and "end_sample" and the columns should be
-        "video_frame" and "signal_sample."
+        The Excel file should have as first column (index) "start" and "end" and the columns should be
+        "PLOTNAME_sample" video_ms."
 
         Attributes
         ----------
-        video_file
-            The path of the video that is being shown.
+        sync_file
+            The path of the sync file for the video that is being shown.
 
         Returns
         -------
@@ -178,7 +190,6 @@ class BaseImporter(BasePlugin):
             A dataframe which tells the gui which frames of the video correspond to which samples in the signal.
             Currently only implemented to accept two synchronized events. Between those, the GUI interpolates linearly.
         """
-        sync_file = cls.get_sync_file(video_file)
         try:
             sync = pd.read_excel(sync_file, index_col=0, engine="openpyxl")
             return sync

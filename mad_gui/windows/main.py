@@ -81,12 +81,12 @@ if ".ui" in ui_path:
             uic_path = Path(os.sep.join(sys.executable.split(os.sep)[:-1])) / "Scripts"
             sys.path.append(str(uic_path))
             Window, _ = loadUiType(ui_path)
-        except TypeError as e:
+        except TypeError as error:
             raise FileNotFoundError(
                 "Probably python did not find `pyside2-uic`. See "
                 '"https://mad-gui.readthedocs.io/en/latest/troubleshooting.html#pyside2-uic-not-found" for more '
                 "information"
-            ) from e
+            ) from error
 elif ".py" in ui_path:
     from mad_gui.qt_designer.build.main import Ui_MainWindow as Window  # noqa
 
@@ -511,7 +511,8 @@ class MainWindow(QMainWindow):
 
         try:
             plots = [*self.sensor_plots.items(), ("video", self.video_plot)]
-        except AttributeError:
+        except AttributeError as e:
+            print(e)
             plots = self.sensor_plots.items()
 
         suffixes = {"video": "_ms"}
