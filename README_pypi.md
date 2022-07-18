@@ -24,7 +24,7 @@ The MaD GUI is a framework for processing time series data. Its use-cases includ
 
 ## Using our example
 
-In a python 3.8 environment, execute the following commands or use the section [Development installation](#development-installation):
+In a python 3.8 environment, execute the following commands or use the section [Development installation](https://github.com/mad-lab-fau/mad-gui#development-installation):
 ```
 pip install mad_gui
 mad-gui
