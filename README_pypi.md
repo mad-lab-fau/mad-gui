@@ -47,4 +47,4 @@ from my_plugin_package imoprt MyAlgorithm
 start_gui(plugins=MyAlgorithm)
 ```
 
-For more information on how to create your plugins, refer to [our readme](https://github.com/mad-lab-fau/mad-gui#developing-plugins) or our []more extensive documentation](https://mad-gui.readthedocs.io/en/latest/plugin_importer.html)
+For more information on how to create your plugins, refer to [our readme](https://github.com/mad-lab-fau/mad-gui#developing-plugins) or our [more extensive documentation](https://mad-gui.readthedocs.io/en/latest/plugin_importer.html)
