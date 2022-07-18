@@ -20,7 +20,7 @@ The MaD GUI is a framework for processing time series data. Its use-cases includ
 
  - [Documentation](https://mad-gui.readthedocs.io/en/latest/README.html) 
  - [Github Repository](https://github.com/mad-lab-fau/mad-gui)
- - [YouTube Playlist](https://www.youtube.com/watch?v=akxcuFOesC8&list=PLf4GpKhBjGcswKIkNeahNt5nDxt8oXPue)
+ - [YouTube Playlist](https://www.youtube.com/watch?v=cSFFSTUM4e0&list=PLf4GpKhBjGcswKIkNeahNt5nDxt8oXPue)
 
 ## Using our example
 
