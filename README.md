@@ -1,3 +1,9 @@
+# Publication
+
+You can use this to cite our work, however, the actual information on how to use this package is contained in this readme and not in the mansucript.
+
+Ollenschläger, M.; Küderle, A.; Mehringer, W.; Seifer, A.-K.; Winkler, J.; Gaßner, H.; Kluge, F.; Eskofier, B.M. MaD GUI:<br/>**An Open-Source Python Package for Annotation and Analysis of Time-Series Data. Sensors 2022, 22, 5849.** https://doi.org/10.3390/s22155849
+
 # MaD GUI 
 **M**achine Learning 
 **a**nd 
@@ -23,10 +29,8 @@ It gives easy access to plotted data / annotations and handles interaction with 
 <div align="center">
 
 :warning: ![WARNING](https://img.shields.io/badge/-WARNING-yellow) :warning: <br />
-This is still an early version. Things might not work as expected. <br />
+This is still an early version. Things might not work as expected but we are happy to help! <br />
 Experiencing issues? [Report a bug here!](https://github.com/mad-lab-fau/mad-gui/issues/new?assignees=&labels=&template=bug_report.md&title=%5BBUG%5D)
-
-
 
 <i>click to enlarge the image</i>
 
