@@ -2,7 +2,7 @@
 
 You can use this to cite our work, however, the actual information on how to use this package is contained in this readme and not in the mansucript.
 
-Ollenschläger, M.; Küderle, A.; Mehringer, W.; Seifer, A.-K.; Winkler, J.; Gaßner, H.; Kluge, F.; Eskofier, B.M. MaD GUI:<br/>**An Open-Source Python Package for Annotation and Analysis of Time-Series Data. Sensors 2022, 22, 5849.** https://doi.org/10.3390/s22155849
+Ollenschläger, M.; Küderle, A.; Mehringer, W.; Seifer, A.-K.; Winkler, J.; Gaßner, H.; Kluge, F.; Eskofier, B.M.<br/>** MaD GUI: An Open-Source Python Package for Annotation and Analysis of Time-Series Data. Sensors 2022, 22, 5849.** https://doi.org/10.3390/s22155849
 
 # MaD GUI 
 **M**achine Learning 
