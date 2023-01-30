@@ -29,3 +29,5 @@ If applicable, add screenshots to help explain your problem.
 
 **Additional context**
 Add any other context about the problem here.
+
+If you like, additionally send an e-mail to malte.ollenschlaeger@fau.de to as I may not notice new issues in timely manner.
