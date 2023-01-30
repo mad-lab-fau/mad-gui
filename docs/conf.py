@@ -101,11 +101,15 @@ smartquotes = False
 # a list of builtin themes.
 #
 html_theme = "pydata_sphinx_theme"
-html_logo = "_static/images/logo_mad_man.png"
-html_favicon = "_static/images/mad-runner.ico"
+#html_logo = "_static/images/logo_mad_man.png"
+#html_favicon = "_static/images/mad-runner.ico"
 html_static_path = ["_static"]
 html_css_files = ["css/custom.css"]
 html_theme_options = {
+    "logo": {
+      "image_light": "_static/images/logo_mad_man.png",
+      "image_dark": "_static/images/logo_mad_man.png",
+    },
     "show_prev_next": False,
     "icon_links": [
         {
