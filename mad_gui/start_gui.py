@@ -16,6 +16,7 @@ from mad_gui.plugins.example import (
     ActivityLabel,
     Stride,
     MyEvent,
+    ExampleDataImporter,
 )
 from mad_gui.windows import MainWindow
 from typing import Optional, Sequence, Type
@@ -24,10 +25,11 @@ from typing import Optional, Sequence, Type
 def start_gui(
     data_dir=Path("."),
     plugins: Optional[Sequence[BasePlugin]] = (
-            ExampleFileImporter(),
-            StationaryMomentsDetector(),
-            EnergyCalculator(),
-            ExampleExporter(),
+        ExampleFileImporter(),
+        ExampleDataImporter(),
+        StationaryMomentsDetector(),
+        EnergyCalculator(),
+        ExampleExporter(),
     ),
     labels: Optional[Sequence[BaseRegionLabel]] = (ActivityLabel, Stride),
     events: Optional[Sequence[BaseEventLabel]] = (MyEvent,),

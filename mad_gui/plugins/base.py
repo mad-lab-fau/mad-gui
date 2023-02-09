@@ -8,7 +8,7 @@ import pandas as pd
 
 from mad_gui.components.dialogs.user_information import UserInformation
 from mad_gui.models.local import PlotData
-from typing import Dict, Union, TypedDict, List, Any
+from typing import Dict, Union, TypedDict, List, Any, Optional
 
 
 class BasePlugin:
@@ -40,7 +40,7 @@ class SensorDataDict(TypedDict):
 class BaseDataImporter(BasePlugin):
     """Classes based on this are expected to directly provide an index of loadable data."""
 
-    def name(cls) -> str:
+    def name(self) -> str:
         """Return a name, which is used to represent this Importer in a dropdown in the GUI."""
         raise NotImplementedError()
 
@@ -51,6 +51,15 @@ class BaseDataImporter(BasePlugin):
     def load_sensor_data(self, index: int) -> Dict[str, SensorDataDict]:  # noqa
         """Loading sensor data based on the index of the data that was selected by the user."""
         raise NotImplementedError()
+
+    def get_start_time(self, index: int) -> Optional[datetime.time]:  # noqa
+        """Get the start time of the corresponding data.
+
+        This may be used by :class:`mad_gui.plot_tools.plots.SensorPlot` to set the channel labels. However, you do not
+        necessarily have to implement it. If you do not implement it, the x-channel will simply start at 0 seconds.
+        """
+        # Implementing this for backward compa
+        return None
 
     def load_annotations(self, index: int) -> pd.DataFrame:  # noqa
         """Loading annotations based on the index of the data that was selected by the user."""

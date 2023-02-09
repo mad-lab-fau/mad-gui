@@ -9,8 +9,8 @@ from mad_gui.components.dialogs import UserInformation
 from mad_gui.models import GlobalData
 from mad_gui.models.local import PlotData
 from mad_gui.plot_tools.labels import BaseRegionLabel, BaseEventLabel
-from mad_gui.plugins.base import BaseAlgorithm, BaseExporter, BaseFileImporter
-from typing import Dict
+from mad_gui.plugins.base import BaseAlgorithm, BaseExporter, BaseFileImporter, BaseDataImporter, SensorDataDict
+from typing import Dict, List
 
 from mad_gui.state_keeper import StateKeeper
 
@@ -36,6 +36,25 @@ class Stride(BaseRegionLabel):
     max_height = 0.75
 
 
+class ExampleDataImporter(BaseDataImporter):
+    def load_sensor_data(self, index: int) -> Dict[str, SensorDataDict]:
+        data = {
+            f"Sensor {index}": {
+                "sensor_data": pd.DataFrame(
+                    np.random.rand(100, 6), columns=["acc_x", "acc_y", "acc_z", "gyr_x", "gyr_y", "gyr_z"]
+                ),
+                "sampling_rate_hz": 100,
+            }
+        }
+        return data
+
+    def name(self) -> str:
+        return "Example Data Importer"
+
+    def get_selectable_data(self) -> List[str]:
+        return [f"Data {i}" for i in range(10)]
+
+
 class ExampleFileImporter(BaseFileImporter):
     """An exemplary importer.
 
@@ -47,8 +66,7 @@ class ExampleFileImporter(BaseFileImporter):
 
     file_type = {"data_file": "*.csv", "video_file": "*.mp4", "annotation_file": "*.csv"}
 
-    @classmethod
-    def name(cls) -> str:
+    def name(self) -> str:
         return "Example Importer"
 
     def load_sensor_data(self, file: str) -> Dict:
@@ -69,8 +87,7 @@ class StationaryMomentsDetector(BaseAlgorithm):
     passed to :meth:`~mad_gui.start_gui` in order for this algorithm to create annotations.
     """
 
-    @classmethod
-    def name(cls):
+    def name(self):
         return "Find Resting Phases (MaD GUI example)"
 
     def process_data(self, plot_data: Dict[str, PlotData]):
@@ -131,8 +148,7 @@ class EnergyCalculator(BaseAlgorithm):
     features for each existing annotation.
     """
 
-    @classmethod
-    def name(cls):
+    def name(self):
         return "Mean energy of acceleration (MaD GUI example)"
 
     def process_data(self, plot_data: Dict[str, PlotData]):
@@ -156,8 +172,7 @@ class EnergyCalculator(BaseAlgorithm):
 class ExampleExporter(BaseExporter):
     """An exemplary exporter, which writes all existing annotations into a csv file."""
 
-    @classmethod
-    def name(cls):
+    def name(self):
         return "Export annotations to csv (MaD GUI example)"
 
     def process_data(self, global_data: GlobalData):

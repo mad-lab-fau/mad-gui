@@ -593,6 +593,13 @@ QPushButton:hover{
            </widget>
           </item>
           <item>
+           <widget class="QPushButton" name="btn_load_from_plugin">
+            <property name="text">
+             <string>PushButton</string>
+            </property>
+           </widget>
+          </item>
+          <item>
            <widget class="QPushButton" name="btn_use_algorithm">
             <property name="sizePolicy">
              <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
@@ -715,6 +722,7 @@ QPushButton:hover{
          <zorder>btn_export</zorder>
          <zorder>btn_load_data</zorder>
          <zorder>btn_use_algorithm</zorder>
+         <zorder>btn_load_from_plugin</zorder>
         </widget>
        </item>
        <item>

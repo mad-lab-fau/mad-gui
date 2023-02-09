@@ -1,5 +1,5 @@
 """A dialog which is used internally by the GUI to select data/video/annotation files and an importer."""
-
+import importlib
 import traceback
 import warnings
 from pathlib import Path
@@ -14,35 +14,43 @@ from mad_gui import BaseFileImporter
 from mad_gui.components.dialogs.user_information import UserInformation
 from mad_gui.components.helper import ask_for_file_name, set_cursor
 from mad_gui.config import Config
+from mad_gui.plugins.base import BaseDataImporter
 from mad_gui.qt_designer import UI_PATH
 from mad_gui.utils.helper import resource_path
 from mad_gui.utils.model_base import BaseStateModel, Property
-from typing import Any, Dict, List, Optional, Tuple, Type
+from typing import Any, Dict, List, Optional, Tuple, Type, Union
 
 LINK_IMPLEMENT_IMPORTER = "https://mad-gui.readthedocs.io/en/latest/customization.html#implement-an-importer"
 
-ui_path = resource_path(str(UI_PATH / "load.ui"))
-if ".ui" in ui_path:
-    try:
-        LoadWindow, _ = loadUiType(ui_path)
-    except TypeError:
+
+def load_window_from_file(path: str, import_name: str) -> Type[QDialog]:
+    ui_path = resource_path(path)
+    if ".ui" in ui_path:
         try:
-            import sys
-            import os
+            window, _ = loadUiType(ui_path)
+        except TypeError:
+            try:
+                import sys
+                import os
 
-            uic_path = Path(os.sep.join(sys.executable.split(os.sep)[:-1])) / "Scripts"
-            sys.path.append(str(uic_path))
-            LoadWindow, _ = loadUiType(ui_path)
-        except TypeError as e:
-            raise FileNotFoundError(
-                "Probably python did not find `pyside2-uic`. See "
-                '"https://mad-gui.readthedocs.io/en/latest/troubleshooting.html#pyside2-uic-not-found" for more '
-                "information"
-            ) from e
+                uic_path = Path(os.sep.join(sys.executable.split(os.sep)[:-1])) / "Scripts"
+                sys.path.append(str(uic_path))
+                window, _ = loadUiType(ui_path)
+            except TypeError as e:
+                raise FileNotFoundError(
+                    "Probably python did not find `pyside2-uic`. See "
+                    '"https://mad-gui.readthedocs.io/en/latest/troubleshooting.html#pyside2-uic-not-found" for more '
+                    "information"
+                ) from e
+    elif ".py" in ui_path:
+        window = importlib.import_module(import_name, package="mad_gui.qt_designer.build").Ui_Form
+    else:
+        raise ValueError(f"Unknown file type: {ui_path}")
+    return window
 
 
-elif ".py" in ui_path:
-    from mad_gui.qt_designer.build.load import Ui_Form as LoadWindow  # noqa
+LoadWindow = load_window_from_file(str(UI_PATH / "load.ui"), "load")
+LoadFromPluginWindow = load_window_from_file(str(UI_PATH / "load_from_plugin.ui"), "load_from_plugin")
 
 
 class FileLoaderDialogState(BaseStateModel):
@@ -301,7 +309,119 @@ class FileLoaderDialog(QDialog):
             return_dict["sync_file"] = sync_file
         return return_dict
 
-    def get_data(self) -> Optional[Tuple[Dict[str, Dict[str, Any]], BaseFileImporter]]:
+    def get_data(self) -> Union[Tuple[Dict[str, Dict[str, Any]], BaseFileImporter], Tuple[None, None]]:
+        """Run this dialog and return the data, that was selected by the user."""
+        if self.exec_():
+            return self.final_data_, self.loader_
+        return None, None
+
+
+class FromPluginLoaderDialogState(BaseStateModel):
+    selected_index: Property(None, dtype=int)
+
+
+class FromPluginLoaderDialog(QDialog):
+    final_data_: Dict[str, Dict[str, Any]]
+    loader_: BaseDataImporter
+
+    def __init__(
+        self,
+        loaders: List[BaseDataImporter],
+        parent=None,
+        initial_state: Optional[FromPluginLoaderDialogState] = None,
+    ):
+        super().__init__()
+        self.loaders = loaders
+        self.parent = parent
+
+        self.state = initial_state
+        if self.state is None:
+            self.state = FromPluginLoaderDialogState()
+
+        self.ui = LoadFromPluginWindow()
+        self.setWindowIcon(parent.windowIcon())
+        self.ui.setupUi(self)
+        self.setStyleSheet(parent.styleSheet())
+        self._setup_ui()
+        self._init_position()
+
+    def _init_position(self):
+        """Move the window to the center of the parent window."""
+
+        x = self.parent.pos().x() + self.parent.size().width() / 2 - self.size().width() / 2
+        y = self.parent.pos().y() + self.parent.size().height() / 2 - self.size().height() / 2
+        self.move(x, y)
+
+    def _setup_ui(self):
+        self.setWindowTitle("Load Data from Plugin")
+        self.ui.combo_plugin.addItems(["", *[loader.name() for loader in self.loaders]])
+        self.ui.combo_plugin.currentIndexChanged.connect(self._handle_plugin_change)
+
+        self.ui.btn_ok.clicked.connect(self._handle_ok_click)
+        self.ui.btn_cancel.clicked.connect(self.close)
+
+        light = Config.theme.COLOR_LIGHT
+
+        for label in self.findChildren(QLabel):
+            label.setStyleSheet(f"color: rgb({light.red()},{light.green()},{light.blue()});")
+
+        for edit in self.findChildren(QLineEdit):
+            edit.setStyleSheet(f"color: rgb({light.red()},{light.green()},{light.blue()});")
+
+        for elem in self.findChildren(QPushButton):
+            elem.setStyleSheet(self.parent.ui.btn_add_label.styleSheet())
+        style_cb = self.parent.ui.btn_add_label.styleSheet().replace("QPushButton", "QComboBox")
+        self.ui.combo_plugin.setStyleSheet(style_cb)
+        self.ui.combo_plugin.view().setStyleSheet(style_cb.replace("QComboBox", "QListView"))
+        self.ui.combo_data.setStyleSheet(style_cb)
+        self.ui.combo_data.view().setStyleSheet(style_cb.replace("QComboBox", "QListView"))
+
+    def _handle_plugin_change(self):
+        # Reset selection
+        self.state.selected_index = None
+        self.ui.combo_data.clear()
+        if self.ui.combo_plugin.currentIndex() == 0:
+            return
+        self.loader_ = self.loaders[self.ui.combo_plugin.currentIndex() - 1]
+        self.ui.combo_data.addItems(self.loader_.get_selectable_data())
+
+    def _handle_ok_click(self):
+        """Use the selected loader for the selcted data.
+
+        Additionally, this changes to cursor to `busy` for user feedback while loading the data.
+        """
+        set_cursor(self, QtCore.Qt.BusyCursor)
+        final_data, loader = self._process_data()
+        set_cursor(self, QtCore.Qt.ArrowCursor)
+        if final_data is None or loader is None:
+            return
+        self.final_data_ = final_data
+
+        self.accept()
+
+    def _process_data(self) -> Union[Tuple[Dict[str, Dict[str, Any]], BaseDataImporter], Tuple[None, None]]:
+        """Process the data and return it."""
+        if self.ui.combo_plugin.currentIndex() == 0:
+            UserInformation.inform("Please select a plugin")
+            return None, None
+        if self.ui.combo_data.currentIndex() == -1:
+            UserInformation.inform("Please select a data source")
+            return None, None
+        self.state.selected_index = self.ui.combo_data.currentIndex()
+        loader = self.loader_._configure(parent=self)
+        data = loader.load_sensor_data(self.state.selected_index)
+        try:
+            annotations = loader.load_annotations(self.state.selected_index)
+            data = self._incorporate_annotations_to_data(data, annotations)
+        except NotImplementedError:
+            pass
+        return_dict = {
+            "plot_data_dicts": data,
+            "start_time": loader.get_start_time(self.state.selected_index),
+        }
+        return return_dict, self.loader_
+
+    def get_data(self) -> Union[Tuple[Dict[str, Dict[str, Any]], BaseDataImporter], Tuple[None, None]]:
         """Run this dialog and return the data, that was selected by the user."""
         if self.exec_():
             return self.final_data_, self.loader_
