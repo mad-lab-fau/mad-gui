@@ -88,7 +88,7 @@ parent directory).
 
 The plugin I created does not show up in the GUI
 ************************************************
-Please make sure that your plugin inherits from one of `BaseImporter`, `BaseAlgorithm`, or `BaseExporter`, as we
+Please make sure that your plugin inherits from one of `BaseFileImporter`, `BaseAlgorithm`, or `BaseExporter`, as we
 describe it in our section `Readme: Developing Plugins <https://mad-gui.readthedocs.io/en/latest/README.html#developing-plugins>`_.
 Additionally, you should make sure to pass your plugin to the `start_gui` function, which is also described in the part
 of `Readme: Developing Plugins <https://mad-gui.readthedocs.io/en/latest/README.html#developing-plugins>`_:

@@ -9,7 +9,7 @@ from mad_gui.components.dialogs import UserInformation
 from mad_gui.models import GlobalData
 from mad_gui.models.local import PlotData
 from mad_gui.plot_tools.labels import BaseRegionLabel, BaseEventLabel
-from mad_gui.plugins.base import BaseAlgorithm, BaseExporter, BaseImporter
+from mad_gui.plugins.base import BaseAlgorithm, BaseExporter, BaseFileImporter
 from typing import Dict
 
 from mad_gui.state_keeper import StateKeeper
@@ -36,7 +36,7 @@ class Stride(BaseRegionLabel):
     max_height = 0.75
 
 
-class ExampleImporter(BaseImporter):
+class ExampleFileImporter(BaseFileImporter):
     """An exemplary importer.
 
     Attributes

@@ -44,10 +44,10 @@ Overview
    .. code-block:: python
 
        from mad_gui import start_gui
-       from mad_gui.plugins import ExampleImporter
+       from mad_gui.plugins import ExampleFileImporter
        from my_algorithm import MyAlgorithm # you need to create this file and class, see below
 
-       start_gui(plugins=[ExampleImporter, MyAlgorithm])
+       start_gui(plugins=[ExampleFileImporter, MyAlgorithm])
 
 .. _algorithm annotations:
 

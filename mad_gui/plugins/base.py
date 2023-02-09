@@ -31,7 +31,7 @@ class BasePlugin:
         raise NotImplementedError()
 
 
-class BaseImporter(BasePlugin):
+class BaseFileImporter(BasePlugin):
     """Classes based on this one enable the GUI to load data from different systems/formats.
 
     Attributes
@@ -88,7 +88,7 @@ class BaseImporter(BasePlugin):
     def load_annotations(self, file_path: Union[Path, str]) -> Dict[str, pd.DataFrame]:  # noqa
         """This loads annotations from file_path and converts them into the format for the GUI.
 
-        This method is called by the :class:`~mad_gui.components.dialogs.plugin_selection.LoadDataDialog` in case the
+        This method is called by the :class:`~mad_gui.components.dialogs.plugin_selection.FileLoaderDialog` in case the
         user selects a file using the "Select annotation" button. In that case, this method should open the file
         specified by `file_path` and then create.
 

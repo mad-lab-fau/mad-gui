@@ -64,7 +64,7 @@ class PlotData(BaseStateModel):
     additional_data
         Keeps things that belongs to the plotted data but should not be plotted. Here you can find everything that was
         returned from your loader for one sensor, where the key is not `sensor_data` or `sampling_rate_hz`, see
-        :class:`mad_gui.plugins.BaseImporter`.
+        :class:`mad_gui.plugins.BaseFileImporter`.
     """
 
     def __init__(self, data: pd.DataFrame, sampling_rate_hz: float, annotation: Dict = None, additional_data=None):
@@ -115,8 +115,8 @@ class PlotData(BaseStateModel):
             raise KeyError(
                 "Your importer's `load_sensor_data` method must return a dict at least with the keys `sensor_data` "
                 f"and `sampling_rate_hz`, but it has {plot_data.keys()}. For docstring on that method see https://mad-"
-                "gui.readthedocs.io/en/latest/modules/generated/plugins/mad_gui.plugins.BaseImporter.html#mad_gui."
-                "plugins.BaseImporter.load_sensor_data"
+                "gui.readthedocs.io/en/latest/modules/generated/plugins/mad_gui.plugins.BaseFileImporter.html#mad_gui."
+                "plugins.BaseFileImporter.load_sensor_data"
             )
         sensor_data = plot_data["sensor_data"]
         sampling_rate_hz = plot_data["sampling_rate_hz"]

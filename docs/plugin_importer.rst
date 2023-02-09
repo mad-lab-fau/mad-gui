@@ -65,9 +65,9 @@ The name will show up in the dropdown menu in the GUI's pop up when the user cli
     from typing import Dict
     import warnings
     import pandas as pd
-    from mad_gui import start_gui, BaseImporter
+    from mad_gui import start_gui, BaseFileImporter
 
-    class CustomImporter(BaseImporter):
+    class CustomImporter(BaseFileImporter):
         loadable_file_type = "*.*"
 
         @classmethod
@@ -139,4 +139,4 @@ From user perspective it should work as we have described in our
     In case loading your file does not work, we recommend to set breakpoints into your loader and check, whether
     everything does what you expect it to do. Also you might want to look at our section about
     :ref:`Troubleshooting development <troubleshooting development>` or at
-    `load_sensor_data's documentation <https://mad-gui.readthedocs.io/en/latest/modules/generated/plugins/mad_gui.plugins.BaseImporter.html#mad_gui.plugins.BaseImporter.load_sensor_data>`_.
+    `load_sensor_data's documentation <https://mad-gui.readthedocs.io/en/latest/modules/generated/plugins/mad_gui.plugins.BaseFileImporter.html#mad_gui.plugins.BaseFileImporter.load_sensor_data>`_.

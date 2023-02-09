@@ -16,7 +16,7 @@ Classes
    :toctree: generated/plugins
    :template: class.rst
 
-   BaseImporter
+   BaseFileImporter
    BaseAlgorithm
    BaseExporter
-   ExampleImporter
+   ExampleFileImporter

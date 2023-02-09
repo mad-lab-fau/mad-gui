@@ -293,7 +293,7 @@ class BaseRegionLabel(pg.LinearRegionItem):
         """Color-code start and end of the label.
 
         It may happen that either the start or the end of a label is `None`. This can happen for example,
-        when :func:`~mad_gui.plugins.BaseImporter.load_activity_stride_annotation_list` (or actually your
+        when :func:`~mad_gui.plugins.BaseFileImporter.load_activity_stride_annotation_list` (or actually your
         implementation of it) finds a start for some activities but no end. This happens for example in the context of
         gait analysis, when a swing phase is found but no preceding stance phase - then there is no label of the start
         of the stride, but a label for terminal contact and the end of the stride.
