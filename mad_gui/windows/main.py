@@ -211,7 +211,6 @@ class MainWindow(QMainWindow):
 
     def _check_plugins(self, element, allowed_plugins: Tuple[Type[BasePlugin], ...]):
         if not isinstance(element, allowed_plugins):
-            base = self._get_element_base(element)
             raise ValueError(
                 f"You passed {element} with the keyword 'plugin' to the GUI. "
                 f"However, your plugin does not inherit from {allowed_plugins}."

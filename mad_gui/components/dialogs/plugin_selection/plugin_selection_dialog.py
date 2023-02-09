@@ -1,38 +1,17 @@
+from typing import List, Union
+
 from PySide2 import QtCore
-from PySide2.QtUiTools import loadUiType
 from PySide2.QtWidgets import QDialog
 
 from mad_gui.components.dialogs.user_information import UserInformation
 from mad_gui.components.helper import set_cursor
 from mad_gui.models.global_data import GlobalData
 from mad_gui.models.local import PlotData
-from mad_gui.plugins.base import BasePlugin
+from mad_gui.plugins.base import BaseAlgorithm, BaseExporter
 from mad_gui.qt_designer import UI_PATH
-from mad_gui.utils.helper import resource_path
-from typing import List, Type
+from mad_gui.utils.helper import load_window_from_file
 
-ui_path = resource_path(str(UI_PATH / "plugin_selection.ui"))
-if ".ui" in ui_path:
-    try:
-        UiForm, _ = loadUiType(ui_path)
-    except TypeError:
-        try:
-            import sys
-            import os
-            from pathlib import Path
-
-            uic_path = Path(os.sep.join(sys.executable.split(os.sep)[:-1])) / "Scripts"
-            sys.path.append(str(uic_path))
-            UiForm, _ = loadUiType(ui_path)
-        except TypeError as e:
-            raise FileNotFoundError(
-                "Probably python did not find `pyside2-uic`. See "
-                '"https://mad-gui.readthedocs.io/en/latest/troubleshooting.html#pyside2-uic-not-found" for more '
-                "information"
-            ) from e
-
-elif ".py" in ui_path:
-    from mad_gui.qt_designer.build.plugin_selection import Ui_Form as UiForm  # noqa
+UiForm = load_window_from_file(UI_PATH / "plugin_selection.ui", "plugin_selection")
 
 
 class PluginSelectionDialog(QDialog):
@@ -46,7 +25,7 @@ class PluginSelectionDialog(QDialog):
 
     _data: PlotData
 
-    def __init__(self, plugins: List[Type[BasePlugin]], parent=None):
+    def __init__(self, plugins: List[Union[BaseAlgorithm, BaseExporter]], parent=None):
         super().__init__()
         self.plugins = plugins
         self.parent = parent
@@ -88,27 +67,27 @@ class PluginSelectionDialog(QDialog):
         loading by the regarding importer. Also, the mode of the GUI will be set to `investigate`.
         """
         try:
-            plugin_class = self.plugins[self.ui.combo_plugin.currentIndex()]
+            plugin = self.plugins[self.ui.combo_plugin.currentIndex()]
         except IndexError:
             UserInformation.inform("No methods for exporting are implemented.")
             return False
         try:
             # TODO: Implement loader config
             user_config = {}
-            plugin = plugin_class(parent=self, **user_config)
+            plugin = plugin._configure(parent=self, **user_config)
         except Exception as error:  # pylint: disable=broad-except
             # broad exception on purpose because we do not know which exceptions might be thrown by an plugin
             # created by someone else
-            UserInformation().inform(f"Error loading Plugin {plugin_class.name()} \n Error:\n {str(error)}")
+            UserInformation().inform(f"Error configuring Plugin {plugin.name()} \n Error:\n {str(error)}")
             return False
 
         try:
             plugin.process_data(self._data)
-            self.executed_plugin = plugin_class
+            self.executed_plugin = plugin
         except Exception as error:
             UserInformation().inform(
-                f"An error occured inside your plugin {plugin_class.name()}: {str(error)}\n"
-                f"Try to debug by setting a breakpoint in your plugin {plugin_class.name()} or see the command line "
+                f"An error occured inside your plugin {plugin.name()}: {str(error)}\n"
+                f"Try to debug by setting a breakpoint in your plugin {plugin.name()} or see the command line "
                 f"for more information."
             )
             raise error

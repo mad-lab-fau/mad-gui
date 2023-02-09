@@ -1,14 +1,13 @@
 """Base class for importing and processing sensor data and annotations."""
-import abc
 import datetime
 from pathlib import Path
-from typing_extensions import Self
+from typing import Dict, Union, TypedDict, List, Any, Optional
 
 import pandas as pd
+from typing_extensions import Self
 
 from mad_gui.components.dialogs.user_information import UserInformation
 from mad_gui.models.local import PlotData
-from typing import Dict, Union, TypedDict, List, Any, Optional
 
 
 class BasePlugin:
@@ -16,7 +15,7 @@ class BasePlugin:
 
     parent: Any = None
 
-    def _configure(self, parent=None, **kwargs) -> Self:
+    def _configure(self, parent=None, **_) -> Self:
         """Configure a class instance.
 
         This will be called before any of the loading methods is called.
@@ -271,7 +270,7 @@ class BaseExporter(BasePlugin):
         """Return a name, which is used to represent this Exporter in a dropdown in the GUI."""
         raise NotImplementedError()
 
-    def process_data(self, global_data):
+    def process_data(self, global_data):  # noqa
         """This method must be implemented by your plugin.
 
         Parameters

@@ -1,5 +1,4 @@
 """A dialog which is used internally by the GUI to select data/video/annotation files and an importer."""
-import importlib
 import traceback
 import warnings
 from pathlib import Path
@@ -7,7 +6,6 @@ from pathlib import Path
 import pandas as pd
 from PySide2 import QtCore
 from PySide2.QtGui import Qt
-from PySide2.QtUiTools import loadUiType
 from PySide2.QtWidgets import QDialog, QLabel, QLineEdit, QPushButton
 
 from mad_gui import BaseFileImporter
@@ -16,38 +14,11 @@ from mad_gui.components.helper import ask_for_file_name, set_cursor
 from mad_gui.config import Config
 from mad_gui.plugins.base import BaseDataImporter
 from mad_gui.qt_designer import UI_PATH
-from mad_gui.utils.helper import resource_path
+from mad_gui.utils.helper import load_window_from_file
 from mad_gui.utils.model_base import BaseStateModel, Property
-from typing import Any, Dict, List, Optional, Tuple, Type, Union
+from typing import Any, Dict, List, Optional, Tuple, Union
 
 LINK_IMPLEMENT_IMPORTER = "https://mad-gui.readthedocs.io/en/latest/customization.html#implement-an-importer"
-
-
-def load_window_from_file(path: str, import_name: str) -> Type[QDialog]:
-    ui_path = resource_path(path)
-    if ".ui" in ui_path:
-        try:
-            window, _ = loadUiType(ui_path)
-        except TypeError:
-            try:
-                import sys
-                import os
-
-                uic_path = Path(os.sep.join(sys.executable.split(os.sep)[:-1])) / "Scripts"
-                sys.path.append(str(uic_path))
-                window, _ = loadUiType(ui_path)
-            except TypeError as e:
-                raise FileNotFoundError(
-                    "Probably python did not find `pyside2-uic`. See "
-                    '"https://mad-gui.readthedocs.io/en/latest/troubleshooting.html#pyside2-uic-not-found" for more '
-                    "information"
-                ) from e
-    elif ".py" in ui_path:
-        window = importlib.import_module(import_name, package="mad_gui.qt_designer.build").Ui_Form
-    else:
-        raise ValueError(f"Unknown file type: {ui_path}")
-    return window
-
 
 LoadWindow = load_window_from_file(str(UI_PATH / "load.ui"), "load")
 LoadFromPluginWindow = load_window_from_file(str(UI_PATH / "load_from_plugin.ui"), "load_from_plugin")
