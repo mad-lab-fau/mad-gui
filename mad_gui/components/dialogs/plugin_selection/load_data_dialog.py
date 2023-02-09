@@ -81,12 +81,12 @@ class FileLoaderDialog(QDialog):
     """
 
     final_data_: Dict[str, Dict[str, Any]]
-    loader_: Type[BaseFileImporter]
+    loader_: BaseFileImporter
 
     def __init__(
         self,
         base_dir: Path,
-        loaders: List[Type[BaseFileImporter]],
+        loaders: List[BaseFileImporter],
         parent=None,
         initial_state: Optional[FileLoaderDialogState] = None,
     ):
@@ -183,11 +183,11 @@ class FileLoaderDialog(QDialog):
         try:
             # TODO: Implement loader config
             user_config = {}
-            loader = self.loader_(parent=self, **user_config)
+            loader = self.loader_._configure(parent=self, **user_config)
         except Exception as e:  # noqa
             # ignore bare except because anything can go wrong in a user-implemented plugin
             print(e)
-            UserInformation().inform(f"Error creating an instance of the plugin {self.loader_.name}:\n\n {e}")
+            UserInformation().inform(f"Error configuring the plugin {self.loader_.name}:\n\n {e}")
             return None, None
 
         try:

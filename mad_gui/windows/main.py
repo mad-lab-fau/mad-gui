@@ -12,7 +12,7 @@ from pathlib import Path
 import platform
 import ctypes
 import pickle
-from typing import Dict, Tuple, List
+from typing import Dict, Tuple, List, Type
 
 import pandas as pd
 import pyqtgraph as pg
@@ -40,7 +40,7 @@ from mad_gui.models.local import PlotData
 from mad_gui.models.ui_state import UiState, PlotState, MODES
 from mad_gui.plot_tools.plots import SensorPlot, VideoPlot
 from mad_gui.plot_tools.labels import BaseRegionLabel, BaseEventLabel
-from mad_gui.plugins.base import BaseExporter, BaseFileImporter, BaseAlgorithm
+from mad_gui.plugins.base import BaseExporter, BaseFileImporter, BaseAlgorithm, BasePlugin
 from mad_gui.plugins.helper import filter_plugins
 from mad_gui.state_keeper import StateKeeper
 from mad_gui.utils.helper import resource_path
@@ -183,10 +183,10 @@ class MainWindow(QMainWindow):
 
     def check_arguments(self, plugins, labels, events):
         for plugin in plugins:
-            self._check_argument(plugin, (BaseFileImporter, BaseAlgorithm, BaseExporter))
+            self._check_plugins(plugin, (BaseFileImporter, BaseAlgorithm, BaseExporter))
 
         for label in labels:
-            self._check_argument(label, (BaseRegionLabel,))
+            self._check_events_and_labels(label, (BaseRegionLabel,), "labels")
             if label.min_height > label.max_height:
                 raise ValueError(
                     f"For the class {label.__name__}, min_height is higher than max_height, please fix that."
@@ -198,31 +198,26 @@ class MainWindow(QMainWindow):
                 )
 
         for event in events:
-            self._check_argument(event, (BaseEventLabel,))
+            self._check_events_and_labels(event, (BaseEventLabel,), "events")
 
-    @staticmethod
-    def _get_element_base(plugin):
-        if issubclass(plugin, BaseRegionLabel):
-            return "labels"
-        if issubclass(plugin, BaseEventLabel):
-            return "events"
-        if issubclass(plugin, (BaseFileImporter, BaseAlgorithm, BaseExporter)):
-            return "plugin"
-        return "unknown"
-
-    def _check_argument(self, element, base_classes: Tuple):
+    def _check_events_and_labels(self, element, base_classes: Tuple, name: str):
         if not issubclass(element, base_classes):
             base = self._get_element_base(element)
             if base == "unknown":
                 raise ValueError(
-                    f"{element.__name__} must inherit from one of BaseFileImporter, BaseAlgorithm, "
-                    f"BaseExporter, BaseRegionLabel, or BaseEventLabel but it does not."
+                    f"You passed {element} with the keyword '{name}' to the GUI. "
+                    f"This means it should be a subclass of {base_classes}, but it is not."
                 )
+
+
+    def _check_plugins(self, element, allowed_plugins: Tuple[Type[BasePlugin], ...]):
+        if not isinstance(element, allowed_plugins):
+            base = self._get_element_base(element)
             raise ValueError(
-                f"You passed {element} with the keyword 'plugin' to the GUI. However, "
-                f"your plugin does not inherit from BaseFileImporter, BaseAlgorithm, or BaseExporter.\n"
-                f"You should have passed it with: start_gui({base}=[{element.__name__}])"
+                f"You passed {element} with the keyword 'plugin' to the GUI. "
+                f"However, your plugin does not inherit from {allowed_plugins}."
             )
+
 
     def _enable_buttons(self, enable: bool):
         """In the beginning we want the user to load data, so we just show the two buttons."""
@@ -245,7 +240,7 @@ class MainWindow(QMainWindow):
     def _configure_buttons(self):
         # buttons menu
         self.ui.btn_use_algorithm.clicked.connect(self.use_algorithm)
-        self.ui.btn_load_data.clicked.connect(self.import_data)
+        self.ui.btn_load_data.clicked.connect(self.import_data_from_file)
         self.ui.btn_save_data_gui_format.clicked.connect(self.save_data_gui_format)
         self.ui.btn_export.clicked.connect(self.export)
         self.ui.btn_load_data_gui_format.clicked.connect(self._handle_load_data_gui_format)
@@ -449,7 +444,13 @@ class MainWindow(QMainWindow):
                     self.global_data.labels = (*self.global_data.labels, label_class)
         return known_label_types
 
-    def import_data(self):
+    def import_data_from_plugin(self):
+        """Start dialog to import data from a plugin."""
+        pass
+
+
+
+    def import_data_from_file(self):
         """Start dialog to import data.
 
         This will open a :class:`mad_gui.LoadDataWindow`. In there, the user can select data to be loaded:

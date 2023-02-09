@@ -24,10 +24,10 @@ from typing import Optional, Sequence, Type
 def start_gui(
     data_dir=Path("."),
     plugins: Optional[Sequence[BasePlugin]] = (
-            ExampleFileImporter,
-            StationaryMomentsDetector,
-            EnergyCalculator,
-            ExampleExporter,
+            ExampleFileImporter(),
+            StationaryMomentsDetector(),
+            EnergyCalculator(),
+            ExampleExporter(),
     ),
     labels: Optional[Sequence[BaseRegionLabel]] = (ActivityLabel, Stride),
     events: Optional[Sequence[BaseEventLabel]] = (MyEvent,),

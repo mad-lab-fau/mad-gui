@@ -2,32 +2,58 @@
 import abc
 import datetime
 from pathlib import Path
+from typing_extensions import Self
 
 import pandas as pd
 
 from mad_gui.components.dialogs.user_information import UserInformation
 from mad_gui.models.local import PlotData
-from typing import Dict, Union
+from typing import Dict, Union, TypedDict, List, Any
 
 
 class BasePlugin:
     """All plugins inherit from this."""
 
-    def __init__(self, parent=None):
-        """Set a parent, in case this would be necessary at any later stage.
+    parent: Any = None
 
-        Parameters
-        ----------
-        parent
-            This could for example be the main window of the GUI, in case the plugin wants to access something there.
-            However, this is unlikely to be necessary since plugins receive either the single
-            :class:`mad_gui.models.GlobalData` or its attribute `PlotData`, which should be sufficient to do everything.
+    def _configure(self, parent=None, **kwargs) -> Self:
+        """Configure a class instance.
+
+        This will be called before any of the loading methods is called.
+        This means, loading methods can rely on the attributes set in this method.
         """
         self.parent = parent
+        return self
 
-    @classmethod
-    def name(cls) -> str:
+    def name(self) -> str:
         """Return a name, which is used to represent this plugin in a dropdown in the GUI."""
+        raise NotImplementedError()
+
+
+class SensorDataDict(TypedDict):
+    """A dict representing sensor data of a single sensor."""
+
+    sensor_data: pd.DataFrame
+    sampling_rate_hz: float
+
+
+class BaseDataImporter(BasePlugin):
+    """Classes based on this are expected to directly provide an index of loadable data."""
+
+    def name(cls) -> str:
+        """Return a name, which is used to represent this Importer in a dropdown in the GUI."""
+        raise NotImplementedError()
+
+    def get_selectable_data(self) -> List[str]:
+        """Return a list of names that can be selected by the user."""
+        raise NotImplementedError()
+
+    def load_sensor_data(self, index: int) -> Dict[str, SensorDataDict]:  # noqa
+        """Loading sensor data based on the index of the data that was selected by the user."""
+        raise NotImplementedError()
+
+    def load_annotations(self, index: int) -> pd.DataFrame:  # noqa
+        """Loading annotations based on the index of the data that was selected by the user."""
         raise NotImplementedError()
 
 
@@ -42,13 +68,11 @@ class BaseFileImporter(BasePlugin):
 
     file_type = {"data_file": "*.*", "video_file": "*.*", "annoatation_file": "*.*"}
 
-    @classmethod
-    @abc.abstractmethod
-    def name(cls) -> str:
+    def name(self) -> str:
         """Return a name, which is used to represent this Importer in a dropdown in the GUI."""
         raise NotImplementedError()
 
-    def load_sensor_data(self, file: str):  # noqa
+    def load_sensor_data(self, file: str) -> Dict[str, SensorDataDict]:  # noqa
         """Loading sensor data as it is usually stored by your recording device
 
         Parameters
@@ -200,13 +224,10 @@ class BaseFileImporter(BasePlugin):
 class BaseAlgorithm(BasePlugin):
     """A base class for implementing an algorithm."""
 
-    @classmethod
-    @abc.abstractmethod
-    def name(cls) -> str:
+    def name(self) -> str:
         """Return a name, which is used to represent this Algorithm in a dropdown in the GUI."""
         return "Basic Algorithm"
 
-    @abc.abstractmethod
     def process_data(self, plot_data: Dict[str, PlotData]):  # noqa
         """Get labels from the data using an algorithm.
 
@@ -237,13 +258,10 @@ class BaseAlgorithm(BasePlugin):
 class BaseExporter(BasePlugin):
     """Export the plotted data and/or annotations."""
 
-    @classmethod
-    @abc.abstractmethod
-    def name(cls) -> str:
+    def name(self) -> str:
         """Return a name, which is used to represent this Exporter in a dropdown in the GUI."""
         raise NotImplementedError()
 
-    @abc.abstractmethod
     def process_data(self, global_data):
         """This method must be implemented by your plugin.
 
