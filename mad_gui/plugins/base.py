@@ -7,6 +7,7 @@ import pandas as pd
 from typing_extensions import Self
 
 from mad_gui.components.dialogs.user_information import UserInformation
+from mad_gui.models import GlobalData
 from mad_gui.models.local import PlotData
 
 
@@ -60,7 +61,7 @@ class BaseDataImporter(BasePlugin):
         # Implementing this for backward compa
         return None
 
-    def load_annotations(self, index: int) -> pd.DataFrame:  # noqa
+    def load_annotations(self, index: int) -> Dict[str, pd.DataFrame]:  # noqa
         """Loading annotations based on the index of the data that was selected by the user."""
         raise NotImplementedError()
 
@@ -270,7 +271,7 @@ class BaseExporter(BasePlugin):
         """Return a name, which is used to represent this Exporter in a dropdown in the GUI."""
         raise NotImplementedError()
 
-    def process_data(self, global_data):  # noqa
+    def process_data(self, global_data: GlobalData):
         """This method must be implemented by your plugin.
 
         Parameters

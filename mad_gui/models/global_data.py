@@ -42,7 +42,8 @@ class GlobalData(BaseStateModel):
         see the documentation of :class:`~mad_gui.models.local.PlotData`.
 
     """
-
+    data_index = Property(None, dtype=int)
+    data_label = Property("", dtype=str)
     data_file = Property("", dtype=str)
     video_file = Property("", dtype=str)
     sync_file = Property("", dtype=str)

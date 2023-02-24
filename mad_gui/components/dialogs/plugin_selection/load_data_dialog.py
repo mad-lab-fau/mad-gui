@@ -389,6 +389,8 @@ class FromPluginLoaderDialog(QDialog):
         return_dict = {
             "plot_data_dicts": data,
             "start_time": loader.get_start_time(self.state.selected_index),
+            "data_index": self.state.selected_index,
+            "data_label": self.ui.combo_data.currentText(),
         }
         return return_dict, self.loader_
 
@@ -397,3 +399,24 @@ class FromPluginLoaderDialog(QDialog):
         if self.exec_():
             return self.final_data_, self.loader_
         return None, None
+
+    @staticmethod
+    def _incorporate_annotations_to_data(data: Dict, annotations: Dict) -> Dict:
+        for sensor, annotation in annotations.items():
+            try:
+                data[sensor]["annotations"] = annotation
+            except KeyError as k:
+                UserInformation.inform(
+                    "Loader provided annotations for sensors that have no plot. Click 'Learn More' "
+                    "for more information",
+                    help_link="https://mad-gui.readthedocs.io/en/latest/"
+                    "troubleshooting.html#loader-provided-"
+                    "annotations-that-were-not-understood",
+                )
+
+                raise ValueError(
+                    "The dict keys of the annotations must match the dict keys of the sensor data. See "
+                    "https://mad-gui.readthedocs.io/en/latest/troubleshooting.html#id2 for more "
+                    "information."
+                ) from k
+        return data

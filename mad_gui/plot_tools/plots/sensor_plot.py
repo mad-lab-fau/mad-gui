@@ -343,9 +343,19 @@ class SensorPlot(BasePlot):
         self.removeItem(item)
 
     def keyPressEvent(self, ev):  # noqa
-        if not self.mode_handler.handle_key_press(ev):
-            # This is important! As it will forward unhandled events to the parent!
-            super().keyPressEvent(ev)
+        if self.mode_handler.handle_key_press(ev):
+            # mode handler has handled the event and we don't want to get it handled again.
+            return
+
+        # If q is pressed we shift the plot to the right by a 2/3 of the current viewport
+        if ev.key() == Qt.Key_W:
+            self.shift_viewport_percent(2 / 3)
+        # if we press W we shift the plot to the left by a 2/3 of the current viewport
+        elif ev.key() == Qt.Key_Q:
+            self.shift_viewport_percent(-2 / 3)
+
+        # This is important! As it will forward unhandled events to the parent!
+        super().keyPressEvent(ev)
 
     def mousePressEvent(self, ev):  # noqa
         # Camelcase method overwrites qt method

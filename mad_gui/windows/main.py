@@ -489,6 +489,8 @@ class MainWindow(QMainWindow):
         self.global_data.start_time = data["start_time"]
         self.global_data.active_loader = loader
         self.global_data.data_file = data.get("data_file_name", "")
+        self.global_data.data_index = data.get("data_index", None)
+        self.global_data.data_label = data.get("data_label", "")
         self.global_data.sync_file = data.get("sync_file", "")
         self.global_data.video_file = data.get("video_file", "")
 
