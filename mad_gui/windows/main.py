@@ -483,11 +483,10 @@ class MainWindow(QMainWindow):
         self._set_loaded_data(*view.get_data())
 
     def _set_loaded_data(self, data, loader):
-        self.global_data.start_time = data["start_time"]
-
         if data is None:
             return
 
+        self.global_data.start_time = data["start_time"]
         self.global_data.active_loader = loader
         self.global_data.data_file = data.get("data_file_name", "")
         self.global_data.sync_file = data.get("sync_file", "")
