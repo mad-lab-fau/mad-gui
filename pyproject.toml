@@ -20,7 +20,7 @@ classifiers = [
 python = ">=3.8,<3.10"
 # we just initialize empty Dataframes, so we do not specify a verison here
 pandas = "*"  
-pyqtgraph = "0.11.0"
+pyqtgraph = "0.13.1"
 PySide2 = "5.15.1"
 typing-extensions = "^3.10.0"
 sphinx-qt-documentation = "^0.3"
