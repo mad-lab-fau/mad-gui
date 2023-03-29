@@ -73,10 +73,10 @@ class BaseEventLabel(pg.InfiniteLine):
             self.parent.setCursor(Qt.ArrowCursor)
         elif self.movable:
             super().mousePressEvent(event)
-            self.setPos(self.parent.snap_to_sample(self.pos().x()))
-
             if event.modifiers() == Qt.ControlModifier:
-                self.edit_label_description()
+                self.description = edit_label_description(description=self.descriptions, parent=self.parent.parent)
+            else:
+                self.setPos(self.parent.snap_to_sample(self.pos().x()))
 
     def mouseDragEvent(self, ev):  # noqa: N802
         super().mouseDragEvent(ev)
@@ -93,20 +93,6 @@ class BaseEventLabel(pg.InfiniteLine):
     def make_readonly(self):
         self.removable = False
         self.setMovable(False)
-
-    def edit_label_description(self):
-        """Setting the type of the activity to one given in the consts file.
-
-        Called by :meth:`mad_gui.plot_tools.SensorPlot._finish_adding_activity` or if the user clicks on the label while
-        being in edit mode. The emitted signal is caught by :meth:`mad_gui.MainWindow.ask_for_label_type`.
-        """
-        # the activities should be set by passing a `Settings` object which inherits from mad_gui.config.BaseSettings
-        # and has an attribute `ACTIVITIES`, see our developer guidelines for more information
-        new_description = NestedLabelSelectDialog(parent=self.parent.parent).get_label(self.descriptions)
-        if not new_description:
-            raise NoLabelSelected("Invalid description selected for label")
-        self.description = new_description[0]
-
 
 class BaseRegionLabel(pg.LinearRegionItem):
     """A label region label plotted in the graph.
@@ -219,7 +205,7 @@ class BaseRegionLabel(pg.LinearRegionItem):
                     "descriptions-for-the-class",
                 )
                 return
-            self.edit_label_description()
+            self.description = edit_label_description(description=self.descriptions, parent=self.parent.parent)
 
     def _hover_event(self, ev):
         """Coloring if mouse hovers of the stride"""
@@ -249,19 +235,6 @@ class BaseRegionLabel(pg.LinearRegionItem):
         if isinstance(self.description, tuple):
             return ", ".join(self.description)
         return self.description
-
-    def edit_label_description(self):
-        """Setting the type of the activity to one given in the consts file.
-
-        Called by :meth:`mad_gui.plot_tools.SensorPlot._finish_adding_activity` or if the user clicks on the label while
-        being in edit mode. The emitted signal is caught by :meth:`mad_gui.MainWindow.ask_for_label_type`.
-        """
-        # the activities should be set by passing a `Settings` object which inherits from mad_gui.config.BaseSettings
-        # and has an attribute `ACTIVITIES`, see our developer guidelines for more information
-        new_description = NestedLabelSelectDialog(parent=self.parent.parent).get_label(self.descriptions)
-        if not new_description:
-            raise NoLabelSelected("Invalid description selected for label")
-        self.description = new_description
 
     def _set_removable(self, removable: bool):
         self.removable = removable
@@ -396,3 +369,18 @@ class BaseRegionLabel(pg.LinearRegionItem):
             elif event.exit and not self.mouseHovering:
                 self.parent.setCursor(Qt.ArrowCursor)
                 self.setEnabled(True)
+
+
+def edit_label_description(description, parent):
+    """Setting the type of the activity to one given in the consts file.
+
+    Called by :meth:`mad_gui.plot_tools.SensorPlot._finish_adding_activity` or if the user clicks on the label while
+    being in edit mode. The emitted signal is caught by :meth:`mad_gui.MainWindow.ask_for_label_type`.
+    """
+    # the activities should be set by passing a `Settings` object which inherits from mad_gui.config.BaseSettings
+    # and has an attribute `ACTIVITIES`, see our developer guidelines for more information
+    new_description = NestedLabelSelectDialog(parent=parent).get_label(description)
+    if not new_description:
+        raise NoLabelSelected("Invalid description selected for label")
+
+    return new_description
