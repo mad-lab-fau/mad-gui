@@ -94,6 +94,7 @@ class BaseEventLabel(pg.InfiniteLine):
         self.removable = False
         self.setMovable(False)
 
+
 class BaseRegionLabel(pg.LinearRegionItem):
     """A label region label plotted in the graph.
 
