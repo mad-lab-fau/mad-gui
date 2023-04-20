@@ -12,7 +12,7 @@ class GlobalData(BaseStateModel):
 
     Attributes
     ----------
-    active_loader
+    active_data_loader
         One of the loaders passed to start_gui, which have inherited from :class:`~mad_gui.plugins.BaseFileImporter`. It
         can be selected by the user via the dropdown menu in the
         :class:`~mad_gui.components.dialogs.plugin_selection.FileLoaderDialog`.
@@ -42,7 +42,8 @@ class GlobalData(BaseStateModel):
         see the documentation of :class:`~mad_gui.models.local.PlotData`.
 
     """
-    active_loader = Property(None)
+
+    active_data_loader = Property(None)
     data_index = Property(None, dtype=int)
     data_label = Property("", dtype=str)
     data_file = Property("", dtype=str)

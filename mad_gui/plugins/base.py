@@ -25,7 +25,7 @@ class BasePlugin:
         self.parent = parent
         return self
 
-    def name(self) -> str:
+    def get_name(self) -> str:
         """Return a name, which is used to represent this plugin in a dropdown in the GUI."""
         raise NotImplementedError()
 
@@ -40,7 +40,7 @@ class SensorDataDict(TypedDict):
 class BaseDataImporter(BasePlugin):
     """Classes based on this are expected to directly provide an index of loadable data."""
 
-    def name(self) -> str:
+    def get_name(self) -> str:
         """Return a name, which is used to represent this Importer in a dropdown in the GUI."""
         raise NotImplementedError()
 
@@ -77,7 +77,7 @@ class BaseFileImporter(BasePlugin):
 
     file_type = {"data_file": "*.*", "video_file": "*.*", "annoatation_file": "*.*"}
 
-    def name(self) -> str:
+    def get_name(self) -> str:
         """Return a name, which is used to represent this Importer in a dropdown in the GUI."""
         raise NotImplementedError()
 
@@ -152,7 +152,7 @@ class BaseFileImporter(BasePlugin):
         """
         UserInformation.inform(
             f"The functionality of loading annotations is not implemented for the chosen importer / recording system "
-            f"({self.name()})."
+            f"({self.get_name()})."
         )
         raise NotImplementedError()
 
@@ -233,7 +233,7 @@ class BaseFileImporter(BasePlugin):
 class BaseAlgorithm(BasePlugin):
     """A base class for implementing an algorithm."""
 
-    def name(self) -> str:
+    def get_name(self) -> str:
         """Return a name, which is used to represent this Algorithm in a dropdown in the GUI."""
         return "Basic Algorithm"
 
@@ -267,7 +267,7 @@ class BaseAlgorithm(BasePlugin):
 class BaseExporter(BasePlugin):
     """Export the plotted data and/or annotations."""
 
-    def name(self) -> str:
+    def get_name(self) -> str:
         """Return a name, which is used to represent this Exporter in a dropdown in the GUI."""
         raise NotImplementedError()
 

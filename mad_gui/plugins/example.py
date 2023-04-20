@@ -48,7 +48,7 @@ class ExampleDataImporter(BaseDataImporter):
         }
         return data
 
-    def name(self) -> str:
+    def get_name(self) -> str:
         return "Example Data Importer"
 
     def get_selectable_data(self) -> List[str]:
@@ -66,8 +66,11 @@ class ExampleFileImporter(BaseFileImporter):
 
     file_type = {"data_file": "*.csv", "video_file": "*.mp4", "annotation_file": "*.csv"}
 
-    def name(self) -> str:
-        return "Example Importer"
+    def __init__(self, name: str):
+        self.name = name
+
+    def get_name(self) -> str:
+        return self.name
 
     def load_sensor_data(self, file: str) -> Dict:
         df = pd.read_csv(file)
@@ -87,7 +90,7 @@ class StationaryMomentsDetector(BaseAlgorithm):
     passed to :meth:`~mad_gui.start_gui` in order for this algorithm to create annotations.
     """
 
-    def name(self):
+    def get_name(self):
         return "Find Resting Phases (MaD GUI example)"
 
     def process_data(self, plot_data: Dict[str, PlotData]):
@@ -148,7 +151,7 @@ class EnergyCalculator(BaseAlgorithm):
     features for each existing annotation.
     """
 
-    def name(self):
+    def get_name(self):
         return "Mean energy of acceleration (MaD GUI example)"
 
     def process_data(self, plot_data: Dict[str, PlotData]):
@@ -172,7 +175,7 @@ class EnergyCalculator(BaseAlgorithm):
 class ExampleExporter(BaseExporter):
     """An exemplary exporter, which writes all existing annotations into a csv file."""
 
-    def name(self):
+    def get_name(self):
         return "Export annotations to csv (MaD GUI example)"
 
     def process_data(self, global_data: GlobalData):

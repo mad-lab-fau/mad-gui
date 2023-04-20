@@ -38,7 +38,7 @@ class PluginSelectionDialog(QDialog):
 
     def _setup_ui(self):
         self.setWindowTitle("Select Plugin")
-        self.ui.combo_plugin.addItems([plugin.name() for plugin in self.plugins])
+        self.ui.combo_plugin.addItems([plugin.get_name() for plugin in self.plugins])
         self.ui.btn_ok.clicked.connect(self._start_processing)
         self.ui.btn_cancel.clicked.connect(self.close)
 
@@ -78,7 +78,7 @@ class PluginSelectionDialog(QDialog):
         except Exception as error:  # pylint: disable=broad-except
             # broad exception on purpose because we do not know which exceptions might be thrown by an plugin
             # created by someone else
-            UserInformation().inform(f"Error configuring Plugin {plugin.name()} \n Error:\n {str(error)}")
+            UserInformation().inform(f"Error configuring Plugin {plugin.get_name()} \n Error:\n {str(error)}")
             return False
 
         try:
@@ -86,8 +86,8 @@ class PluginSelectionDialog(QDialog):
             self.executed_plugin = plugin
         except Exception as error:
             UserInformation().inform(
-                f"An error occured inside your plugin {plugin.name()}: {str(error)}\n"
-                f"Try to debug by setting a breakpoint in your plugin {plugin.name()} or see the command line "
+                f"An error occured inside your plugin {plugin.get_name()}: {str(error)}\n"
+                f"Try to debug by setting a breakpoint in your plugin {plugin.get_name()} or see the command line "
                 f"for more information."
             )
             raise error

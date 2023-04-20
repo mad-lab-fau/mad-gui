@@ -66,11 +66,13 @@ class FileLoaderDialog(QDialog):
         self,
         base_dir: Path,
         loaders: List[BaseFileImporter],
+        pre_selected_loader: Optional[BaseFileImporter] = None,
         parent=None,
         initial_state: Optional[FileLoaderDialogState] = None,
     ):
         super().__init__()
         self.loaders = loaders
+        self.pre_selected_loader = pre_selected_loader
         self.parent = parent
         self.base_dir = base_dir
 
@@ -94,7 +96,14 @@ class FileLoaderDialog(QDialog):
 
     def _setup_ui(self):
         self.setWindowTitle("Load Data")
-        self.ui.combo_plugin.addItems([loader.name() for loader in self.loaders])
+        self.ui.combo_plugin.addItems([loader.get_name() for loader in self.loaders])
+        # Set current selected plugin
+        try:
+            pre_selected = self.loaders.index(self.pre_selected_loader) if self.pre_selected_loader else 0
+        except ValueError:
+            pre_selected = 0
+            warnings.warn("Pre-selected loader not found in list of loaders.")
+        self.ui.combo_plugin.setCurrentIndex(pre_selected)
 
         self.ui.btn_select_data.clicked.connect(lambda: self._handle_file_select("data_file"))
         self.ui.btn_select_video.clicked.connect(lambda: self._handle_file_select("video_file"))
@@ -166,7 +175,7 @@ class FileLoaderDialog(QDialog):
         except Exception as e:  # noqa
             # ignore bare except because anything can go wrong in a user-implemented plugin
             print(e)
-            UserInformation().inform(f"Error configuring the plugin {self.loader_.name}:\n\n {e}")
+            UserInformation().inform(f"Error configuring the plugin {self.loader_.get_name}:\n\n {e}")
             return None, None
 
         try:
@@ -212,7 +221,7 @@ class FileLoaderDialog(QDialog):
                 help_link=LINK_IMPLEMENT_IMPORTER,
             )
             raise KeyError(
-                f"{self.loader_.name()}'s  `load_sensor_data` method must return a dict. See {LINK_IMPLEMENT_IMPORTER}"
+                f"{self.loader_.get_name()}'s  `load_sensor_data` method must return a dict. See {LINK_IMPLEMENT_IMPORTER}"
             )
 
         for plot, data in plot_data.items():
@@ -223,7 +232,7 @@ class FileLoaderDialog(QDialog):
                     help_link=LINK_IMPLEMENT_IMPORTER,
                 )
                 raise KeyError(
-                    f"{self.loader_.name()} returned data to be plotted with the name {plot}. {plot} does not contain a"
+                    f"{self.loader_.get_name()} returned data to be plotted with the name {plot}. {plot} does not contain a"
                     f" key `sensor_data`, but is expected to. `sensor_data` in turn should keep a pd.DataFrame, "
                     f"where the columns are the channels to plot and each row is one sample to plot. "
                     f"See {LINK_IMPLEMENT_IMPORTER}"
@@ -236,7 +245,7 @@ class FileLoaderDialog(QDialog):
                     help_link=LINK_IMPLEMENT_IMPORTER,
                 )
                 raise KeyError(
-                    f"{self.loader_.name()} returned data to be plotted with the name {plot}. {plot} does not contain a"
+                    f"{self.loader_.get_name()} returned data to be plotted with the name {plot}. {plot} does not contain a"
                     f" key `sampling_rate_hz`, but is expected to. `sampling_rate_hz` in turn should keep a float. "
                     f"See {LINK_IMPLEMENT_IMPORTER}"
                 )
@@ -249,7 +258,7 @@ class FileLoaderDialog(QDialog):
                     help_link=LINK_IMPLEMENT_IMPORTER,
                 )
                 raise KeyError(
-                    f"You tried to load data named {plot} using {self.loader_.name()}'s `load_sensor_data`. However, "
+                    f"You tried to load data named {plot} using {self.loader_.get_name()}'s `load_sensor_data`. However, "
                     f"the key `sensor_data` keeps data of the type {type(sensor_data)}, although it should be a "
                     f"pandas DataFrame. See {LINK_IMPLEMENT_IMPORTER} for more info."
                 )
@@ -300,11 +309,15 @@ class FromPluginLoaderDialog(QDialog):
     def __init__(
         self,
         loaders: List[BaseDataImporter],
+        pre_selected_loader: Optional[BaseDataImporter] = None,
+        pre_selected_data: Optional[int] = None,
         parent=None,
         initial_state: Optional[FromPluginLoaderDialogState] = None,
     ):
         super().__init__()
         self.loaders = loaders
+        self.pre_selected_loader = pre_selected_loader
+        self.pre_selected_data = pre_selected_data
         self.parent = parent
 
         self.state = initial_state
@@ -327,8 +340,15 @@ class FromPluginLoaderDialog(QDialog):
 
     def _setup_ui(self):
         self.setWindowTitle("Load Data from Plugin")
-        self.ui.combo_plugin.addItems(["", *[loader.name() for loader in self.loaders]])
+        self.ui.combo_plugin.addItems(["", *[loader.get_name() for loader in self.loaders]])
         self.ui.combo_plugin.currentIndexChanged.connect(self._handle_plugin_change)
+        # Set current selected plugin
+        try:
+            pre_selected = self.loaders.index(self.pre_selected_loader) + 1 if self.pre_selected_loader else 0
+        except ValueError:
+            pre_selected = 0
+            warnings.warn("Pre-selected loader not found in list of loaders.")
+        self.ui.combo_plugin.setCurrentIndex(pre_selected)
 
         self.ui.btn_ok.clicked.connect(self._handle_ok_click)
         self.ui.btn_cancel.clicked.connect(self.close)
@@ -357,6 +377,10 @@ class FromPluginLoaderDialog(QDialog):
             return
         self.loader_ = self.loaders[self.ui.combo_plugin.currentIndex() - 1]
         self.ui.combo_data.addItems(self.loader_.get_selectable_data())
+
+        if self.loader_ == self.pre_selected_loader and self.pre_selected_data is not None:
+            # If we successfully restored the pre-selected loader, we also restore the pre-selected data
+            self.ui.combo_data.setCurrentIndex(self.pre_selected_data)
 
     def _handle_ok_click(self):
         """Use the selected loader for the selcted data.

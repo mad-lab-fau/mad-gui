@@ -456,7 +456,17 @@ class MainWindow(QMainWindow):
                 "If you configured a plugin that can read from file, use the load data button instead. "
             )
             return
-        view = FromPluginLoaderDialog(loaders=loaders, parent=self)
+
+        pre_selected_loader = self.global_data.active_data_loader
+        if not isinstance(pre_selected_loader, BaseDataImporter):
+            pre_selected_loader = None
+
+        view = FromPluginLoaderDialog(
+            loaders=loaders,
+            pre_selected_loader=pre_selected_loader,
+            pre_selected_data=self.global_data.data_index,
+            parent=self,
+        )
         self._set_loaded_data(*view.get_data())
 
     def import_data_from_file(self):
@@ -483,7 +493,16 @@ class MainWindow(QMainWindow):
             )
             return
 
-        view = FileLoaderDialog(self.global_data.base_dir, loaders=loaders, parent=self)
+        pre_selected_loader = self.global_data.active_data_loader
+        if not isinstance(pre_selected_loader, BaseFileImporter):
+            pre_selected_loader = None
+
+        view = FileLoaderDialog(
+            self.global_data.base_dir,
+            loaders=loaders,
+            pre_selected_loader=self.global_data.active_data_loader,
+            parent=self,
+        )
 
         self._set_loaded_data(*view.get_data())
 
@@ -492,7 +511,7 @@ class MainWindow(QMainWindow):
             return
 
         self.global_data.start_time = data["start_time"]
-        self.global_data.active_loader = loader
+        self.global_data.active_data_loader = loader
         self.global_data.data_file = data.get("data_file_name", "")
         self.global_data.data_index = data.get("data_index", None)
         self.global_data.data_label = data.get("data_label", "")
@@ -520,7 +539,7 @@ class MainWindow(QMainWindow):
         """Set the synchronization for each plot"""
         if not sync_file:
             return
-        sync = self.global_data.active_loader.get_video_signal_synchronization(sync_file)
+        sync = self.global_data.active_data_loader.get_video_signal_synchronization(sync_file)
 
         try:
             plots = [*self.sensor_plots.items(), ("video", self.video_plot)]

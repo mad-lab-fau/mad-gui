@@ -25,7 +25,8 @@ from typing import Optional, Sequence, Type
 def start_gui(
     data_dir=Path("."),
     plugins: Optional[Sequence[BasePlugin]] = (
-        ExampleFileImporter(),
+        ExampleFileImporter("Example File Importer 1"),
+        ExampleFileImporter("Example File Importer 2"),
         ExampleDataImporter(),
         StationaryMomentsDetector(),
         EnergyCalculator(),
