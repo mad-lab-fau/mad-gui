@@ -189,8 +189,10 @@ class FileLoaderDialog(QDialog):
             data = self._incorporate_annotations_to_data(data, annotations)
 
         return_dict = {
+            "active_loader": loader,
             "plot_data_dicts": data,
             "data_file_name": self.state.data_file,
+            "annotation_file_name": self.state.annotation_file,
             "start_time": loader.get_start_time(self.state.data_file),
         }
 
@@ -387,6 +389,7 @@ class FromPluginLoaderDialog(QDialog):
         except NotImplementedError:
             pass
         return_dict = {
+            "active_loader": loader,
             "plot_data_dicts": data,
             "start_time": loader.get_start_time(self.state.selected_index),
             "data_index": self.state.selected_index,

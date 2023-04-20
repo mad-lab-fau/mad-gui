@@ -42,6 +42,7 @@ class GlobalData(BaseStateModel):
         see the documentation of :class:`~mad_gui.models.local.PlotData`.
 
     """
+    active_loader = Property(None)
     data_index = Property(None, dtype=int)
     data_label = Property("", dtype=str)
     data_file = Property("", dtype=str)

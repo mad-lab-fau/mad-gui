@@ -164,7 +164,12 @@ class MainWindow(QMainWindow):
 
         self.closeEvent = self._close_event  # doing this to have consistent method naming
 
-        self.global_data.bind(self.ui.label_displayed_data.setText, "data_file")
+        def set_display_title(_):
+            self.ui.label_displayed_data.setText(f"{self.global_data.data_file} ({self.global_data.data_label})")
+            self.setWindowTitle(f"MadGUI - {self.global_data.data_file} ({self.global_data.data_label})")
+
+        self.global_data.bind(set_display_title, "data_file")
+        self.global_data.bind(set_display_title, "data_label")
         self.global_data.bind(self._plot_data, "plot_data", initial_set=False)
         self.global_data.bind(self._set_sync, "sync_file", initial_set=False)
         self.plot_state.bind(self._update_button_state, "mode", initial_set=True)
@@ -491,6 +496,7 @@ class MainWindow(QMainWindow):
         self.global_data.data_file = data.get("data_file_name", "")
         self.global_data.data_index = data.get("data_index", None)
         self.global_data.data_label = data.get("data_label", "")
+        self.global_data.annotation_file = data.get("annotation_file", "")
         self.global_data.sync_file = data.get("sync_file", "")
         self.global_data.video_file = data.get("video_file", "")
 
