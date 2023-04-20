@@ -379,7 +379,6 @@ class FromPluginLoaderDialog(QDialog):
         self.loader_ = self.loaders[self.ui.combo_plugin.currentIndex()]
         self.ui.combo_data.addItems(self.loader_.get_selectable_data())
 
-        print(self.ui.combo_data.currentIndex())
         if self.loader_ == self.pre_selected_loader and self.pre_selected_data is not None:
             # If we successfully restored the pre-selected loader, we also restore the pre-selected data
             self.ui.combo_data.setCurrentIndex(self.pre_selected_data)
