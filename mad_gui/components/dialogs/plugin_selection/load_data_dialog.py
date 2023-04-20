@@ -221,7 +221,8 @@ class FileLoaderDialog(QDialog):
                 help_link=LINK_IMPLEMENT_IMPORTER,
             )
             raise KeyError(
-                f"{self.loader_.get_name()}'s  `load_sensor_data` method must return a dict. See {LINK_IMPLEMENT_IMPORTER}"
+                f"{self.loader_.get_name()}'s  `load_sensor_data` method must return a dict. "
+                f"See {LINK_IMPLEMENT_IMPORTER}"
             )
 
         for plot, data in plot_data.items():
@@ -232,8 +233,9 @@ class FileLoaderDialog(QDialog):
                     help_link=LINK_IMPLEMENT_IMPORTER,
                 )
                 raise KeyError(
-                    f"{self.loader_.get_name()} returned data to be plotted with the name {plot}. {plot} does not contain a"
-                    f" key `sensor_data`, but is expected to. `sensor_data` in turn should keep a pd.DataFrame, "
+                    f"{self.loader_.get_name()} returned data to be plotted with the name {plot}. "
+                    f"{plot} does not contain akey `sensor_data`, but is expected to. "
+                    "`sensor_data` in turn should keep a pd.DataFrame, "
                     f"where the columns are the channels to plot and each row is one sample to plot. "
                     f"See {LINK_IMPLEMENT_IMPORTER}"
                 )
@@ -245,8 +247,9 @@ class FileLoaderDialog(QDialog):
                     help_link=LINK_IMPLEMENT_IMPORTER,
                 )
                 raise KeyError(
-                    f"{self.loader_.get_name()} returned data to be plotted with the name {plot}. {plot} does not contain a"
-                    f" key `sampling_rate_hz`, but is expected to. `sampling_rate_hz` in turn should keep a float. "
+                    f"{self.loader_.get_name()} returned data to be plotted with the name {plot}. "
+                    f"{plot} does not contain akey `sampling_rate_hz`, but is expected to. "
+                    "`sampling_rate_hz` in turn should keep a float. "
                     f"See {LINK_IMPLEMENT_IMPORTER}"
                 )
             sensor_data = data.get("sensor_data", None)
@@ -298,10 +301,6 @@ class FileLoaderDialog(QDialog):
         return None, None
 
 
-class FromPluginLoaderDialogState(BaseStateModel):
-    selected_index: Property(None, dtype=int)
-
-
 class FromPluginLoaderDialog(QDialog):
     final_data_: Dict[str, Dict[str, Any]]
     loader_: BaseDataImporter
@@ -312,17 +311,12 @@ class FromPluginLoaderDialog(QDialog):
         pre_selected_loader: Optional[BaseDataImporter] = None,
         pre_selected_data: Optional[int] = None,
         parent=None,
-        initial_state: Optional[FromPluginLoaderDialogState] = None,
     ):
         super().__init__()
         self.loaders = loaders
         self.pre_selected_loader = pre_selected_loader
         self.pre_selected_data = pre_selected_data
         self.parent = parent
-
-        self.state = initial_state
-        if self.state is None:
-            self.state = FromPluginLoaderDialogState()
 
         self.ui = LoadFromPluginWindow()
         self.setWindowIcon(parent.windowIcon())
@@ -340,15 +334,8 @@ class FromPluginLoaderDialog(QDialog):
 
     def _setup_ui(self):
         self.setWindowTitle("Load Data from Plugin")
-        self.ui.combo_plugin.addItems(["", *[loader.get_name() for loader in self.loaders]])
+        self.ui.combo_plugin.addItems([loader.get_name() for loader in self.loaders])
         self.ui.combo_plugin.currentIndexChanged.connect(self._handle_plugin_change)
-        # Set current selected plugin
-        try:
-            pre_selected = self.loaders.index(self.pre_selected_loader) + 1 if self.pre_selected_loader else 0
-        except ValueError:
-            pre_selected = 0
-            warnings.warn("Pre-selected loader not found in list of loaders.")
-        self.ui.combo_plugin.setCurrentIndex(pre_selected)
 
         self.ui.btn_ok.clicked.connect(self._handle_ok_click)
         self.ui.btn_cancel.clicked.connect(self.close)
@@ -369,18 +356,42 @@ class FromPluginLoaderDialog(QDialog):
         self.ui.combo_data.setStyleSheet(style_cb)
         self.ui.combo_data.view().setStyleSheet(style_cb.replace("QComboBox", "QListView"))
 
+        self.ui.combo_data.currentIndexChanged.connect(self._handle_data_change)
+        self.ui.previousData.clicked.connect(lambda: self._handle_data_change_buttons_clicked(-1))
+        self.ui.nextData.clicked.connect(lambda: self._handle_data_change_buttons_clicked(1))
+
+        # Set current selected plugin
+        try:
+            pre_selected = self.loaders.index(self.pre_selected_loader) if self.pre_selected_loader else -1
+        except ValueError:
+            pre_selected = -1
+            warnings.warn("Pre-selected loader not found in list of loaders.")
+        self.ui.combo_plugin.setCurrentIndex(pre_selected)
+
+        self._handle_plugin_change()
+        self._handle_data_change()
+
     def _handle_plugin_change(self):
         # Reset selection
-        self.state.selected_index = None
         self.ui.combo_data.clear()
-        if self.ui.combo_plugin.currentIndex() == 0:
+        if self.ui.combo_plugin.currentIndex() == -1:
             return
-        self.loader_ = self.loaders[self.ui.combo_plugin.currentIndex() - 1]
+        self.loader_ = self.loaders[self.ui.combo_plugin.currentIndex()]
         self.ui.combo_data.addItems(self.loader_.get_selectable_data())
 
+        print(self.ui.combo_data.currentIndex())
         if self.loader_ == self.pre_selected_loader and self.pre_selected_data is not None:
             # If we successfully restored the pre-selected loader, we also restore the pre-selected data
             self.ui.combo_data.setCurrentIndex(self.pre_selected_data)
+
+    def _handle_data_change(self):
+        self.ui.previousData.setEnabled(self.ui.combo_data.currentIndex() > 0)
+        self.ui.nextData.setEnabled(self.ui.combo_data.currentIndex() < self.ui.combo_data.count() - 1)
+
+    def _handle_data_change_buttons_clicked(self, direction: int):
+        if self.ui.combo_data.currentIndex() == -1:
+            return
+        self.ui.combo_data.setCurrentIndex(self.ui.combo_data.currentIndex() + direction)
 
     def _handle_ok_click(self):
         """Use the selected loader for the selcted data.
@@ -398,25 +409,22 @@ class FromPluginLoaderDialog(QDialog):
 
     def _process_data(self) -> Union[Tuple[Dict[str, Dict[str, Any]], BaseDataImporter], Tuple[None, None]]:
         """Process the data and return it."""
-        if self.ui.combo_plugin.currentIndex() == 0:
-            UserInformation.inform("Please select a plugin")
-            return None, None
         if self.ui.combo_data.currentIndex() == -1:
             UserInformation.inform("Please select a data source")
             return None, None
-        self.state.selected_index = self.ui.combo_data.currentIndex()
+        selected_index = self.ui.combo_data.currentIndex()
         loader = self.loader_._configure(parent=self)
-        data = loader.load_sensor_data(self.state.selected_index)
+        data = loader.load_sensor_data(selected_index)
         try:
-            annotations = loader.load_annotations(self.state.selected_index)
+            annotations = loader.load_annotations(selected_index)
             data = self._incorporate_annotations_to_data(data, annotations)
         except NotImplementedError:
             pass
         return_dict = {
             "active_loader": loader,
             "plot_data_dicts": data,
-            "start_time": loader.get_start_time(self.state.selected_index),
-            "data_index": self.state.selected_index,
+            "start_time": loader.get_start_time(selected_index),
+            "data_index": selected_index,
             "data_label": self.ui.combo_data.currentText(),
         }
         return return_dict, self.loader_

@@ -42,7 +42,8 @@ class Sidebar(QObject):
 
     def _toggle(self):
         if self.collapsed:
-            self.ui.btn_load_data.setText("Load data")
+            self.ui.btn_load_data.setText("Load from file")
+            self.ui.btn_load_from_plugin.setText("Load from plugin")
             self.ui.btn_export.setText("Export data")
             self.ui.btn_use_algorithm.setText("Use algorithm")
             self.ui.btn_load_data_gui_format.setText("Reload displayed data")
