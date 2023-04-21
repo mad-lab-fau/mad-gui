@@ -202,7 +202,7 @@ class PartialLabel(pg.LinearRegionItem):
         if self.label_class.descriptions:
             # If it is an activity label, we need to select the activity type
             final_label.description = edit_label_description(
-                description=final_label.descriptions, parent=final_label.parent.parent
+                descriptions=final_label.descriptions, parent=final_label.parent.parent
             )
         return final_label
 

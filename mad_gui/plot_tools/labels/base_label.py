@@ -75,7 +75,9 @@ class BaseEventLabel(pg.InfiniteLine):
             super().mousePressEvent(event)
             if event.modifiers() == Qt.ControlModifier:
                 try:
-                    description = edit_label_description(description=self.descriptions, parent=self.parent.parent)
+                    description = edit_label_description(
+                        descriptions=self.descriptions, parent=self.parent.parent, initial=self.description
+                    )
                 except NoLabelSelected:
                     pass
                 else:
@@ -212,7 +214,9 @@ class BaseRegionLabel(pg.LinearRegionItem):
                 )
                 return
             try:
-                self.description = edit_label_description(description=self.descriptions, parent=self.parent.parent)
+                self.description = edit_label_description(
+                    descriptions=self.descriptions, parent=self.parent.parent, initial=self.description
+                )
             except NoLabelSelected:
                 pass
 
@@ -380,7 +384,7 @@ class BaseRegionLabel(pg.LinearRegionItem):
                 self.setEnabled(True)
 
 
-def edit_label_description(description, parent):
+def edit_label_description(descriptions, parent, initial=None):
     """Setting the type of the activity to one given in the consts file.
 
     Called by :meth:`mad_gui.plot_tools.SensorPlot._finish_adding_activity` or if the user clicks on the label while
@@ -388,7 +392,7 @@ def edit_label_description(description, parent):
     """
     # the activities should be set by passing a `Settings` object which inherits from mad_gui.config.BaseSettings
     # and has an attribute `ACTIVITIES`, see our developer guidelines for more information
-    new_description = NestedLabelSelectDialog(parent=parent).get_label(description)
+    new_description = NestedLabelSelectDialog(parent=parent, initial_selection=initial).get_label(descriptions)
     if not new_description:
         raise NoLabelSelected("Invalid description selected for label")
 

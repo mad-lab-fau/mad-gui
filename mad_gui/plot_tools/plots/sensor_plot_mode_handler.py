@@ -6,11 +6,16 @@ from PySide2.QtCore import QEvent, Qt
 from PySide2.QtGui import QMouseEvent
 from pyqtgraph import InfiniteLine, mkPen
 
-from mad_gui.components.dialogs import NestedLabelSelectDialog
 from mad_gui.components.dialogs.user_information import UserInformation
 from mad_gui.config import Config
 from mad_gui.plot_tools.labels import PartialLabel
-from mad_gui.plot_tools.labels.base_label import BaseEventLabel, BaseRegionLabel, InvalidStartEnd, NoLabelSelected
+from mad_gui.plot_tools.labels.base_label import (
+    BaseEventLabel,
+    BaseRegionLabel,
+    InvalidStartEnd,
+    NoLabelSelected,
+    edit_label_description,
+)
 from mad_gui.plot_tools.plots.base_mode_handler import BaseModeHandler
 
 
@@ -86,7 +91,9 @@ class AddModeHandler(BaseModeHandler):
     def _add_event_to_region(self, position: float):
         # self._partial_label
         label_class = self.plot.inside_label_range(position)
-        description = NestedLabelSelectDialog(parent=self.plot.parent.parent).get_label(label_class.event_descriptions)
+        description = edit_label_description(
+            descriptions=label_class.event_descriptions, parent=self.plot.parent.parent
+        )
         new_event = BaseEventLabel(
             parent=self.plot,
             pos=position * self.plot.plot_data.sampling_rate_hz,
@@ -112,8 +119,7 @@ class AddModeHandler(BaseModeHandler):
         else:
             position = self.plot.snap_to_sample(pos.x())
 
-        description = NestedLabelSelectDialog(parent=self.plot.parent).get_label(event_class.descriptions)
-
+        description = edit_label_description(descriptions=event_class.event_descriptions, parent=self.plot.parent)
         new_event = event_class(
             parent=self.plot,
             pos=position * self.plot.plot_data.sampling_rate_hz,

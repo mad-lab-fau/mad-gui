@@ -20,11 +20,12 @@ class NestedLabelSelectDialog(QDialog):
 
     latest_selection_: Tuple[str, ...] = ()
 
-    def __init__(self, parent=None):
+    def __init__(self, parent=None, initial_selection: Tuple[str, ...] = None):
         super().__init__()
         self.parent = parent
         self.setWindowIcon(self.parent.windowIcon())
         self.setPalette(self.parent.palette())
+        self.initial_selection = initial_selection or NestedLabelSelectDialog.latest_selection_
         self.main_layout = QVBoxLayout()
         self.level_widgets: List[QVBoxLayout] = []
         self.level_button_group: List[QButtonGroup] = []
@@ -57,12 +58,8 @@ class NestedLabelSelectDialog(QDialog):
 
         self.main_layout.addWidget(self.buttons)
         self._setup_level(self._get_level_keys(self._label_options), level=0)
-        if NestedLabelSelectDialog.latest_selection_:
-            for level, name_button in enumerate(NestedLabelSelectDialog.latest_selection_):
-                radiobutton = self.findChild(QRadioButton, name_button)
-                self.level_button_group[level].buttonToggled.emit(radiobutton, True)
 
-        self.level_button_group[0].buttons()[0].setFocus()
+        self.level_button_group[0].checkedButton().setFocus()
 
     def _on_label_select(self, value):
         if not value:
@@ -115,7 +112,11 @@ class NestedLabelSelectDialog(QDialog):
 
         self._clean_level(level)
 
-        first_button = None
+        pre_selected = None
+
+        initial_choice_for_level = None
+        if self.initial_selection and len(self.initial_selection) > level:
+            initial_choice_for_level = self.initial_selection[level]
 
         for i, choice in enumerate(choices):
             button = QRadioButton(str(i + 1) + ": " + choice, parent=self)
@@ -123,21 +124,16 @@ class NestedLabelSelectDialog(QDialog):
             button.installEventFilter(self)
             button.setObjectName(choice)
             if i == 0:
-                first_button = button
+                # per default we select the first button
+                pre_selected = button
+            if initial_choice_for_level == choice:
+                pre_selected = button
             # We insert instead of add to keep the stretch at the bottom
             widget.insertWidget(widget.count() - 1, button)
-            if (
-                NestedLabelSelectDialog.latest_selection_
-                and len(NestedLabelSelectDialog.latest_selection_) > level
-                and NestedLabelSelectDialog.latest_selection_[level] in choice
-            ):
-
-                button.setChecked(True)
             group.addButton(button)
 
         # Enable first checkbox:
-        if first_button is not None and not NestedLabelSelectDialog.latest_selection_:
-            first_button.setChecked(True)
+        pre_selected.setChecked(True)
 
     def get_label(self, label_options: Union[List[str], Dict[str, Any]]):
         self._max_depth = depth(label_options)
