@@ -8,8 +8,16 @@ from typing import Any, Dict, List, Tuple, Union
 
 def depth(d):
     if isinstance(d, dict):
-        return 1 + (max(map(depth, d.values())) if d else 0)
-    return 0
+        if not d:
+            # empty dict
+            return 1
+        all_depths = (depth(v) for v in d.values())
+        return 1 + max(all_depths)
+    if isinstance(d, list):
+        return 1
+    if d is None:
+        return 0
+    raise ValueError(f"Unknown type {type(d)}")
 
 
 class NestedLabelSelectDialog(QDialog):
@@ -43,7 +51,7 @@ class NestedLabelSelectDialog(QDialog):
         # Create emtpy layouts based max depth
         label_layout = QHBoxLayout()
         self.main_layout.addLayout(label_layout)
-        for i in range(self._max_depth + 1):
+        for i in range(self._max_depth):
             group_box = QGroupBox(parent=self, title=f"Level {i}")
             group_box.setPalette(self.palette())
             inner_layout = QVBoxLayout()
@@ -70,7 +78,7 @@ class NestedLabelSelectDialog(QDialog):
             return self._setup_level(choices, level + 1)
         # We have a final choice.
         # We do nothing, but we need to cleanup all further levels"
-        for i in range(level + 1, self._max_depth + 1):
+        for i in range(level + 1, self._max_depth):
             self._clean_level(i)
 
         self.current_selection_ = tuple(b.checkedButton().objectName() for b in self.level_button_group[: level + 1])
