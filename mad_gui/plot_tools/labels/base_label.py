@@ -390,7 +390,9 @@ def edit_label_description(descriptions, parent, initial=None):
     Called by :meth:`mad_gui.plot_tools.SensorPlot._finish_adding_activity` or if the user clicks on the label while
     being in edit mode. The emitted signal is caught by :meth:`mad_gui.MainWindow.ask_for_label_type`.
     """
-    if isinstance(initial, str):
+    if initial is None:
+        pass
+    elif isinstance(initial, str):
         initial = (initial,)
     else:
         initial = tuple(initial)
