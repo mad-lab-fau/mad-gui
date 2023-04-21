@@ -8,7 +8,7 @@ from mad_gui.components.dialogs import UserInformation
 from mad_gui.components.dialogs.label_annotation_dialog import NestedLabelSelectDialog
 from mad_gui.config import Config
 from mad_gui.state_keeper import StateKeeper
-from typing import Optional
+from typing import Optional, Union, Sequence
 
 
 class InvalidStartEnd(Exception):
@@ -29,7 +29,7 @@ class BaseEventLabel(pg.InfiniteLine):
         self,
         parent,
         pos,
-        description: Optional[str] = None,
+        description: Optional[Union[str, Sequence[str]]] = None,
         belongs_to_region_label: Optional[bool] = False,
         min_height: Optional[float] = 0,
         max_height: Optional[float] = 1,
@@ -145,7 +145,7 @@ class BaseRegionLabel(pg.LinearRegionItem):
         parent,
         events: Optional[pd.Series] = None,
         identifier: int = None,
-        description: Optional[str] = None,
+        description: Optional[Union[str, Sequence[str]]] = None,
         **_kwargs,  # underscore to prevent pylint form triggering
     ):
         pg.LinearRegionItem.__init__(self)
@@ -390,6 +390,11 @@ def edit_label_description(descriptions, parent, initial=None):
     Called by :meth:`mad_gui.plot_tools.SensorPlot._finish_adding_activity` or if the user clicks on the label while
     being in edit mode. The emitted signal is caught by :meth:`mad_gui.MainWindow.ask_for_label_type`.
     """
+    if isinstance(initial, str):
+        initial = (initial,)
+    else:
+        initial = tuple(initial)
+
     # the activities should be set by passing a `Settings` object which inherits from mad_gui.config.BaseSettings
     # and has an attribute `ACTIVITIES`, see our developer guidelines for more information
     new_description = NestedLabelSelectDialog(parent=parent, initial_selection=initial).get_label(descriptions)
