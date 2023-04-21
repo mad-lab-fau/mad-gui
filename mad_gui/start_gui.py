@@ -33,7 +33,7 @@ def start_gui(
     events: Optional[Sequence[BaseEventLabel]] = (MyEvent,),
     settings: Optional[Type[BaseSettings]] = BaseSettings,
     theme: Optional[Type[BaseTheme]] = BaseTheme,
-    use_opengl: bool = False,
+    use_opengl: bool = True,
 ):
     """Use this function to start the GUI and pass your plugins, like importers and algorithms to it.
 
