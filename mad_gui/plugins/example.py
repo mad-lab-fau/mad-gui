@@ -31,6 +31,7 @@ class MyEvent(BaseEventLabel):
 
 
 class Stride(BaseRegionLabel):
+    name = "Stride"
     min_height = 0
     max_height = 0.75
 
