@@ -91,9 +91,13 @@ class AddModeHandler(BaseModeHandler):
     def _add_event_to_region(self, position: float):
         # self._partial_label
         label_class = self.plot.inside_label_range(position)
-        description = edit_label_description(
-            descriptions=label_class.event_descriptions, parent=self.plot.parent.parent
-        )
+        try:
+            description = edit_label_description(
+                descriptions=label_class.event_descriptions, parent=self.plot.parent.parent
+            )
+        except NoLabelSelected:
+            # If people press cancel we do nothing
+            return
         new_event = BaseEventLabel(
             parent=self.plot,
             pos=position * self.plot.plot_data.sampling_rate_hz,
@@ -112,6 +116,11 @@ class AddModeHandler(BaseModeHandler):
         event_class = plot.inside_event_range(pos)
         if not event_class:
             return
+        try:
+            description = edit_label_description(descriptions=event_class.descriptions, parent=self.plot.parent)
+        except NoLabelSelected:
+            # If people press cancel we do nothing
+            return
         if getattr(event_class, "snap_to_min", False):
             position = self.plot.snap_to_min(pos.x())
         elif getattr(event_class, "snap_to_max", False):
@@ -119,7 +128,6 @@ class AddModeHandler(BaseModeHandler):
         else:
             position = self.plot.snap_to_sample(pos.x())
 
-        description = edit_label_description(descriptions=event_class.event_descriptions, parent=self.plot.parent)
         new_event = event_class(
             parent=self.plot,
             pos=position * self.plot.plot_data.sampling_rate_hz,
