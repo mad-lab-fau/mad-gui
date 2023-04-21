@@ -55,9 +55,6 @@ except ModuleNotFoundError:
     # we only need to import this when we are in a .exe, see pyinstaller docs
     pass
 
-# helps to make plot zooming smooth even when line width >1
-pg.setConfigOption("useOpenGL", True)
-
 # CI can't handle openGL
 if os.environ.get("GITHUB_CI"):
     pg.setConfigOption("useOpenGL", False)

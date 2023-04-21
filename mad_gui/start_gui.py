@@ -2,6 +2,7 @@ import argparse
 import sys
 from pathlib import Path
 
+import pyqtgraph
 from PySide2.QtWidgets import QApplication
 
 from mad_gui.config import BaseSettings, BaseTheme
@@ -32,6 +33,7 @@ def start_gui(
     events: Optional[Sequence[BaseEventLabel]] = (MyEvent,),
     settings: Optional[Type[BaseSettings]] = BaseSettings,
     theme: Optional[Type[BaseTheme]] = BaseTheme,
+    use_opengl: bool = False,
 ):
     """Use this function to start the GUI and pass your plugins, like importers and algorithms to it.
 
@@ -54,10 +56,15 @@ def start_gui(
         Change some settings like the snap range, if you set your label's `snap_to_min` or `snap_to_max` to `True`
     theme
         Change the two main colors (light and dark) of the GUI using this
+    use_opengl
+        If you want to use OpenGL for the plots, set this to `True`.
+        On some operating systems, this makes zooming and scrolling much smoother.
+        However, under Linux this can cause degraded performance, so you can set it to `False` there.
 
 
     """
     # Create the Qt Application
+    pyqtgraph.setConfigOptions(useOpenGL=use_opengl, useNumba=True)
     app = QApplication(sys.argv)
     form = MainWindow(
         parent=app, data_dir=data_dir, settings=settings, theme=theme, plugins=plugins, labels=labels, events=events

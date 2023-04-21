@@ -5,7 +5,7 @@ from PySide2.QtGui import QBrush, QColor, QLinearGradient, Qt
 from PySide2.QtWidgets import QWidget
 
 from mad_gui.config import Config
-from mad_gui.plot_tools.labels.base_label import BaseRegionLabel, InvalidStartEnd
+from mad_gui.plot_tools.labels.base_label import BaseRegionLabel, InvalidStartEnd, edit_label_description
 from mad_gui.state_keeper import StateKeeper
 from typing import Callable, Optional, Type
 
@@ -201,7 +201,9 @@ class PartialLabel(pg.LinearRegionItem):
         )
         if self.label_class.descriptions:
             # If it is an activity label, we need to select the activity type
-            final_label.edit_label_description()
+            final_label.description = edit_label_description(
+                description=final_label.descriptions, parent=final_label.parent.parent
+            )
         return final_label
 
 
