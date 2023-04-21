@@ -159,7 +159,11 @@ class NestedLabelSelectDialog(QDialog):
             self.reject()
             return
         current_focus = self.focusWidget().parentWidget()
-        level = self.level_widgets.index(current_focus.layout())
+        try:
+            level = self.level_widgets.index(current_focus.layout())
+        except ValueError:
+            # This happens if a widget is focused that is not part of the label selection
+            return
         choices = self._get_choices(level)
         # Number keys start at 49 to 59
         mapping = dict(zip(range(49, 59), choices))

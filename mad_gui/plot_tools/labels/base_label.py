@@ -184,7 +184,7 @@ class BaseRegionLabel(pg.LinearRegionItem):
         self.setEnabled(False)
 
     def _set_events(self, events: pd.DataFrame):
-        for event, pos in events.iteritems():
+        for event, pos in events.items():
             if pos is None:
                 return
             self.event_labels[event] = BaseEventLabel(
@@ -211,7 +211,10 @@ class BaseRegionLabel(pg.LinearRegionItem):
                     "descriptions-for-the-class",
                 )
                 return
-            self.description = edit_label_description(description=self.descriptions, parent=self.parent.parent)
+            try:
+                self.description = edit_label_description(description=self.descriptions, parent=self.parent.parent)
+            except NoLabelSelected:
+                pass
 
     def _hover_event(self, ev):
         """Coloring if mouse hovers of the stride"""

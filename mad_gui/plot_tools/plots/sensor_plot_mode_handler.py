@@ -1,17 +1,17 @@
 from __future__ import annotations
 
-from pyqtgraph import InfiniteLine, mkPen
+from typing import Optional
+
 from PySide2.QtCore import QEvent, Qt
 from PySide2.QtGui import QMouseEvent
+from pyqtgraph import InfiniteLine, mkPen
 
 from mad_gui.components.dialogs import NestedLabelSelectDialog
 from mad_gui.components.dialogs.user_information import UserInformation
 from mad_gui.config import Config
 from mad_gui.plot_tools.labels import PartialLabel
 from mad_gui.plot_tools.labels.base_label import BaseEventLabel, BaseRegionLabel, InvalidStartEnd, NoLabelSelected
-from mad_gui.plot_tools.plots import BasePlot, SensorPlot
 from mad_gui.plot_tools.plots.base_mode_handler import BaseModeHandler
-from typing import Optional
 
 
 class AddModeHandler(BaseModeHandler):

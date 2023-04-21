@@ -55,7 +55,7 @@ class BasePlot(pg.PlotWidget):
         #    self.addItem(BaseEventLabel(pos=pos, span=(event.min_height, event.max_height), parent=self))
         if event_classes is None:
             return
-        event_ranges = pd.DataFrame()
+        event_ranges = []
         for event_class in event_classes:
             if event_class.name not in self.plot_data.annotations.keys():
                 self.plot_data.annotations[event_class.name] = AnnotationData()
@@ -66,11 +66,11 @@ class BasePlot(pg.PlotWidget):
                 data=[[event_class.min_height, event_class.max_height]],
                 columns=["min_height", "max_height"],
             )
-            event_ranges = event_ranges.append(event_range)
-        self.event_ranges = event_ranges
+            event_ranges.append(event_range)
+        self.event_ranges = pd.concat(event_ranges)
 
     def _initialize_labels(self, labels: List):
-        label_ranges = pd.DataFrame()
+        label_ranges = []
 
         for label_class in labels:
             if hasattr(self.plot_data, "annotations"):
@@ -82,8 +82,8 @@ class BasePlot(pg.PlotWidget):
                 data=[[label_class.min_height, label_class.max_height]],
                 columns=["min_height", "max_height"],
             )
-            label_ranges = label_ranges.append(label_range)
-        self.label_ranges = label_ranges
+            label_ranges.append(label_range)
+        self.label_ranges = pd.concat(label_ranges)
 
     def _ensure_annotations_available(self, label_class: Union[BaseRegionLabel, BaseEventLabel]):
         if label_class.name not in self.plot_data.annotations.keys():
