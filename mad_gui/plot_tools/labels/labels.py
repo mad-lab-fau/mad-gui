@@ -1,3 +1,5 @@
+from typing import Callable, Optional, Type
+
 import numpy as np
 import pandas as pd
 import pyqtgraph as pg
@@ -7,7 +9,6 @@ from PySide2.QtWidgets import QWidget
 from mad_gui.config import Config
 from mad_gui.plot_tools.labels.base_label import BaseRegionLabel, InvalidStartEnd, edit_label_description
 from mad_gui.state_keeper import StateKeeper
-from typing import Callable, Optional, Type
 
 
 class SegmentedStrideLabel(BaseRegionLabel):

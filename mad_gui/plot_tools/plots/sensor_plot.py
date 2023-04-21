@@ -343,10 +343,9 @@ class SensorPlot(BasePlot):
         self.removeItem(item)
 
     def keyPressEvent(self, ev):  # noqa
-        # Camelcase method overwrites qt method
-        self.mode_handler.handle_key_press(ev)
-        # This is important! As it will forward unhandled events to the parent!
-        super().keyPressEvent(ev)
+        if not self.mode_handler.handle_key_press(ev):
+            # This is important! As it will forward unhandled events to the parent!
+            super().keyPressEvent(ev)
 
     def mousePressEvent(self, ev):  # noqa
         # Camelcase method overwrites qt method

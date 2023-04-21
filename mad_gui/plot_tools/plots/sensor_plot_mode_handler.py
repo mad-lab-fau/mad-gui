@@ -71,7 +71,12 @@ class AddModeHandler(BaseModeHandler):
             self.handle_mouse_click(e, pos=local)
             ev.accept()
             e.accept()
-        ev.accept()
+        if ev.key() == Qt.Key_Escape:
+            ev.accept()
+            if self._partial_label is not None:
+                self._clear_partial_label()
+                # This indicates that the event will not probagate further
+                return True
 
     def handle_mouse_movement(self, ev):
         if not self._active:
@@ -228,8 +233,8 @@ class AddModeHandler(BaseModeHandler):
             )
             self.plot.addItem(self._potential_start)
 
-    def _clear_partial_label(self):
-        if self._potential_start is not None:
+    def _clear_partial_label(self, labels_only=False):
+        if labels_only is not True and self._potential_start is not None:
             self.plot.delete_item(self._potential_start)
             self._potential_start = None
         if self._partial_label is not None:
