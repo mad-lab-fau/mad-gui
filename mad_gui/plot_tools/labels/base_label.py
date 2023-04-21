@@ -74,7 +74,12 @@ class BaseEventLabel(pg.InfiniteLine):
         elif self.movable:
             super().mousePressEvent(event)
             if event.modifiers() == Qt.ControlModifier:
-                self.description = edit_label_description(description=self.descriptions, parent=self.parent.parent)
+                try:
+                    description = edit_label_description(description=self.descriptions, parent=self.parent.parent)
+                except NoLabelSelected:
+                    pass
+                else:
+                    self.description = description
             else:
                 self.setPos(self.parent.snap_to_sample(self.pos().x()))
 
