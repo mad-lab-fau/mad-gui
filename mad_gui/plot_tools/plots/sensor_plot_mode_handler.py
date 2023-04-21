@@ -9,6 +9,7 @@ from mad_gui.components.dialogs.user_information import UserInformation
 from mad_gui.config import Config
 from mad_gui.plot_tools.labels import PartialLabel
 from mad_gui.plot_tools.labels.base_label import BaseEventLabel, BaseRegionLabel, InvalidStartEnd, NoLabelSelected
+from mad_gui.plot_tools.plots import BasePlot, SensorPlot
 from mad_gui.plot_tools.plots.base_mode_handler import BaseModeHandler
 from typing import Optional
 
@@ -141,17 +142,19 @@ class AddModeHandler(BaseModeHandler):
     def _start_new_label(self, pos):
         plot = self.plot
         label_class = self.plot.inside_label_range(pos)
-        if getattr(label_class, "snap_to_min", False) and getattr(label_class, "snap_to_max", False):
+        post_process = plot.snap_to_sample
+
+        snap_to_min = getattr(label_class, "snap_to_min", False)
+        snap_to_max = getattr(label_class, "snap_to_max", False)
+        if snap_to_min and snap_to_max:
             UserInformation.inform(
                 f"The class {label_class} is configured to snap to minimum AND maximum. Please "
                 f"only set one of those to attributes to `True`. Snapping is deactivated for now."
             )
-        elif getattr(label_class, "snap_to_min", False):
+        elif snap_to_min:
             post_process = plot.snap_to_min
-        elif getattr(label_class, "snap_to_max", False):
+        elif snap_to_max:
             post_process = plot.snap_to_max
-        else:
-            post_process = plot.snap_to_sample
 
         if self._partial_label:
             self._clear_partial_label()

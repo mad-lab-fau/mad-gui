@@ -2,13 +2,13 @@ import pyqtgraph as pg
 from PySide2.QtGui import QCursor
 from PySide2.QtWidgets import QApplication
 
-from mad_gui.plot_tools.plots.base_plot import BasePlot
+from mad_gui.plot_tools.plots import SensorPlot
 
 
 class BaseModeHandler:
     mode: str
 
-    def __init__(self, plot: BasePlot):
+    def __init__(self, plot: SensorPlot):
         self.plot = plot
         # This makes sure that the correct plot has focus when entering a new mode and can accept keyboard inputs
         # TODO: Should this be handled here on an application level?
