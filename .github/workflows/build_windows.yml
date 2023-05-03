@@ -31,7 +31,7 @@ jobs:
         pip install .
         pip install pyinstaller doit pillow
         doit prepare_build
-        pyinstaller pyinstaller.spec --onefile
+        pyinstaller pyinstaller.spec
         ls dist
         
     - uses: actions/upload-artifact@v2
