@@ -39,7 +39,7 @@ Those requirements must include everything that is needed by your plugins.
 Create a virtual environment
 ############################
 
-Install a clean python 3.7 version.
+Install a clean python version.
 We recommend that you do not use anaconda since this might lead to issues with packaging.
 Also we recommend not to have python in your PATH variable to avoid confusions.
 Next, we are going to set up an environment just for packaging.
@@ -47,17 +47,17 @@ Therefore, open a terminal and navigate to your script which starts mad_gui in t
 
 Windows
 *******
-1. <path to your fresh py3.7 installation>\\python -m venv .venv
+1. <path to your fresh py installation>\\python -m venv .venv
 2. .venv\\Scripts\\activate
 3. .venv\\Scripts\\python.exe -m pip install --upgrade pip
-4. .venv\\Scripts\\pip install -r requirements.txt pillow doit pyinstaller
+4. .venv\\Scripts\\pip install . pillow doit pyinstaller
 
 Unix
 ****
-1. <path to your fresh py3.7 installation>\python -m venv .venv
+1. <path to your fresh py installation>\python -m venv .venv
 2. source .venv/bin/activate
 3. .venv/bin/python -m pip install --upgrade pip
-4. .venv/bin/pip install -r requirements.txt pillow doit pyinstaller
+4. .venv/bin/pip install . pillow doit pyinstaller
 
 Transform UI files
 ##################
