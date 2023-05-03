@@ -47,21 +47,20 @@ Therefore, open a terminal and navigate to your script which starts mad_gui in t
 
 Windows
 *******
-```
-<path to your fresh py installation>\\python -m venv .venv
-.venv\\Scripts\\activate
-.venv\\Scripts\\python.exe -m pip install --upgrade pip
-.venv\\Scripts\\pip install . pillow doit pyinstaller
-```
+
+1. ``<path to your fresh py installation>\\python -m venv .venv``
+2. ``.venv\\Scripts\\activate``
+3. ``.venv\\Scripts\\python.exe -m pip install --upgrade pip``
+4. ``.venv\\Scripts\\pip install . pillow doit pyinstaller``
 
 Unix
 ****
-```
-<path to your fresh py installation>\python -m venv .venv
-source .venv/bin/activate
-.venv/bin/python -m pip install --upgrade pip
-.venv/bin/pip install . pillow doit pyinstaller
-```
+
+1. ``<path to your fresh py installation>\python -m venv .venv``
+2. ``source .venv/bin/activate``
+3. ``.venv/bin/python -m pip install --upgrade pip``
+4. ``.venv/bin/pip install . pillow doit pyinstaller``
+
 
 Transform UI files
 ##################
@@ -69,9 +68,7 @@ Transform UI files
 Now we can prepare the build - we need to transform some files using the `dodo.py` from :ref:`the first step in this manual <retrieve files>` in the directory where the .venv as well as your script to start the GUI are.
 It will transform some .ui files to .py files and copies them into `.venv/Lib/site-packages/mad_gui/qt_designer/build` (Unix: `.venv/lib/python3.7/site-packages/...`)
 
-```
-doit prepare_build
-```
+``doit prepare_build``
 
 Configure and use pyinstaller
 #############################
@@ -81,8 +78,6 @@ In the line `a = Analysis(['start.py'])` change `start.py` to the python script 
 In case your algorithms need some files, for example .csv files make sure to add them to the argument `datas` a few lines below.
 Also, you might need to add some `hiddenimports` further below in case pyinstaller does not find all the dependencies - you will find that out when you can not start the executable later.
 
-```
-pyinstaller pyinstaller.spec --onefile 
-```
+``pyinstaller pyinstaller.spec --onefile``
 
 Finally, you can find the standalone executable in the dist folder.
