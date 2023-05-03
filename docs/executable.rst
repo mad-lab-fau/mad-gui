@@ -78,6 +78,6 @@ In the line `a = Analysis(['start.py'])` change `start.py` to the python script 
 In case your algorithms need some files, for example .csv files make sure to add them to the argument `datas` a few lines below.
 Also, you might need to add some `hiddenimports` further below in case pyinstaller does not find all the dependencies - you will find that out when you can not start the executable later.
 
-``pyinstaller pyinstaller.spec --onefile``
+``pyinstaller pyinstaller.spec``
 
 Finally, you can find the standalone executable in the dist folder.
