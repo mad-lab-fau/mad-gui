@@ -38,5 +38,5 @@ jobs:
     - uses: actions/upload-artifact@v2
       with:
         name: windows_executable
-        path: docs/_static/images/splash.jpg
+        path: D:\a\mad-gui\mad-gui\dist\
         
