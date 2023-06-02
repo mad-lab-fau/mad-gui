@@ -1,37 +1,72 @@
 """Base class for importing and processing sensor data and annotations."""
-import abc
 import datetime
 from pathlib import Path
+from typing import Dict, Union, TypedDict, List, Any, Optional
 
 import pandas as pd
+from typing_extensions import Self
 
 from mad_gui.components.dialogs.user_information import UserInformation
+from mad_gui.models import GlobalData
 from mad_gui.models.local import PlotData
-from typing import Dict, Union
 
 
 class BasePlugin:
     """All plugins inherit from this."""
 
-    def __init__(self, parent=None):
-        """Set a parent, in case this would be necessary at any later stage.
+    parent: Any = None
 
-        Parameters
-        ----------
-        parent
-            This could for example be the main window of the GUI, in case the plugin wants to access something there.
-            However, this is unlikely to be necessary since plugins receive either the single
-            :class:`mad_gui.models.GlobalData` or its attribute `PlotData`, which should be sufficient to do everything.
+    def _configure(self, parent=None, **_) -> Self:
+        """Configure a class instance.
+
+        This will be called before any of the loading methods is called.
+        This means, loading methods can rely on the attributes set in this method.
         """
         self.parent = parent
+        return self
 
-    @classmethod
-    def name(cls) -> str:
+    def get_name(self) -> str:
         """Return a name, which is used to represent this plugin in a dropdown in the GUI."""
         raise NotImplementedError()
 
 
-class BaseImporter(BasePlugin):
+class SensorDataDict(TypedDict):
+    """A dict representing sensor data of a single sensor."""
+
+    sensor_data: pd.DataFrame
+    sampling_rate_hz: float
+
+
+class BaseDataImporter(BasePlugin):
+    """Classes based on this are expected to directly provide an index of loadable data."""
+
+    def get_name(self) -> str:
+        """Return a name, which is used to represent this Importer in a dropdown in the GUI."""
+        raise NotImplementedError()
+
+    def get_selectable_data(self) -> List[str]:
+        """Return a list of names that can be selected by the user."""
+        raise NotImplementedError()
+
+    def load_sensor_data(self, index: int) -> Dict[str, SensorDataDict]:  # noqa
+        """Loading sensor data based on the index of the data that was selected by the user."""
+        raise NotImplementedError()
+
+    def get_start_time(self, index: int) -> Optional[datetime.time]:  # noqa
+        """Get the start time of the corresponding data.
+
+        This may be used by :class:`mad_gui.plot_tools.plots.SensorPlot` to set the channel labels. However, you do not
+        necessarily have to implement it. If you do not implement it, the x-channel will simply start at 0 seconds.
+        """
+        # Implementing this for backward compa
+        return None
+
+    def load_annotations(self, index: int) -> Dict[str, pd.DataFrame]:  # noqa
+        """Loading annotations based on the index of the data that was selected by the user."""
+        raise NotImplementedError()
+
+
+class BaseFileImporter(BasePlugin):
     """Classes based on this one enable the GUI to load data from different systems/formats.
 
     Attributes
@@ -42,13 +77,11 @@ class BaseImporter(BasePlugin):
 
     file_type = {"data_file": "*.*", "video_file": "*.*", "annoatation_file": "*.*"}
 
-    @classmethod
-    @abc.abstractmethod
-    def name(cls) -> str:
+    def get_name(self) -> str:
         """Return a name, which is used to represent this Importer in a dropdown in the GUI."""
         raise NotImplementedError()
 
-    def load_sensor_data(self, file: str):  # noqa
+    def load_sensor_data(self, file: str) -> Dict[str, SensorDataDict]:  # noqa
         """Loading sensor data as it is usually stored by your recording device
 
         Parameters
@@ -88,7 +121,7 @@ class BaseImporter(BasePlugin):
     def load_annotations(self, file_path: Union[Path, str]) -> Dict[str, pd.DataFrame]:  # noqa
         """This loads annotations from file_path and converts them into the format for the GUI.
 
-        This method is called by the :class:`~mad_gui.components.dialogs.plugin_selection.LoadDataDialog` in case the
+        This method is called by the :class:`~mad_gui.components.dialogs.plugin_selection.FileLoaderDialog` in case the
         user selects a file using the "Select annotation" button. In that case, this method should open the file
         specified by `file_path` and then create.
 
@@ -119,7 +152,7 @@ class BaseImporter(BasePlugin):
         """
         UserInformation.inform(
             f"The functionality of loading annotations is not implemented for the chosen importer / recording system "
-            f"({self.name()})."
+            f"({self.get_name()})."
         )
         raise NotImplementedError()
 
@@ -200,13 +233,10 @@ class BaseImporter(BasePlugin):
 class BaseAlgorithm(BasePlugin):
     """A base class for implementing an algorithm."""
 
-    @classmethod
-    @abc.abstractmethod
-    def name(cls) -> str:
+    def get_name(self) -> str:
         """Return a name, which is used to represent this Algorithm in a dropdown in the GUI."""
         return "Basic Algorithm"
 
-    @abc.abstractmethod
     def process_data(self, plot_data: Dict[str, PlotData]):  # noqa
         """Get labels from the data using an algorithm.
 
@@ -237,14 +267,11 @@ class BaseAlgorithm(BasePlugin):
 class BaseExporter(BasePlugin):
     """Export the plotted data and/or annotations."""
 
-    @classmethod
-    @abc.abstractmethod
-    def name(cls) -> str:
+    def get_name(self) -> str:
         """Return a name, which is used to represent this Exporter in a dropdown in the GUI."""
         raise NotImplementedError()
 
-    @abc.abstractmethod
-    def process_data(self, global_data):
+    def process_data(self, global_data: GlobalData):
         """This method must be implemented by your plugin.
 
         Parameters

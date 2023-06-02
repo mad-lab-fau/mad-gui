@@ -136,9 +136,11 @@ class BasePlot(pg.PlotWidget):
     @staticmethod
     def _enforce_columns(activity: pd.Series, necessary_columns: List) -> pd.Series:
         # make sure all required fields are available
+        activities = [activity]
         for parameter in necessary_columns:
             if parameter not in activity.index:
-                activity = activity.append(pd.Series(data=[None], index=[parameter]))
+                activities.append(pd.Series(data=[None], index=[parameter]))
+        activity = pd.concat(activities)
         return activity
 
     def set_title(self, title: str):
@@ -298,6 +300,18 @@ class BasePlot(pg.PlotWidget):
         x_min = sec - getattr(Config.settings, "PLOT_WIDTH_PLAYING_VIDEO", 20) * 0.5
         x_max = sec + getattr(Config.settings, "PLOT_WIDTH_PLAYING_VIDEO", 20) * 0.5
         self.setXRange(x_min, x_max)
+
+    def shift_viewport_percent(self, percent: float):
+        """Shift the viewport by a percentage of the total width.
+
+        Parameters
+        ----------
+        percent
+            the percentage between 0 and 1 of the total width to shift the viewport by
+        """
+        x_min, x_max = self.viewRange()[0]
+        x_range = x_max - x_min
+        self.setXRange(x_min + x_range * percent, x_max + x_range * percent)
 
     def finish_syncing(self):
         if self.sync_item:

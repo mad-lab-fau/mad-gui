@@ -11,11 +11,12 @@ from mad_gui.plugins.base import BasePlugin
 from mad_gui.plugins.example import (
     EnergyCalculator,
     ExampleExporter,
-    ExampleImporter,
+    ExampleFileImporter,
     StationaryMomentsDetector,
     ActivityLabel,
     Stride,
     MyEvent,
+    ExampleDataImporter,
 )
 from mad_gui.windows import MainWindow
 from typing import Optional, Sequence, Type
@@ -24,10 +25,12 @@ from typing import Optional, Sequence, Type
 def start_gui(
     data_dir=Path("."),
     plugins: Optional[Sequence[BasePlugin]] = (
-        ExampleImporter,
-        StationaryMomentsDetector,
-        EnergyCalculator,
-        ExampleExporter,
+        ExampleFileImporter("Example File Importer 1"),
+        ExampleFileImporter("Example File Importer 2"),
+        ExampleDataImporter(),
+        StationaryMomentsDetector(),
+        EnergyCalculator(),
+        ExampleExporter(),
     ),
     labels: Optional[Sequence[BaseRegionLabel]] = (ActivityLabel, Stride),
     events: Optional[Sequence[BaseEventLabel]] = (MyEvent,),
@@ -48,7 +51,7 @@ def start_gui(
         The base path where there user will be directed to when opening a file.
     plugins
         Mostly you will adapt the GUI via this. The plugins must inherit from either of these:
-        :class:`~mad_gui.plugins.BaseImporter`, :class:`~mad_gui.plugins.BaseExporter`,
+        :class:`~mad_gui.plugins.BaseFileImporter`, :class:`~mad_gui.plugins.BaseExporter`,
         :class:`~mad_gui.plugins.BaseAlgorithm`.
     labels
         The region labels you want to use. They inherit from :class:`~mad_gui.plot_tools.labels.BaseRegionLabel`.

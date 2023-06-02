@@ -198,7 +198,7 @@ class PartialLabel(pg.LinearRegionItem):
             start=start * self.sampling_rate_hz,
             end=end * self.sampling_rate_hz,
             parent=self.label_parent,
-            events=pd.concat(events_series) if events_series else None,
+            events=pd.concat(events_series, axis=1) if events_series else None,
         )
         if self.label_class.descriptions:
             # If it is an activity label, we need to select the activity type

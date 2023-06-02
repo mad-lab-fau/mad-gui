@@ -27,10 +27,10 @@ Export displayed annotations
    .. code-block:: python
 
        from mad_gui import start_gui
-       from mad_gui.plugins import ExampleImporter
+       from mad_gui.plugins import ExampleFileImporter
        from my_exporter import CustomExporter # you need to create this file and class, see below
 
-       start_gui(plugins=[ExampleImporter, CustomExporter])
+       start_gui(plugins=[ExampleFileImporter, CustomExporter])
 
 Upon pressing the `Export data` button in the GUI, the `ExportResultsDialog <https://github.com/mad-lab-fau/mad-gui/blob/main/mad_gui/components/dialogs/plugin_selection/export_results_dialog.py#L19>`_ will be
 opened, in which your exporter can be selected. Basically, you will receive a `GlobalData <https://mad-gui.readthedocs.io/en/latest/modules/generated/mad_gui/mad_gui.models.GlobalData.html#mad_gui.models.GlobalData>`_ object, which keeps

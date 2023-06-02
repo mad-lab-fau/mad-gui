@@ -1,4 +1,6 @@
+import importlib
 import os
+import sys
 import tempfile
 import warnings
 from datetime import datetime, timedelta
@@ -6,7 +8,10 @@ from pathlib import Path
 
 from PySide2.QtCore import QObject, Signal, Slot
 
-from typing import Callable, Optional
+from typing import Callable, Optional, Type
+
+from PySide2.QtUiTools import loadUiType
+from PySide2.QtWidgets import QDialog
 
 
 def set_and_bind_property(slot: Slot, model_class: QObject, property_name: str, initial_set: bool = True):
@@ -68,8 +73,8 @@ def _get_resource_path(relative_path):
     if (time_now - date_newest_mei) > timedelta(seconds=60):
         raise FileNotFoundError("Did not find a current _MEI folder in tmp.")
     base_path = newest_mei
-    relative_path = str.replace(relative_path, ".ui", ".py")
-    relative_path = str.replace(relative_path, "qt_designer", f"qt_designer{os.sep}build")
+    relative_path = str.replace(str(relative_path), ".ui", ".py")
+    relative_path = str.replace(str(relative_path), "qt_designer", f"qt_designer{os.sep}build")
     warnings.warn(
         f"Found a _MEI folder in {tempfile.gettempdir()}, which has bee created <1 minute ago."
         f" Therefore, I assume this is called from a standalone executable."
@@ -78,3 +83,27 @@ def _get_resource_path(relative_path):
     )
 
     return base_path, relative_path
+
+
+def load_window_from_file(path: str, import_name: str) -> Type[QDialog]:
+    """Load a ui file and return the window class."""
+    ui_path = resource_path(path)
+    if ".ui" in ui_path:
+        try:
+            window, _ = loadUiType(ui_path)
+        except TypeError:
+            try:
+                uic_path = Path(os.sep.join(sys.executable.split(os.sep)[:-1])) / "Scripts"
+                sys.path.append(str(uic_path))
+                window, _ = loadUiType(ui_path)
+            except TypeError as e:
+                raise FileNotFoundError(
+                    "Probably python did not find `pyside2-uic`. See "
+                    '"https://mad-gui.readthedocs.io/en/latest/troubleshooting.html#pyside2-uic-not-found" for more '
+                    "information"
+                ) from e
+    elif ".py" in ui_path:
+        window = importlib.import_module(import_name, package="mad_gui.qt_designer.build").Ui_Form
+    else:
+        raise ValueError(f"Unknown file type: {ui_path}")
+    return window

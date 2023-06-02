@@ -593,6 +593,35 @@ QPushButton:hover{
            </widget>
           </item>
           <item>
+           <widget class="QPushButton" name="btn_load_from_plugin">
+            <property name="styleSheet">
+             <string notr="true">QPushButton{
+border: none;
+padding: 3px;
+color:rgb(0,56,101);
+text-align: left;
+}
+
+QPushButton:hover{
+	background-color: rgb(221,229,240);
+}</string>
+            </property>
+            <property name="text">
+             <string/>
+            </property>
+            <property name="icon">
+             <iconset resource="window_buttons.qrc">
+              <normaloff>:/btn/images/plugin_load.png</normaloff>:/btn/images/plugin_load.png</iconset>
+            </property>
+            <property name="iconSize">
+             <size>
+              <width>20</width>
+              <height>20</height>
+             </size>
+            </property>
+           </widget>
+          </item>
+          <item>
            <widget class="QPushButton" name="btn_use_algorithm">
             <property name="sizePolicy">
              <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
@@ -715,6 +744,7 @@ QPushButton:hover{
          <zorder>btn_export</zorder>
          <zorder>btn_load_data</zorder>
          <zorder>btn_use_algorithm</zorder>
+         <zorder>btn_load_from_plugin</zorder>
         </widget>
        </item>
        <item>
@@ -1369,7 +1399,7 @@ QPushButton:hover{
           </palette>
          </property>
          <property name="styleSheet">
-          <string notr="true">background-color: none</string>
+          <string notr="true"/>
          </property>
          <property name="frameShape">
           <enum>QFrame::NoFrame</enum>

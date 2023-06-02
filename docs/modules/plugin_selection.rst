@@ -15,4 +15,4 @@ Classes
    :template: class.rst
 
     PluginSelectionDialog
-    LoadDataDialog
+    FileLoaderDialog

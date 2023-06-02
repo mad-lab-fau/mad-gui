@@ -5,7 +5,7 @@ If data of a specific system should be used within our GUI, a file in this direc
 functionalities given by :py:mod:`mad_gui.plugins.base`, see classes below.
 """
 
-from mad_gui.plugins.base import BaseExporter, BaseImporter, BaseAlgorithm
-from mad_gui.plugins.example import ExampleImporter, ExampleExporter
+from mad_gui.plugins.base import BaseExporter, BaseFileImporter, BaseAlgorithm
+from mad_gui.plugins.example import ExampleFileImporter, ExampleExporter
 
-__all__ = ["BaseImporter", "BaseAlgorithm", "BaseExporter", "ExampleImporter", "ExampleExporter"]
+__all__ = ["BaseFileImporter", "BaseAlgorithm", "BaseExporter", "ExampleFileImporter", "ExampleExporter"]

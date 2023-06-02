@@ -4,7 +4,7 @@ import pytest
 from PySide2.QtCore import Qt, QTimer
 
 from mad_gui.models.global_data import PlotData
-from mad_gui.plugins.example import ExampleImporter
+from mad_gui.plugins.example import ExampleFileImporter
 from tests.test_windows.create_main_window import get_main_window
 
 SENSOR_NAME = "Pocket IMU"
@@ -79,7 +79,7 @@ class TestGui:
         qtbot.wait(1000)
 
         assert len(gui.sensor_plots) == 0
-        plot_data_dict = ExampleImporter().load_sensor_data(imu_file)
+        plot_data_dict = ExampleFileImporter().load_sensor_data(imu_file)
         plot_data = PlotData.from_dict(
             {
                 "sensor_data": plot_data_dict[SENSOR_NAME]["sensor_data"],

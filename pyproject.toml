@@ -1,11 +1,12 @@
 [tool.poetry]
 name = "mad_gui"
-version = "1.0.1"
+version = "2.0.0"
 description = "Python GUI for annotating and processing time series data."
 authors = [
     "Malte Ollenschlaeger <malte.ollenschlaeger@fau.de>",
     "Arne Kuederle <arne.kuederle@fau.de>",
-    "Ann-Kristin Seifer <ann-kristin.seifer@fau.de>"
+    "Ann-Kristin Seifer <ann-kristin.seifer@fau.de>",
+    "Katharina Jäger <katharina.jaeger@fau.de>"
 ]
 readme = "README_pypi.md"
 homepage = "https://github.com/mad-lab-fau/mad-gui"
@@ -21,8 +22,7 @@ python = ">=3.8,<3.10"
 pandas = ">=1.2"
 pyqtgraph = "0.13.1"
 PySide2 = "5.15.1"
-typing-extensions = "^3.10.0"
-sphinx-qt-documentation = "^0.3"
+typing-extensions = ">=4.1.1"
 python-vlc = "^3.0.16120"
 
 [tool.poetry.dev-dependencies]
@@ -41,6 +41,7 @@ pydata-sphinx-theme = "^0.6.2"
 sphinx-markdown-tables = "^0.0.15"
 prospector ="1.5.3" # older versions might work but also might crash: https://github.com/PyCQA/prospector/issues/438
 sphinxemoji = "^0.1.9"
+sphinx-qt-documentation = "^0.3"
 
 [tool.poetry.scripts]
 mad-gui = "mad_gui:start_gui"

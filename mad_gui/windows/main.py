@@ -12,7 +12,7 @@ from pathlib import Path
 import platform
 import ctypes
 import pickle
-from typing import Dict, Tuple, List
+from typing import Dict, Tuple, List, Type
 
 import pandas as pd
 import pyqtgraph as pg
@@ -28,7 +28,7 @@ from PySide2.QtWidgets import (
 from PySide2.QtGui import QPalette
 
 from mad_gui.components.dialogs.data_selector import DataSelector
-from mad_gui.components.dialogs.plugin_selection.load_data_dialog import LoadDataDialog
+from mad_gui.components.dialogs.plugin_selection.load_data_dialog import FileLoaderDialog, FromPluginLoaderDialog
 from mad_gui.components.dialogs.plugin_selection.plugin_selection_dialog import PluginSelectionDialog
 from mad_gui.components.dialogs.user_information import UserInformation
 from mad_gui.components.helper import set_cursor
@@ -40,7 +40,7 @@ from mad_gui.models.local import PlotData
 from mad_gui.models.ui_state import UiState, PlotState, MODES
 from mad_gui.plot_tools.plots import SensorPlot, VideoPlot
 from mad_gui.plot_tools.labels import BaseRegionLabel, BaseEventLabel
-from mad_gui.plugins.base import BaseExporter, BaseImporter, BaseAlgorithm
+from mad_gui.plugins.base import BaseExporter, BaseFileImporter, BaseAlgorithm, BasePlugin, BaseDataImporter
 from mad_gui.plugins.helper import filter_plugins
 from mad_gui.state_keeper import StateKeeper
 from mad_gui.utils.helper import resource_path
@@ -164,7 +164,12 @@ class MainWindow(QMainWindow):
 
         self.closeEvent = self._close_event  # doing this to have consistent method naming
 
-        self.global_data.bind(self.ui.label_displayed_data.setText, "data_file")
+        def set_display_title(_):
+            self.ui.label_displayed_data.setText(f"{self.global_data.data_file} ({self.global_data.data_label})")
+            self.setWindowTitle(f"MadGUI - {self.global_data.data_file} ({self.global_data.data_label})")
+
+        self.global_data.bind(set_display_title, "data_file")
+        self.global_data.bind(set_display_title, "data_label")
         self.global_data.bind(self._plot_data, "plot_data", initial_set=False)
         self.global_data.bind(self._set_sync, "sync_file", initial_set=False)
         self.plot_state.bind(self._update_button_state, "mode", initial_set=True)
@@ -183,10 +188,10 @@ class MainWindow(QMainWindow):
 
     def check_arguments(self, plugins, labels, events):
         for plugin in plugins:
-            self._check_argument(plugin, (BaseImporter, BaseAlgorithm, BaseExporter))
+            self._check_plugins(plugin, (BaseFileImporter, BaseDataImporter, BaseAlgorithm, BaseExporter))
 
         for label in labels:
-            self._check_argument(label, (BaseRegionLabel,))
+            self._check_events_and_labels(label, (BaseRegionLabel,), "labels")
             if label.min_height > label.max_height:
                 raise ValueError(
                     f"For the class {label.__name__}, min_height is higher than max_height, please fix that."
@@ -198,30 +203,22 @@ class MainWindow(QMainWindow):
                 )
 
         for event in events:
-            self._check_argument(event, (BaseEventLabel,))
+            self._check_events_and_labels(event, (BaseEventLabel,), "events")
 
-    @staticmethod
-    def _get_element_base(plugin):
-        if issubclass(plugin, BaseRegionLabel):
-            return "labels"
-        if issubclass(plugin, BaseEventLabel):
-            return "events"
-        if issubclass(plugin, (BaseImporter, BaseAlgorithm, BaseExporter)):
-            return "plugin"
-        return "unknown"
-
-    def _check_argument(self, element, base_classes: Tuple):
+    def _check_events_and_labels(self, element, base_classes: Tuple, name: str):
         if not issubclass(element, base_classes):
             base = self._get_element_base(element)
             if base == "unknown":
                 raise ValueError(
-                    f"{element.__name__} must inherit from one of BaseImporter, BaseAlgorithm, "
-                    f"BaseExporter, BaseRegionLabel, or BaseEventLabel but it does not."
+                    f"You passed {element} with the keyword '{name}' to the GUI. "
+                    f"This means it should be a subclass of {base_classes}, but it is not."
                 )
+
+    def _check_plugins(self, element, allowed_plugins: Tuple[Type[BasePlugin], ...]):
+        if not isinstance(element, allowed_plugins):
             raise ValueError(
-                f"You passed {element} with the keyword 'plugin' to the GUI. However, "
-                f"your plugin does not inherit from BaseImporter, BaseAlgorithm, or BaseExporter.\n"
-                f"You should have passed it with: start_gui({base}=[{element.__name__}])"
+                f"You passed {element} with the keyword 'plugin' to the GUI. "
+                f"However, your plugin does not inherit from {allowed_plugins}."
             )
 
     def _enable_buttons(self, enable: bool):
@@ -245,7 +242,8 @@ class MainWindow(QMainWindow):
     def _configure_buttons(self):
         # buttons menu
         self.ui.btn_use_algorithm.clicked.connect(self.use_algorithm)
-        self.ui.btn_load_data.clicked.connect(self.import_data)
+        self.ui.btn_load_data.clicked.connect(self.import_data_from_file)
+        self.ui.btn_load_from_plugin.clicked.connect(self.import_data_from_plugin)
         self.ui.btn_save_data_gui_format.clicked.connect(self.save_data_gui_format)
         self.ui.btn_export.clicked.connect(self.export)
         self.ui.btn_load_data_gui_format.clicked.connect(self._handle_load_data_gui_format)
@@ -449,7 +447,29 @@ class MainWindow(QMainWindow):
                     self.global_data.labels = (*self.global_data.labels, label_class)
         return known_label_types
 
-    def import_data(self):
+    def import_data_from_plugin(self):
+        """Start dialog to import data from a plugin."""
+        loaders = filter_plugins(self.global_data.plugins, BaseDataImporter)
+        if len(loaders) == 0:
+            UserInformation.inform(
+                "There were no Plugins that support direct loading passed to the GUI. "
+                "If you configured a plugin that can read from file, use the load data button instead. "
+            )
+            return
+
+        pre_selected_loader = self.global_data.active_data_loader
+        if not isinstance(pre_selected_loader, BaseDataImporter):
+            pre_selected_loader = None
+
+        view = FromPluginLoaderDialog(
+            loaders=loaders,
+            pre_selected_loader=pre_selected_loader,
+            pre_selected_data=self.global_data.data_index,
+            parent=self,
+        )
+        self._set_loaded_data(*view.get_data())
+
+    def import_data_from_file(self):
         """Start dialog to import data.
 
         This will open a :class:`mad_gui.LoadDataWindow`. In there, the user can select data to be loaded:
@@ -463,7 +483,7 @@ class MainWindow(QMainWindow):
         :mod:`mad_gui.plugins`.
 
         """
-        loaders = filter_plugins(self.global_data.plugins, BaseImporter)
+        loaders = filter_plugins(self.global_data.plugins, BaseFileImporter)
         if len(loaders) == 0:
             UserInformation.inform(
                 "There were no loaders passed to the GUI. Read more about the fact why the plugin you created does "
@@ -473,16 +493,29 @@ class MainWindow(QMainWindow):
             )
             return
 
-        view = LoadDataDialog(self.global_data.base_dir, loaders=loaders, parent=self)
+        pre_selected_loader = self.global_data.active_data_loader
+        if not isinstance(pre_selected_loader, BaseFileImporter):
+            pre_selected_loader = None
 
-        data, loader = view.get_data()
-        self.global_data.start_time = data["start_time"]
+        view = FileLoaderDialog(
+            self.global_data.base_dir,
+            loaders=loaders,
+            pre_selected_loader=self.global_data.active_data_loader,
+            parent=self,
+        )
 
+        self._set_loaded_data(*view.get_data())
+
+    def _set_loaded_data(self, data, loader):
         if data is None:
             return
 
-        self.global_data.active_loader = loader
+        self.global_data.start_time = data["start_time"]
+        self.global_data.active_data_loader = loader
         self.global_data.data_file = data.get("data_file_name", "")
+        self.global_data.data_index = data.get("data_index", None)
+        self.global_data.data_label = data.get("data_label", "")
+        self.global_data.annotation_file = data.get("annotation_file", "")
         self.global_data.sync_file = data.get("sync_file", "")
         self.global_data.video_file = data.get("video_file", "")
 
@@ -506,7 +539,7 @@ class MainWindow(QMainWindow):
         """Set the synchronization for each plot"""
         if not sync_file:
             return
-        sync = self.global_data.active_loader.get_video_signal_synchronization(sync_file)
+        sync = self.global_data.active_data_loader.get_video_signal_synchronization(sync_file)
 
         try:
             plots = [*self.sensor_plots.items(), ("video", self.video_plot)]
@@ -611,8 +644,8 @@ class MainWindow(QMainWindow):
     def use_algorithm(self):
         """Applies an algorithm to the plotted IMU data.
 
-        This will basically call :func:`mad_gui.plugins.BaseImporter.annotation_from_data`. Instead of the
-        `BaseImporter` a different importer specified in the :class:`mad_gui.LoadDataWindow` (dropdown menu)
+        This will basically call :func:`mad_gui.plugins.BaseFileImporter.annotation_from_data`. Instead of the
+        `BaseFileImporter` a different importer specified in the :class:`mad_gui.LoadDataWindow` (dropdown menu)
         might be used.
 
         The activity and/or stride labels that will be generated by that method will then be passed to the plots,

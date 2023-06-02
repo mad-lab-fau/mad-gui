@@ -16,7 +16,7 @@ Classes
    :toctree: generated/plugins
    :template: class_no_inheritances.rst
 
-   ExampleImporter
+   ExampleFileImporter
    StationaryMomentsDetector
    EnergyCalculator
    ExampleExporter
