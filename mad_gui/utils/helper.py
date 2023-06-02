@@ -73,8 +73,8 @@ def _get_resource_path(relative_path):
     if (time_now - date_newest_mei) > timedelta(seconds=60):
         raise FileNotFoundError("Did not find a current _MEI folder in tmp.")
     base_path = newest_mei
-    relative_path = str.replace(relative_path, ".ui", ".py")
-    relative_path = str.replace(relative_path, "qt_designer", f"qt_designer{os.sep}build")
+    relative_path = str.replace(str(relative_path), ".ui", ".py")
+    relative_path = str.replace(str(relative_path), "qt_designer", f"qt_designer{os.sep}build")
     warnings.warn(
         f"Found a _MEI folder in {tempfile.gettempdir()}, which has bee created <1 minute ago."
         f" Therefore, I assume this is called from a standalone executable."
