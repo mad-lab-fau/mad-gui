@@ -76,6 +76,8 @@ def task_prepare_build():
         ui_files = [file for file in os.listdir(dst_path.parent) if ".ui" in file]
         print("\n")
         for file in ui_files:
+            result = subprocess.check_output("pyside2-uic -h")
+            print(f"Result: {result}")
             print(f"Converting from: {dst_path.parent}{os.sep}{file}")
             print(f"To: {dst_path}{os.sep}{file.split('.')[0]}.py")
             result = subprocess.check_output(f"pyside2-uic -o {dst_path}{os.sep}{file.split('.')[0]}.py {dst_path.parent}{os.sep}{file}")
