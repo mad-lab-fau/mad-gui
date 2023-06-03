@@ -32,10 +32,10 @@ jobs:
         pip install pyinstaller doit pillow
         export PATH=$PATH:/Users/runner/work/mad-gui/mad-gui/.venv/bin
         doit prepare_build
-        ls /Users/runner/work/mad-gui/mad-gui/.venv/lib/python3.8/site-packages/mad_gui/qt_designer
-        pyside2-uic -h
+        echo ""
         echo "build folder contains:"
         ls /Users/runner/work/mad-gui/mad-gui/.venv/lib/python3.8/site-packages/mad_gui/qt_designer/build
+        echo ""
         pyinstaller pyinstaller.spec
         ls dist
         cd dist
