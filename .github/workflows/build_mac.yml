@@ -30,7 +30,8 @@ jobs:
         python -m pip install --upgrade pip
         pip install .
         pip install pyinstaller doit pillow
-        ls /Users/runner/work/mad-gui/mad-gui/.venv/bin/
+        export PATH=$PATH:/Users/runner/work/mad-gui/mad-gui/.venv/bin
+        which pyside2-uic
         doit prepare_build
         ls /Users/runner/work/mad-gui/mad-gui/.venv/lib/python3.8/site-packages/mad_gui/qt_designer/build
         pyinstaller pyinstaller.spec
