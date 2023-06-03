@@ -22,7 +22,7 @@ if platform.system() == "Windows":
 elif platform.system() in ["Linux", "Darwin"]:
     python_dirs = os.listdir(Path(venv_path) / "lib/")
     warnings.warn(
-        f"dodo.py: Assuming your python 3.7 installation is in {Path(venv_path)}/lib/{python_dirs[0]}"
+        f"dodo.py: Assuming your python installation is in {Path(venv_path)}/lib/{python_dirs[0]}"
     )
     site_packages_path = f"{venv_path}/lib/{python_dirs[0]}/site-packages"
 else:
