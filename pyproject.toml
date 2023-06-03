@@ -21,7 +21,7 @@ classifiers = [
 python = ">=3.8,<3.10"
 pandas = ">=1.2"
 pyqtgraph = "0.13.1"
-PySide2 = "6.5.1"
+PySide6 = "6.5.1"
 typing-extensions = ">=4.1.1"
 python-vlc = "^3.0.16120"
 
