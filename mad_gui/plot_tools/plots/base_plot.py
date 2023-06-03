@@ -138,7 +138,7 @@ class BasePlot(pg.PlotWidget):
         # make sure all required fields are available
         for parameter in necessary_columns:
             if parameter not in activity.index:
-                activity = activity.append(pd.Series(data=[None], index=[parameter]))
+                activity = pd.concat([activity, pd.Series(data=[None], index=[parameter])])
         return activity
 
     def set_title(self, title: str):
