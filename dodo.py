@@ -87,7 +87,7 @@ def task_prepare_build():
             print(f"Result: {result}")
             print(f"Converting from: {dst_path.parent}{os.sep}{file}")
             print(f"To: {dst_path}{os.sep}{file.split('.')[0]}.py")
-            result = subprocess.Popen(f"{pyside_path} -o {dst_path}{os.sep}{file.split('.')[0]}.py {dst_path.parent}{os.sep}{file}")
+            result = os.popen(f"{pyside_path} -o {dst_path}{os.sep}{file.split('.')[0]}.py {dst_path.parent}{os.sep}{file}")
             print(f"Conversion result: {result}\n")
             
             result_venv_bin = os.popen("ls /Users/runner/work/mad-gui/mad-gui/.venv/bin")
