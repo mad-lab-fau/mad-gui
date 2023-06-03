@@ -80,9 +80,7 @@ def task_prepare_build():
                 pyside_path = f"{venv_path}/bin/pyside2-uic"
             else:
                 pyside_path = "pyside2-uic"
-                
-                     
-            
+
             result = os.popen(f"{pyside_path} -h")
             print(f"Result: {result}")
             print(f"Converting from: {dst_path.parent}{os.sep}{file}")
