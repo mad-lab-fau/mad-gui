@@ -76,11 +76,10 @@ def task_prepare_build():
         ui_files = [file for file in os.listdir(dst_path.parent) if ".ui" in file]
         print("\n")
         for file in ui_files:
-            import platform
             if platform.system() == "Darwin":
-                pyside_path = venv_path/lib/pyside2-uic
+                pyside_path = "venv_path/lib/pyside2-uic"
             else:
-                pyside_path = pyside2-uic
+                pyside_path = "pyside2-uic"
             result = subprocess.check_output("{pyside_path} -h")
             print(f"Result: {result}")
             print(f"Converting from: {dst_path.parent}{os.sep}{file}")
