@@ -77,7 +77,7 @@ def task_prepare_build():
         print("\n")
         for file in ui_files:
             if platform.system() == "Darwin":
-                pyside_path = "venv_path/lib/pyside2-uic"
+                pyside_path = f"{venv_path}/lib/pyside2-uic"
             else:
                 pyside_path = "pyside2-uic"
             result = subprocess.check_output(f"{pyside_path} -h")
