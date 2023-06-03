@@ -57,7 +57,7 @@ def task_prepare_build():
         if arch in ["Linux", "Darwin"]:
             python_dirs = os.listdir(Path(venv_path) / "lib/")
             warnings.warn(
-                f"dodo.py: Assuming your python 3.7 installation is in {Path(venv_path)}/lib/{python_dirs[0]}"
+                f"dodo.py: Assuming your python installation is in {Path(venv_path)}/lib/{python_dirs[0]}"
             )
             return Path(venv_path) / "lib" / python_dirs[0] / "site-packages/mad_gui/qt_designer/build/"
         raise ValueError("What operating system is this?!")
@@ -76,8 +76,9 @@ def task_prepare_build():
         print("\n")
         for file in ui_files:
             print(f"Converting from: {dst_path.parent}{os.sep}{file}")
-            print(f"To: {dst_path}{os.sep}{file.split('.')[0]}.py\n")
-            os.popen(f"pyside2-uic -o {dst_path}{os.sep}{file.split('.')[0]}.py {dst_path.parent}{os.sep}{file}")
+            print(f"To: {dst_path}{os.sep}{file.split('.')[0]}.py")
+            result = subprocess.check_output(f"pyside2-uic -o {dst_path}{os.sep}{file.split('.')[0]}.py {dst_path.parent}{os.sep}{file}")
+            print(f"Conversio result: {result}\n")
 
         print(
             "Info: These conversions should have taken place in the virtual environment you are going to use with "
