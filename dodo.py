@@ -90,7 +90,7 @@ def task_prepare_build():
             result = subprocess.Popen(f"{pyside_path} -o {dst_path}{os.sep}{file.split('.')[0]}.py {dst_path.parent}{os.sep}{file}")
             print(f"Conversion result: {result}\n")
             
-            result_venv_bin = os.popen("ls /Users/runner/work/mad-gui/mad-gui/.venv/bin"
+            result_venv_bin = os.popen("ls /Users/runner/work/mad-gui/mad-gui/.venv/bin")
             print(f"Content of .venv/bin: {result_venv_bin}")
                                        
             result_qt_designer=os.popen("ls /Users/runner/work/mad-gui/mad-gui/.venv/lib/python3.8/site-packages/mad_gui/qt_designer/") 
