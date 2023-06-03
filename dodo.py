@@ -80,7 +80,7 @@ def task_prepare_build():
                 pyside_path = f"{venv_path}/bin/pyside2-uic"
             else:
                 pyside_path = "pyside2-uic"
-            result = subprocess.check_output("/Users/runner/work/mad-gui/mad-gui/.venv/bin")
+            result = subprocess.check_output("ls /Users/runner/work/mad-gui/mad-gui/.venv/bin")
             print(f"Content of .venv/bin: {result}")
             result = subprocess.check_output(f"{pyside_path} -h")
             print(f"Result: {result}")
