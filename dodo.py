@@ -80,7 +80,7 @@ def task_prepare_build():
                 pyside_path = "venv_path/lib/pyside2-uic"
             else:
                 pyside_path = "pyside2-uic"
-            result = subprocess.check_output("{pyside_path} -h")
+            result = subprocess.check_output(f"{pyside_path} -h")
             print(f"Result: {result}")
             print(f"Converting from: {dst_path.parent}{os.sep}{file}")
             print(f"To: {dst_path}{os.sep}{file.split('.')[0]}.py")
