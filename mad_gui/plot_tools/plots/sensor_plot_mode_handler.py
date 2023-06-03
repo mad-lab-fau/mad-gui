@@ -71,12 +71,14 @@ class AddModeHandler(BaseModeHandler):
             self.handle_mouse_click(e, pos=local)
             ev.accept()
             e.accept()
+            return True
         if ev.key() == Qt.Key_Escape:
             ev.accept()
             if self._partial_label is not None:
                 self._clear_partial_label()
                 # This indicates that the event will not probagate further
                 return True
+        return False
 
     def handle_mouse_movement(self, ev):
         if not self._active:

@@ -10,9 +10,8 @@ from mad_gui.models import GlobalData
 from mad_gui.models.local import PlotData
 from mad_gui.plot_tools.labels import BaseRegionLabel, BaseEventLabel
 from mad_gui.plugins.base import BaseAlgorithm, BaseExporter, BaseImporter
-from typing import Dict
-
 from mad_gui.state_keeper import StateKeeper
+from typing import Dict
 
 
 class ActivityLabel(BaseRegionLabel):
