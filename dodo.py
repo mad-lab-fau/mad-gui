@@ -88,16 +88,6 @@ def task_prepare_build():
             print(f"Converting from: {dst_path.parent}{os.sep}{file}")
             print(f"To: {dst_path}{os.sep}{file.split('.')[0]}.py")
             result = os.popen(f"{pyside_path} -o {dst_path}{os.sep}{file.split('.')[0]}.py {dst_path.parent}{os.sep}{file}")
-            print(f"Conversion result: {result}\n")
-            
-            result_venv_bin = os.popen("ls /Users/runner/work/mad-gui/mad-gui/.venv/bin")
-            print(f"Content of .venv/bin: {result_venv_bin}")
-                                       
-            result_qt_designer=os.popen("ls /Users/runner/work/mad-gui/mad-gui/.venv/lib/python3.8/site-packages/mad_gui/qt_designer/") 
-            print(f"Content of qt_designer: {result_qt_designer}")
-            
-            result_build=os.popen("ls /Users/runner/work/mad-gui/mad-gui/.venv/lib/python3.8/site-packages/mad_gui/qt_designer/build") 
-            print(f"Content of qt_designer: {result_build}")      
 
         print(
             "Info: These conversions should have taken place in the virtual environment you are going to use with "
