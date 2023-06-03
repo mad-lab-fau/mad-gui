@@ -13,9 +13,9 @@ jobs:
     runs-on: macos-11.0
 
     steps:
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v3
     - name: Set up Python
-      uses: actions/setup-python@v2
+      uses: actions/setup-python@v3
       with:
         python-version: '3.8'
     - name: Install dependencies
@@ -40,7 +40,7 @@ jobs:
         sudo tar -czf mad_gui.tgz mad_gui
         ls
         
-    - uses: actions/upload-artifact@v2
+    - uses: actions/upload-artifact@v3
       with:
         name: mac_11_executable
         path: /Users/runner/work/mad-gui/mad-gui/dist/
