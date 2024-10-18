@@ -20,6 +20,7 @@ classifiers = [
 [tool.poetry.dependencies]
 python = ">=3.10, <3.12"
 pandas = ">=1.2"
+numpy = "<2"
 pyqtgraph = "0.13.7"
 PySide6 = "6.5.1"
 typing-extensions = ">=4.1.1"
