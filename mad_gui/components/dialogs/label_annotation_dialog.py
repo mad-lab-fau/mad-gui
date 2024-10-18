@@ -1,7 +1,7 @@
 from functools import reduce
 
-from PySide2.QtCore import QEvent, Qt
-from PySide2.QtWidgets import QButtonGroup, QDialog, QDialogButtonBox, QGroupBox, QHBoxLayout, QRadioButton, QVBoxLayout
+from PySide6.QtCore import QEvent, Qt
+from PySide6.QtWidgets import QButtonGroup, QDialog, QDialogButtonBox, QGroupBox, QHBoxLayout, QRadioButton, QVBoxLayout
 
 from typing import Any, Dict, List, Tuple, Union
 

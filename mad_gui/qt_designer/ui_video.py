@@ -1,7 +1,7 @@
-from PySide2.QtCore import QSize, Qt
-from PySide2.QtMultimedia import QMediaPlayer, QMediaPlaylist
-from PySide2.QtMultimediaWidgets import QVideoWidget
-from PySide2.QtWidgets import QHBoxLayout, QPushButton, QSizePolicy, QSlider, QVBoxLayout, QWidget
+from PySide6.QtCore import QSize, Qt
+from PySide6.QtMultimedia import QMediaPlayer
+from PySide6.QtMultimediaWidgets import QVideoWidget
+from PySide6.QtWidgets import QHBoxLayout, QPushButton, QSizePolicy, QSlider, QVBoxLayout, QWidget
 
 
 class UiVideoWindow(QWidget):
@@ -28,7 +28,6 @@ class UiVideoWindow(QWidget):
         self.verticalLayout.addWidget(self.view_video)
 
         self.player = QMediaPlayer()
-        self.playlist = QMediaPlaylist()
 
         self.horizontalLayout = QHBoxLayout()
 

@@ -3,7 +3,7 @@ a) load and show IMU data
 b) apply an algorithm for stride segmentation and event detection
 c) be used to manually add/delete/adapt labels for strides and/or activites.
 
-isort:skip_file (Required import order: PySide2, pyqtgraph, mad_gui.*)
+isort:skip_file (Required import order: PySide6, pyqtgraph, mad_gui.*)
 """
 import os
 import sys
@@ -16,16 +16,16 @@ from typing import Dict, Tuple, List, Type
 
 import pandas as pd
 import pyqtgraph as pg
-from PySide2.QtCore import Qt
-from PySide2.QtUiTools import loadUiType
-from PySide2.QtWidgets import (
+from PySide6.QtCore import Qt
+from PySide6.QtUiTools import loadUiType
+from PySide6.QtWidgets import (
     QFileDialog,
     QMessageBox,
     QVBoxLayout,
     QMainWindow,
     QApplication,
 )
-from PySide2.QtGui import QPalette
+from PySide6.QtGui import QPalette
 
 from mad_gui.components.dialogs.data_selector import DataSelector
 from mad_gui.components.dialogs.plugin_selection.load_data_dialog import FileLoaderDialog, FromPluginLoaderDialog
@@ -60,7 +60,7 @@ if os.environ.get("GITHUB_CI"):
     pg.setConfigOption("useOpenGL", False)
 
 # Make sure that graphs are properly scaled when having multiple screens
-QApplication.setAttribute(Qt.AA_EnableHighDpiScaling)
+# QApplication.setAttribute(Qt.AA_EnableHighDpiScaling)
 os.environ["QT_AUTO_SCREEN_SCALE_FACTOR"] = "1"
 if platform.system() == "Windows" and int(float(platform.release())) >= 8:
     # we need int(float(...)) because if issues with windows 8
@@ -80,8 +80,8 @@ if ".ui" in ui_path:
             Window, _ = loadUiType(ui_path)
         except TypeError as error:
             raise FileNotFoundError(
-                "Probably python did not find `pyside2-uic`. See "
-                '"https://mad-gui.readthedocs.io/en/latest/troubleshooting.html#pyside2-uic-not-found" for more '
+                "Probably python did not find `PySide6-uic`. See "
+                '"https://mad-gui.readthedocs.io/en/latest/troubleshooting.html#PySide6-uic-not-found" for more '
                 "information"
             ) from error
 elif ".py" in ui_path:
@@ -170,7 +170,7 @@ class MainWindow(QMainWindow):
 
         self.global_data.bind(set_display_title, "data_file")
         self.global_data.bind(set_display_title, "data_label")
-        self.global_data.bind(self._plot_data, "plot_data", initial_set=False)
+        # self.global_data.bind(self._plot_data, "plot_data", initial_set=False)
         self.global_data.bind(self._set_sync, "sync_file", initial_set=False)
         self.plot_state.bind(self._update_button_state, "mode", initial_set=True)
 
@@ -468,6 +468,7 @@ class MainWindow(QMainWindow):
             parent=self,
         )
         self._set_loaded_data(*view.get_data())
+        self._plot_data(self.global_data.plot_data)
 
     def import_data_from_file(self):
         """Start dialog to import data.
@@ -505,6 +506,7 @@ class MainWindow(QMainWindow):
         )
 
         self._set_loaded_data(*view.get_data())
+        self._plot_data(self.global_data.plot_data)
 
     def _set_loaded_data(self, data, loader):
         if data is None:
@@ -693,9 +695,9 @@ class MainWindow(QMainWindow):
             ) from error
         self.global_data.plot_data = dialog._data
         set_cursor(self, Qt.ArrowCursor)
-        # actually this should be called automatically due to global_data.bind(_plot_data, "plot_data") but that does
-        # not work currently
-        # we could probably resolve it in mad_gui.plot_tools.plots.SensorPlot in the __init__ but it does not work yet
+        # TODO: actually this should be called automatically due to global_data.bind(_plot_data, "plot_data")
+        # However, that does not work currently. It seems wen setting global_data.plot_data = plot_data
+        # the key "Pocket IMU" is entered, but when plotting, the data is not there (yet)
         self._plot_data(self.global_data.plot_data)
 
     def _save_data(self, data_to_save: PlotData):

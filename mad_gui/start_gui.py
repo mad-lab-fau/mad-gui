@@ -3,7 +3,7 @@ import sys
 from pathlib import Path
 
 import pyqtgraph
-from PySide2.QtWidgets import QApplication
+from PySide6.QtWidgets import QApplication
 
 from mad_gui.config import BaseSettings, BaseTheme
 from mad_gui.plot_tools.labels import BaseEventLabel, BaseRegionLabel
@@ -74,7 +74,7 @@ def start_gui(
     )
     form.show()
 
-    sys.exit(app.exec_())
+    sys.exit(app.exec())
 
 
 if __name__ == "__main__":

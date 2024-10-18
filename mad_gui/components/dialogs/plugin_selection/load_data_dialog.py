@@ -4,9 +4,9 @@ import warnings
 from pathlib import Path
 
 import pandas as pd
-from PySide2 import QtCore
-from PySide2.QtGui import Qt
-from PySide2.QtWidgets import QDialog, QLabel, QLineEdit, QPushButton
+from PySide6 import QtCore
+from PySide6.QtGui import Qt
+from PySide6.QtWidgets import QDialog, QLabel, QLineEdit, QPushButton
 
 from mad_gui import BaseFileImporter
 from mad_gui.components.dialogs.user_information import UserInformation

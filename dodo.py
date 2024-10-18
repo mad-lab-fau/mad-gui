@@ -57,9 +57,7 @@ def task_prepare_build():
             return Path(venv_path) / "Lib/site-packages/mad_gui/qt_designer/build/"
         if arch in ["Linux", "Darwin"]:
             python_dirs = os.listdir(Path(venv_path) / "lib/")
-            warnings.warn(
-                f"dodo.py: Assuming your python installation is in {Path(venv_path)}/lib/{python_dirs[0]}"
-            )
+            warnings.warn(f"dodo.py: Assuming your python installation is in {Path(venv_path)}/lib/{python_dirs[0]}")
             return Path(venv_path) / "lib" / python_dirs[0] / "site-packages/mad_gui/qt_designer/build/"
         raise ValueError("What operating system is this?!")
 
@@ -85,7 +83,9 @@ def task_prepare_build():
             print(f"Result: {result}")
             print(f"Converting from: {dst_path.parent}{os.sep}{file}")
             print(f"To: {dst_path}{os.sep}{file.split('.')[0]}.py")
-            result = os.popen(f"{pyside_path} -o {dst_path}{os.sep}{file.split('.')[0]}.py {dst_path.parent}{os.sep}{file}")
+            result = os.popen(
+                f"{pyside_path} -o {dst_path}{os.sep}{file.split('.')[0]}.py {dst_path.parent}{os.sep}{file}"
+            )
 
         print(
             "Info: These conversions should have taken place in the virtual environment you are going to use with "

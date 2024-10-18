@@ -1,6 +1,6 @@
 import sys
 
-from PySide2.QtWidgets import QApplication
+from PySide6.QtWidgets import QApplication
 
 from mad_gui import BaseSettings, BaseTheme
 from mad_gui.plot_tools.labels import BaseEventLabel, BaseRegionLabel
@@ -33,6 +33,14 @@ def get_main_window():
     theme = BaseTheme
 
     form = MainWindow(
-        settings=settings, theme=theme, plugins=[ExampleFileImporter], labels=[BaseRegionLabel, Activity], events=[Peak]
+        settings=settings,
+        theme=theme,
+        plugins=[ExampleFileImporter("My Importer")],
+        labels=[BaseRegionLabel, Activity],
+        events=[Peak],
     )
     return form
+
+
+if __name__ == "__main__":
+    get_main_window()

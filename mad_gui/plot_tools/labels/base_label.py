@@ -2,7 +2,7 @@ import numpy as np
 import pandas as pd
 import pyqtgraph as pg
 from pyqtgraph import mkPen
-from PySide2.QtGui import QColor, QHoverEvent, QMouseEvent, Qt
+from PySide6.QtGui import QColor, QHoverEvent, QMouseEvent, Qt
 
 from mad_gui.components.dialogs import UserInformation
 from mad_gui.components.dialogs.label_annotation_dialog import NestedLabelSelectDialog

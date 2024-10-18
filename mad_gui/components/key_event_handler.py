@@ -1,5 +1,5 @@
-from PySide2.QtCore import QObject, Qt, Slot
-from PySide2.QtGui import QKeyEvent
+from PySide6.QtCore import QObject, Qt, Slot
+from PySide6.QtGui import QKeyEvent
 
 from mad_gui.models.ui_state import PlotState
 from typing import Optional, Tuple

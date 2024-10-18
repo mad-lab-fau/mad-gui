@@ -3,8 +3,8 @@ from typing import Callable, Optional, Type
 import numpy as np
 import pandas as pd
 import pyqtgraph as pg
-from PySide2.QtGui import QBrush, QColor, QLinearGradient, Qt
-from PySide2.QtWidgets import QWidget
+from PySide6.QtGui import QBrush, QColor, QLinearGradient, Qt
+from PySide6.QtWidgets import QWidget
 
 from mad_gui.config import Config
 from mad_gui.plot_tools.labels.base_label import BaseRegionLabel, InvalidStartEnd, edit_label_description

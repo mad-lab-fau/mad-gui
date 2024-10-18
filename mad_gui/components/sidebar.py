@@ -1,4 +1,4 @@
-from PySide2.QtCore import QObject, QPropertyAnimation, Signal
+from PySide6.QtCore import QObject, QPropertyAnimation, Signal
 
 from mad_gui.config import Config
 
