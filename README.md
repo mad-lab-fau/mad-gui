@@ -13,7 +13,7 @@ Ollenschläger, M.; Küderle, A.; Mehringer, W.; Seifer, A.-K.; Winkler, J.; Ga�
 **I**nterface
 
 [![Codestyle black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
-[![Test and Lint](https://github.com/mad-lab-fau/mad-gui/workflows/Test%20and%20Lint/badge.svg? branch=main)](https://github.com/mad-lab-fau/mad-gui/actions/workflows/test_and_lint.yml)
+[![Test and Lint](https://github.com/mad-lab-fau/mad-gui/workflows/Test%20and%20Lint/badge.svg?branch=main)](https://github.com/mad-lab-fau/mad-gui/actions/workflows/test_and_lint.yml)
 [![Documentation Status](https://readthedocs.org/projects/mad-gui/badge/?version=latest)](https://mad-gui.readthedocs.io/en/latest/?badge=latest)
 [![PyPI version shields.io](https://img.shields.io/pypi/v/mad-gui)](https://pypi.org/project/mad-gui/)
 [![PyPI stats](https://img.shields.io/pypi/dm/mad_gui)](https://pypi.org/project/mad-gui/)
