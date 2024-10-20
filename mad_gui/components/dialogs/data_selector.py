@@ -1,7 +1,7 @@
 """Select which kind of data should be loaded/saved."""
 
-from PySide2.QtCore import Qt
-from PySide2.QtWidgets import QCheckBox, QDialog, QDialogButtonBox, QVBoxLayout
+from PySide6.QtCore import Qt
+from PySide6.QtWidgets import QCheckBox, QDialog, QDialogButtonBox, QVBoxLayout
 
 from mad_gui.state_keeper import StateKeeper
 

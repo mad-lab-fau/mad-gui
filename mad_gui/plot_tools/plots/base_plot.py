@@ -2,8 +2,8 @@
 import pandas as pd
 import pyqtgraph as pg
 from pyqtgraph.GraphicsScene.mouseEvents import MouseClickEvent
-from PySide2.QtCore import Slot
-from PySide2.QtGui import QColor, QCursor, QMouseEvent, QPalette
+from PySide6.QtCore import Slot
+from PySide6.QtGui import QColor, QCursor, QMouseEvent, QPalette
 
 from mad_gui.config import Config
 from mad_gui.models.local import AnnotationData, PlotData
@@ -47,14 +47,12 @@ class BasePlot(pg.PlotWidget):
         self._initialize_events(event_classes)
 
     def _initialize_events(self, event_classes: List):
-        # if not hasattr(self.plot_data.annotations, "events"):
-        #    return
         # df = self.plot_data.annotations["events"].data
         # for _, event in df.iterrows():
         #    pos = self.snap_to_sample(event.pos / self.plot_data.sampling_rate_hz)
         #    self.addItem(BaseEventLabel(pos=pos, span=(event.min_height, event.max_height), parent=self))
-        if event_classes is None:
-            return
+        # if event_classes is None:
+        #    return
         event_ranges = []
         for event_class in event_classes:
             if event_class.name not in self.plot_data.annotations.keys():
@@ -74,7 +72,7 @@ class BasePlot(pg.PlotWidget):
 
         for label_class in labels:
             if hasattr(self.plot_data, "annotations"):
-                self._ensure_annotations_available(label_class)
+                self._ensure_label_available(label_class)
                 self.set_labels(label_class, self.plot_data.annotations[label_class.name].data)
 
             label_range = pd.DataFrame(
@@ -85,9 +83,13 @@ class BasePlot(pg.PlotWidget):
             label_ranges.append(label_range)
         self.label_ranges = pd.concat(label_ranges)
 
-    def _ensure_annotations_available(self, label_class: Union[BaseRegionLabel, BaseEventLabel]):
+    def _ensure_label_available(self, label_class: BaseRegionLabel):
         if label_class.name not in self.plot_data.annotations.keys():
             self.plot_data.annotations[label_class.name] = AnnotationData()
+
+    def _ensure_event_available(self, event_class: BaseEventLabel):
+        if event_class.name not in self.plot_data.annotations["events"].keys():
+            self.plot_data.annotations["events"][event_class.name] = AnnotationData()
 
     @Slot(BaseEventLabel, pd.DataFrame)
     def set_events(self, label_class: Type[BaseEventLabel], df: pd.DataFrame):

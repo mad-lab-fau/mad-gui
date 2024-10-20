@@ -1,8 +1,8 @@
 from typing import TYPE_CHECKING
 
 import pyqtgraph as pg
-from PySide2.QtGui import QCursor
-from PySide2.QtWidgets import QApplication
+from PySide6.QtGui import QCursor
+from PySide6.QtWidgets import QApplication
 
 if TYPE_CHECKING:
     from mad_gui.plot_tools.plots import SensorPlot

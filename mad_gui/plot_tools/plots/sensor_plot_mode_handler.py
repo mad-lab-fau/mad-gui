@@ -2,8 +2,8 @@ from __future__ import annotations
 
 from typing import Optional
 
-from PySide2.QtCore import QEvent, Qt
-from PySide2.QtGui import QMouseEvent
+from PySide6.QtCore import QEvent, Qt
+from PySide6.QtGui import QMouseEvent
 from pyqtgraph import InfiniteLine, mkPen
 
 from mad_gui.components.dialogs.user_information import UserInformation

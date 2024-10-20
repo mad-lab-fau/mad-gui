@@ -1,7 +1,7 @@
 from pathlib import Path
 
 import pytest
-from PySide2.QtCore import Qt, QTimer
+from PySide6.QtCore import Qt, QTimer
 
 from mad_gui.models.global_data import PlotData
 from mad_gui.plugins.example import ExampleFileImporter

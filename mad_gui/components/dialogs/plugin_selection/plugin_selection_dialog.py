@@ -1,7 +1,7 @@
 from typing import List, Union
 
-from PySide2 import QtCore
-from PySide2.QtWidgets import QDialog
+from PySide6 import QtCore
+from PySide6.QtWidgets import QDialog
 
 from mad_gui.components.dialogs.user_information import UserInformation
 from mad_gui.components.helper import set_cursor

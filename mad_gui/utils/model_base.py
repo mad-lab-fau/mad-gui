@@ -1,6 +1,6 @@
 import pandas as pd
-from PySide2.QtCore import Property as QtProperty
-from PySide2.QtCore import QObject, Signal, Slot
+from PySide6.QtCore import Property as QtProperty
+from PySide6.QtCore import QObject, Signal, Slot
 from typing_extensions import Literal
 
 from mad_gui.utils import helper

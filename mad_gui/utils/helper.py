@@ -6,12 +6,12 @@ import warnings
 from datetime import datetime, timedelta
 from pathlib import Path
 
-from PySide2.QtCore import QObject, Signal, Slot
+from PySide6.QtCore import QObject, Signal, Slot
 
 from typing import Callable, Optional, Type
 
-from PySide2.QtUiTools import loadUiType
-from PySide2.QtWidgets import QDialog
+from PySide6.QtUiTools import loadUiType
+from PySide6.QtWidgets import QDialog
 
 
 def set_and_bind_property(slot: Slot, model_class: QObject, property_name: str, initial_set: bool = True):
@@ -98,8 +98,8 @@ def load_window_from_file(path: str, import_name: str) -> Type[QDialog]:
                 window, _ = loadUiType(ui_path)
             except TypeError as e:
                 raise FileNotFoundError(
-                    "Probably python did not find `pyside2-uic`. See "
-                    '"https://mad-gui.readthedocs.io/en/latest/troubleshooting.html#pyside2-uic-not-found" for more '
+                    "Probably python did not find `PySide6-uic`. See "
+                    '"https://mad-gui.readthedocs.io/en/latest/troubleshooting.html#PySide6-uic-not-found" for more '
                     "information"
                 ) from e
     elif ".py" in ui_path:

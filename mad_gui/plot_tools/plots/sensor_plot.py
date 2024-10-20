@@ -3,9 +3,9 @@ import datetime
 import numpy as np
 import pandas as pd
 import pyqtgraph as pg
-from PySide2.QtCore import QObject, Qt, QTime, Slot
-from PySide2.QtUiTools import loadUiType
-from PySide2.QtWidgets import (
+from PySide6.QtCore import QObject, Qt, QTime, Slot
+from PySide6.QtUiTools import loadUiType
+from PySide6.QtWidgets import (
     QButtonGroup,
     QCheckBox,
     QDialog,
@@ -53,8 +53,8 @@ if ".ui" in ui_path:
             ChannelSelector, _ = loadUiType(ui_path)
         except TypeError as e:
             raise FileNotFoundError(
-                "Probably python did not find `pyside2-uic`. See "
-                '"https://mad-gui.readthedocs.io/en/latest/troubleshooting.html#pyside2-uic-not-found" for more '
+                "Probably python did not find `PySide6-uic`. See "
+                '"https://mad-gui.readthedocs.io/en/latest/troubleshooting.html#PySide6-uic-not-found" for more '
                 "information"
             ) from e
 
@@ -204,7 +204,8 @@ class SensorPlot(BasePlot):
         self.channels_selection_button_group.buttonToggled.connect(self._update_plotted_channels)
 
         # add to plotwidget
-        self.getPlotItem().vb.menu.axes.append(submenu)
+        # self.getPlotItem().vb.menu.axes.append(submenu)
+
         self.getPlotItem().vb.menu.ctrl.append(ui)
         self.getPlotItem().vb.menu.widgetGroups.append(submenu)
         self.getPlotItem().vb.menu.addMenu(submenu)

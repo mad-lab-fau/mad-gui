@@ -3,7 +3,7 @@ from pathlib import Path
 
 import numpy as np
 import pandas as pd
-from PySide2.QtWidgets import QFileDialog
+from PySide6.QtWidgets import QFileDialog
 
 from mad_gui.components.dialogs import UserInformation
 from mad_gui.models import GlobalData

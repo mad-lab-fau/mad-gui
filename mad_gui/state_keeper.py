@@ -1,6 +1,6 @@
 """Keeps the state of the GUI and related signals / slots."""
 
-from PySide2.QtCore import QObject, Signal, Slot
+from PySide6.QtCore import QObject, Signal, Slot
 
 
 class _StateKeeper(QObject):

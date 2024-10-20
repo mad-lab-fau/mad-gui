@@ -1,6 +1,6 @@
 """A window to display a message for the user and potentially getting a yes/no answer."""
-from PySide2.QtCore import Qt
-from PySide2.QtWidgets import QDialog, QMessageBox
+from PySide6.QtCore import Qt
+from PySide6.QtWidgets import QDialog, QMessageBox
 
 from typing import Optional
 
@@ -68,7 +68,7 @@ class UserInformation(QDialog):
         Note: If you want to execute the following example without having a MaD GUI instance running (i.e. you did
         not use :meth:`mad_gui.start_gui`, you need to:
 
-        >>> from PySide2.QtWidgets import QApplication
+        >>> from PySide6.QtWidgets import QApplication
         >>> app = QApplication()
 
         You do not need the above code snippet, if you want to implement the lines below into your plugin.
@@ -97,7 +97,7 @@ class UserInformation(QDialog):
         Returns
         -------
         answer
-            Either `Yes` or `No` of the class :py:class:`PySide2.QtWidgets.QMessageBox`.
+            Either `Yes` or `No` of the class :py:class:`PySide6.QtWidgets.QMessageBox`.
             :py:
 
         Examples
@@ -105,12 +105,12 @@ class UserInformation(QDialog):
         Note: If you want to execute the following example without having a MaD GUI instance running (i.e. you did
         not use :meth:`mad_gui.start_gui`, you need to:
 
-        >>> from PySide2.QtWidgets import QApplication
+        >>> from PySide6.QtWidgets import QApplication
         >>> app = QApplication()
 
         You do not need the above code snippet, if you want to implement the lines below into your plugin.
 
-        >>> from PySide2.QtWidgets import QMessageBox
+        >>> from PySide6.QtWidgets import QMessageBox
         >>> from mad_gui.components.dialogs import UserInformation
         >>> answer = UserInformation.confirm("Do you want to perform X?")
         >>> if answer == QMessageBox.Yes:

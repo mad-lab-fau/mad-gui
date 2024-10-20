@@ -1,8 +1,9 @@
 import warnings
 
 import pandas as pd
-from PySide2.QtCore import QObject, Qt, QUrl
-from PySide2.QtMultimedia import QMediaContent, QMediaPlayer, QMediaPlaylist
+from PySide6.QtCore import QObject, Qt, QUrl
+from PySide6.QtMultimedia import QMediaPlayer
+
 
 from mad_gui.components.dialogs import UserInformation
 from mad_gui.qt_designer.ui_video import UiVideoWindow
@@ -51,11 +52,12 @@ class VideoWindow(UiVideoWindow, QObject):
 
     def start_video(self, video_file: str):
         self.video_file = video_file
-        self.playlist.clear()
-        self.playlist.addMedia(QMediaContent(QUrl.fromLocalFile(video_file)))
-        self.playlist.setCurrentIndex(0)
+        # self.playlist.clear()
+        # self.playlist.addMedia(QUrl.fromLocalFile(video_file))
+        # self.playlist.setCurrentIndex(0)
         self.playlist.setPlaybackMode(QMediaPlaylist.CurrentItemInLoop)
-        self.player.setPlaylist(self.playlist)
+        self.player.setSource(QUrl.fromLocalFile(video_file))
+        # self.player.setPlaylist(self.playlist)
         self.player.mediaStatusChanged.connect(self.set_rate)
         self.player.setVideoOutput(self.view_video)
         self.player.setNotifyInterval(10)

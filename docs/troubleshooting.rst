@@ -64,7 +64,7 @@ If you get an error like this, see the next section.
     TypeError: cannot unpack non-iterable NoneType object
 
 
-PySide2-uic not found
+PySide6-uic not found
 *********************
 
 .. note::
@@ -73,16 +73,16 @@ PySide2-uic not found
 .. code-block:: console
 
     "...mad_gui/components/dialogs/....py", line .., in <module>
-    FileNotFoundError: Probably python did not find pyside2-uic
+    FileNotFoundError: Probably python did not find pyside6-uic
 
-Apparently python can't find pyside2-uic, this can be solved like this.
+Apparently python can't find pyside6-uic, this can be solved like this.
 
 - In your terminal / command line interface activate the environment you want to use (e.g. `conda activate mad_gui`)
 - Find out, where the python installation is by using `where python` (Windows) or `which python` (Unix)
-- That folder should also keep a folder `Scripts`, go there and copy `pyside2-uic` from there to the parent folder, where also python is
+- That folder should also keep a folder `Scripts`, go there and copy `pyside6-uic` from there to the parent folder, where also python is
 - Try again
 
-Then copy pyside2-uic from the folder `Scripts` to the location where also your python executable is (should be the
+Then copy pyside6-uic from the folder `Scripts` to the location where also your python executable is (should be the
 parent directory).
 
 
